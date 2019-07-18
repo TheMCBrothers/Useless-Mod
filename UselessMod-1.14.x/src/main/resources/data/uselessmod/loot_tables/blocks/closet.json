@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "uselessmod:closet",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "uselessmod:closet",
+          "functions": [
+           {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+				{
+	              "source": "Items",
+	              "target": "BlockEntityTag.Items",
+	              "op": "replace"
+	            },
+               {
+                "source": "casingId",
+                "target": "uselessmod.casingId",
+                "op": "replace"
+               },
+               {
+                "source": "beddingId",
+                "target": "uselessmod.beddingId",
+                "op": "replace"
+               }
+              ]
+           },
+            {
+              "function": "minecraft:set_contents",
+              "entries": [
+                {
+                  "type": "minecraft:dynamic",
+                  "name": "minecraft:contents"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

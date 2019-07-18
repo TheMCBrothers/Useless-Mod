@@ -1,0 +1,6 @@
+{
+	"parent": "uselessmod:block/machine",
+	"textures": {
+		"front": "uselessmod:block/compressor_front_active"
+	}
+}

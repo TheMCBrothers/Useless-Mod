@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "uselessmod:diamond_dust"
+	},
+	"result": "minecraft:diamond",
+	"experience": 0.75,
+	"cookingtime": 200
+}

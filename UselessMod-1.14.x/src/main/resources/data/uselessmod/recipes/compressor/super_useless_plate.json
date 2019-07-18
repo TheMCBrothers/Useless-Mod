@@ -1,0 +1,9 @@
+{
+	"type": "uselessmod:compressing",
+	"ingredient": {
+		"item": "uselessmod:super_useless_ingot"
+	},
+	"result": "uselessmod:super_useless_plate",
+	"experience": 2.0,
+	"compresstime": 50
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "uselessmod:block/greenstone_dust_side",
+    "textures": {
+        "line": "uselessmod:block/greenstone_dust_line0"
+    }
+}

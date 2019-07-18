@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"#D#",
+		"DGD",
+		"#D#"
+	],
+	"key": {
+		"G": { "item": "minecraft:glowstone" },
+		"D": { "tag": "forge:dyes/orange" },
+		"#": { "item": "minecraft:glass_pane" }
+	},
+	"result": {
+		"item": "uselessmod:orange_lamp"
+	}
+}

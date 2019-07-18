@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"top": "uselessmod:block/machine_top",
+		"side": "uselessmod:block/machine_side",
+		"front": "uselessmod:block/machine_side"
+	}
+}

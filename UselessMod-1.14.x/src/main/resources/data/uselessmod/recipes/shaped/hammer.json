@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" I#",
+		" SI",
+		"S  "
+	],
+	"key": {
+		"I": { "item": "uselessmod:useless_ingot" },
+		"S": { "item": "minecraft:stick" },
+		"#": { "item": "minecraft:string" }
+	},
+	"result": {
+		"item": "uselessmod:hammer"
+	}
+}

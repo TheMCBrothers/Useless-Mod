@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"item": "minecraft:gold_ingot"
+	},
+	"result": {
+		"item": "uselessmod:gold_dust",
+		"count": 1
+	},
+	"experience": 2.3,
+	"crushtime": 200
+}

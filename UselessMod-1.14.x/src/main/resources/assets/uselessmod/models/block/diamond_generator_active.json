@@ -1,0 +1,6 @@
+{
+    "parent": "uselessmod:block/machine",
+    "textures": {
+        "front": "uselessmod:block/diamond_generator_front_active"
+    }
+}

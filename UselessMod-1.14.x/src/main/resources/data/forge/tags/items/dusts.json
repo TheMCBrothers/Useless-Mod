@@ -1,0 +1,12 @@
+{
+	"replace": false,
+	"values": [
+		"#forge:dusts/coal",
+		"#forge:dusts/diamond",
+		"#forge:dusts/emerald",
+		"#forge:dusts/gold",
+		"#forge:dusts/iron",
+		"#forge:dusts/super_useless",
+		"#forge:dusts/useless"
+	]
+}

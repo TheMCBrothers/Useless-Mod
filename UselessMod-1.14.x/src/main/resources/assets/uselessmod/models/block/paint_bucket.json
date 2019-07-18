@@ -1,0 +1,141 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "canvas": "uselessmod:block/canvas",
+        "useless_block": "uselessmod:block/useless_block",
+        "particle": "uselessmod:block/useless_block"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 45, 0 ],
+            "translation": [ 0, 0.8, 0 ],
+            "scale": [ 0.725, 0.725, 0.725 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.25, 0.25, 0.25 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 8, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "from": [ 2, 0, 2 ],
+            "to": [ 14, 1, 14 ],
+            "faces": {
+                "north": { "texture": "#useless_block", "uv": [ 3, 15, 15, 16 ] },
+                "east": { "texture": "#useless_block", "uv": [ 3, 15, 15, 16 ] },
+                "south": { "texture": "#useless_block", "uv": [ 3, 15, 15, 16 ] },
+                "west": { "texture": "#useless_block", "uv": [ 3, 15, 15, 16 ] },
+                "up": { "texture": "#useless_block", "uv": [ 3, 3, 15, 15 ] },
+                "down": { "texture": "#useless_block", "uv": [ 3, 3, 15, 15 ] }
+            }
+        },
+        {
+            "from": [ 2, 1, 2 ],
+            "to": [ 14, 10, 3 ],
+            "faces": {
+                "north": { "texture": "#useless_block", "uv": [ 2, 6, 14, 15 ] },
+                "east": { "texture": "#useless_block", "uv": [ 6, 6, 7, 15 ] },
+                "south": { "texture": "#useless_block", "uv": [ 2, 6, 14, 15 ] },
+                "west": { "texture": "#useless_block", "uv": [ 10, 6, 11, 15 ] }
+            }
+        },
+        {
+            "from": [ 2, 1, 13 ],
+            "to": [ 14, 10, 14 ],
+            "faces": {
+                "north": { "texture": "#useless_block", "uv": [ 2, 6, 14, 15 ] },
+                "east": { "texture": "#useless_block", "uv": [ 5, 6, 6, 15 ] },
+                "south": { "texture": "#useless_block", "uv": [ 2, 6, 14, 15 ] },
+                "west": { "texture": "#useless_block", "uv": [ 10, 6, 11, 15 ] }
+            }
+        },
+        {
+            "from": [ 2, 1, 3 ],
+            "to": [ 3, 10, 13 ],
+            "faces": {
+                "east": { "texture": "#useless_block", "uv": [ 3, 6, 13, 15 ] },
+                "west": { "texture": "#useless_block", "uv": [ 3, 6, 13, 15 ] }
+            }
+        },
+        {
+            "from": [ 13, 1, 3 ],
+            "to": [ 14, 10, 13 ],
+            "faces": {
+                "east": { "texture": "#useless_block", "uv": [ 3, 6, 13, 15 ] },
+                "west": { "texture": "#useless_block", "uv": [ 3, 6, 13, 15 ] }
+            }
+        },
+        {
+            "from": [ 1, 10, 1 ],
+            "to": [ 15, 11, 3 ],
+            "faces": {
+                "north": { "texture": "#useless_block", "uv": [ 1, 8, 15, 9 ] },
+                "east": { "texture": "#useless_block", "uv": [ 7, 7, 9, 8 ] },
+                "south": { "texture": "#useless_block", "uv": [ 1, 6, 15, 7 ] },
+                "west": { "texture": "#useless_block", "uv": [ 4, 6, 6, 7 ] },
+                "up": { "texture": "#useless_block", "uv": [ 1, 6, 15, 8 ] },
+                "down": { "texture": "#useless_block", "uv": [ 1, 7, 15, 9 ] }
+            }
+        },
+        {
+            "from": [ 1, 10, 13 ],
+            "to": [ 15, 11, 15 ],
+            "faces": {
+                "north": { "texture": "#useless_block", "uv": [ 2, 6, 16, 7 ] },
+                "east": { "texture": "#useless_block", "uv": [ 7, 8, 9, 9 ] },
+                "south": { "texture": "#useless_block", "uv": [ 1, 7, 15, 8 ] },
+                "west": { "texture": "#useless_block", "uv": [ 7, 6, 9, 7 ] },
+                "up": { "texture": "#useless_block", "uv": [ 1, 6, 15, 8 ] },
+                "down": { "texture": "#useless_block", "uv": [ 1, 5, 15, 7 ] }
+            }
+        },
+        {
+            "from": [ 1, 10, 3 ],
+            "to": [ 3, 11, 13 ],
+            "faces": {
+                "east": { "texture": "#useless_block", "uv": [ 4, 6, 14, 7 ] },
+                "west": { "texture": "#useless_block", "uv": [ 4, 5, 14, 6 ] },
+                "up": { "texture": "#useless_block", "uv": [ 4, 5, 6, 15 ] },
+                "down": { "texture": "#useless_block", "uv": [ 7, 5, 9, 15 ] }
+            }
+        },
+        {
+            "from": [ 13, 10, 3 ],
+            "to": [ 15, 11, 13 ],
+            "faces": {
+                "east": { "texture": "#useless_block", "uv": [ 3, 8, 13, 9 ] },
+                "west": { "texture": "#useless_block", "uv": [ 3, 7, 13, 8 ] },
+                "up": { "texture": "#useless_block", "uv": [ 9, 5, 11, 15 ] },
+                "down": { "texture": "#useless_block", "uv": [ 6, 5, 8, 15 ] }
+            }
+        },
+        {
+            "from": [ 3, 1, 3 ],
+            "to": [ 13, 9, 13 ],
+            "faces": {
+                "up": { "texture": "#canvas", "uv": [ 3, 3, 13, 13 ], "tintindex": 0 }
+            }
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"item": "uselessmod:super_useless_ingot"
+	},
+	"result": {
+		"item": "uselessmod:super_useless_dust",
+		"count": 1
+	},
+	"experience": 2.3,
+	"crushtime": 200
+}

@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"item": "minecraft:diamond"
+	},
+	"result": {
+		"item": "uselessmod:diamond_dust",
+		"count": 1
+	},
+	"experience": 2.3,
+	"crushtime": 200
+}

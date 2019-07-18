@@ -1,0 +1,45 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "uselessmod:energy_cable/center",
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"north": {
+			"true": {
+				"submodel": "uselessmod:energy_cable/north"
+			},
+			"false": {}
+		},
+		"south": {
+			"true": {
+				"submodel": "uselessmod:energy_cable/south"
+			},
+			"false": {}
+		},
+		"east": {
+			"true": {
+				"submodel": "uselessmod:energy_cable/east"
+			},
+			"false": {}
+		},
+		"west": {
+			"true": {
+				"submodel": "uselessmod:energy_cable/west"
+			},
+			"false": {}
+		},
+		"up": {
+			"true": {
+				"submodel": "uselessmod:energy_cable/up"
+			},
+			"false": {}
+		},
+		"down": {
+			"true": {
+				"submodel": "uselessmod:energy_cable/down"
+			},
+			"false": {}
+		}
+	}
+}
