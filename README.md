@@ -1,4 +1,4 @@
-#<h1>Useless Mod</h1>
+<h1>Useless Mod</h1>
 <pre><br />This is a mod by TheMCBros for Forge<br /><br /></pre>
 <h3>Features</h3>
 <ul>
