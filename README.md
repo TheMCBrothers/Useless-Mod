@@ -1,5 +1,5 @@
-<h1>Useless Mod</h1>
-<pre><br />This is a mod by TheMCBros for forge<br /><br /></pre>
+#<h1>Useless Mod</h1>
+<pre><br />This is a mod by TheMCBros for Forge<br /><br /></pre>
 <h3>Features</h3>
 <ul>
 <li>Two useless ores generate in your world</li>
@@ -11,12 +11,16 @@
 <li>Useless decoration blocks</li>
 <li>Lamp block within 16 colors</li>
 <li>Wall closet within 96 variants</li>
+<li>A very useless entity</li>
+<li>Canvas Block wich is paintable with the Paint Brush</li>
+<li>Paint Bucket (decoration)</li>
 </ul>
 <p><strong>Note:</strong></p>
 <ul>
 <li>Not everything in this mod is useless!</li>
 </ul>
 <h3>Planned Features:</h3>
+<p>Custom potion type</p>
 <ul>
 <li>A new dimension with new types of blocks</li>
 <li>Custom fluid and working fluid tank</li>
@@ -26,6 +30,7 @@
 <ul>
 <li>Find the game installation folder</li>
 <li>Put the mod .jar file into the mods folder</li>
+<li>If you run a server, also just put it in the server mods folder.</li>
 </ul>
 <h3>Modpacks</h3>
 <p>Yes, this mod can be used in modpacks</p>
