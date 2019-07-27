@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "uselessmod:item/iron_plate"
+    },
+	"overrides": [
+		{
+			"predicate": {
+				"uselessmod:extended": 1
+			},
+			"model": "uselessmod:item/iron_plate_extended"
+		}
+	]
+}

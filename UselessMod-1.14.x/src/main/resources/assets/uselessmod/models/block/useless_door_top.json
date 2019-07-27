@@ -1,7 +1,0 @@
-{
-    "parent": "block/door_top",
-    "textures": {
-        "bottom": "uselessmod:block/useless_door_bottom",
-        "top": "uselessmod:block/useless_door_top"
-    }
-}

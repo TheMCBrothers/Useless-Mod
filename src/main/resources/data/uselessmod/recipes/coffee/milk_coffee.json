@@ -1,0 +1,13 @@
+{
+	"type": "uselessmod:coffee",
+	"ingredient": {
+		"item": "minecraft:milk_bucket"
+	},
+	"result": {
+		"item": "uselessmod:coffee_cup",
+		"nbt": {
+			"CoffeeType": "milk"
+		}
+	},
+	"cooktime": 100
+}

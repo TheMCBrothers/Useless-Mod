@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "uselessmod:gold_dust"
+	},
+	"result": "minecraft:gold_ingot",
+	"experience": 0.75,
+	"cookingtime": 200
+}

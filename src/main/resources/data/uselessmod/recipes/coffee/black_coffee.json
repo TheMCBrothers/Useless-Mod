@@ -1,0 +1,13 @@
+{
+	"type": "uselessmod:coffee",
+	"ingredient": {
+		"item": "uselessmod:useless_flour"
+	},
+	"result": {
+		"item": "uselessmod:coffee_cup",
+		"nbt": {
+			"CoffeeType": "black"
+		}
+	},
+	"cooktime": 100
+}

@@ -1,0 +1,9 @@
+{
+	"type": "uselessmod:compressing",
+	"ingredient": {
+		"item": "minecraft:iron_ingot"
+	},
+	"result": "uselessmod:iron_plate",
+	"experience": 0.5,
+	"compresstime": 100
+}

@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" # ",
+		"#C#",
+		"IFI"
+	],
+	"key": {
+		"#": { "item": "uselessmod:useless_ingot" },
+		"I": { "item": "minecraft:iron_ingot" },
+		"F": { "item": "minecraft:stone" },
+		"C": { "item": "uselessmod:machineframe" }
+	},
+	"result": {
+		"item": "uselessmod:compressor"
+	}
+}

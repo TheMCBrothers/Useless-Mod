@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "uselessmod:closet",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "uselessmod:canvas",
+          "functions": [
+           {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+               {
+                "source": "color",
+                "target": "BlockEntityTag.color",
+                "op": "replace"
+               }
+              ]
+           },
+            {
+              "function": "minecraft:set_contents",
+              "entries": [
+                {
+                  "type": "minecraft:dynamic",
+                  "name": "minecraft:contents"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

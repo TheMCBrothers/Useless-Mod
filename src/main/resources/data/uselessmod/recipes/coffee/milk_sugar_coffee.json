@@ -1,0 +1,13 @@
+{
+	"type": "uselessmod:coffee",
+	"ingredient": {
+		"item": "minecraft:emerald"
+	},
+	"result": {
+		"item": "uselessmod:coffee_cup",
+		"nbt": {
+			"CoffeeType": "milk_sugar"
+		}
+	},
+	"cooktime": 100
+}

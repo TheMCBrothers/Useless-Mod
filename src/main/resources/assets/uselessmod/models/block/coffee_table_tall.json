@@ -1,0 +1,102 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "legs": "minecraft:block/oak_log",
+        "plate": "minecraft:block/stripped_oak_log"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 45, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.25, 0.25, 0.25 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "name": "Plate",
+            "from": [ 0, 14, 0 ], 
+            "to": [ 16, 16, 16 ], 
+            "faces": {
+                "north": { "texture": "#plate", "uv": [ 0, 0, 16, 2 ] },
+                "east": { "texture": "#plate", "uv": [ 0, 0, 16, 2 ] },
+                "south": { "texture": "#plate", "uv": [ 0, 0, 16, 2 ] },
+                "west": { "texture": "#plate", "uv": [ 0, 0, 16, 2 ] },
+                "up": { "texture": "#plate", "uv": [ 0, 0, 16, 16 ] },
+                "down": { "texture": "#plate", "uv": [ 0, 0, 16, 16 ] }
+            }
+        },
+        {
+            "name": "LegNW",
+            "from": [ 0.5, 0, 0.5 ], 
+            "to": [ 2.5, 14, 2.5 ], 
+            "faces": {
+                "north": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "east": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "south": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "west": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "down": { "texture": "#legs", "uv": [ 0, 0, 2, 2 ] }
+            }
+        },
+        {
+            "name": "LegNE",
+            "from": [ 13.5, 0, 0.5 ], 
+            "to": [ 15.5, 14, 2.5 ], 
+            "faces": {
+                "north": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "east": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "south": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "west": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "down": { "texture": "#legs", "uv": [ 0, 0, 2, 2 ] }
+            }
+        },
+        {
+            "name": "LegSE",
+            "from": [ 13.5, 0, 13.5 ], 
+            "to": [ 15.5, 14, 15.5 ], 
+            "faces": {
+                "north": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "east": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "south": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "west": { "texture": "#legs", "uv": [ 0, 0, 2, 14 ] },
+                "down": { "texture": "#legs", "uv": [ 0, 0, 2, 2 ] }
+            }
+        },
+        {
+            "name": "LegSW",
+            "from": [ 0.5, 0, 13.5 ], 
+            "to": [ 2.5, 14, 15.5 ], 
+            "faces": {
+                "north": { "texture": "#legs", "uv": [ 7, 2, 9, 16 ] },
+                "east": { "texture": "#legs", "uv": [ 7, 2, 9, 16 ] },
+                "south": { "texture": "#legs", "uv": [ 7, 2, 9, 16 ] },
+                "west": { "texture": "#legs", "uv": [ 7, 2, 9, 16 ] },
+                "down": { "texture": "#legs", "uv": [ 7, 14, 9, 16 ] }
+            }
+        }
+    ]
+}

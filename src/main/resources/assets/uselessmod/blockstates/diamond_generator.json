@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"facing=north,active=false": { "model": "uselessmod:block/diamond_generator" },
+		"facing=north,active=true": { "model": "uselessmod:block/diamond_generator_active" },
+		"facing=south,active=false": { "model": "uselessmod:block/diamond_generator", "y": 180 },
+		"facing=south,active=true": { "model": "uselessmod:block/diamond_generator_active", "y": 180 },
+		"facing=east,active=false": { "model": "uselessmod:block/diamond_generator", "y": 90 },
+		"facing=east,active=true": { "model": "uselessmod:block/diamond_generator_active", "y": 90 },
+		"facing=west,active=false": { "model": "uselessmod:block/diamond_generator", "y": 270 },
+		"facing=west,active=true": { "model": "uselessmod:block/diamond_generator_active", "y": 270 }
+	}
+}

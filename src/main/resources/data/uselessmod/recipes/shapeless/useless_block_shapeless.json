@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+	    [
+			{
+				"item": "minecraft:diamond_block"
+			},
+			{
+				"item": "minecraft:emerald_block"
+			}
+		],
+		{
+	      "item": "uselessmod:useless_plate"
+		}
+	],
+	"result": {
+    	"item": "uselessmod:useless_block",
+		"count": 1
+	}
+}

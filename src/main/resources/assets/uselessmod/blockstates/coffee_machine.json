@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"facing=north,cup=false": { "model": "uselessmod:block/coffee_machine" },
+		"facing=north,cup=true": { "model": "uselessmod:block/coffee_machine_cup" },
+		"facing=south,cup=false": { "model": "uselessmod:block/coffee_machine", "y": 180 },
+		"facing=south,cup=true": { "model": "uselessmod:block/coffee_machine_cup", "y": 180 },
+		"facing=east,cup=false": { "model": "uselessmod:block/coffee_machine", "y": 90 },
+		"facing=east,cup=true": { "model": "uselessmod:block/coffee_machine_cup", "y": 90 },
+		"facing=west,cup=false": { "model": "uselessmod:block/coffee_machine", "y": 270 },
+		"facing=west,cup=true": { "model": "uselessmod:block/coffee_machine_cup", "y": 270 }
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "uselessmod:super_useless_dust"
+	},
+	"result": "uselessmod:super_useless_ingot",
+	"experience": 1.0,
+	"cookingtime": 200
+}

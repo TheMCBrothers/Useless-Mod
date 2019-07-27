@@ -1,0 +1,10 @@
+{
+    "music.should_i_stay_or_should_i_go": {
+        "subtitle": "subtitle.uselessmod.should_i_stay_or_should_i_go_disc",
+        "sounds": [ "uselessmod:music_disc/should_i_stay_or_should_i_go" ]
+    },
+    "music.moskau": {
+        "subtitle": "subtitle.uselessmod.moskau_disc",
+        "sounds": [ "uselessmod:music_disc/moskau" ]
+    }
+}

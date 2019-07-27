@@ -1,7 +1,0 @@
-{
-    "parent": "item/handheld",
-    "textures": {
-        "layer0": "uselessmod:item/paint_brush_0",
-		"layer1": "uselessmod:item/paint_brush_1"
-    }
-}

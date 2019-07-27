@@ -1,0 +1,13 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item": "uselessmod:paint_brush" }
+	],
+	"result": {
+		"item": "uselessmod:paint_brush",
+		"count": 1,
+		"nbt": {
+			"color": 16383998
+		}
+	}
+}
