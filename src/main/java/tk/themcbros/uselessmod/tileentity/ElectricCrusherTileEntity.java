@@ -18,6 +18,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.ElectricCrusherContainer;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
@@ -28,7 +29,7 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 2, 1 };
 	private static final int[] SLOTS_SIDES = new int[] { 0 };
-	private static final int RF_PER_TICK = 15;
+	private static final int RF_PER_TICK = MachineConfig.crusher_rf_per_tick.get();
 	private NonNullList<ItemStack> crusherItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
 	private int crushTime;
 	private int crushTimeTotal;

@@ -13,7 +13,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "uselessmod:useless_wheat",
+                  "block": "uselessmod:coffee_seeds",
                   "properties": {
                     "age": "7"
                   }
@@ -46,13 +46,13 @@
               }
             }
           ],
-          "name": "uselessmod:useless_wheat_seeds"
+          "name": "uselessmod:coffee_seeds"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "uselessmod:coffee_beans",
+          "block": "uselessmod:coffee_seeds",
           "properties": {
             "age": "7"
           }
@@ -63,6 +63,10 @@
   "functions": [
     {
       "function": "minecraft:explosion_decay"
+    },
+    {
+      "function": "minecraft:set_count",
+      "count": 2
     }
   ]
 }

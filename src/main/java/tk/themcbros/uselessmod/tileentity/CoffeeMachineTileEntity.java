@@ -26,6 +26,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
 import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
 import tk.themcbros.uselessmod.lists.ModItems;
@@ -35,11 +36,11 @@ import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
 public class CoffeeMachineTileEntity extends TileEntity implements ITickableTileEntity, ISidedInventory, INamedContainerProvider {
 
-	public static final int RF_PER_TICK = 8;
-	private static final float WATER_PER_TICK = 1.5F;
-	private static final int COFFEE_BEANS_PER_COFFEE = 2;
-	private static final int WATER_CAPACITY = 4000;
-	private static final int COFFEE_BEANS_CAPACITY = 64;
+	public static final int RF_PER_TICK = MachineConfig.coffee_machine_rf_per_tick.get();
+	private static final double WATER_PER_TICK = MachineConfig.coffee_machine_water_per_tick.get();
+	private static final int COFFEE_BEANS_PER_COFFEE = MachineConfig.coffee_machine_coffee_beans_per_coffee.get();
+	private static final int WATER_CAPACITY = MachineConfig.coffee_machine_water_capacity.get();
+	private static final int COFFEE_BEANS_CAPACITY = MachineConfig.coffee_machine_coffee_beans_capacity.get();
 	
 	private static final int[] SLOTS_TOP = new int[] { 2,3,5 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 4 };

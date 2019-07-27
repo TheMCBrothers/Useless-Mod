@@ -17,6 +17,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.ElectricFurnaceContainer;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 
@@ -25,7 +26,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	private static final int[] SLOTS_TOP = { 0 };
 	private static final int[] SLOTS_SIDE = { 0 };
 	private static final int[] SLOTS_BOTTOM = { 1 };
-	private static final int RF_PER_TICK = 15;
+	private static final int RF_PER_TICK = MachineConfig.furnace_rf_per_tick.get();
 	
 	private NonNullList<ItemStack> furnaceItemStacks = NonNullList.withSize(2, ItemStack.EMPTY);
 	private int cookTime;

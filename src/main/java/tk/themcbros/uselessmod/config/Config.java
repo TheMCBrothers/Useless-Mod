@@ -21,6 +21,7 @@ public class Config {
 	static {
 		
 		OreGenConfig.init(server_builder, client_builder);
+		MachineConfig.init(server_builder, client_builder);
 		
 		server_config = server_builder.build();
 		client_config = client_builder.build();

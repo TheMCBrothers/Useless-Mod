@@ -19,6 +19,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CompressorContainer;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.recipes.CompressorRecipe;
@@ -26,7 +27,7 @@ import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
 public class CompressorTileEntity extends MachineTileEntity {
 
-	public static final int RF_PER_TICK = 15;
+	public static final int RF_PER_TICK = MachineConfig.compressor_rf_per_tick.get();
 	
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 1 };
