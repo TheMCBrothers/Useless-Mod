@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +17,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.util.ResourceLocation;
 import tk.themcbros.uselessmod.recipes.CompressorRecipe;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
@@ -84,7 +82,6 @@ public class UselessRecipeValidator {
 			this.maxInputs = maxInputs;
 		}
 
-		@SuppressWarnings("ConstantConditions")
 		public boolean isRecipeValid(T recipe) {
 			if (recipe.isDynamic()) {
 				return false;
@@ -117,11 +114,10 @@ public class UselessRecipeValidator {
 		}
 
 		private String getInfo(T recipe) {
-			return "nininni";
+			return recipeCategory.getTitle();
 //			return ErrorUtil.getInfoFromRecipe(recipe, recipeCategory);
 		}
 
-		@SuppressWarnings("ConstantConditions")
 		protected static int getInputCount(List<Ingredient> ingredientList) {
 			int inputCount = 0;
 			for (Ingredient ingredient : ingredientList) {

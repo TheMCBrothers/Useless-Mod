@@ -1,11 +1,12 @@
 {
 	"type": "uselessmod:coffee",
 	"ingredient": {
-		"item": "uselessmod:useless_flour"
+		"item": "uselessmod:coffee_beans"
 	},
 	"result": {
 		"item": "uselessmod:coffee_cup",
 		"nbt": {
+			"Potion": "uselessmod:black_coffee",
 			"CoffeeType": "black"
 		}
 	},

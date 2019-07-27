@@ -17,6 +17,7 @@ public class ItemNames {
 	public static final ResourceLocation USELESS_FLOUR = new ResourceLocation(UselessMod.MOD_ID, "useless_flour");
 	public static final ResourceLocation COFFEE_SEEDS = new ResourceLocation(UselessMod.MOD_ID, "coffee_seeds");
 	public static final ResourceLocation COFFEE_BEANS = new ResourceLocation(UselessMod.MOD_ID, "coffee_beans");
+	public static final ResourceLocation SUGARED_MILK = new ResourceLocation(UselessMod.MOD_ID, "sugared_milk");
 	public static final ResourceLocation CUP = new ResourceLocation(UselessMod.MOD_ID, "cup");
 	public static final ResourceLocation COFFEE_CUP = new ResourceLocation(UselessMod.MOD_ID, "coffee_cup");
 	public static final ResourceLocation IRON_DUST = new ResourceLocation(UselessMod.MOD_ID, "iron_dust");

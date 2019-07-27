@@ -32,7 +32,7 @@ public class UselessItem extends Item {
 	public UselessItem(Properties properties) {
 		super(properties.defaultMaxDamage(28));
 		
-		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> UselessItem.this.canRepair ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> UselessItem.this.hasEffect(stack) ? 1F : 0F);
 	}
 	
 	@Override
@@ -77,6 +77,11 @@ public class UselessItem extends Item {
 			}
 		}
 		return success ? ActionResultType.SUCCESS : ActionResultType.PASS;
+	}
+	
+	@Override
+	public boolean hasEffect(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains("empowered");
 	}
 
 	@Override

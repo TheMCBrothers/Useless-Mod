@@ -27,6 +27,7 @@ import tk.themcbros.uselessmod.container.ElectricCrusherContainer;
 import tk.themcbros.uselessmod.jei.categories.CompressorRecipeCategory;
 import tk.themcbros.uselessmod.jei.categories.CrusherRecipeCategory;
 import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.lists.ModItems;
 import tk.themcbros.uselessmod.recipes.CompressorRecipe;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
 
@@ -52,6 +53,18 @@ public class JEICompat implements IModPlugin {
 			String casingId = tag.getString("casingId");
 			String beddingId = tag.getString("beddingId");
 			return casingId + beddingId;
+		});
+		registration.registerSubtypeInterpreter(ModItems.PAINT_BRUSH, itemStack -> {
+			return Integer.toString(itemStack.getTag().getInt("color"));
+		});
+		registration.registerSubtypeInterpreter(ModBlocks.CANVAS.asItem(), itemStack -> {
+			return Integer.toString(itemStack.getTag().getInt("color"));
+		});
+		registration.registerSubtypeInterpreter(ModBlocks.PAINT_BUCKET.asItem(), itemStack -> {
+			return Integer.toString(itemStack.getTag().getInt("color"));
+		});
+		registration.registerSubtypeInterpreter(ModItems.COFFEE_CUP, itemStack -> {
+			return itemStack.getTag().getString("CoffeeType");
 		});
 	}
 	

@@ -12,10 +12,10 @@ import net.minecraft.util.IntArray;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
+import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeBeansSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeInputSecondSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeInputSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeOutputSlot;
-import tk.themcbros.uselessmod.container.slots.coffee_machine.MilkTankSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.WaterTankSlot;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 
@@ -35,7 +35,7 @@ public class CoffeeMachineContainer extends Container {
 		
 		// Machine Slots
 		this.addSlot(new WaterTankSlot(coffeeMachineInventory, 0, 7, 55));
-		this.addSlot(new MilkTankSlot(coffeeMachineInventory, 1, 27, 55));
+		this.addSlot(new CoffeeBeansSlot(coffeeMachineInventory, 1, 27, 55));
 		this.addSlot(new CoffeeInputSlot(coffeeMachineInventory, 2, 61, 26));
 		this.addSlot(new CoffeeInputSecondSlot(coffeeMachineInventory, 3, 79, 26));
 		this.addSlot(new CoffeeOutputSlot(coffeeMachineInventory, 4, 112, 45));
@@ -94,6 +94,13 @@ public class CoffeeMachineContainer extends Container {
 	}
 	
 	@OnlyIn(Dist.CLIENT)
+	public int getEnergyStoredScaled() {
+		int i = this.fields.get(0);
+		int j = this.fields.get(1);
+		return j != 0 && i != 0 ? i * 45 / j : 0;
+	}
+	
+	@OnlyIn(Dist.CLIENT)
 	public int getWaterGuiHeight(int height) {
 		int i = this.fields.get(2);
 		int j = this.fields.get(3);
@@ -101,17 +108,17 @@ public class CoffeeMachineContainer extends Container {
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public int getMilkGuiHeight(int height) {
+	public int getCoffeeBeansGuiHeight(int height) {
 		int i = this.fields.get(4);
 		int j = this.fields.get(5);
 		return j != 0 && i != 0 ? i * height / j : 0;
 	}
-
+	
 	@OnlyIn(Dist.CLIENT)
-	public int getEnergyStoredScaled() {
-		int i = this.fields.get(0);
-		int j = this.fields.get(1);
-		return j != 0 && i != 0 ? i * 45 / j : 0;
+	public int getCookTimeScaled() {
+		int i = this.fields.get(6);
+		int j = this.fields.get(7);
+		return j != 0 && i != 0 ? i * 41 / j : 0;
 	}
 	
 	public int getEnergyStored() {

@@ -11,7 +11,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -37,10 +36,14 @@ import tk.themcbros.uselessmod.recipes.RecipeTypes;
 public class CoffeeMachineTileEntity extends TileEntity implements ITickableTileEntity, ISidedInventory, INamedContainerProvider {
 
 	public static final int RF_PER_TICK = 8;
+	private static final float WATER_PER_TICK = 1.5F;
+	private static final int COFFEE_BEANS_PER_COFFEE = 2;
+	private static final int WATER_CAPACITY = 4000;
+	private static final int COFFEE_BEANS_CAPACITY = 64;
 	
-	private static final int[] SLOTS_TOP = new int[] { 0,1,2,3 };
+	private static final int[] SLOTS_TOP = new int[] { 2,3,5 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 4 };
-	private static final int[] SLOTS_SIDES = new int[] { 0,1,2,3 };
+	private static final int[] SLOTS_SIDES = new int[] { 0,1,2,3,5 };
 	
 	private NonNullList<ItemStack> coffeeMachineItemStacks = NonNullList.withSize(6, ItemStack.EMPTY);
 	
@@ -49,8 +52,8 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	private int waterAmount;
 	private int coffeeBeansAmount;
 	
-	private int maxWaterAmount = Fluid.BUCKET_VOLUME * 4;
-	private int maxCoffeeBeansAmount = 16;
+	private int maxWaterAmount = WATER_CAPACITY;
+	private int maxCoffeeBeansAmount = COFFEE_BEANS_CAPACITY;
 	
 	private int cookTime;
 	private int cookTimeTotal;
@@ -134,7 +137,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		boolean flag = this.isActive();
 		boolean flag1 = this.getBlockState().get(CoffeeMachineBlock.CUP);
 		boolean flag2 = false;
-		boolean cup = (this.coffeeMachineItemStacks.get(2).getItem() == ModItems.CUP || this.coffeeMachineItemStacks.get(2).getItem() == ModItems.COFFEE_CUP);
+		boolean cup = (this.coffeeMachineItemStacks.get(2).getItem() == ModItems.CUP || this.coffeeMachineItemStacks.get(4).getItem() == ModItems.COFFEE_CUP);
 		if((flag) && (!flag1)) flag2 = true;
 		
 		if(this.isActive()) this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
@@ -155,18 +158,20 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 			}
 			
 			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.coffeeMachineItemStacks.get(0).isEmpty()) {
-				IRecipe<?> irecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world).orElse(null);
-				if (!this.isActive() && this.canCook(irecipe)) {
+				CoffeeRecipe coffeeRecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, this, this.world).orElse(null);
+				if (!this.isActive() && this.canCook(coffeeRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					cookTime++;
+					this.waterAmount -= WATER_PER_TICK;
 				}
 
-				if (this.isActive() && this.canCook(irecipe)) {
-					++this.cookTime;
+				if (this.isActive() && this.canCook(coffeeRecipe)) {
+					this.cookTime += 1;
+					this.waterAmount -= WATER_PER_TICK;
 					if (this.cookTime == this.cookTimeTotal) {
 						this.cookTime = 0;
 						this.cookTimeTotal = this.getCookTime();
-						this.cookItem(irecipe);
+						this.cookItem(coffeeRecipe);
 						flag1 = true;
 					}
 				} else {
@@ -193,8 +198,12 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				.map(CoffeeRecipe::getCookTime).orElse(200);
 	}
 	
-	private boolean canCook(@Nullable IRecipe<?> recipe) {
-		if (!this.coffeeMachineItemStacks.get(3).isEmpty() && !this.coffeeMachineItemStacks.get(2).isEmpty() && recipe != null) {
+	private boolean canCook(@Nullable CoffeeRecipe recipe) {
+		final int waterUse = (int) (WATER_PER_TICK * (this.getCookTime()-this.cookTime));
+		if (!this.coffeeMachineItemStacks.get(3).isEmpty() 
+				&& !this.coffeeMachineItemStacks.get(2).isEmpty() 
+				&& coffeeBeansAmount >= COFFEE_BEANS_PER_COFFEE
+				&& waterAmount >= waterUse && recipe != null) {
 			ItemStack itemstack = recipe.getRecipeOutput();
 			if (itemstack.isEmpty()) {
 				return false;
@@ -222,9 +231,9 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		}
 	}
 
-	private void cookItem(@Nullable IRecipe<?> recipe) {
+	private void cookItem(@Nullable CoffeeRecipe recipe) {
 		if (recipe != null && this.canCook(recipe)) {
-			ItemStack itemstack = this.coffeeMachineItemStacks.get(3);
+			ItemStack itemstack = this.coffeeMachineItemStacks.get(2);
 			ItemStack itemstack1 = this.coffeeMachineItemStacks.get(3);
 			ItemStack itemstack2 = recipe.getRecipeOutput();
 			ItemStack itemstack3 = this.coffeeMachineItemStacks.get(4);
@@ -233,9 +242,13 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 			} else if (itemstack3.getItem() == itemstack2.getItem()) {
 				itemstack3.grow(itemstack2.getCount());
 			}
-
+			
 			itemstack.shrink(1);
-			itemstack1.shrink(1);
+			if(itemstack1.hasContainerItem() && itemstack1.getMaxStackSize() == 1)
+				this.coffeeMachineItemStacks.set(3, itemstack1.getContainerItem());
+			else
+				itemstack1.shrink(1);
+			this.coffeeBeansAmount -= COFFEE_BEANS_PER_COFFEE;
 		}
 	}
 	

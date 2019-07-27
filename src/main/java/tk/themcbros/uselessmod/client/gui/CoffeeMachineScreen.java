@@ -67,7 +67,7 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
 			int maxCoffeeBeansAmount = this.container.getMaxMilkAmount();
 			List<String> tooltip = new ArrayList<String>();
 			tooltip.add(new TranslationTextComponent(ModItems.COFFEE_BEANS.getTranslationKey()).getFormattedText());
-			tooltip.add(coffeeBeansAmount + " / " + maxCoffeeBeansAmount + "");
+			tooltip.add(coffeeBeansAmount + " / " + maxCoffeeBeansAmount);
 			this.renderTooltip(tooltip, mouseX, mouseY,
 					(font == null ? this.font : font));
 		}
@@ -91,20 +91,22 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
 		this.blit(i, j, 0, 0, this.xSize, this.ySize);
 		
 		int k = this.container.getEnergyStoredScaled();
-		this.blit(i + energyBar.x, j + energyBar.y + energyBar.height - k, 177, 18, energyBar.width, k);
+		this.blit(i + energyBar.x, j + energyBar.y + energyBar.height - k, 177, 19, energyBar.width, k);
+		
+		int l = this.container.getCookTimeScaled();
+		this.blit(i + 67, j + 43, 176, 0, l + 1, 18);
 		
 		//Draw fluid
         this.minecraft.getTextureManager().bindTexture(FLUID_TEXTURES);
         int waterFluidHeight = this.container.getWaterGuiHeight(waterTankRectangle.height);
         this.blit(guiLeft + waterTankRectangle.x, guiTop + waterTankRectangle.y + (waterTankRectangle.height - waterFluidHeight), 0, 0, waterTankRectangle.width, waterFluidHeight);
-        int milkFluidHeight = this.container.getMilkGuiHeight(milkTankRectangle.height);
+        int milkFluidHeight = this.container.getCoffeeBeansGuiHeight(milkTankRectangle.height);
         this.blit(guiLeft + milkTankRectangle.x, guiTop + milkTankRectangle.y + (milkTankRectangle.height - milkFluidHeight), 32, 0, milkTankRectangle.width, milkFluidHeight);
-//        blit(waterTankRectangle.x + guiLeft, waterTankRectangle.y + guiTop + (waterTankRectangle.height - fluidHeight), 0, waterTankRectangle.width, fluidHeight, fluidTexture);
 
         //Draw lines over fluid
         this.minecraft.getTextureManager().bindTexture(TEXTURES);
-        this.blit(waterTankRectangle.x + guiLeft, waterTankRectangle.y + guiTop, 195, 18, waterTankRectangle.width, waterTankRectangle.height);
-        this.blit(milkTankRectangle.x + guiLeft, milkTankRectangle.y + guiTop, 195, 18, milkTankRectangle.width, milkTankRectangle.height);
+        this.blit(waterTankRectangle.x + guiLeft, waterTankRectangle.y + guiTop, 195, 19, waterTankRectangle.width, waterTankRectangle.height);
+        this.blit(milkTankRectangle.x + guiLeft, milkTankRectangle.y + guiTop, 195, 19, milkTankRectangle.width, milkTankRectangle.height);
 	}
 	
 	@Override
@@ -113,8 +115,6 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
 		this.font.drawString(s, (float) (this.xSize / 2 - this.font.getStringWidth(s) / 2), 6.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F,
 				(float) (this.ySize - 96 + 3), 4210752);
-		this.font.drawString("T: " + this.container.getCookTime(), 51.0F,
-				64.0F, 4210752);
 	}
 
 }

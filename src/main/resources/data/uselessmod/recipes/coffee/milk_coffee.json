@@ -6,9 +6,8 @@
 	"result": {
 		"item": "uselessmod:coffee_cup",
 		"nbt": {
-			"uselessmod": {
-				"CoffeeType": "milk"
-			}
+			"Potion": "uselessmod:milk_coffee",
+			"CoffeeType": "milk"
 		}
 	},
 	"cooktime": 100

@@ -5,7 +5,6 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.DyeColor;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -65,7 +64,7 @@ public class ClientProxy extends CommonProxy {
         BlockColors blockColors = event.getBlockColors();
         
         blockColors.register((state, world, pos, tintIndex) -> {
-            return tintIndex == 0 ? 0xcf2560 : tintIndex == 1 ? 0x46a37e : -1;
+            return world != null && pos != null ? world.getBiome(pos).getWaterColor() : -1;
          }, ModBlocks.CHEESE_MAKER);
         
         blockColors.register((state, world, pos, tintIndex) -> {
@@ -105,10 +104,9 @@ public class ClientProxy extends CommonProxy {
 		}, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET);
 		
 		itemColors.register((stack, tintIndex) -> {
-			CompoundNBT compound = stack.getChildTag("uselessmod");
-			if(compound != null) {
+			if(stack.hasTag() && stack.getTag().contains("CoffeeType")) {
 				for(CoffeeType type : CoffeeType.values()) {
-					if(compound.getString("CoffeeType").equals(type.getName())) {
+					if(stack.getTag().getString("CoffeeType").equals(type.getName())) {
 						if(type != null) {
 							return type.getColor();
 						}

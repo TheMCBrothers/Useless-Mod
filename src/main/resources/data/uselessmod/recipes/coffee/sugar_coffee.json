@@ -6,6 +6,7 @@
 	"result": {
 		"item": "uselessmod:coffee_cup",
 		"nbt": {
+			"Potion": "uselessmod:sugar_coffee",
 			"CoffeeType": "sugar"
 		}
 	},

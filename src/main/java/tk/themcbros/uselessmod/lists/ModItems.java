@@ -5,6 +5,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraftforge.event.RegistryEvent;
@@ -42,6 +43,8 @@ public class ModItems {
 	public static final Item COFFEE_SEEDS = null;
 	@ObjectHolder("coffee_beans")
 	public static final Item COFFEE_BEANS = null;
+	@ObjectHolder("sugared_milk")
+	public static final Item SUGARED_MILK = null;
 	@ObjectHolder("cup")
 	public static final Item CUP = null;
 	@ObjectHolder("coffee_cup")
@@ -140,6 +143,7 @@ public class ModItems {
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.USELESS_FLOUR));
 			registry.register(new BlockNamedItem(ModBlocks.COFFEE_SEEDS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.COFFEE_SEEDS));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.COFFEE_BEANS));
+			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).maxStackSize(1).containerItem(Items.BUCKET)).setRegistryName(ItemNames.SUGARED_MILK));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.CUP));
 			registry.register(new CoffeeCupItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).maxStackSize(1)).setRegistryName(ItemNames.COFFEE_CUP));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.IRON_DUST));

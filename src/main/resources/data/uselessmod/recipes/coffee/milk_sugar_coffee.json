@@ -1,11 +1,12 @@
 {
 	"type": "uselessmod:coffee",
 	"ingredient": {
-		"item": "minecraft:emerald"
+		"item": "uselessmod:sugared_milk"
 	},
 	"result": {
 		"item": "uselessmod:coffee_cup",
 		"nbt": {
+			"Potion": "uselessmod:milk_sugar_coffee",
 			"CoffeeType": "milk_sugar"
 		}
 	},

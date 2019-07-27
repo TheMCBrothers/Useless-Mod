@@ -33,7 +33,7 @@ public class CoffeeCupItem extends Item {
 		ItemStack stack = new ItemStack(this);
 		stack.setTag(new CompoundNBT());
 		PotionUtils.addPotionToItemStack(stack, CoffeeType.BLACK.getPotion());
-		stack.getOrCreateChildTag("uselessmod").putString("CoffeeType", CoffeeType.BLACK.getName());
+		stack.getTag().putString("CoffeeType", CoffeeType.BLACK.getName());
 		return stack;
 	}
 	
@@ -92,13 +92,16 @@ public class CoffeeCupItem extends Item {
 	
 	@Override
 	public String getTranslationKey(ItemStack stack) {
-		return this.getTranslationKey() + "." + stack.getOrCreateChildTag("uselessmod").getString("CoffeeType");
+		return stack.hasTag() && stack.getTag().contains("CoffeeType") 
+				? this.getTranslationKey() + "." + stack.getTag().getString("CoffeeType")
+				: this.getTranslationKey();
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		return super.hasEffect(stack) || stack.getOrCreateChildTag("uselessmod").getString("CoffeeType") == CoffeeType.SUGAR.getName();
+		return super.hasEffect(stack) || 
+				(stack.hasTag() && stack.getTag().contains("CoffeeType") && stack.getTag().getString("CoffeeType") == CoffeeType.SUGAR.getName());
 	}
 	
 	@Override
@@ -108,7 +111,7 @@ public class CoffeeCupItem extends Item {
 				ItemStack stack = new ItemStack(this);
 				stack.setTag(new CompoundNBT());
 				PotionUtils.addPotionToItemStack(stack, type.getPotion());
-				stack.getOrCreateChildTag("uselessmod").putString("CoffeeType", type.getName());
+				stack.getTag().putString("CoffeeType", type.getName());
 				items.add(stack);
 			}
 		}
