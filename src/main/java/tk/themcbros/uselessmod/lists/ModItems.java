@@ -13,14 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.items.CoffeeCupItem;
-import tk.themcbros.uselessmod.items.GrenadeItem;
-import tk.themcbros.uselessmod.items.HammerItem;
-import tk.themcbros.uselessmod.items.ItemUselessSoup;
-import tk.themcbros.uselessmod.items.ModAxeItem;
-import tk.themcbros.uselessmod.items.ModPickaxeItem;
-import tk.themcbros.uselessmod.items.PaintBrushItem;
-import tk.themcbros.uselessmod.items.UselessItem;
+import tk.themcbros.uselessmod.items.*;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModItems {
@@ -145,7 +138,7 @@ public class ModItems {
 			registry.register(new ItemUselessSoup(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).food(FoodList.USELESS_SOUP)).setRegistryName(ItemNames.USELESS_SOUP));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).food(FoodList.USELESS_BREAD)).setRegistryName(ItemNames.USELESS_BREAD));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.USELESS_FLOUR));
-			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.COFFEE_SEEDS));
+			registry.register(new BlockNamedItem(ModBlocks.COFFEE_SEEDS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.COFFEE_SEEDS));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.COFFEE_BEANS));
 			registry.register(new Item(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(ItemNames.CUP));
 			registry.register(new CoffeeCupItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).maxStackSize(1)).setRegistryName(ItemNames.COFFEE_CUP));

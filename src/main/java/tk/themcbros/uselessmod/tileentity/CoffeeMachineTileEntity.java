@@ -47,10 +47,10 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	private CustomEnergyStorage energyStorage;
 	
 	private int waterAmount;
-	private int milkAmount;
+	private int coffeeBeansAmount;
 	
 	private int maxWaterAmount = Fluid.BUCKET_VOLUME * 4;
-	private int maxMilkAmount = Fluid.BUCKET_VOLUME * 2;
+	private int maxCoffeeBeansAmount = 16;
 	
 	private int cookTime;
 	private int cookTimeTotal;
@@ -77,10 +77,10 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				CoffeeMachineTileEntity.this.maxWaterAmount = value;
 				break;
 			case 4:
-				CoffeeMachineTileEntity.this.milkAmount = value;
+				CoffeeMachineTileEntity.this.coffeeBeansAmount = value;
 				break;
 			case 5:
-				CoffeeMachineTileEntity.this.maxMilkAmount = value;
+				CoffeeMachineTileEntity.this.maxCoffeeBeansAmount = value;
 				break;
 			case 6:
 				CoffeeMachineTileEntity.this.cookTime = value;
@@ -106,9 +106,9 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 			case 3:
 				return CoffeeMachineTileEntity.this.maxWaterAmount;
 			case 4:
-				return CoffeeMachineTileEntity.this.milkAmount;
+				return CoffeeMachineTileEntity.this.coffeeBeansAmount;
 			case 5:
-				return CoffeeMachineTileEntity.this.maxMilkAmount;
+				return CoffeeMachineTileEntity.this.maxCoffeeBeansAmount;
 			case 6:
 				return CoffeeMachineTileEntity.this.cookTime;
 			case 7:
@@ -148,9 +148,9 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				waterAmount += Fluid.BUCKET_VOLUME;
 				this.markDirty();
 			}
-			if(this.coffeeMachineItemStacks.get(1).getItem() == Items.MILK_BUCKET && milkAmount <= maxMilkAmount-Fluid.BUCKET_VOLUME) {
-				this.coffeeMachineItemStacks.set(1, new ItemStack(Items.BUCKET));
-				milkAmount += Fluid.BUCKET_VOLUME;
+			if(this.coffeeMachineItemStacks.get(1).getItem() == ModItems.COFFEE_BEANS && coffeeBeansAmount <= maxCoffeeBeansAmount-1) {
+				this.coffeeMachineItemStacks.get(1).shrink(1);
+				coffeeBeansAmount += 1;
 				this.markDirty();
 			}
 			
@@ -245,7 +245,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		compound.put("Energy", this.energyStorage.serializeNBT());
 		CompoundNBT machineCompound = new CompoundNBT();
 		machineCompound.putInt("WaterAmount", this.waterAmount);
-		machineCompound.putInt("MilkAmount",this. milkAmount);
+		machineCompound.putInt("MilkAmount",this. coffeeBeansAmount);
 		machineCompound.putInt("CookTime", this.cookTime);
 		machineCompound.putInt("CookTimeTotal",this. cookTimeTotal);
 		compound.put("Machine", machineCompound);
@@ -260,7 +260,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		this.energyStorage.deserializeNBT(compound.getCompound("Energy"));
 		CompoundNBT machineCompound = compound.getCompound("Machine");
 		this.waterAmount = machineCompound.getInt("WaterAmount");
-		this.milkAmount = machineCompound.getInt("MilkAmount");
+		this.coffeeBeansAmount = machineCompound.getInt("MilkAmount");
 		this.cookTime = machineCompound.getInt("CookTime");
 		this.cookTimeTotal = machineCompound.getInt("CookTimeTotal");
 	}
@@ -270,7 +270,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	}
 	
 	public int getMilkAmount() {
-		return this.milkAmount;
+		return this.coffeeBeansAmount;
 	}
 	
 	public int getMaxWaterAmount() {
@@ -278,7 +278,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	}
 	
 	public int getMaxMilkAmount() {
-		return this.maxMilkAmount;
+		return this.maxCoffeeBeansAmount;
 	}
 
 	@Override

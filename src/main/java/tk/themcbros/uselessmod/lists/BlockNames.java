@@ -24,6 +24,7 @@ public class BlockNames {
 	public static final ResourceLocation BLUE_ROSE = new ResourceLocation(UselessMod.MOD_ID, "blue_rose");
 	public static final ResourceLocation POTTED_BLUE_ROSE = new ResourceLocation(UselessMod.MOD_ID, "potted_blue_rose");
 	public static final ResourceLocation USELESS_CROPS = new ResourceLocation(UselessMod.MOD_ID, "useless_wheat");
+	public static final ResourceLocation COFFEE_SEEDS = new ResourceLocation(UselessMod.MOD_ID, "coffee_seeds");
 	public static final ResourceLocation CANVAS = new ResourceLocation(UselessMod.MOD_ID, "canvas");
 	public static final ResourceLocation PAINT_BUCKET = new ResourceLocation(UselessMod.MOD_ID, "paint_bucket");
 

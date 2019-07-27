@@ -10,8 +10,10 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
+import tk.themcbros.uselessmod.lists.ModItems;
 
 public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer> {
 
@@ -61,11 +63,11 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
 					(font == null ? this.font : font));
 		}
 		if (this.isInBounds(mouseX, mouseY, milkTankRectangle)) {
-			int milkAmount = this.container.getMilkAmount();
-			int maxMilkAmount = this.container.getMaxMilkAmount();
+			int coffeeBeansAmount = this.container.getMilkAmount();
+			int maxCoffeeBeansAmount = this.container.getMaxMilkAmount();
 			List<String> tooltip = new ArrayList<String>();
-			tooltip.add("Milk Tank");
-			tooltip.add(milkAmount + " / " + maxMilkAmount + " mB");
+			tooltip.add(new TranslationTextComponent(ModItems.COFFEE_BEANS.getTranslationKey()).getFormattedText());
+			tooltip.add(coffeeBeansAmount + " / " + maxCoffeeBeansAmount + "");
 			this.renderTooltip(tooltip, mouseX, mouseY,
 					(font == null ? this.font : font));
 		}

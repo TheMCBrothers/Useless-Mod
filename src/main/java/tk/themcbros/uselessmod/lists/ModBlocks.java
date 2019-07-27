@@ -64,6 +64,8 @@ public class ModBlocks {
 	public static final Block POTTED_BLUE_ROSE = null;
 	@ObjectHolder("useless_wheat")
 	public static final Block USELESS_CROPS = null;
+	@ObjectHolder("coffee_seeds")
+	public static final Block COFFEE_SEEDS = null;
 	@ObjectHolder("canvas")
 	public static final Block CANVAS = null;
 	@ObjectHolder("paint_bucket")
@@ -156,6 +158,7 @@ public class ModBlocks {
 			registry.register(new FlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(BlockNames.BLUE_ROSE));
 			registry.register(new FlowerPotBlock(BLUE_ROSE, Block.Properties.create(Material.MISCELLANEOUS)).setRegistryName(BlockNames.POTTED_BLUE_ROSE));
 			registry.register(new UselessCropsBlock(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP)).setRegistryName(BlockNames.USELESS_CROPS));
+			registry.register(new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP)).setRegistryName(BlockNames.COFFEE_SEEDS));
 			registry.register(new CanvasBlock(Block.Properties.create(Material.WOOL).hardnessAndResistance(.5f)).setRegistryName(BlockNames.CANVAS));
 			registry.register(new PaintBucketBlock(Block.Properties.create(Material.WOOL).hardnessAndResistance(.4f)).setRegistryName(BlockNames.PAINT_BUCKET));
 			registry.register(new CrusherBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.CRUSHER));
