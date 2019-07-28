@@ -30,6 +30,8 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 	private NonNullList<ItemStack> generatorStacks = NonNullList.withSize(1, ItemStack.EMPTY);
 	private int cookTime;
 	
+	private static final int[] SLOTS_IN = new int[] { 0 };
+	
 	private IIntArray fields = new IIntArray() {
 		@Override
 		public int size() {
@@ -158,7 +160,7 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 
 	@Override
 	public int[] getSlotsForFace(Direction side) {
-		return null;
+		return side == Direction.DOWN ? new int[] {} : SLOTS_IN;
 	}
 	
 	@Override

@@ -23,7 +23,7 @@ import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
 public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
 
-private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/coffee_machine.png");
+	private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/coffee_machine.png");
 	
 	private static final int cup_input = 2;
 	private static final int ingredient_input = 3;
