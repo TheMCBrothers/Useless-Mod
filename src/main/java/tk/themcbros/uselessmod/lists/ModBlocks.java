@@ -56,10 +56,10 @@ public class ModBlocks {
 	public static final Block LAMP = null;
 	@ObjectHolder("red_rose")
 	public static final Block RED_ROSE = null;
-	@ObjectHolder("potted_red_rose")
-	public static final Block POTTED_RED_ROSE = null;
 	@ObjectHolder("blue_rose")
 	public static final Block BLUE_ROSE = null;
+	@ObjectHolder("potted_red_rose")
+	public static final Block POTTED_RED_ROSE = null;
 	@ObjectHolder("potted_blue_rose")
 	public static final Block POTTED_BLUE_ROSE = null;
 	@ObjectHolder("useless_wheat")
@@ -154,8 +154,8 @@ public class ModBlocks {
 			registry.register(new CheeseMakerBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1f)).setRegistryName(BlockNames.CHEESE_MAKER));
 			registry.register(new LampBlock(Block.Properties.create(Material.REDSTONE_LIGHT).sound(SoundType.GLASS).hardnessAndResistance(1f)).setRegistryName(BlockNames.LAMP));
 			registry.register(new FlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(BlockNames.RED_ROSE));
-			registry.register(new FlowerPotBlock(RED_ROSE, Block.Properties.create(Material.MISCELLANEOUS)).setRegistryName(BlockNames.POTTED_RED_ROSE));
 			registry.register(new FlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(BlockNames.BLUE_ROSE));
+			registry.register(new FlowerPotBlock(RED_ROSE, Block.Properties.create(Material.MISCELLANEOUS)).setRegistryName(BlockNames.POTTED_RED_ROSE));
 			registry.register(new FlowerPotBlock(BLUE_ROSE, Block.Properties.create(Material.MISCELLANEOUS)).setRegistryName(BlockNames.POTTED_BLUE_ROSE));
 			registry.register(new UselessCropsBlock(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP)).setRegistryName(BlockNames.USELESS_CROPS));
 			registry.register(new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP)).setRegistryName(BlockNames.COFFEE_SEEDS));

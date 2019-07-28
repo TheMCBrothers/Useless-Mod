@@ -162,8 +162,6 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 	@Override
 	public void tick() {
 		
-		if(this.world.isBlockPowered(pos)) energyStorage.modifyEnergyStored(100);
-		
 		boolean flag = isActive();
 		boolean flag1 = false;
 		ItemStack input = crusherItemStacks.get(0);
@@ -210,33 +208,46 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 		return this.world.getRecipeManager().getRecipe(RecipeTypes.CRUSHING, this, this.world)
 				.map(CrusherRecipe::getCrushTime).orElse(200);
 	}
-
+	
 	private boolean canCrush(@Nullable CrusherRecipe recipe) {
 		if (!this.crusherItemStacks.get(0).isEmpty() && recipe != null) {
-			ItemStack recipeOutput = recipe.getRecipeOutput();
-			ItemStack secondOutput = recipe.getSecondRecipeOutput();
-			if (recipeOutput.isEmpty()) {
-				return false;
-			} else {
-				ItemStack itemstack1 = this.crusherItemStacks.get(1);
-				ItemStack itemstack2 = this.crusherItemStacks.get(2);
-				if (itemstack1.isEmpty() && itemstack2.isEmpty()) {
-					return true;
-				} else if (!itemstack1.isItemEqual(recipeOutput) || !itemstack2.isItemEqual(secondOutput)) {
+			ItemStack recipeOutputStack = recipe.getRecipeOutput();
+			ItemStack recipeSecondOutputStack = recipe.getSecondRecipeOutput();
+			if(!recipeSecondOutputStack.isEmpty()) {
+				if (recipeOutputStack.isEmpty()) {
 					return false;
-				} else if ((itemstack1.getCount() + recipeOutput.getCount() <= this.getInventoryStackLimit()
-						&& itemstack1.getCount() < itemstack1.getMaxStackSize())
-						&& (itemstack2.getCount() + secondOutput.getCount() <= this.getInventoryStackLimit()
-								&& itemstack2.getCount() < itemstack2.getMaxStackSize())) {
-					return true;
 				} else {
-					return itemstack1.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxStackSize() && 
-							itemstack2.getCount() + secondOutput.getCount() <= secondOutput.getMaxStackSize(); // Forge fix:
-																										// make furnace
-																										// respect stack
-																										// sizes in
-																										// furnace
-																										// recipes
+					ItemStack crusherOutputStack = this.crusherItemStacks.get(1);
+					ItemStack crusherSecondOutputStack = this.crusherItemStacks.get(2);
+					if (crusherOutputStack.isEmpty() && crusherSecondOutputStack.isEmpty()) {
+						return true;
+					} else if (!crusherOutputStack.isItemEqual(recipeOutputStack) || !crusherSecondOutputStack.isItemEqual(recipeSecondOutputStack)) {
+						return false;
+					} else if (crusherOutputStack.getCount() + recipeOutputStack.getCount() <= this.getInventoryStackLimit()
+							&& crusherOutputStack.getCount() < crusherOutputStack.getMaxStackSize()
+							&& crusherSecondOutputStack.getCount() + recipeSecondOutputStack.getCount() <= this.getInventoryStackLimit()
+							&& crusherSecondOutputStack.getCount() < crusherSecondOutputStack.getMaxStackSize()) {
+						return true;
+					} else {
+						return crusherOutputStack.getCount() + recipeOutputStack.getCount() <= recipeOutputStack.getMaxStackSize()
+								&& crusherSecondOutputStack.getCount() + recipeSecondOutputStack.getCount() <= recipeSecondOutputStack.getMaxStackSize();
+					}
+				}
+			} else {
+				if (recipeOutputStack.isEmpty()) {
+					return false;
+				} else {
+					ItemStack crusherOutputStack = this.crusherItemStacks.get(1);
+					if (crusherOutputStack.isEmpty()) {
+						return true;
+					} else if (!crusherOutputStack.isItemEqual(recipeOutputStack)) {
+						return false;
+					} else if (crusherOutputStack.getCount() + recipeOutputStack.getCount() <= this.getInventoryStackLimit()
+							&& crusherOutputStack.getCount() < crusherOutputStack.getMaxStackSize()) {
+						return true;
+					} else {
+						return crusherOutputStack.getCount() + recipeOutputStack.getCount() <= recipeOutputStack.getMaxStackSize();
+					}
 				}
 			}
 		} else {

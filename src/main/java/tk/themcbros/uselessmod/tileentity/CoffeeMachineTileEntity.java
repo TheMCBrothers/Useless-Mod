@@ -141,8 +141,6 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		boolean cup = (this.coffeeMachineItemStacks.get(2).getItem() == ModItems.CUP || this.coffeeMachineItemStacks.get(4).getItem() == ModItems.COFFEE_CUP);
 		if((flag) && (!flag1)) flag2 = true;
 		
-		if(this.isActive()) this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-		
 		if(!world.isRemote) {
 			
 			if((cup && !flag1) || (!cup && flag1)) flag2 = true;
@@ -154,7 +152,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 			}
 			if(this.coffeeMachineItemStacks.get(1).getItem() == ModItems.COFFEE_BEANS && coffeeBeansAmount <= maxCoffeeBeansAmount-1) {
 				this.coffeeMachineItemStacks.get(1).shrink(1);
-				coffeeBeansAmount += 1;
+				this.coffeeBeansAmount++;
 				this.markDirty();
 			}
 			
@@ -162,28 +160,28 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				CoffeeRecipe coffeeRecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCook(coffeeRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					cookTime++;
+					this.cookTime++;
 					this.waterAmount -= WATER_PER_TICK;
+					flag2 = true;
 				}
 
 				if (this.isActive() && this.canCook(coffeeRecipe)) {
-					this.cookTime += 1;
+					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
+					this.cookTime++;
 					this.waterAmount -= WATER_PER_TICK;
 					if (this.cookTime == this.cookTimeTotal) {
 						this.cookTime = 0;
 						this.cookTimeTotal = this.getCookTime();
 						this.cookItem(coffeeRecipe);
-						flag1 = true;
+						flag2 = true;
 					}
 				} else {
 					this.cookTime = 0;
 				}
 			}
 
-			if (flag != this.isActive()) {
-				flag1 = true;
-				this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(CoffeeMachineBlock.ACTIVE, Boolean.valueOf(this.isActive())), 3);
-			}
+			if (flag != this.isActive())
+				flag2 = true;
 			
 			if(flag2) {
 				BlockState state = world.getBlockState(pos);

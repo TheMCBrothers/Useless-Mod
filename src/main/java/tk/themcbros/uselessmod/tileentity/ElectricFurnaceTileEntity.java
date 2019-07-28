@@ -8,7 +8,6 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -100,7 +99,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 			if(cookTime > 0) {
 				energyStorage.modifyEnergyStored(-RF_PER_TICK);
 				cookTime++;
-				IRecipe<?> irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
+				FurnaceRecipe irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
 				if(cookTime == this.cookTimeTotal) {
 					this.cookTime = 0;
 					this.cookTimeTotal = this.getCookTime();
@@ -110,7 +109,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 				}
 			} else {
 				if(!input.isEmpty()) {
-					IRecipe<?> irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
+					FurnaceRecipe irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
 					if(this.canSmelt(irecipe)) {
 						cookTimeTotal = this.getCookTime();
 						cookTime++;
@@ -138,7 +137,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 				.map(FurnaceRecipe::getCookTime).orElse(200);
 	}
 
-	protected boolean canSmelt(@Nullable IRecipe<?> irecipe) {
+	protected boolean canSmelt(@Nullable FurnaceRecipe irecipe) {
 		if (!this.furnaceItemStacks.get(0).isEmpty() && irecipe != null) {
 			ItemStack itemstack = irecipe.getRecipeOutput();
 			if (itemstack.isEmpty()) {
@@ -173,7 +172,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 		}
 	}
 
-	private void smeltItem(@Nullable IRecipe<?> irecipe) {
+	private void smeltItem(@Nullable FurnaceRecipe irecipe) {
 		if (irecipe != null && this.canSmelt(irecipe)) {
 			ItemStack itemstack = this.furnaceItemStacks.get(0);
 			ItemStack itemstack1 = irecipe.getRecipeOutput();

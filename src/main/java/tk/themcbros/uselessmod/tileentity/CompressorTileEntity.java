@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
@@ -100,20 +99,18 @@ public class CompressorTileEntity extends MachineTileEntity {
 	public void tick() {
 		boolean flag = this.isActive();
 		boolean flag1 = false;
-		if (this.isActive()) {
-			this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-		}
 
 		if (!this.world.isRemote) {
 			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.compressorItemStacks.get(0).isEmpty()) {
-				IRecipe<?> irecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world).orElse(null);
+				CompressorRecipe irecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCompress(irecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					compressTime++;
 				}
 
 				if (this.isActive() && this.canCompress(irecipe)) {
-					++this.compressTime;
+					this.compressTime++;
+					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					if (this.compressTime == this.compressTimeTotal) {
 						this.compressTime = 0;
 						this.compressTimeTotal = this.getCompressTime();
@@ -142,7 +139,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 				.map(CompressorRecipe::getCompressTime).orElse(200);
 	}
 	
-	private boolean canCompress(@Nullable IRecipe<?> recipe) {
+	private boolean canCompress(@Nullable CompressorRecipe recipe) {
 		if (!this.compressorItemStacks.get(0).isEmpty() && recipe != null) {
 			ItemStack itemstack = recipe.getRecipeOutput();
 			if (itemstack.isEmpty()) {
@@ -171,7 +168,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 		}
 	}
 
-	private void compressItem(@Nullable IRecipe<?> recipe) {
+	private void compressItem(@Nullable CompressorRecipe recipe) {
 		if (recipe != null && this.canCompress(recipe)) {
 			ItemStack itemstack = this.compressorItemStacks.get(0);
 			ItemStack itemstack1 = recipe.getRecipeOutput();
