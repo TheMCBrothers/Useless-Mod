@@ -3,11 +3,13 @@ package tk.themcbros.uselessmod.lists;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.closet.BeddingRegistryEvent;
 import tk.themcbros.uselessmod.closet.IClosetMaterial;
 import tk.themcbros.uselessmod.closet.IClosetRegistry;
+import tk.themcbros.uselessmod.closet.WoodType;
 
 public class ModBeddings {
 
@@ -45,6 +47,13 @@ public class ModBeddings {
             beddingReg.registerMaterial(Blocks.GREEN_WOOL, new ResourceLocation("block/green_wool"));
             beddingReg.registerMaterial(Blocks.RED_WOOL, new ResourceLocation("block/red_wool"));
             beddingReg.registerMaterial(Blocks.BLACK_WOOL, new ResourceLocation("block/black_wool"));
+            
+            if(ModList.get().isLoaded("biomesoplenty")) {
+            	for(WoodType type : WoodType.values(WoodType.SubType.BOP)) {
+            		ResourceLocation location = new ResourceLocation("biomesoplenty", type.getName() + "_planks");
+	            	casingReg.registerMaterial(location, new ResourceLocation("biomesoplenty", "blocks/" + type.getName() + "_planks"));
+            	}
+            }
         }
     }
 	

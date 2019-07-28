@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 
@@ -29,16 +30,20 @@ public class ClosetRegistry implements IClosetRegistry {
     public IClosetMaterial registerMaterial(@Nonnull Block block, ResourceLocation textureLocation) {
         return this.registerMaterial(new ClosetMaterial(block, textureLocation, Ingredient.fromItems(block)));
     }
+	
+	public IClosetMaterial registerMaterial(ResourceLocation key, ResourceLocation textureLocation) {
+		return this.registerMaterial(new ClosetMaterial(key, textureLocation, Ingredient.fromItems(ForgeRegistries.BLOCKS.getValue(key))));
+	}
     
     @Override
     public IClosetMaterial registerMaterial(IClosetMaterial material) {
         if(this.REGISTRY.contains(material)) {
-            UselessMod.LOGGER.warn("Tried to register a dog bed material with the id {} more that once", material); 
+            UselessMod.LOGGER.warn("Tried to register a closet material with the id {} more that once", material); 
             return null;
         }
         else {
             this.REGISTRY.add(material.setRegName(this.key));
-            UselessMod.LOGGER.debug("Register dog bed {} under the key {}", this.key, material);
+            UselessMod.LOGGER.debug("Register closet {} under the key {}", this.key, material);
             return material;
         }
     }

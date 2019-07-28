@@ -51,7 +51,7 @@ public class ModEntityTypes {
 	}
 	
 	public static void registerEntityWorldSpawns() {
-		registerEntityWorldSpawn(USELESS_ENTITY, Biomes.PLAINS);
+		registerEntityWorldSpawn(USELESS_ENTITY, Biomes.NETHER);
 	}
 	
 }
