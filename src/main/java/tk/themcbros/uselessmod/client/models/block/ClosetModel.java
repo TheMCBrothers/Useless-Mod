@@ -32,8 +32,8 @@ import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.common.model.TRSRTransformation;
+import tk.themcbros.uselessmod.closet.ClosetRegistry;
 import tk.themcbros.uselessmod.closet.IClosetMaterial;
-import tk.themcbros.uselessmod.lists.ModBeddings;
 import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
 
 public class ClosetModel implements IBakedModel {
@@ -63,7 +63,7 @@ public class ClosetModel implements IBakedModel {
 	
 	@Override
 	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
-		return this.getCustomModel(ModBeddings.OAK, ModBeddings.WHITE, Direction.NORTH, false).getQuads(state, side, rand);
+		return this.getCustomModel(ClosetRegistry.CASINGS.getKeys().get(0), ClosetRegistry.CASINGS.getKeys().get(0), Direction.NORTH, false).getQuads(state, side, rand);
 	}
 	
 	@Override
@@ -78,8 +78,8 @@ public class ClosetModel implements IBakedModel {
 	
 	@Override
 	public IModelData getModelData(IEnviromentBlockReader world, BlockPos pos, BlockState state, IModelData tileData) {
-		IClosetMaterial casing = ModBeddings.OAK;
-		IClosetMaterial bedding = ModBeddings.WHITE;
+		IClosetMaterial casing = ClosetRegistry.CASINGS.getKeys().get(0);
+		IClosetMaterial bedding = ClosetRegistry.BEDDINGS.getKeys().get(0);
 		Direction facing = Direction.NORTH;
 		Boolean open = false;
 

@@ -67,12 +67,12 @@ public class CrusherContainer extends Container {
 
 				slot.onSlotChange(itemstack1, itemstack);
 			} else if (index != 1 && index != 0) {
-				if (this.func_217057_a(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+				if (this.isItemFuel(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (this.func_217058_b(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+				} else if (this.canCrush(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if (index >= 3 && index < 30) {
@@ -102,13 +102,13 @@ public class CrusherContainer extends Container {
 		return itemstack;
 	}
 
-	protected boolean func_217057_a(ItemStack p_217057_1_) {
+	protected boolean canCrush(ItemStack stack) {
 		return this.world.getRecipeManager()
-				.getRecipe(RecipeTypes.CRUSHING, new Inventory(p_217057_1_), this.world)
+				.getRecipe(RecipeTypes.CRUSHING, new Inventory(stack), this.world)
 				.isPresent();
 	}
 
-	protected boolean func_217058_b(ItemStack stack) {
+	protected boolean isItemFuel(ItemStack stack) {
 		return AbstractFurnaceTileEntity.isFuel(stack);
 	}
 
