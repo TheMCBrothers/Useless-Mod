@@ -127,7 +127,9 @@ public class ElectricCrusherContainer extends Container {
 
 	@OnlyIn(Dist.CLIENT)
 	public int getEnergyStoredScaled() {
-		return this.fields.get(0) * 60 / this.fields.get(1);
+		int i = this.fields.get(0);
+		int j = this.fields.get(1);
+		return i != 0 && j != 0 ? i * 60 / j : 0;
 	}
 
 }

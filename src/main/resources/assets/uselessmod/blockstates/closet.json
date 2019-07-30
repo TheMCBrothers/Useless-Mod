@@ -1,6 +1,12 @@
 {
-    "variants": {
-        "open=true":  { "model": "uselessmod:block/closet" },
-		"open=false": { "model": "uselessmod:block/closet_closed" }
-    }
+	"forge-marker": 1,
+	"defaults": {
+		"model": "uselessmod:block/closet_closed"
+	},
+	"variants": {
+		"open": {
+			"true":  { "model": "uselessmod:block/closet_open" },
+			"false": { "model": "uselessmod:block/closet_closed" }
+		}
+	}
 }

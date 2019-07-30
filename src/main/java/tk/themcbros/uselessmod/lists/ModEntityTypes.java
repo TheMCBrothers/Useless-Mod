@@ -42,7 +42,7 @@ public class ModEntityTypes {
 		return item;
 	}
 	
-	private static void registerEntityWorldSpawn(EntityType<?> type, Biome... biomes) {
+	private static void registerEntityWorldSpawn(EntityType<?> type, int weight, int minCount, int maxCount, Biome... biomes) {
 		for(Biome biome : biomes) {
 			if(biome != null) {
 				biome.getSpawns(type.getClassification()).add(new SpawnListEntry(type, 10, 1, 10));
@@ -51,7 +51,7 @@ public class ModEntityTypes {
 	}
 	
 	public static void registerEntityWorldSpawns() {
-		registerEntityWorldSpawn(USELESS_ENTITY, Biomes.NETHER);
+		registerEntityWorldSpawn(USELESS_ENTITY, 1, 4, 4, Biomes.NETHER);
 	}
 	
 }

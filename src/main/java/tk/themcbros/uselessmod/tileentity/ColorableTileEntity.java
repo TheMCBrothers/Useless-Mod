@@ -54,6 +54,7 @@ public abstract  class ColorableTileEntity extends TileEntity {
 		if(this.world.isRemote) {
 			ModelDataManager.requestModelDataRefresh(this);
 //			TODO this.world.markForRerender(this.getPos());
+			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 

@@ -29,6 +29,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	private IClosetMaterial casingId = IClosetMaterial.NULL;
 	private IClosetMaterial beddingId = IClosetMaterial.NULL;
 	private Direction facing = Direction.NORTH;
+	private Boolean open = Boolean.FALSE;
 	
 	public static ModelProperty<IClosetMaterial> CASING = new ModelProperty<IClosetMaterial>();
 	public static ModelProperty<IClosetMaterial> BEDDING = new ModelProperty<IClosetMaterial>();
@@ -89,7 +90,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 		this.markDirty();
 		if(this.world.isRemote) {
 			ModelDataManager.requestModelDataRefresh(this);
-//			TODO this.world.markForRerender(this.getPos());
+			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 	
@@ -98,7 +99,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 		this.markDirty();
 		if(this.world.isRemote) {
 			ModelDataManager.requestModelDataRefresh(this);
-//			TODO this.world.markForRerender(this.getPos());
+			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 	
@@ -107,7 +108,16 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 		this.markDirty();
 		if(this.world.isRemote) {
 			ModelDataManager.requestModelDataRefresh(this);
-//			TODO this.world.markForRerender(this.getPos());
+			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+		}
+	}
+	
+	public void setOpen(Boolean open) {
+		this.open = open;
+		this.markDirty();
+		if(this.world.isRemote) {
+			ModelDataManager.requestModelDataRefresh(this);
+			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 	
@@ -121,6 +131,10 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	
 	public Direction getFacing() {
 		return facing;
+	}
+	
+	public Boolean isOpen() {
+		return open;
 	}
 	
 	@Override
@@ -205,6 +219,16 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	@Override
 	public ITextComponent getDisplayName() {
 		 return new TranslationTextComponent("container.uselessmod.closet");
+	}
+	
+	@Override
+	public void openInventory(PlayerEntity player) {
+		this.setOpen(Boolean.TRUE);
+	}
+	
+	@Override
+	public void closeInventory(PlayerEntity player) {
+		this.setOpen(Boolean.FALSE);
 	}
 
 }

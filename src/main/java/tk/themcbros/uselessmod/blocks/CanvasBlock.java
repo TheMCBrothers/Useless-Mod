@@ -22,7 +22,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootContext.Builder;
 import tk.themcbros.uselessmod.helper.UselessUtils;
 import tk.themcbros.uselessmod.items.PaintBrushItem;
 import tk.themcbros.uselessmod.lists.ModBlocks;
@@ -53,6 +52,7 @@ public class CanvasBlock extends Block {
 			if(tileEntity != null && tileEntity instanceof CanvasTileEntity)
 				((CanvasTileEntity) tileEntity).setColor(stack.getTag().getInt("color"));
 		}
+		worldIn.notifyBlockUpdate(pos, state, state, 3);
 	}
 	
 	@Override
@@ -60,7 +60,6 @@ public class CanvasBlock extends Block {
 		if(player.getHeldItem(handIn).getItem() == ModItems.PAINT_BRUSH) {
 			ColorableTileEntity canvas = (ColorableTileEntity) worldIn.getTileEntity(pos);
 			canvas.setColor(player.getHeldItem(handIn).getTag().getInt("color"));
-//			TODO worldIn.markForRerender(pos);
 			return true;
 		}
 		return false;

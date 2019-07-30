@@ -8,9 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -45,7 +43,8 @@ public class ClosetModel implements IBakedModel {
 	private IBakedModel bakedModel;
 	
 	private final VertexFormat format;
-	private final Map<Triple<String, String, Direction>, IBakedModel> cache = Maps.newHashMap();
+	private final Map<String, IBakedModel> cache = Maps.newHashMap();
+	
 	
 	public ClosetModel(ModelLoader modelLoader, BlockModel model, IBakedModel bakedModel, VertexFormat format) {
 		this.modelLoader = modelLoader;
@@ -81,16 +80,15 @@ public class ClosetModel implements IBakedModel {
 		IClosetMaterial casing = ClosetRegistry.CASINGS.getKeys().get(0);
 		IClosetMaterial bedding = ClosetRegistry.BEDDINGS.getKeys().get(0);
 		Direction facing = Direction.NORTH;
-		Boolean open = false;
+		Boolean open = Boolean.FALSE;
 
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof ClosetTileEntity) {
 			casing = ((ClosetTileEntity) tile).getCasingId();
 			bedding = ((ClosetTileEntity) tile).getBeddingId();
+			open = ((ClosetTileEntity) tile).isOpen();
 		}
 		
-		if(state.has(BlockStateProperties.OPEN))
-			open = state.get(BlockStateProperties.OPEN);
 		if(state.has(BlockStateProperties.HORIZONTAL_FACING))
 			facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
 
@@ -106,7 +104,7 @@ public class ClosetModel implements IBakedModel {
 			@Nonnull Direction facing, Boolean open) {
 		IBakedModel customModel = this.bakedModel;
 
-		Triple<String, String, Direction> key = ImmutableTriple.of(casingResource, beddingResource, facing);
+		String key = casingResource + ";" + beddingResource + ";" + facing.toString() + ";" + open.toString();
 
 		IBakedModel possibleModel = this.cache.get(key);
 
