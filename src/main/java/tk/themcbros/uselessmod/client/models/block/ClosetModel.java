@@ -38,18 +38,21 @@ public class ClosetModel implements IBakedModel {
 	
 	public static ClosetItemOverride ITEM_OVERRIDE = new ClosetItemOverride();
 
+	private boolean open;
 	private ModelLoader modelLoader;
-	private BlockModel model;
-	private IBakedModel bakedModel;
+	private BlockModel model, openModel;
+	private IBakedModel bakedModel, openBakedModel;
 	
 	private final VertexFormat format;
 	private final Map<String, IBakedModel> cache = Maps.newHashMap();
 	
 	
-	public ClosetModel(ModelLoader modelLoader, BlockModel model, IBakedModel bakedModel, VertexFormat format) {
+	public ClosetModel(ModelLoader modelLoader, BlockModel model, IBakedModel bakedModel, BlockModel openModel, IBakedModel openBakedModel, VertexFormat format) {
 		this.modelLoader = modelLoader;
 		this.model = model;
 		this.bakedModel = bakedModel;
+		this.openModel = openModel;
+		this.openBakedModel = openBakedModel;
 		this.format = format;
 	}
 
@@ -62,7 +65,7 @@ public class ClosetModel implements IBakedModel {
 	
 	@Override
 	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
-		return this.getCustomModel(ClosetRegistry.CASINGS.getKeys().get(0), ClosetRegistry.CASINGS.getKeys().get(0), Direction.NORTH, false).getQuads(state, side, rand);
+		return this.getCustomModel(ClosetRegistry.CASINGS.getKeys().get(0), ClosetRegistry.CASINGS.getKeys().get(0), Direction.NORTH, Boolean.FALSE).getQuads(state, side, rand);
 	}
 	
 	@Override
@@ -71,7 +74,7 @@ public class ClosetModel implements IBakedModel {
 		IClosetMaterial casing = extraData.getData(ClosetTileEntity.CASING);
 		IClosetMaterial bedding = extraData.getData(ClosetTileEntity.BEDDING);
 		Direction facing = extraData.getData(ClosetTileEntity.FACING);
-		Boolean open = extraData.getData(ClosetTileEntity.OPEN);
+		Boolean open= extraData.getData(ClosetTileEntity.OPEN);
 		return this.getCustomModel(casing, bedding, facing, open).getQuads(state, side, rand);
 	}
 	
@@ -86,11 +89,12 @@ public class ClosetModel implements IBakedModel {
 		if (tile instanceof ClosetTileEntity) {
 			casing = ((ClosetTileEntity) tile).getCasingId();
 			bedding = ((ClosetTileEntity) tile).getBeddingId();
-			open = ((ClosetTileEntity) tile).isOpen();
 		}
 		
 		if(state.has(BlockStateProperties.HORIZONTAL_FACING))
 			facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+		if(state.has(BlockStateProperties.OPEN))
+			open = state.get(BlockStateProperties.OPEN);
 
 		tileData.setData(ClosetTileEntity.CASING, casing);
 		tileData.setData(ClosetTileEntity.BEDDING, bedding);
@@ -102,7 +106,8 @@ public class ClosetModel implements IBakedModel {
 	
 	public IBakedModel getCustomModel(@Nonnull String casingResource, @Nonnull String beddingResource,
 			@Nonnull Direction facing, Boolean open) {
-		IBakedModel customModel = this.bakedModel;
+		this.open = open;
+		IBakedModel customModel = open ? this.openBakedModel : this.bakedModel;
 
 		String key = casingResource + ";" + beddingResource + ";" + facing.toString() + ";" + open.toString();
 
@@ -117,11 +122,15 @@ public class ClosetModel implements IBakedModel {
 						part.partRotation, part.shade));
 			}
 
-			BlockModel newModel = new BlockModel(this.model.getParentLocation(), elements,
+			BlockModel newModel = open 
+					? new BlockModel(this.openModel.getParentLocation(), elements,
+					Maps.newHashMap(this.openModel.textures), this.openModel.isAmbientOcclusion(), this.openModel.isGui3d(),
+					this.openModel.getAllTransforms(), Lists.newArrayList(this.openModel.getOverrides()))
+					: new BlockModel(this.model.getParentLocation(), elements,
 					Maps.newHashMap(this.model.textures), this.model.isAmbientOcclusion(), this.model.isGui3d(),
 					this.model.getAllTransforms(), Lists.newArrayList(this.model.getOverrides()));
-			newModel.name = this.model.name;
-			newModel.parent = this.model.parent;
+			newModel.name = open ? this.openModel.name : this.model.name;
+			newModel.parent = open ? this.openModel.parent : this.model.parent;
 
 			newModel.textures.put("bedding", beddingResource);
 			newModel.textures.put("casing", casingResource);
@@ -137,22 +146,22 @@ public class ClosetModel implements IBakedModel {
 
 	@Override
 	public boolean isAmbientOcclusion() {
-		return this.bakedModel.isAmbientOcclusion();
+		return this.open ? this.openBakedModel.isAmbientOcclusion() : this.bakedModel.isAmbientOcclusion();
 	}
 
 	@Override
 	public boolean isGui3d() {
-		return this.bakedModel.isGui3d();
+		return this.open ? this.openBakedModel.isGui3d() : this.bakedModel.isGui3d();
 	}
 
 	@Override
 	public boolean isBuiltInRenderer() {
-		return this.bakedModel.isBuiltInRenderer();
+		return this.open ? this.openBakedModel.isBuiltInRenderer() : this.bakedModel.isBuiltInRenderer();
 	}
 
 	@Override
 	public TextureAtlasSprite getParticleTexture() {
-		return this.bakedModel.getParticleTexture();
+		return this.open ? this.openBakedModel.getParticleTexture() : this.bakedModel.getParticleTexture();
 	}
 
 	@Override
@@ -162,7 +171,8 @@ public class ClosetModel implements IBakedModel {
 	
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-		return Pair.of(this, this.bakedModel.handlePerspective(cameraTransformType).getRight());
+		return this.open ? Pair.of(this, this.openBakedModel.handlePerspective(cameraTransformType).getRight())
+				: Pair.of(this, this.bakedModel.handlePerspective(cameraTransformType).getRight());
 	}
 
 }

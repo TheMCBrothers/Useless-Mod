@@ -56,7 +56,8 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState()
 				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-				.with(BlockStateProperties.WATERLOGGED, Boolean.FALSE));
+				.with(BlockStateProperties.WATERLOGGED, Boolean.FALSE)
+				.with(BlockStateProperties.OPEN, Boolean.FALSE));
 	}
 	
 	@Override
@@ -71,12 +72,14 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if(hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING) && !worldIn.isRemote) {
-			TileEntity tileEntity = worldIn.getTileEntity(pos);
-			if(tileEntity instanceof ClosetTileEntity && player instanceof ServerPlayerEntity) {
-				((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
-				return true;
+		if(hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+			if(!worldIn.isRemote) {
+				TileEntity tileEntity = worldIn.getTileEntity(pos);
+				if(tileEntity instanceof ClosetTileEntity && player instanceof ServerPlayerEntity) {
+					((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
+				}
 			}
+			return true;
 		}
 		return false;
 	}
@@ -89,7 +92,7 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.WATERLOGGED);
+		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.WATERLOGGED, BlockStateProperties.OPEN);
 	}
 	
 	@Override
@@ -103,6 +106,8 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 				ClosetTileEntity closet = (ClosetTileEntity) tile;
 				closet.setBeddingId(ClosetRegistry.BEDDINGS.get(tag.getString("beddingId")));
 				closet.setCasingId(ClosetRegistry.CASINGS.get(tag.getString("casingId")));
+				closet.setOpen(Boolean.FALSE);
+				closet.setFacing(state.get(BlockStateProperties.HORIZONTAL_FACING));
 			}
 		}
 	}

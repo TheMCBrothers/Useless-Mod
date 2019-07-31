@@ -1,5 +1,6 @@
 package tk.themcbros.uselessmod.tileentity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -10,15 +11,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
+import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
 import tk.themcbros.uselessmod.closet.IClosetMaterial;
 import tk.themcbros.uselessmod.container.ClosetContainer;
@@ -37,11 +44,72 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	public static ModelProperty<Boolean> OPEN = new ModelProperty<Boolean>();
 	
 	private NonNullList<ItemStack> closetContents = NonNullList.withSize(15, ItemStack.EMPTY);
+	private int openCount;
 	
 	private static final int[] SLOTS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
 	
 	public ClosetTileEntity() {
 		super(ModTileEntities.CLOSET);
+	}
+	
+	@Override
+	public void openInventory(PlayerEntity player) {
+//		UselessMod.LOGGER.debug("OPEN BARREL");
+		if (!player.isSpectator()) {
+			if (this.openCount < 0) {
+				this.openCount = 0;
+			}
+
+			++this.openCount;
+			BlockState blockstate = this.getBlockState();
+			boolean flag = blockstate.get(BlockStateProperties.OPEN);
+			if (!flag) {
+				this.playSound(blockstate, SoundEvents.BLOCK_BARREL_OPEN);
+				this.setState(blockstate, true);
+				UselessMod.LOGGER.debug("OPENED BARREL");
+			}
+
+			this.func_213964_r();
+			if(this.world.isRemote) ModelDataManager.requestModelDataRefresh(this);
+		}
+
+	}
+	
+	public void closeInventory(PlayerEntity player) {
+//		UselessMod.LOGGER.debug("CLOSE BARREL");
+		if (!player.isSpectator()) {
+			--this.openCount;
+			
+			if(this.openCount <= 0) {
+				BlockState blockstate = this.getBlockState();
+				boolean flag = blockstate.get(BlockStateProperties.OPEN);
+				if (flag) {
+					this.playSound(blockstate, SoundEvents.BLOCK_BARREL_CLOSE);
+					this.setState(blockstate, false);
+					UselessMod.LOGGER.debug("CLOSED BARREL");
+				}
+			}
+			if(this.world.isRemote) ModelDataManager.requestModelDataRefresh(this);
+		}
+
+	}
+
+	private void setState(BlockState p_213963_1_, boolean p_213963_2_) {
+		this.world.setBlockState(this.getPos(),
+				p_213963_1_.with(BlockStateProperties.OPEN, Boolean.valueOf(p_213963_2_)), 3);
+	}
+
+	private void func_213964_r() {
+		this.world.getPendingBlockTicks().scheduleTick(this.getPos(), this.getBlockState().getBlock(), 5);
+	}
+
+	private void playSound(BlockState p_213965_1_, SoundEvent p_213965_2_) {
+		Vec3i vec3i = p_213965_1_.get(BlockStateProperties.HORIZONTAL_FACING).getDirectionVec();
+		double d0 = (double) this.pos.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
+		double d1 = (double) this.pos.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
+		double d2 = (double) this.pos.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
+		this.world.playSound((PlayerEntity) null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.5F,
+				this.world.rand.nextFloat() * 0.1F + 0.9F);
 	}
 	
 	@Override
@@ -62,6 +130,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 		compound.putString("casingId", this.casingId != null ? this.casingId.getSaveId() : "missing");
 		compound.putString("beddingId", this.beddingId != null ? this.beddingId.getSaveId() : "missing");
 		compound.putString("facing", facing.getName() != null ? facing.getName() : "north");
+		compound.putBoolean("open", this.open);
 		return compound;
 	}
 	
@@ -112,8 +181,8 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 		}
 	}
 	
-	public void setOpen(Boolean open) {
-		this.open = open;
+	public void setOpen(Boolean newOpen) {
+		this.open = newOpen;
 		this.markDirty();
 		if(this.world.isRemote) {
 			ModelDataManager.requestModelDataRefresh(this);
@@ -139,7 +208,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	
 	@Override
 	public IModelData getModelData() {
-		return new ModelDataMap.Builder().withProperty(CASING).withProperty(BEDDING).withInitial(FACING, Direction.NORTH).withInitial(OPEN, false).build();
+		return new ModelDataMap.Builder().withProperty(CASING).withProperty(BEDDING).withInitial(FACING, Direction.NORTH).withInitial(OPEN, Boolean.FALSE).build();
 	}
 
 	@Override
@@ -219,16 +288,6 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	@Override
 	public ITextComponent getDisplayName() {
 		 return new TranslationTextComponent("container.uselessmod.closet");
-	}
-	
-	@Override
-	public void openInventory(PlayerEntity player) {
-		this.setOpen(Boolean.TRUE);
-	}
-	
-	@Override
-	public void closeInventory(PlayerEntity player) {
-		this.setOpen(Boolean.FALSE);
 	}
 
 }

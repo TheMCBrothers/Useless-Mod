@@ -30,9 +30,14 @@ public class ModelBake {
         try {
             ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(ModBlocks.CLOSET);
             ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+            ResourceLocation unbakedModelOpenLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath() + "_open");
             
             BlockModel model = (BlockModel)event.getModelLoader().getUnbakedModel(unbakedModelLoc);
-            IBakedModel customModel = new ClosetModel(event.getModelLoader(), model, model.bake(event.getModelLoader(), ModelLoader.defaultTextureGetter(), TRSRTransformation.getRotation(Direction.NORTH), DefaultVertexFormats.BLOCK), DefaultVertexFormats.BLOCK);
+            BlockModel openModel = (BlockModel)event.getModelLoader().getUnbakedModel(unbakedModelOpenLoc);
+            IBakedModel customModel = new ClosetModel(event.getModelLoader(), 
+            		model, model.bake(event.getModelLoader(), ModelLoader.defaultTextureGetter(), TRSRTransformation.getRotation(Direction.NORTH), DefaultVertexFormats.BLOCK),
+            		openModel, openModel.bake(event.getModelLoader(), ModelLoader.defaultTextureGetter(), TRSRTransformation.getRotation(Direction.NORTH), DefaultVertexFormats.BLOCK),
+            		DefaultVertexFormats.BLOCK);
 
             // Replace all valid block states
             ModBlocks.CLOSET.getStateContainer().getValidStates().forEach(state -> {

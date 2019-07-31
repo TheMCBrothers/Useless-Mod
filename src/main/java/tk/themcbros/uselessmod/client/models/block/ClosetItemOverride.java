@@ -18,7 +18,7 @@ public class ClosetItemOverride extends ItemOverrideList {
 			if(tag != null) {
 				String casingId = ClosetRegistry.CASINGS.get(tag.getString("casingId")).getTexture();
 				String beddingId = ClosetRegistry.BEDDINGS.get(tag.getString("beddingId")).getTexture();
-				return ((ClosetModel) modelOriginal).getCustomModel(casingId, beddingId, Direction.EAST, true);
+				return ((ClosetModel) modelOriginal).getCustomModel(casingId, beddingId, Direction.EAST, Boolean.TRUE);
 			}
 		}
 		
