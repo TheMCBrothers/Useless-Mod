@@ -20,8 +20,8 @@
 <li>Not everything in this mod is useless!</li>
 </ul>
 <h3>Planned Features:</h3>
-<p>Custom potion type</p>
 <ul>
+<li>Custom potion type</li>
 <li>A new dimension with new types of blocks</li>
 <li>Custom fluid and working fluid tank</li>
 <li>Multiblock machines</li>
