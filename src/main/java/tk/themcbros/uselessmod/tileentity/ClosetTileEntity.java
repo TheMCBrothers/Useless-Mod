@@ -54,7 +54,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	
 	@Override
 	public void openInventory(PlayerEntity player) {
-//		UselessMod.LOGGER.debug("OPEN BARREL");
+		UselessMod.LOGGER.debug("OPEN BARREL");
 		if (!player.isSpectator()) {
 			if (this.openCount < 0) {
 				this.openCount = 0;
@@ -76,7 +76,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	}
 	
 	public void closeInventory(PlayerEntity player) {
-//		UselessMod.LOGGER.debug("CLOSE BARREL");
+		UselessMod.LOGGER.debug("CLOSE BARREL");
 		if (!player.isSpectator()) {
 			--this.openCount;
 			
@@ -121,6 +121,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 		this.casingId = ClosetRegistry.CASINGS.get(compound.getString("casingId"));
 		this.beddingId = ClosetRegistry.BEDDINGS.get(compound.getString("beddingId"));
 		this.facing = Direction.byName(compound.getString("facing"));
+		this.open = compound.getBoolean("open");
 	}
 	
 	@Override
