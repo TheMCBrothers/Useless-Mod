@@ -39,6 +39,7 @@ public class UselessBiome extends Biome {
 				.depth(0.5F)
 				.scale(0.5F)
 				.temperature(0.7F)
+				.downfall(1.4F)
 				.waterColor(0x40B45F)
 				.waterFogColor(0x3FBF6A)
 				.parent((String)null));
