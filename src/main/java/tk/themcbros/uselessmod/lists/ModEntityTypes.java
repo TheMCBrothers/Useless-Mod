@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.config.EntityConfig;
 import tk.themcbros.uselessmod.entity.GrenadeEntity;
 import tk.themcbros.uselessmod.entity.UselessEntity;
 
@@ -51,7 +52,7 @@ public class ModEntityTypes {
 	}
 	
 	public static void registerEntityWorldSpawns() {
-		registerEntityWorldSpawn(USELESS_ENTITY, 1, 4, 4, Biomes.NETHER);
+		if(EntityConfig.useless_entity_enabled.get()) registerEntityWorldSpawn(USELESS_ENTITY, 1, 4, 4, Biomes.NETHER);
 	}
 	
 }
