@@ -5,6 +5,10 @@ import tk.themcbros.uselessmod.UselessMod;
 
 public class BlockNames {
 
+	public static final ResourceLocation USELESS_GRASS_BLOCK = new ResourceLocation(UselessMod.MOD_ID, "useless_grass_block");
+	public static final ResourceLocation USELESS_GRASS = new ResourceLocation(UselessMod.MOD_ID, "useless_grass");
+	public static final ResourceLocation USELESS_DIRT = new ResourceLocation(UselessMod.MOD_ID, "useless_dirt");
+	
 	public static final ResourceLocation USELESS_BLOCK = new ResourceLocation(UselessMod.MOD_ID, "useless_block");
 	public static final ResourceLocation SUPER_USELESS_BLOCK = new ResourceLocation(UselessMod.MOD_ID, "super_useless_block");
 	public static final ResourceLocation USELESS_BARS = new ResourceLocation(UselessMod.MOD_ID, "useless_bars");

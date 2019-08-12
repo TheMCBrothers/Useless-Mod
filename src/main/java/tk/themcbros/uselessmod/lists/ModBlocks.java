@@ -3,12 +3,14 @@ package tk.themcbros.uselessmod.lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowerBlock;
 import net.minecraft.block.FlowerPotBlock;
+import net.minecraft.block.GrassBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.TallBlockItem;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,15 +18,37 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.blocks.*;
+import tk.themcbros.uselessmod.blocks.CanvasBlock;
+import tk.themcbros.uselessmod.blocks.CheeseMakerBlock;
+import tk.themcbros.uselessmod.blocks.ClosetBlock;
+import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
+import tk.themcbros.uselessmod.blocks.CoffeeSeedsBlock;
+import tk.themcbros.uselessmod.blocks.CoffeeTableBlock;
+import tk.themcbros.uselessmod.blocks.CompressorBlock;
+import tk.themcbros.uselessmod.blocks.CreativePowerBlock;
+import tk.themcbros.uselessmod.blocks.CrusherBlock;
+import tk.themcbros.uselessmod.blocks.ElectricCrusherBlock;
+import tk.themcbros.uselessmod.blocks.ElectricFurnaceBlock;
+import tk.themcbros.uselessmod.blocks.EnergyCableBlock;
+import tk.themcbros.uselessmod.blocks.GlowstoneGeneratorBlock;
+import tk.themcbros.uselessmod.blocks.GreenstoneWireBlock;
+import tk.themcbros.uselessmod.blocks.LampBlock;
+import tk.themcbros.uselessmod.blocks.ModDoorBlock;
+import tk.themcbros.uselessmod.blocks.ModPaneBlock;
+import tk.themcbros.uselessmod.blocks.PaintBucketBlock;
+import tk.themcbros.uselessmod.blocks.UselessCropsBlock;
+import tk.themcbros.uselessmod.blocks.UselessTallGrassBlock;
 import tk.themcbros.uselessmod.items.LampBlockItem;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModBlocks {
 
-//	public static final Block USELESS_GRASS_BLOCK = null;
-//	public static final Block USELESS_GRASS = null;
-//	public static final Block USELESS_DIRT = null;
+	@ObjectHolder("useless_grass_block")
+	public static final Block USELESS_GRASS_BLOCK = null;
+	@ObjectHolder("useless_grass")
+	public static final Block USELESS_GRASS = null;
+	@ObjectHolder("useless_dirt")
+	public static final Block USELESS_DIRT = null;
 	
 	@ObjectHolder("useless_block")
 	public static final Block USELESS_BLOCK = null;
@@ -139,6 +163,10 @@ public class ModBlocks {
 		public static void onBlockRegistry(final RegistryEvent.Register<Block> event) {
 			IForgeRegistry<Block> registry = event.getRegistry();
 			
+			registry.register(new GrassBlock(Block.Properties.create(Material.ORGANIC).tickRandomly().hardnessAndResistance(0.6F).sound(SoundType.PLANT)).setRegistryName(BlockNames.USELESS_GRASS_BLOCK));
+			registry.register(new UselessTallGrassBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()).setRegistryName(BlockNames.USELESS_GRASS));
+			registry.register(new Block(Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND)).setRegistryName(BlockNames.USELESS_DIRT));
+			
 			registry.register(new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.USELESS_BLOCK));
 			registry.register(new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(2.0f)).setRegistryName(BlockNames.SUPER_USELESS_BLOCK));
 			registry.register(new ModPaneBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3f)).setRegistryName(BlockNames.USELESS_BARS));
@@ -179,6 +207,10 @@ public class ModBlocks {
 		@SubscribeEvent
 		public static void onItemRegistry(final RegistryEvent.Register<Item> event) {
 			IForgeRegistry<Item> registry = event.getRegistry();
+
+			registry.register(new BlockItem(USELESS_GRASS_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_GRASS_BLOCK));
+			registry.register(new TallBlockItem(USELESS_GRASS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_GRASS));
+			registry.register(new BlockItem(USELESS_DIRT, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_DIRT));
 
 			registry.register(new BlockItem(USELESS_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_BLOCK));
 			registry.register(new BlockItem(SUPER_USELESS_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_BLOCK));
