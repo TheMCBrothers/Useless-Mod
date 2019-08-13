@@ -1,15 +1,16 @@
 package tk.themcbros.uselessmod.lists;
 
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.tileentity.CanvasTileEntity;
 import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
 import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
+import tk.themcbros.uselessmod.tileentity.ColorableTileEntity;
 import tk.themcbros.uselessmod.tileentity.CompressorTileEntity;
 import tk.themcbros.uselessmod.tileentity.CreativePowerBlockTileEntity;
 import tk.themcbros.uselessmod.tileentity.CrusherTileEntity;
@@ -17,7 +18,6 @@ import tk.themcbros.uselessmod.tileentity.ElectricCrusherTileEntity;
 import tk.themcbros.uselessmod.tileentity.ElectricFurnaceTileEntity;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 import tk.themcbros.uselessmod.tileentity.GlowstoneGeneratorTileEntity;
-import tk.themcbros.uselessmod.tileentity.PaintBucketTileEntity;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModTileEntities {
@@ -40,10 +40,8 @@ public class ModTileEntities {
 	public static final TileEntityType<EnergyCableTileEntity> ENERGY_CABLE = null;
 	@ObjectHolder("closet")
 	public static final TileEntityType<ClosetTileEntity> CLOSET = null;
-	@ObjectHolder("canvas")
-	public static final TileEntityType<ClosetTileEntity> CANVAS = null;
-	@ObjectHolder("paint_bucket")
-	public static final TileEntityType<PaintBucketTileEntity> PAINT_BUCKET = null;
+	@ObjectHolder("colorable")
+	public static final TileEntityType<ColorableTileEntity> COLORABLE = null;
 	
 	@Mod.EventBusSubscriber(modid = UselessMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -60,8 +58,7 @@ public class ModTileEntities {
 			registry.register(TileEntityType.Builder.create(CreativePowerBlockTileEntity::new, ModBlocks.CREATIVE_POWER_BLOCK).build(null).setRegistryName(BlockNames.CREATIVE_POWER_BLOCK));
 			registry.register(TileEntityType.Builder.create(EnergyCableTileEntity::new, ModBlocks.BASIC_ENERGY_CABLE, ModBlocks.ADVANCED_ENERGY_CABLE).build(null).setRegistryName(BlockNames.ENERGY_CABLE));
 			registry.register(TileEntityType.Builder.create(ClosetTileEntity::new, ModBlocks.CLOSET).build(null).setRegistryName(BlockNames.CLOSET));
-			registry.register(TileEntityType.Builder.create(CanvasTileEntity::new, ModBlocks.CANVAS).build(null).setRegistryName(BlockNames.CANVAS));
-			registry.register(TileEntityType.Builder.create(PaintBucketTileEntity::new, ModBlocks.PAINT_BUCKET).build(null).setRegistryName(BlockNames.PAINT_BUCKET));
+			registry.register(TileEntityType.Builder.create(ColorableTileEntity::new, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET).build(null).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "colorable")));
 			
 			UselessMod.LOGGER.info("Registered TileEntities");
 		}

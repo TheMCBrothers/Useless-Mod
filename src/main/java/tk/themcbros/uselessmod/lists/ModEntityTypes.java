@@ -2,9 +2,6 @@ package tk.themcbros.uselessmod.lists;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
@@ -32,15 +29,7 @@ public class ModEntityTypes {
 			
 			registry.register(USELESS_ENTITY.setRegistryName(EntityNames.USELESS_ENTITY));
 			registry.register(GRENADE.setRegistryName(EntityNames.GRENADE));
-			
-			registerEntityWorldSpawns();
 		}
-	}
-	
-	public static Item registerSpawnEgg(String registryName, EntityType<?> type, int primaryColor, int secondaryColor) {
-		SpawnEggItem item = new SpawnEggItem(type, primaryColor, secondaryColor, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP));
-		item.setRegistryName(new ResourceLocation(UselessMod.MOD_ID, registryName));
-		return item;
 	}
 	
 	private static void registerEntityWorldSpawn(EntityType<?> type, int weight, int minCount, int maxCount, Biome... biomes) {
@@ -52,7 +41,9 @@ public class ModEntityTypes {
 	}
 	
 	public static void registerEntityWorldSpawns() {
-		if(EntityConfig.useless_entity_enabled.get()) registerEntityWorldSpawn(USELESS_ENTITY, 1, 4, 4, Biomes.NETHER);
+		if(EntityConfig.useless_entity_enabled.get()) {
+			registerEntityWorldSpawn(USELESS_ENTITY, 1, 4, 4, Biomes.NETHER, ModBiomes.USELESS_BIOME);
+		}
 	}
 	
 }

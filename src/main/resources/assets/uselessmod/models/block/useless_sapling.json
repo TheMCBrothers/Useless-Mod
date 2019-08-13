@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "uselessmod:block/useless_sapling",
+		"particle": "uselessmod:block/useless_sapling"
+    }
+}

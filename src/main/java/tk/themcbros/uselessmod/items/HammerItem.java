@@ -10,11 +10,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.lists.ToolMaterialList;
 
 public class HammerItem extends ToolItem {
@@ -23,7 +21,6 @@ public class HammerItem extends ToolItem {
 
 	public HammerItem(Properties builder) {
 		super(-9f, 0.1f, ToolMaterialList.useless, EFFECTIVE_ON, builder.defaultMaxDamage(125));
-		this.setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "hammer"));
 	}
 	
 	@Override

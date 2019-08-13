@@ -17,7 +17,7 @@ import tk.themcbros.uselessmod.lists.ModBlocks;
 
 public class UselessCropsFeature extends FlowersFeature {
 
-	private static final Block[] FLOWERS = new Block[] { ModBlocks.USELESS_CROPS, ModBlocks.COFFEE_SEEDS };
+	private static final Block[] FLOWERS = new Block[] { ModBlocks.USELESS_WHEAT, ModBlocks.COFFEE_SEEDS };
 
 	public UselessCropsFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserializer) {
 		super(deserializer);

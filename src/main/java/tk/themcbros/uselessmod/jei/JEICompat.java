@@ -1,8 +1,13 @@
 package tk.themcbros.uselessmod.jei;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -19,6 +24,8 @@ import tk.themcbros.uselessmod.client.gui.CompressorScreen;
 import tk.themcbros.uselessmod.client.gui.CrusherScreen;
 import tk.themcbros.uselessmod.client.gui.ElectricCrusherScreen;
 import tk.themcbros.uselessmod.client.gui.ElectricFurnaceScreen;
+import tk.themcbros.uselessmod.closet.ClosetRegistry;
+import tk.themcbros.uselessmod.closet.IClosetMaterial;
 import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
 import tk.themcbros.uselessmod.container.CompressorContainer;
 import tk.themcbros.uselessmod.container.CrusherContainer;
@@ -46,9 +53,6 @@ public class JEICompat implements IModPlugin {
 			String casingId = tag.getString("casingId");
 			String beddingId = tag.getString("beddingId");
 			return casingId + beddingId;
-		});
-		registration.registerSubtypeInterpreter(ModItems.PAINT_BRUSH, itemStack -> {
-			return itemStack.hasTag() && itemStack.getTag().contains("color") ? Integer.toString(itemStack.getTag().getInt("color")) : "paint_brush";
 		});
 		registration.registerSubtypeInterpreter(ModBlocks.CANVAS.asItem(), itemStack -> {
 			return itemStack.hasTag() && itemStack.getTag().contains("color") ? Integer.toString(itemStack.getTag().getInt("color")) : "canvas";
@@ -86,6 +90,17 @@ public class JEICompat implements IModPlugin {
 		registration.addRecipes(UselessRecipeValidator.getCompressorRecipes(), RecipeCategoryUid.COMPRESSOR);
 		registration.addRecipes(UselessRecipeValidator.getCoffeeRecipes(), RecipeCategoryUid.COFFEE);
 		registration.addRecipes(ClosetRecipeMaker.createClosetRecipes(), VanillaRecipeCategoryUid.CRAFTING);
+		
+		List<ItemStack> stacks = Lists.newArrayList();
+		for(IClosetMaterial casingMaterial : ClosetRegistry.CASINGS.getKeys()) {
+			for(IClosetMaterial beddingMaterial : ClosetRegistry.BEDDINGS.getKeys()) {
+				ItemStack stack = ClosetRegistry.createItemStack(casingMaterial, beddingMaterial);
+				stacks.add(stack);
+			}
+		}
+		registration.addIngredientInfo(stacks, VanillaTypes.ITEM, "uselessmod.jei.closet_desc");
+		registration.addIngredientInfo(new ItemStack(ModItems.PAINT_BRUSH), VanillaTypes.ITEM, "uselessmod.jei.paint_brush_desc");
+		registration.addIngredientInfo(new ItemStack(ModItems.PAINT_BUCKET), VanillaTypes.ITEM, "uselessmod.jei.paint_bucket_desc");
 	}
 	
 	@Override

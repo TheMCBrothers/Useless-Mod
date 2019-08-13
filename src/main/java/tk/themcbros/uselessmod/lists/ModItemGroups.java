@@ -33,12 +33,25 @@ public class ModItemGroups {
 	public static final ItemGroup CLOSET_GROUP = new ItemGroup("uselessmod.closets") {
 		
 		private Random random = new Random();
+		private int ticks = 0;
+		private ItemStack currentIcon = ItemStack.EMPTY;
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon() {
 			return ClosetRegistry.createItemStack(this.pickRandomString(ClosetRegistry.CASINGS.getKeys()),
 					this.pickRandomString(ClosetRegistry.BEDDINGS.getKeys()));
+		}
+		
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack getIcon() {
+			if(this.currentIcon.isEmpty() || ticks > 250) {
+				this.currentIcon = this.createIcon();
+				ticks = 0;
+			}
+			ticks++;
+			return this.currentIcon;
 		}
 		
 		public net.minecraft.util.ResourceLocation getBackgroundImage() {

@@ -5,8 +5,6 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 
 public class LampBlockItem extends BlockItem {
@@ -16,7 +14,6 @@ public class LampBlockItem extends BlockItem {
 	public LampBlockItem(Properties builder, DyeColor color) {
 		super(ModBlocks.LAMP, builder);
 		this.color = color;
-		this.setRegistryName(new ResourceLocation(UselessMod.MOD_ID, color.getName() + "_lamp"));
 	}
 	
 	@Override

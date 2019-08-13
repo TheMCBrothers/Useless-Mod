@@ -1,12 +1,17 @@
 package tk.themcbros.uselessmod.proxy;
 
+import net.minecraft.block.ShearableDoublePlantBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.DyeColor;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GrassColors;
+import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -27,6 +32,7 @@ import tk.themcbros.uselessmod.client.gui.ElectricFurnaceScreen;
 import tk.themcbros.uselessmod.client.gui.GlowstoneGeneratorScreen;
 import tk.themcbros.uselessmod.client.renders.entity.UselessRenderRegistry;
 import tk.themcbros.uselessmod.lists.CoffeeType;
+import tk.themcbros.uselessmod.lists.ModBiomes;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 import tk.themcbros.uselessmod.lists.ModItems;
@@ -90,6 +96,19 @@ public class ClientProxy extends CommonProxy {
             return colour;
         }, ModBlocks.LAMP);
         
+		blockColors.register((state, world, pos, tint_index) -> {
+			return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.get(0.5D, 1.0D);
+		}, ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_FERN, ModBlocks.USELESS_GRASS,
+				ModBlocks.POTTED_USELESS_FERN);
+
+		blockColors.register((p_210234_0_, p_210234_1_, p_210234_2_, p_210234_3_) -> {
+			return p_210234_1_ != null && p_210234_2_ != null ? BiomeColors.getGrassColor(p_210234_1_,
+					p_210234_0_.get(ShearableDoublePlantBlock.field_208063_b) == DoubleBlockHalf.UPPER
+							? p_210234_2_.down()
+							: p_210234_2_)
+					: -1;
+		}, ModBlocks.LARGE_USELESS_FERN, ModBlocks.TALL_USELESS_GRASS);
+        
     }
 	
 	private void registerItemColors(ColorHandlerEvent.Item event) {
@@ -115,6 +134,10 @@ public class ClientProxy extends CommonProxy {
 			}
 			return -1;
 		}, ModItems.COFFEE_CUP);
+		
+		itemColors.register((stack, tintIndex) -> {
+			return ModBiomes.USELESS_BIOME.getGrassColor((BlockPos)null);
+		}, ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
 	}
 	
 	@Override

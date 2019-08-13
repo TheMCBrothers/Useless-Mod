@@ -74,12 +74,36 @@
 	"item.uselessmod.hammer": "Hammer",
 	"item.uselessmod.paint_brush": "Paint Brush",
 	"item.uselessmod.paint_brush.tooltip": "\u00a77Color: %s",
+	"item.uselessmod.paint_brush.tooltip_uses": "\u00a77Uses Left: %s",
 	
 	"item.uselessmod.greenstone": "Greenstone Dust",
 	
 	"item.uselessmod.useless_entity_spawn_egg": "Useless Entity Spawn Egg",
 	"item.uselessmod.grenade": "Grenade",
 	
+	
+	"block.uselessmod.useless_grass_block": "Useless Grass Block",
+	"block.uselessmod.useless_dirt": "Useless Dirt",
+	"block.uselessmod.useless_grass": "Useless Grass",
+	"block.uselessmod.useless_fern": "Useless Fern",
+	"block.uselessmod.large_useless_fern": "Useless Large Fern",
+	"block.uselessmod.tall_useless_grass": "Useless Tall Grass",
+	"block.uselessmod.useless_log": "Useless Log",
+	"block.uselessmod.stripped_useless_log": "Stripped Useless Log",
+	"block.uselessmod.useless_wood": "Useless Wood",
+	"block.uselessmod.stripped_useless_wood": "Stripped Useless Wood",
+	"block.uselessmod.useless_planks": "Useless Planks",
+	"block.uselessmod.useless_slab": "Useless Slab",
+	"block.uselessmod.useless_stairs": "Useless Stairs",
+	"block.uselessmod.useless_sapling": "Useless Sapling",
+	"block.uselessmod.useless_leaves": "Useless Leaves",
+	"block.uselessmod.useless_fence": "Useless Fence",
+	"block.uselessmod.useless_sign": "Useless Sign",
+	"block.uselessmod.useless_pressure_plate": "Useless Pressure Plate",
+	"block.uselessmod.useless_trapdoor": "Useless Trapdoor",
+	"block.uselessmod.useless_fence_gate": "Useless Fence Gate",
+	"block.uselessmod.useless_button": "Useless Button",
+	"block.uselessmod.wooden_useless_door": "Wooden Useless Door",
 	
 	"block.uselessmod.useless_block" : "Useless Block",
 	"block.uselessmod.super_useless_block" : "Super-Useless Block",
@@ -130,6 +154,7 @@
 	"block.uselessmod.canvas.tooltip": "\u00a77Color: %s",
 	"block.uselessmod.paint_bucket": "Paint Bucket",
 	"block.uselessmod.paint_bucket.tooltip": "\u00a77Color: %s",
+	"block.uselessmod.paint_bucket.tooltip_2": "\u00a77Filled with: %s",
 
 	"container.uselessmod.crusher": "Crusher",
 	"container.uselessmod.glowstone_generator": "Glowstone Generator",
@@ -147,8 +172,12 @@
 	
 	
 	"tooltip.uselessmod.fluid_tank": "Fluid: %s",
-	"tooltip.uselessmod.machine": "@aEnergy: %d",
+	"tooltip.uselessmod.machine": "Energy: %d",
 	"tooltip.uselessmod.press_shift": "\u00a77\u00a7o<Press LSHIFT>",
+	
+	"uselessmod.jei.paint_brush_desc": "Use the paint brush to paint the canvas\nTo get the right color, collect it from a paint bucket",
+	"uselessmod.jei.paint_bucket_desc": "Used to collect color with paint brush.\n\nRight click with dye color to change color",
+	"uselessmod.jei.closet_desc": "The closet comes in 112 variants.\nIt supports Biomes O' Plenty for more variants.\n\nIf you break it, it keeps its contents",
 	
 	
 	"closet.null": "Null",
@@ -187,6 +216,7 @@
 	"closet.casing.biomesoplenty.redwood_planks": "Redwood Plank Casing",
 	"closet.casing.biomesoplenty.umbran_planks": "Umbran Plank Casing",
 	"closet.casing.biomesoplenty.willow_planks": "Willow Plank Casing",
+	"closet.casing.uselessmod.useless_planks": "Useless Plank Casing",
 	
 	"itemGroup.uselessmod": "Useless Mod",
 	"itemGroup.uselessmod.closets": "Closet Variants"

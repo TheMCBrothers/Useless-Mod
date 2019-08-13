@@ -31,7 +31,7 @@ public class ClosetRecipeMaker {
                 );
                 ItemStack output = ClosetRegistry.createItemStack(casingId, beddingId);
                 
-                ResourceLocation id = new ResourceLocation(UselessMod.MOD_ID, "uselessmod.closet" + output.getTranslationKey());
+                ResourceLocation id = new ResourceLocation(UselessMod.MOD_ID, output.getTranslationKey());
                 ShapedRecipe recipe = new ShapedRecipe(id, group, 3, 3, inputs, output);
                 recipes.add(recipe);
             }

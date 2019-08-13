@@ -1,29 +1,33 @@
 package tk.themcbros.uselessmod.lists;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.FlowerBlock;
+import net.minecraft.block.FenceBlock;
+import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.GrassBlock;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.StandingSignBlock;
+import net.minecraft.block.WallSignBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.TallBlockItem;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.blocks.CanvasBlock;
 import tk.themcbros.uselessmod.blocks.CheeseMakerBlock;
 import tk.themcbros.uselessmod.blocks.ClosetBlock;
 import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
-import tk.themcbros.uselessmod.blocks.CoffeeSeedsBlock;
 import tk.themcbros.uselessmod.blocks.CoffeeTableBlock;
+import tk.themcbros.uselessmod.blocks.ColorableBlock;
 import tk.themcbros.uselessmod.blocks.CompressorBlock;
 import tk.themcbros.uselessmod.blocks.CreativePowerBlock;
 import tk.themcbros.uselessmod.blocks.CrusherBlock;
@@ -37,231 +41,157 @@ import tk.themcbros.uselessmod.blocks.ModDoorBlock;
 import tk.themcbros.uselessmod.blocks.ModPaneBlock;
 import tk.themcbros.uselessmod.blocks.PaintBucketBlock;
 import tk.themcbros.uselessmod.blocks.UselessCropsBlock;
+import tk.themcbros.uselessmod.blocks.UselessDoublePlantBlock;
+import tk.themcbros.uselessmod.blocks.UselessFlowerBlock;
+import tk.themcbros.uselessmod.blocks.UselessGrassBlock;
+import tk.themcbros.uselessmod.blocks.UselessPressurePlateBlock;
+import tk.themcbros.uselessmod.blocks.UselessSaplingBlock;
+import tk.themcbros.uselessmod.blocks.UselessStairsBlock;
 import tk.themcbros.uselessmod.blocks.UselessTallGrassBlock;
-import tk.themcbros.uselessmod.items.LampBlockItem;
+import tk.themcbros.uselessmod.blocks.UselessTrapdoorBlock;
+import tk.themcbros.uselessmod.blocks.UselessWoodButtonBlock;
+import tk.themcbros.uselessmod.world.feature.UselessTree;
 
 @ObjectHolder(UselessMod.MOD_ID)
+@Mod.EventBusSubscriber(bus = Bus.MOD, modid = UselessMod.MOD_ID)
 public class ModBlocks {
 
-	@ObjectHolder("useless_grass_block")
-	public static final Block USELESS_GRASS_BLOCK = null;
-	@ObjectHolder("useless_grass")
-	public static final Block USELESS_GRASS = null;
-	@ObjectHolder("useless_dirt")
-	public static final Block USELESS_DIRT = null;
+	public static Block USELESS_GRASS_BLOCK = null;
+	public static Block USELESS_DIRT = null;
+	public static Block USELESS_GRASS = null;
+	public static Block USELESS_FERN = null;
+	public static Block LARGE_USELESS_FERN = null;
+	public static Block TALL_USELESS_GRASS = null;
+	public static Block POTTED_USELESS_FERN = null;
+	public static Block USELESS_LOG = null;
+	public static Block STRIPPED_USELESS_LOG = null;
+	public static Block USELESS_WOOD = null;
+	public static Block STRIPPED_USELESS_WOOD = null;
+	public static Block USELESS_PLANKS = null;
+	public static Block USELESS_SLAB = null;
+	public static Block USELESS_STAIRS = null;
+	public static Block USELESS_SAPLING = null;
+	public static Block POTTED_USELESS_SAPLING = null;
+	public static Block USELESS_LEAVES = null;
+	public static Block USELESS_FENCE = null;
+	public static Block USELESS_SIGN = null;
+	public static Block USELESS_WALL_SIGN = null;
+	public static Block USELESS_PRESSURE_PLATE = null;
+	public static Block USELESS_TRAPDOOR = null;
+	public static Block USELESS_FENCE_GATE = null;
+	public static Block USELESS_BUTTON = null;
+	public static Block WOODEN_USELESS_DOOR = null;
 	
-	@ObjectHolder("useless_block")
-	public static final Block USELESS_BLOCK = null;
-	@ObjectHolder("super_useless_block")
-	public static final Block SUPER_USELESS_BLOCK = null;
-	@ObjectHolder("useless_bars")
-	public static final Block USELESS_BARS = null;
-	@ObjectHolder("super_useless_bars")
-	public static final Block SUPER_USELESS_BARS = null;
-	@ObjectHolder("useless_door")
-	public static final Block USELESS_DOOR = null;
-	@ObjectHolder("super_useless_door")
-	public static final Block SUPER_USELESS_DOOR = null;
-	@ObjectHolder("useless_ore")
-	public static final Block USELESS_ORE = null;
-	@ObjectHolder("useless_ore_nether")
-	public static final Block USELESS_ORE_NETHER = null;
-	@ObjectHolder("useless_ore_end")
-	public static final Block USELESS_ORE_END = null;
-	@ObjectHolder("super_useless_ore")
-	public static final Block SUPER_USELESS_ORE = null;
-	@ObjectHolder("super_useless_ore_nether")
-	public static final Block SUPER_USELESS_ORE_NETHER = null;
-	@ObjectHolder("super_useless_ore_end")
-	public static final Block SUPER_USELESS_ORE_END = null;
-	@ObjectHolder("cheese_maker")
-	public static final Block CHEESE_MAKER = null;
-	@ObjectHolder("lamp")
-	public static final Block LAMP = null;
-	@ObjectHolder("red_rose")
-	public static final Block RED_ROSE = null;
-	@ObjectHolder("blue_rose")
-	public static final Block BLUE_ROSE = null;
-	@ObjectHolder("potted_red_rose")
-	public static final Block POTTED_RED_ROSE = null;
-	@ObjectHolder("potted_blue_rose")
-	public static final Block POTTED_BLUE_ROSE = null;
-	@ObjectHolder("useless_wheat")
-	public static final Block USELESS_CROPS = null;
-	@ObjectHolder("coffee_seeds")
-	public static final Block COFFEE_SEEDS = null;
-	@ObjectHolder("canvas")
-	public static final Block CANVAS = null;
-	@ObjectHolder("paint_bucket")
-	public static final Block PAINT_BUCKET = null;
+	public static Block USELESS_BLOCK = null;
+	public static Block SUPER_USELESS_BLOCK = null;
+	public static Block USELESS_BARS = null;
+	public static Block SUPER_USELESS_BARS = null;
+	public static Block USELESS_DOOR = null;
+	public static Block SUPER_USELESS_DOOR = null;
+	public static Block USELESS_ORE = null;
+	public static Block USELESS_ORE_NETHER = null;
+	public static Block USELESS_ORE_END = null;
+	public static Block SUPER_USELESS_ORE = null;
+	public static Block SUPER_USELESS_ORE_NETHER = null;
+	public static Block SUPER_USELESS_ORE_END = null;
+	public static Block CHEESE_MAKER = null;
+	public static Block LAMP = null;
+	public static Block RED_ROSE = null;
+	public static Block BLUE_ROSE = null;
+	public static Block POTTED_RED_ROSE = null;
+	public static Block POTTED_BLUE_ROSE = null;
+	public static Block USELESS_WHEAT = null;
+	public static Block COFFEE_SEEDS = null;
+	public static Block CANVAS = null;
+	public static Block PAINT_BUCKET = null;
 	
-	@ObjectHolder("crusher")
-	public static final Block CRUSHER = null;
-	@ObjectHolder("electric_crusher")
-	public static final Block ELECTRIC_CRUSHER = null;
-	@ObjectHolder("electric_furnace")
-	public static final Block ELECTRIC_FURNACE = null;
-	@ObjectHolder("compressor")
-	public static final Block COMPRESSOR = null;
-	@ObjectHolder("glowstone_generator")
-	public static final Block GLOWSTONE_GENERATOR = null;
-	@ObjectHolder("creative_power_block")
-	public static final Block CREATIVE_POWER_BLOCK = null;
-	@ObjectHolder("coffee_machine")
-	public static final Block COFFEE_MACHINE = null;
-	@ObjectHolder("basic_energy_cable")
-	public static final Block BASIC_ENERGY_CABLE = null;
-	@ObjectHolder("advanced_energy_cable")
-	public static final Block ADVANCED_ENERGY_CABLE = null;
-	@ObjectHolder("closet")
-	public static final Block CLOSET = null;
+	public static Block CRUSHER = null;
+	public static Block ELECTRIC_CRUSHER = null;
+	public static Block ELECTRIC_FURNACE = null;
+	public static Block COMPRESSOR = null;
+	public static Block GLOWSTONE_GENERATOR = null;
+	public static Block CREATIVE_POWER_BLOCK = null;
+	public static Block COFFEE_MACHINE = null;
+	public static Block BASIC_ENERGY_CABLE = null;
+	public static Block ADVANCED_ENERGY_CABLE = null;
+	public static Block CLOSET = null;
 	
-	@ObjectHolder("greenstone_wire")
-	public static final Block GREENSTONE_WIRE = null;
+	public static Block GREENSTONE_WIRE = null;
 	
-	@ObjectHolder("stripped_oak_coffee_table")
-	public static final Block STRIPPED_OAK_COFFEE_TABLE = null;
+	public static Block STRIPPED_OAK_COFFEE_TABLE = null;
 	
-	// Item Blocks
-	
-	@ObjectHolder("white_lamp")
-	public static final BlockItem WHITE_LAMP = null;
-	@ObjectHolder("orange_lamp")
-	public static final BlockItem ORANGE_LAMP = null;
-	@ObjectHolder("magenta_lamp")
-	public static final BlockItem MAGENTA_LAMP = null;
-	@ObjectHolder("light_blue_lamp")
-	public static final BlockItem LIGHT_BLUE_LAMP = null;
-	@ObjectHolder("yellow_lamp")
-	public static final BlockItem YELLOW_LAMP = null;
-	@ObjectHolder("lime_lamp")
-	public static final BlockItem LIME_LAMP = null;
-	@ObjectHolder("pink_lamp")
-	public static final BlockItem PINK_LAMP = null;
-	@ObjectHolder("gray_lamp")
-	public static final BlockItem GRAY_LAMP = null;
-	@ObjectHolder("light_gray_lamp")
-	public static final BlockItem LIGHT_GRAY_LAMP = null;
-	@ObjectHolder("cyan_lamp")
-	public static final BlockItem CYAN_LAMP = null;
-	@ObjectHolder("purple_lamp")
-	public static final BlockItem PURPLE_LAMP = null;
-	@ObjectHolder("blue_lamp")
-	public static final BlockItem BLUE_LAMP = null;
-	@ObjectHolder("brown_lamp")
-	public static final BlockItem BROWN_LAMP = null;
-	@ObjectHolder("green_lamp")
-	public static final BlockItem GREEN_LAMP = null;
-	@ObjectHolder("red_lamp")
-	public static final BlockItem RED_LAMP = null;
-	@ObjectHolder("black_lamp")
-	public static final BlockItem BLACK_LAMP = null;
-	
-	@Mod.EventBusSubscriber(modid = UselessMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-	public static class Registration {
-		@SubscribeEvent
-		public static void onBlockRegistry(final RegistryEvent.Register<Block> event) {
-			IForgeRegistry<Block> registry = event.getRegistry();
-			
-			registry.register(new GrassBlock(Block.Properties.create(Material.ORGANIC).tickRandomly().hardnessAndResistance(0.6F).sound(SoundType.PLANT)).setRegistryName(BlockNames.USELESS_GRASS_BLOCK));
-			registry.register(new UselessTallGrassBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()).setRegistryName(BlockNames.USELESS_GRASS));
-			registry.register(new Block(Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND)).setRegistryName(BlockNames.USELESS_DIRT));
-			
-			registry.register(new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.USELESS_BLOCK));
-			registry.register(new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(2.0f)).setRegistryName(BlockNames.SUPER_USELESS_BLOCK));
-			registry.register(new ModPaneBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3f)).setRegistryName(BlockNames.USELESS_BARS));
-			registry.register(new ModPaneBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.2f)).setRegistryName(BlockNames.SUPER_USELESS_BARS));
-			registry.register(new ModDoorBlock(Block.Properties.create(Material.IRON, MaterialColor.IRON).hardnessAndResistance(2f)).setRegistryName(BlockNames.USELESS_DOOR));
-			registry.register(new ModDoorBlock(Block.Properties.create(Material.IRON, MaterialColor.IRON).hardnessAndResistance(2.5f)).setRegistryName(BlockNames.SUPER_USELESS_DOOR));
-			registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.75f)).setRegistryName(BlockNames.USELESS_ORE));
-			registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.75f)).setRegistryName(BlockNames.USELESS_ORE_NETHER));
-			registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.75f)).setRegistryName(BlockNames.USELESS_ORE_END));
-			registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f)).setRegistryName(BlockNames.SUPER_USELESS_ORE));
-			registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f)).setRegistryName(BlockNames.SUPER_USELESS_ORE_NETHER));
-			registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f)).setRegistryName(BlockNames.SUPER_USELESS_ORE_END));
-			registry.register(new CheeseMakerBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1f)).setRegistryName(BlockNames.CHEESE_MAKER));
-			registry.register(new LampBlock(Block.Properties.create(Material.REDSTONE_LIGHT).sound(SoundType.GLASS).hardnessAndResistance(1f)).setRegistryName(BlockNames.LAMP));
-			registry.register(new FlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(BlockNames.RED_ROSE));
-			registry.register(new FlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(BlockNames.BLUE_ROSE));
-			registry.register(new FlowerPotBlock(RED_ROSE, Block.Properties.create(Material.MISCELLANEOUS)).setRegistryName(BlockNames.POTTED_RED_ROSE));
-			registry.register(new FlowerPotBlock(BLUE_ROSE, Block.Properties.create(Material.MISCELLANEOUS)).setRegistryName(BlockNames.POTTED_BLUE_ROSE));
-			registry.register(new UselessCropsBlock(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP)).setRegistryName(BlockNames.USELESS_CROPS));
-			registry.register(new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP)).setRegistryName(BlockNames.COFFEE_SEEDS));
-			registry.register(new CanvasBlock(Block.Properties.create(Material.WOOL).hardnessAndResistance(.5f)).setRegistryName(BlockNames.CANVAS));
-			registry.register(new PaintBucketBlock(Block.Properties.create(Material.WOOL).hardnessAndResistance(.4f)).setRegistryName(BlockNames.PAINT_BUCKET));
-			registry.register(new CrusherBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.CRUSHER));
-			registry.register(new ElectricCrusherBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.ELECTRIC_CRUSHER));
-			registry.register(new ElectricFurnaceBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.ELECTRIC_FURNACE));
-			registry.register(new CompressorBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.COMPRESSOR));
-			registry.register(new GlowstoneGeneratorBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.GLOWSTONE_GENERATOR));
-			registry.register(new CoffeeMachineBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1f)).setRegistryName(BlockNames.COFFEE_MACHINE));
-			registry.register(new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS), 100).setRegistryName(BlockNames.BASIC_ENERGY_CABLE));
-			registry.register(new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS), 200).setRegistryName(BlockNames.ADVANCED_ENERGY_CABLE));
-			registry.register(new CreativePowerBlock(Block.Properties.create(Material.ANVIL).hardnessAndResistance(1.5f)).setRegistryName(BlockNames.CREATIVE_POWER_BLOCK));
-			registry.register(new ClosetBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5f)).setRegistryName(BlockNames.CLOSET));
-			registry.register(new GreenstoneWireBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement()).setRegistryName(BlockNames.GREENSTONE_WIRE));
-			registry.register(new CoffeeTableBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5f)).setRegistryName(BlockNames.STRIPPED_OAK_COFFEE_TABLE));
-			
-			UselessMod.LOGGER.info("Registered blocks");
-		}
-		@SubscribeEvent
-		public static void onItemRegistry(final RegistryEvent.Register<Item> event) {
-			IForgeRegistry<Item> registry = event.getRegistry();
-
-			registry.register(new BlockItem(USELESS_GRASS_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_GRASS_BLOCK));
-			registry.register(new TallBlockItem(USELESS_GRASS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_GRASS));
-			registry.register(new BlockItem(USELESS_DIRT, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_DIRT));
-
-			registry.register(new BlockItem(USELESS_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_BLOCK));
-			registry.register(new BlockItem(SUPER_USELESS_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_BLOCK));
-			registry.register(new BlockItem(USELESS_BARS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_BARS));
-			registry.register(new BlockItem(SUPER_USELESS_BARS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_BARS));
-			registry.register(new BlockItem(USELESS_DOOR, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_DOOR));
-			registry.register(new BlockItem(SUPER_USELESS_DOOR, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_DOOR));
-			registry.register(new BlockItem(USELESS_ORE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_ORE));
-			registry.register(new BlockItem(USELESS_ORE_NETHER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_ORE_NETHER));
-			registry.register(new BlockItem(USELESS_ORE_END, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.USELESS_ORE_END));
-			registry.register(new BlockItem(SUPER_USELESS_ORE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_ORE));
-			registry.register(new BlockItem(SUPER_USELESS_ORE_NETHER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_ORE_NETHER));
-			registry.register(new BlockItem(SUPER_USELESS_ORE_END, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.SUPER_USELESS_ORE_END));
-			registry.register(new BlockItem(CHEESE_MAKER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.CHEESE_MAKER));
-			registry.register(new BlockItem(RED_ROSE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.RED_ROSE));
-			registry.register(new BlockItem(BLUE_ROSE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.BLUE_ROSE));
-			registry.register(new BlockItem(CANVAS, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.CANVAS));
-			registry.register(new BlockItem(PAINT_BUCKET, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.PAINT_BUCKET));
-			
-			registry.register(new BlockItem(CRUSHER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.CRUSHER));
-			registry.register(new BlockItem(ELECTRIC_CRUSHER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.ELECTRIC_CRUSHER));
-			registry.register(new BlockItem(ELECTRIC_FURNACE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.ELECTRIC_FURNACE));
-			registry.register(new BlockItem(COMPRESSOR, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.COMPRESSOR));
-			registry.register(new BlockItem(GLOWSTONE_GENERATOR, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.GLOWSTONE_GENERATOR));	
-			registry.register(new BlockItem(CREATIVE_POWER_BLOCK, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.CREATIVE_POWER_BLOCK));
-			registry.register(new BlockItem(COFFEE_MACHINE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.COFFEE_MACHINE));
-//			registry.register(new BlockItem(BASIC_ENERGY_CABLE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.BASIC_ENERGY_CABLE));
-//			registry.register(new BlockItem(ADVANCED_ENERGY_CABLE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.ADVANCED_ENERGY_CABLE));
-			registry.register(new BlockItem(CLOSET, new Item.Properties().group(ModItemGroups.CLOSET_GROUP)).setRegistryName(BlockNames.CLOSET));
-			
-			registry.register(new BlockItem(STRIPPED_OAK_COFFEE_TABLE, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP)).setRegistryName(BlockNames.STRIPPED_OAK_COFFEE_TABLE));
-
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.WHITE));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.ORANGE));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.MAGENTA));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.LIGHT_BLUE));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.YELLOW));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.LIME));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.PINK));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.GRAY));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.LIGHT_GRAY));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.CYAN));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.PURPLE));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.BLUE));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.BROWN));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.GREEN));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.RED));
-			registry.register(new LampBlockItem(new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP), DyeColor.BLACK));
-			
-			UselessMod.LOGGER.info("Registered item blocks");
-		}
+	@SubscribeEvent
+	public static void blockRegister(final RegistryEvent.Register<Block> event) {
+		USELESS_GRASS_BLOCK = register("useless_grass_block", new UselessGrassBlock(Block.Properties.create(Material.ORGANIC).tickRandomly().hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
+		USELESS_DIRT = register("useless_dirt", new Block(Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND)));
+		USELESS_GRASS = register("useless_grass", new UselessTallGrassBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()));
+		USELESS_FERN = register("useless_fern", new UselessTallGrassBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()));
+		LARGE_USELESS_FERN = register("large_useless_fern", new UselessDoublePlantBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()));
+		TALL_USELESS_GRASS = register("tall_useless_grass", new UselessDoublePlantBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()));
+		POTTED_USELESS_FERN = register("potted_useless_fern", new FlowerPotBlock(USELESS_FERN, Block.Properties.create(Material.MISCELLANEOUS)));
+		USELESS_LOG = register("useless_log", new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+		STRIPPED_USELESS_LOG = register("stripped_useless_log", new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+		USELESS_WOOD = register("useless_wood", new RotatedPillarBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+		STRIPPED_USELESS_WOOD = register("stripped_useless_wood", new RotatedPillarBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+		USELESS_PLANKS = register("useless_planks", new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+		USELESS_SLAB = register("useless_slab", new SlabBlock(Block.Properties.from(USELESS_PLANKS)));
+		USELESS_STAIRS = register("useless_stairs", new UselessStairsBlock(USELESS_PLANKS.getDefaultState(), Block.Properties.from(USELESS_PLANKS)));
+		USELESS_SAPLING = register("useless_sapling", new UselessSaplingBlock(new UselessTree(), Block.Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly().doesNotBlockMovement()));
+		POTTED_USELESS_SAPLING = register("potted_useless_sapling", new FlowerPotBlock(USELESS_SAPLING, Block.Properties.create(Material.MISCELLANEOUS)));
+		USELESS_LEAVES = register("useless_leaves", new LeavesBlock(Block.Properties.create(Material.LEAVES).tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.PLANT)));
+		USELESS_FENCE = register("useless_fence", new FenceBlock(Block.Properties.from(USELESS_PLANKS)));
+		USELESS_SIGN = register("useless_sign", new StandingSignBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD)));
+		USELESS_WALL_SIGN = register("useless_wall_sign", new WallSignBlock(Block.Properties.from(USELESS_SIGN)));
+		USELESS_PRESSURE_PLATE = register("useless_pressure_plate", new UselessPressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
+		USELESS_TRAPDOOR = register("useless_trapdoor", new UselessTrapdoorBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0F).sound(SoundType.WOOD)));
+		USELESS_FENCE_GATE = register("useless_fence_gate", new FenceGateBlock(Block.Properties.from(USELESS_FENCE)));
+		USELESS_BUTTON = register("useless_button", new UselessWoodButtonBlock(Block.Properties.from(USELESS_PRESSURE_PLATE)));
+		WOODEN_USELESS_DOOR = register("wooden_useless_door", new ModDoorBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(3.0F)));
+		
+		USELESS_BLOCK = register("useless_block", new Block(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
+		SUPER_USELESS_BLOCK = register("super_useless_block", new Block(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
+		USELESS_BARS = register("useless_bars", new ModPaneBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
+		SUPER_USELESS_BARS = register("super_useless_bars", new ModPaneBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
+		USELESS_DOOR = register("useless_door", new ModDoorBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F)));
+		SUPER_USELESS_DOOR = register("super_useless_door", new ModDoorBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F)));
+		USELESS_ORE = register("useless_ore", new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.0F)));
+		USELESS_ORE_NETHER = register("useless_ore_nether", new Block(Block.Properties.create(Material.ROCK, MaterialColor.NETHERRACK).sound(SoundType.STONE).hardnessAndResistance(3.0F)));
+		USELESS_ORE_END = register("useless_ore_end", new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.0F)));
+		SUPER_USELESS_ORE = register("super_useless_ore", new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.0F)));
+		SUPER_USELESS_ORE_NETHER = register("super_useless_ore_nether", new Block(Block.Properties.create(Material.ROCK, MaterialColor.NETHERRACK).sound(SoundType.STONE).hardnessAndResistance(3.0F)));
+		SUPER_USELESS_ORE_END = register("super_useless_ore_end", new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.0F)));
+		CHEESE_MAKER = register("cheese_maker", new CheeseMakerBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F).sound(SoundType.METAL)));
+		LAMP = register("lamp", new LampBlock(Block.Properties.create(Material.REDSTONE_LIGHT).sound(SoundType.GLASS).hardnessAndResistance(1.2F)));
+		RED_ROSE = register("red_rose", new UselessFlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)));
+		BLUE_ROSE = register("blue_rose", new UselessFlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)));
+		POTTED_RED_ROSE = register("potted_red_rose", new FlowerPotBlock(RED_ROSE, Block.Properties.create(Material.MISCELLANEOUS)));
+		POTTED_BLUE_ROSE = register("potted_blue_rose", new FlowerPotBlock(BLUE_ROSE, Block.Properties.create(Material.MISCELLANEOUS)));
+		USELESS_WHEAT = register("useless_wheat", new UselessCropsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement()));
+		COFFEE_SEEDS = register("coffee_seeds", new UselessCropsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement()));
+		CANVAS = register("canvas", new ColorableBlock(Block.Properties.create(Material.WOOL).sound(SoundType.CLOTH).hardnessAndResistance(.3F)));
+		PAINT_BUCKET = register("paint_bucket", new PaintBucketBlock(Block.Properties.create(Material.WOOL).sound(SoundType.METAL).hardnessAndResistance(.25F)));
+		
+		CRUSHER = register("crusher", new CrusherBlock(Block.Properties.create(Material.ROCK).sound(SoundType.METAL).hardnessAndResistance(3.5F)));
+		ELECTRIC_CRUSHER = register("electric_crusher", new ElectricCrusherBlock(Block.Properties.from(CRUSHER)));
+		ELECTRIC_FURNACE = register("electric_furnace", new ElectricFurnaceBlock(Block.Properties.from(CRUSHER)));
+		COMPRESSOR = register("compressor", new CompressorBlock(Block.Properties.from(CRUSHER)));
+		GLOWSTONE_GENERATOR = register("glowstone_generator", new GlowstoneGeneratorBlock(Block.Properties.from(CRUSHER)));
+		CREATIVE_POWER_BLOCK = register("creative_power_block", new CreativePowerBlock(Block.Properties.from(CRUSHER)));
+		COFFEE_MACHINE = register("coffee_machine", new CoffeeMachineBlock(Block.Properties.from(CRUSHER)));
+		BASIC_ENERGY_CABLE = register("basic_energy_cable", new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.125F), 200));
+		ADVANCED_ENERGY_CABLE = register("advanced_energy_cable", new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.25F), 500));
+		CLOSET = register("closet", new ClosetBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F)));
+		
+		GREENSTONE_WIRE = register("greenstone_wire", new GreenstoneWireBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement()));
+		
+		STRIPPED_OAK_COFFEE_TABLE = register("stripped_oak_coffee_table", new CoffeeTableBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD)));
 	}
 	
+	public static Block register(String name, Block block) {
+		ResourceLocation location = new ResourceLocation(UselessMod.MOD_ID, name);
+		block.setRegistryName(location);
+		ForgeRegistries.BLOCKS.register(block);
+		UselessMod.LOGGER.debug("Registered block with registry name: " + location);
+		return block;
+	}
 }

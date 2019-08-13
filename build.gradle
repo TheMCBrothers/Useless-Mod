@@ -127,9 +127,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 	
     // compile against the JEI API but do not include it at runtime
-    //compileOnly fg.deobf("mezz.jei:jei-${mcversion}:${jeiversion}:api")
+    compileOnly fg.deobf("mezz.jei:jei-${mcversion}:${jeiversion}:api")
     // at runtime, use the full JEI jar
-    //runtimeOnly fg.deobf("mezz.jei:jei-${mcversion}:${jeiversion}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mcversion}:${jeiversion}")
 
 }
 

@@ -12,6 +12,8 @@ import tk.themcbros.uselessmod.closet.BeddingRegistryEvent;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
 import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.lists.ModBiomes;
+import tk.themcbros.uselessmod.lists.ModEntityTypes;
+import tk.themcbros.uselessmod.lists.VanillaCompat;
 import tk.themcbros.uselessmod.world.FlowerGeneration;
 import tk.themcbros.uselessmod.world.OreGeneration;
 
@@ -36,6 +38,8 @@ public class CommonProxy {
 		OreGeneration.setupNetherOreGeneration();
 		
 		FlowerGeneration.setupFlowerGeneration();
+		
+		VanillaCompat.register();
 	}
 	
 	protected void init(InterModEnqueueEvent event) {
@@ -46,6 +50,7 @@ public class CommonProxy {
 		UselessMod.LOGGER.debug("CommonProxy postInit method");
 		FMLJavaModLoadingContext.get().getModEventBus().post(new BeddingRegistryEvent(ClosetRegistry.CASINGS, ClosetRegistry.BEDDINGS));
 		
+		ModEntityTypes.registerEntityWorldSpawns();
 		ModBiomes.addBiomesToManager();
 	}
 	

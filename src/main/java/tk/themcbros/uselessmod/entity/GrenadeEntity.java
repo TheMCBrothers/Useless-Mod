@@ -11,6 +11,7 @@ import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import tk.themcbros.uselessmod.config.EntityConfig;
 import tk.themcbros.uselessmod.lists.ModEntityTypes;
 import tk.themcbros.uselessmod.lists.ModItems;
 
@@ -32,7 +33,8 @@ public class GrenadeEntity extends ProjectileItemEntity {
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		final BlockPos blockPos = new BlockPos(this);
-		world.createExplosion(this, DamageSource.MAGIC, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 5, false, Mode.DESTROY);
+		final boolean destroy = EntityConfig.grenade_enabled.get();
+		world.createExplosion(this, DamageSource.MAGIC, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 5, false, destroy ? Mode.DESTROY : Mode.NONE);
 		remove();
 	}
 
@@ -40,7 +42,4 @@ public class GrenadeEntity extends ProjectileItemEntity {
 	protected Item func_213885_i() {
 		return ModItems.GRENADE;
 	}
-
-	
-	
 }

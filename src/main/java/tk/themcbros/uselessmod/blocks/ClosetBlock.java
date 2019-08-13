@@ -128,8 +128,8 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 
 	@Override
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		for (IClosetMaterial beddingId : ClosetRegistry.BEDDINGS.getKeys())
-			for (IClosetMaterial casingId : ClosetRegistry.CASINGS.getKeys())
+		for (IClosetMaterial casingId : ClosetRegistry.CASINGS.getKeys())
+			for (IClosetMaterial beddingId : ClosetRegistry.BEDDINGS.getKeys())
 				items.add(ClosetRegistry.createItemStack(casingId, beddingId));
 	}
 	

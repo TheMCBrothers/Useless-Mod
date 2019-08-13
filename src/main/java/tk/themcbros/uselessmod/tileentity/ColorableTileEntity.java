@@ -4,15 +4,15 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.client.model.ModelDataManager;
+import tk.themcbros.uselessmod.lists.ModTileEntities;
 
-public abstract  class ColorableTileEntity extends TileEntity {
+public class ColorableTileEntity extends TileEntity {
 
 	private int color;
 
-	public ColorableTileEntity(TileEntityType<?> typeIn) {
-		super(typeIn);
+	public ColorableTileEntity() {
+		super(ModTileEntities.COLORABLE);
 		this.color = 0xFFFFFF;
 	}
 

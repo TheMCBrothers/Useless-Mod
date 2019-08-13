@@ -30,6 +30,8 @@ public class ModBeddings {
 				}
 			}
 			
+			casingReg.registerMaterial(ModBlocks.USELESS_PLANKS, new ResourceLocation(UselessMod.MOD_ID, "block/useless_planks"));
+			
 			beddingReg.registerMaterial(Blocks.WHITE_WOOL, new ResourceLocation("block/white_wool"));
 			beddingReg.registerMaterial(Blocks.ORANGE_WOOL, new ResourceLocation("block/orange_wool"));
 			beddingReg.registerMaterial(Blocks.MAGENTA_WOOL, new ResourceLocation("block/magenta_wool"));

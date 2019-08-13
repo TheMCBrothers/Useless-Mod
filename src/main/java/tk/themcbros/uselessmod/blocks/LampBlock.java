@@ -24,7 +24,7 @@ import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import tk.themcbros.uselessmod.items.LampBlockItem;
-import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.lists.ModItems;
 
 public class LampBlock extends Block {
 
@@ -53,52 +53,52 @@ public class LampBlock extends Block {
 		
 		switch (state.get(COLOR)) {
 		case WHITE:
-			provider = ModBlocks.WHITE_LAMP;
+			provider = ModItems.WHITE_LAMP;
 			break;
 		case BLACK:
-			provider = ModBlocks.BLACK_LAMP;
+			provider = ModItems.BLACK_LAMP;
 			break;
 		case BLUE:
-			provider = ModBlocks.BLUE_LAMP;
+			provider = ModItems.BLUE_LAMP;
 			break;
 		case BROWN:
-			provider = ModBlocks.BROWN_LAMP;
+			provider = ModItems.BROWN_LAMP;
 			break;
 		case CYAN:
-			provider = ModBlocks.CYAN_LAMP;
+			provider = ModItems.CYAN_LAMP;
 			break;
 		case GRAY:
-			provider = ModBlocks.GRAY_LAMP;
+			provider = ModItems.GRAY_LAMP;
 			break;
 		case GREEN:
-			provider = ModBlocks.GREEN_LAMP;
+			provider = ModItems.GREEN_LAMP;
 			break;
 		case LIGHT_BLUE:
-			provider = ModBlocks.LIGHT_BLUE_LAMP;
+			provider = ModItems.LIGHT_BLUE_LAMP;
 			break;
 		case LIGHT_GRAY:
-			provider = ModBlocks.LIGHT_GRAY_LAMP;
+			provider = ModItems.LIGHT_GRAY_LAMP;
 			break;
 		case LIME:
-			provider = ModBlocks.LIME_LAMP;
+			provider = ModItems.LIME_LAMP;
 			break;
 		case MAGENTA:
-			provider = ModBlocks.MAGENTA_LAMP;
+			provider = ModItems.MAGENTA_LAMP;
 			break;
 		case ORANGE:
-			provider = ModBlocks.ORANGE_LAMP;
+			provider = ModItems.ORANGE_LAMP;
 			break;
 		case PINK:
-			provider = ModBlocks.PINK_LAMP;
+			provider = ModItems.PINK_LAMP;
 			break;
 		case PURPLE:
-			provider = ModBlocks.PURPLE_LAMP;
+			provider = ModItems.PURPLE_LAMP;
 			break;
 		case RED:
-			provider = ModBlocks.RED_LAMP;
+			provider = ModItems.RED_LAMP;
 			break;
 		case YELLOW:
-			provider = ModBlocks.YELLOW_LAMP;
+			provider = ModItems.YELLOW_LAMP;
 			break;
 		default:
 			break;
@@ -116,52 +116,52 @@ public class LampBlock extends Block {
 		
 		switch (state.get(COLOR)) {
 		case WHITE:
-			provider = ModBlocks.WHITE_LAMP;
+			provider = ModItems.WHITE_LAMP;
 			break;
 		case BLACK:
-			provider = ModBlocks.BLACK_LAMP;
+			provider = ModItems.BLACK_LAMP;
 			break;
 		case BLUE:
-			provider = ModBlocks.BLUE_LAMP;
+			provider = ModItems.BLUE_LAMP;
 			break;
 		case BROWN:
-			provider = ModBlocks.BROWN_LAMP;
+			provider = ModItems.BROWN_LAMP;
 			break;
 		case CYAN:
-			provider = ModBlocks.CYAN_LAMP;
+			provider = ModItems.CYAN_LAMP;
 			break;
 		case GRAY:
-			provider = ModBlocks.GRAY_LAMP;
+			provider = ModItems.GRAY_LAMP;
 			break;
 		case GREEN:
-			provider = ModBlocks.GREEN_LAMP;
+			provider = ModItems.GREEN_LAMP;
 			break;
 		case LIGHT_BLUE:
-			provider = ModBlocks.LIGHT_BLUE_LAMP;
+			provider = ModItems.LIGHT_BLUE_LAMP;
 			break;
 		case LIGHT_GRAY:
-			provider = ModBlocks.LIGHT_GRAY_LAMP;
+			provider = ModItems.LIGHT_GRAY_LAMP;
 			break;
 		case LIME:
-			provider = ModBlocks.LIME_LAMP;
+			provider = ModItems.LIME_LAMP;
 			break;
 		case MAGENTA:
-			provider = ModBlocks.MAGENTA_LAMP;
+			provider = ModItems.MAGENTA_LAMP;
 			break;
 		case ORANGE:
-			provider = ModBlocks.ORANGE_LAMP;
+			provider = ModItems.ORANGE_LAMP;
 			break;
 		case PINK:
-			provider = ModBlocks.PINK_LAMP;
+			provider = ModItems.PINK_LAMP;
 			break;
 		case PURPLE:
-			provider = ModBlocks.PURPLE_LAMP;
+			provider = ModItems.PURPLE_LAMP;
 			break;
 		case RED:
-			provider = ModBlocks.RED_LAMP;
+			provider = ModItems.RED_LAMP;
 			break;
 		case YELLOW:
-			provider = ModBlocks.YELLOW_LAMP;
+			provider = ModItems.YELLOW_LAMP;
 			break;
 		default:
 			break;
