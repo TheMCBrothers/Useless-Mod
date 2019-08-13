@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"###",
+		"###",
+		" S "
+	],
+	"key": {
+		"#": { "item": "uselessmod:useless_planks" },
+		"S": { "item": "minecraft:stick" }
+	},
+	"result": {
+		"item": "uselessmod:useless_sign",
+		"count": 3
+	}
+}

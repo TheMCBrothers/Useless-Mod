@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"#D#",
+		"B#B"
+	],
+	"key": {
+		"#": { "item": "uselessmod:useless_ingot" },
+		"B": { "item": "uselessmod:useless_block" },
+		"D": { "tag": "forge:dyes" }
+	},
+	"result": {
+		"item": "uselessmod:paint_bucket",
+		"count": 1
+	}
+}
