@@ -44,6 +44,7 @@ public class PaintBucketBlock extends ColorableBlock {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity != null && tileEntity instanceof ColorableTileEntity)
 				((ColorableTileEntity) tileEntity).setColor(colour);
+			if(!player.abilities.isCreativeMode) stack.shrink(1);
 			return true;
 		}
 		return false;

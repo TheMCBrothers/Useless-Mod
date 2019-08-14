@@ -54,12 +54,6 @@ public class JEICompat implements IModPlugin {
 			String beddingId = tag.getString("beddingId");
 			return casingId + beddingId;
 		});
-		registration.registerSubtypeInterpreter(ModBlocks.CANVAS.asItem(), itemStack -> {
-			return itemStack.hasTag() && itemStack.getTag().contains("color") ? Integer.toString(itemStack.getTag().getInt("color")) : "canvas";
-		});
-		registration.registerSubtypeInterpreter(ModBlocks.PAINT_BUCKET.asItem(), itemStack -> {
-			return itemStack.hasTag() && itemStack.getTag().contains("color") ? Integer.toString(itemStack.getTag().getInt("color")) : "paint_bucket";
-		});
 		registration.registerSubtypeInterpreter(ModItems.COFFEE_CUP, itemStack -> {
 			return itemStack.hasTag() && itemStack.getTag().contains("CoffeeType") ? itemStack.getTag().getString("CoffeeType") : "coffee_cup";
 		});

@@ -138,7 +138,7 @@ public class PaintBrushItem extends Item {
 		if (nbttagcompound != null)
 			return nbttagcompound.getInt("color");
 
-		return 10511680;
+		return 16383998;
 
 	}
 

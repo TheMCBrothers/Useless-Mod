@@ -7,12 +7,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -43,8 +40,12 @@ public class ColorableBlock extends Block {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
-		if(tileEntity != null && tileEntity instanceof ColorableTileEntity)
-			((ColorableTileEntity) tileEntity).setColor(stack.getTag().getInt("color"));
+		if(tileEntity != null && tileEntity instanceof ColorableTileEntity) {
+			if(stack.hasTag() && stack.getTag() != null && stack.getTag().contains("color"))
+				((ColorableTileEntity) tileEntity).setColor(stack.getTag().getInt("color"));
+			else
+				((ColorableTileEntity) tileEntity).setColor(16383998);
+		}
 		worldIn.notifyBlockUpdate(pos, state, state, 3);
 	}
 	
@@ -68,22 +69,6 @@ public class ColorableBlock extends Block {
 			stack.getTag().putInt("color", ((ColorableTileEntity) tileEntity).getColor());
 		}
 		return stack;
-	}
-	
-	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		for(DyeColor color : DyeColor.values()) {
-            ItemStack baseColours = new ItemStack(this);
-            baseColours.setTag(new CompoundNBT());
-            float[] colourComponents = color.getColorComponentValues();
-            int colour = (int) (colourComponents[0] * 255F);
-            colour = (int) ((colour << 8) + colourComponents[1] * 255F);
-            colour = (int) ((colour << 8) + colourComponents[2] * 255F);
-            
-            
-            baseColours.getTag().putInt("color", colour);
-            items.add(baseColours);
-        }
 	}
 	
 }
