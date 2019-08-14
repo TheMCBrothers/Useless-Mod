@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"##",
+		"##"
+	],
+	"key": {
+		"#": { "item": "uselessmod:canvas" }
+	},
+	"result": {
+		"item": "minecraft:white_wool",
+		"count": 4
+	}
+}

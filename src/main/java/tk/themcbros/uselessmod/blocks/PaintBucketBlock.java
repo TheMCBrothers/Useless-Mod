@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeItem;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -34,9 +34,9 @@ public class PaintBucketBlock extends ColorableBlock {
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		final ItemStack stack = player.getHeldItem(handIn);
-		if(stack.getItem() instanceof DyeItem) {
-			DyeItem dyeItem = (DyeItem) stack.getItem();
-			float[] colourComponents = dyeItem.getDyeColor().getColorComponentValues();
+		DyeColor color = DyeColor.getColor(stack);
+		if(color != null) {
+			float[] colourComponents = color.getColorComponentValues();
 			int colour = (int) (colourComponents[0] * 255F);
 			colour = (int) ((colour << 8) + colourComponents[1] * 255F);
 			colour = (int) ((colour << 8) + colourComponents[2] * 255F);
