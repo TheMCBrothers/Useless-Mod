@@ -52,6 +52,7 @@ public class ModItems {
 	public static Item SUGARED_MILK = null;
 	public static Item CUP = null;
 	public static Item COFFEE_CUP = null;
+	public static Item USELESS_STICK = null;
 	public static Item IRON_DUST = null;
 	public static Item USELESS_DUST = null;
 	public static Item SUPER_USELESS_DUST = null;
@@ -253,6 +254,7 @@ public class ModItems {
 		SUGARED_MILK = registerItem("sugared_milk", new Item(new Item.Properties().maxStackSize(1)));
 		CUP = registerItem("cup");
 		COFFEE_CUP = registerItem("coffee_cup", new CoffeeCupItem(new Item.Properties().maxStackSize(1).group(GROUP)));
+		USELESS_STICK = registerItem("useless_stick");
 		IRON_DUST = registerItem("iron_dust");
 		USELESS_DUST = registerItem("useless_dust");
 		SUPER_USELESS_DUST = registerItem("super_useless_dust");

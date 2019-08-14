@@ -1,7 +1,7 @@
 {
 	"parent": "block/door_top",
 	"textures": {
-		"bottom": "block/oak_door_bottom",
-		"top": "block/oak_door_top"
+		"bottom": "uselessmod:block/wooden_useless_door_bottom",
+		"top": "uselessmod:block/wooden_useless_door_top"
 	}
 }

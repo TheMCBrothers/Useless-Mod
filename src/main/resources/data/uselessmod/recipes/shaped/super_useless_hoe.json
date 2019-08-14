@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"I": { "item": "uselessmod:super_useless_ingot" },
-		"S": { "item": "minecraft:stick" }
+		"S": { "tag": "forge:rods/wooden" }
 	},
 	"result": {
 		"item": "uselessmod:super_useless_hoe"

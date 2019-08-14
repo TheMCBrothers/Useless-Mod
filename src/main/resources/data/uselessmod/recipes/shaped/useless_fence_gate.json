@@ -6,7 +6,7 @@
 	],
 	"key": {
 		"#": { "item": "uselessmod:useless_planks" },
-		"S": { "item": "minecraft:stick" }
+		"S": { "tag": "forge:rods/wooden" }
 	},
 	"result": {
 		"item": "uselessmod:useless_fence_gate",
