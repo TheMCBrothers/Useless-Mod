@@ -66,6 +66,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 			if (!flag) {
 				this.playSound(blockstate, SoundEvents.BLOCK_BARREL_OPEN);
 				this.setState(blockstate, true);
+				this.setOpen(true);
 				UselessMod.LOGGER.debug("OPENED BARREL");
 			}
 
@@ -86,6 +87,7 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 				if (flag) {
 					this.playSound(blockstate, SoundEvents.BLOCK_BARREL_CLOSE);
 					this.setState(blockstate, false);
+					this.setOpen(false);
 					UselessMod.LOGGER.debug("CLOSED BARREL");
 				}
 			}
