@@ -55,6 +55,11 @@ public class ClosetModel implements IBakedModel {
 	}
 
 	public IBakedModel getCustomModel(IClosetMaterial casing, IClosetMaterial bedding, Direction facing, Boolean open) {
+		// Hotfix for possible optifine bug
+        if (casing == null) { casing = ClosetRegistry.CASINGS.getKeys().get(0); }
+        if (bedding == null) { bedding = ClosetRegistry.BEDDINGS.getKeys().get(0); }
+        if (facing == null) { facing = Direction.NORTH; }
+		
 		String casingTex = casing.getTexture();
 		String beddingTex = bedding.getTexture();
 
