@@ -12,19 +12,19 @@ import tk.themcbros.uselessmod.UselessMod;
 @Mod.EventBusSubscriber
 public class Config {
 	
-	private static final ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();
-	public static final ForgeConfigSpec server_config;
+	private static final ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
+	public static final ForgeConfigSpec common_config;
 	
 	private static final ForgeConfigSpec.Builder client_builder = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec client_config;
 	
 	static {
 		
-		OreGenConfig.init(server_builder, client_builder);
-		MachineConfig.init(server_builder, client_builder);
-		EntityConfig.init(server_builder, client_builder);
+		OreGenConfig.init(common_builder, client_builder);
+		MachineConfig.init(common_builder, client_builder);
+		EntityConfig.init(common_builder, client_builder);
 		
-		server_config = server_builder.build();
+		common_config = common_builder.build();
 		client_config = client_builder.build();
 		
 	}

@@ -145,8 +145,7 @@
 	"block.uselessmod.glowstone_generator": "Glowstone Generator",
 	"block.uselessmod.electric_furnace": "Electric Furnace",
 	"block.uselessmod.creative_power_block": "Creative Power Block",
-	"block.uselessmod.basic_energy_cable": "Basic Energy Cable",
-	"block.uselessmod.advanced_energy_cable": "Advanced Energy Cable",
+	"block.uselessmod.energy_cable": "Energy Cable",
 	"block.uselessmod.compressor": "Compressor",
 	"block.uselessmod.coffee_machine": "Coffee Machine",
 	"block.uselessmod.stripped_oak_coffee_table": "Stripped Oak Coffee Table",
@@ -156,6 +155,9 @@
 	"block.uselessmod.paint_bucket": "Paint Bucket",
 	"block.uselessmod.paint_bucket.tooltip": "\u00a77Color: %s",
 	"block.uselessmod.paint_bucket.tooltip_2": "\u00a77Filled with: %s",
+	"block.uselessmod.light_switch": "Light Switch",
+	"block.uselessmod.light_switch.tooltip": "Attached Block Positions:",
+	"block.uselessmod.unlit_lantern": "Unlit Lantern",
 
 	"container.uselessmod.crusher": "Crusher",
 	"container.uselessmod.glowstone_generator": "Glowstone Generator",
@@ -174,7 +176,11 @@
 	
 	"tooltip.uselessmod.fluid_tank": "Fluid: %s",
 	"tooltip.uselessmod.machine": "Energy: %d",
-	"tooltip.uselessmod.press_shift": "\u00a77\u00a7o<Press LSHIFT>",
+	"tooltip.uselessmod.press_shift": "\u00a77\u00a7o<Press Left Shift>",
+	"tooltip.uselessmod.light_switch.clear": "\u00a77\u00a7oSneak and right click to clear configuration",
+	
+	"status.uselessmod.light_switch.block_added": "Added block at %s to Light Switch",
+	"status.uselessmod.light_switch.cleared": "Light switch configuration cleared",
 	
 	"uselessmod.jei.paint_brush_desc": "Use the paint brush to paint the canvas\nTo get the right color, collect it from a paint bucket",
 	"uselessmod.jei.paint_bucket_desc": "Used to collect color with paint brush.\n\nRight click with dye color to change color",

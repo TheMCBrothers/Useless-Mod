@@ -38,6 +38,67 @@ public class LampBlock extends Block {
 	}
 	
 	@Override
+	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+		IItemProvider provider = this;
+
+		switch (state.get(COLOR)) {
+		case WHITE:
+			provider = ModItems.WHITE_LAMP;
+			break;
+		case BLACK:
+			provider = ModItems.BLACK_LAMP;
+			break;
+		case BLUE:
+			provider = ModItems.BLUE_LAMP;
+			break;
+		case BROWN:
+			provider = ModItems.BROWN_LAMP;
+			break;
+		case CYAN:
+			provider = ModItems.CYAN_LAMP;
+			break;
+		case GRAY:
+			provider = ModItems.GRAY_LAMP;
+			break;
+		case GREEN:
+			provider = ModItems.GREEN_LAMP;
+			break;
+		case LIGHT_BLUE:
+			provider = ModItems.LIGHT_BLUE_LAMP;
+			break;
+		case LIGHT_GRAY:
+			provider = ModItems.LIGHT_GRAY_LAMP;
+			break;
+		case LIME:
+			provider = ModItems.LIME_LAMP;
+			break;
+		case MAGENTA:
+			provider = ModItems.MAGENTA_LAMP;
+			break;
+		case ORANGE:
+			provider = ModItems.ORANGE_LAMP;
+			break;
+		case PINK:
+			provider = ModItems.PINK_LAMP;
+			break;
+		case PURPLE:
+			provider = ModItems.PURPLE_LAMP;
+			break;
+		case RED:
+			provider = ModItems.RED_LAMP;
+			break;
+		case YELLOW:
+			provider = ModItems.YELLOW_LAMP;
+			break;
+		default:
+			break;
+		}
+
+		ItemStack stack = new ItemStack(provider);
+		return stack;
+	}
+
+	@Override
 	public ToolType getHarvestTool(BlockState state) {
 		return ToolType.PICKAXE;
 	}
@@ -49,127 +110,13 @@ public class LampBlock extends Block {
 	
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		IItemProvider provider = this;
-		
-		switch (state.get(COLOR)) {
-		case WHITE:
-			provider = ModItems.WHITE_LAMP;
-			break;
-		case BLACK:
-			provider = ModItems.BLACK_LAMP;
-			break;
-		case BLUE:
-			provider = ModItems.BLUE_LAMP;
-			break;
-		case BROWN:
-			provider = ModItems.BROWN_LAMP;
-			break;
-		case CYAN:
-			provider = ModItems.CYAN_LAMP;
-			break;
-		case GRAY:
-			provider = ModItems.GRAY_LAMP;
-			break;
-		case GREEN:
-			provider = ModItems.GREEN_LAMP;
-			break;
-		case LIGHT_BLUE:
-			provider = ModItems.LIGHT_BLUE_LAMP;
-			break;
-		case LIGHT_GRAY:
-			provider = ModItems.LIGHT_GRAY_LAMP;
-			break;
-		case LIME:
-			provider = ModItems.LIME_LAMP;
-			break;
-		case MAGENTA:
-			provider = ModItems.MAGENTA_LAMP;
-			break;
-		case ORANGE:
-			provider = ModItems.ORANGE_LAMP;
-			break;
-		case PINK:
-			provider = ModItems.PINK_LAMP;
-			break;
-		case PURPLE:
-			provider = ModItems.PURPLE_LAMP;
-			break;
-		case RED:
-			provider = ModItems.RED_LAMP;
-			break;
-		case YELLOW:
-			provider = ModItems.YELLOW_LAMP;
-			break;
-		default:
-			break;
-
-		}
-		
-		ItemStack stack = new ItemStack(provider);
-		return stack;
+		return this.getItem(world, pos, state);
 	}
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, net.minecraft.world.storage.loot.LootContext.Builder builder) {
 		List<ItemStack> drops = new ArrayList<ItemStack>();
-		IItemProvider provider = this;
-		
-		switch (state.get(COLOR)) {
-		case WHITE:
-			provider = ModItems.WHITE_LAMP;
-			break;
-		case BLACK:
-			provider = ModItems.BLACK_LAMP;
-			break;
-		case BLUE:
-			provider = ModItems.BLUE_LAMP;
-			break;
-		case BROWN:
-			provider = ModItems.BROWN_LAMP;
-			break;
-		case CYAN:
-			provider = ModItems.CYAN_LAMP;
-			break;
-		case GRAY:
-			provider = ModItems.GRAY_LAMP;
-			break;
-		case GREEN:
-			provider = ModItems.GREEN_LAMP;
-			break;
-		case LIGHT_BLUE:
-			provider = ModItems.LIGHT_BLUE_LAMP;
-			break;
-		case LIGHT_GRAY:
-			provider = ModItems.LIGHT_GRAY_LAMP;
-			break;
-		case LIME:
-			provider = ModItems.LIME_LAMP;
-			break;
-		case MAGENTA:
-			provider = ModItems.MAGENTA_LAMP;
-			break;
-		case ORANGE:
-			provider = ModItems.ORANGE_LAMP;
-			break;
-		case PINK:
-			provider = ModItems.PINK_LAMP;
-			break;
-		case PURPLE:
-			provider = ModItems.PURPLE_LAMP;
-			break;
-		case RED:
-			provider = ModItems.RED_LAMP;
-			break;
-		case YELLOW:
-			provider = ModItems.YELLOW_LAMP;
-			break;
-		default:
-			break;
-
-		}
-		
-		ItemStack stack = new ItemStack(provider);
-		drops.add(stack);
+		drops.add(this.getItem(null, null, state));
 		return drops;
 	}
 	

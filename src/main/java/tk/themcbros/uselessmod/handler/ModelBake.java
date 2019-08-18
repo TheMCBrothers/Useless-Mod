@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,13 +40,18 @@ public class ModelBake {
 			IBakedModel customModel = new ClosetModel(event.getModelLoader(), model,
 					model.bake(event.getModelLoader(), ModelLoader.defaultTextureGetter(),
 							TRSRTransformation.getRotation(Direction.NORTH), DefaultVertexFormats.BLOCK),
+					DefaultVertexFormats.BLOCK, false);
+			IBakedModel customOpenModel = new ClosetModel(event.getModelLoader(), openModel,
 					openModel.bake(event.getModelLoader(), ModelLoader.defaultTextureGetter(),
 							TRSRTransformation.getRotation(Direction.NORTH), DefaultVertexFormats.BLOCK),
-					DefaultVertexFormats.BLOCK);
+					DefaultVertexFormats.BLOCK, true);
 
 			// Replace all valid block states
 			ModBlocks.CLOSET.getStateContainer().getValidStates().forEach(state -> {
-				modelRegistry.put(BlockModelShapes.getModelLocation(state), customModel);
+				if(state.has(BlockStateProperties.OPEN) && state.get(BlockStateProperties.OPEN))
+					modelRegistry.put(BlockModelShapes.getModelLocation(state), customOpenModel);
+				else
+					modelRegistry.put(BlockModelShapes.getModelLocation(state), customModel);
 			});
 
 			// Replace inventory model

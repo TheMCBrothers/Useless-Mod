@@ -62,5 +62,12 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 		this.maxReceive = nbt.getInt("MaxReceive");
 		this.maxExtract = nbt.getInt("MaxExtract");
 	}
-
+	
+	public static CustomEnergyStorage fromNBT(CompoundNBT nbt) {
+		int energy = nbt.getInt("Energy");
+		int capacity = nbt.getInt("Capacity");
+		int maxReceive = nbt.getInt("MaxReceive");
+		int maxExtract = nbt.getInt("MaxExtract");
+		return new CustomEnergyStorage(capacity, maxReceive, maxExtract, energy);
+	}
 }

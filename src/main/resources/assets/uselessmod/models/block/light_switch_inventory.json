@@ -1,0 +1,64 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "particle": "uselessmod:block/light_switch",
+        "light_switch": "uselessmod:block/light_switch"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 220, 0 ],
+            "translation": [ 3.5, -2, 0 ],
+            "scale": [ 0.825, 0.825, 0.825 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.35, 0.35, 0.35 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 0, -7 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 116, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "from": [ 5, 2, 15 ], 
+            "to": [ 11, 14, 16 ], 
+            "faces": {
+                "north": { "texture": "#light_switch", "uv": [ 5, 2, 11, 14 ] },
+                "east": { "texture": "#light_switch", "uv": [ 0, 2, 1, 14 ] },
+                "south": { "texture": "#light_switch", "uv": [ 5, 2, 11, 14 ] },
+                "west": { "texture": "#light_switch", "uv": [ 15, 2, 16, 14 ] },
+                "up": { "texture": "#light_switch", "uv": [ 5, 15, 11, 16 ] },
+                "down": { "texture": "#light_switch", "uv": [ 5, 0, 11, 1 ] }
+            }
+        },
+        {
+            "from": [ 6.8, 4.5, 14 ], 
+            "to": [ 9.2, 6.5, 15 ], 
+            "faces": {
+                "north": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 2 ] },
+                "east": { "texture": "#light_switch", "uv": [ 0, 0, 1, 2 ] },
+                "west": { "texture": "#light_switch", "uv": [ 0, 0, 1, 2 ] },
+                "up": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 1 ] },
+                "down": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 1 ] }
+            }
+        }
+    ]
+}

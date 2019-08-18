@@ -25,7 +25,10 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
+import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
 import tk.themcbros.uselessmod.lists.ModItems;
+import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 
 public class UselessItem extends Item {
 
@@ -42,38 +45,53 @@ public class UselessItem extends Item {
 		BlockPos pos = context.getPos();
 		TileEntity tileEntity = world.getTileEntity(pos);
 		PlayerEntity player = context.getPlayer();
-		if(world.isRemote) {
-			return ActionResultType.PASS;
-		} else {
-			if(tileEntity != null) {
-				IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
-				IEnergyStorage energyHandler = tileEntity.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-				if(fluidHandler != null) {
-					List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
-					
-					textComponents.add(new StringTextComponent("-- Fluid Handler --"));
-					String fluid = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().getLocalizedName() : "none";
-					int capacity = fluidHandler.getTankProperties()[0].getCapacity();
-					int amount = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().amount : 0;
-					textComponents.add(new StringTextComponent("Fluid: " + fluid));
-					textComponents.add(new StringTextComponent("Tank: " + amount + " / " + capacity + " mB"));
-					
-					for(ITextComponent iTextComponent : textComponents) {
-						player.sendStatusMessage(iTextComponent, false);
-					}
-					success = true;
+		if(tileEntity != null) {
+			
+			if(tileEntity instanceof EnergyCableTileEntity) {
+				EnergyCableTileEntity energyCable = (EnergyCableTileEntity) tileEntity;
+				List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
+				EnergyCableNetwork cableNetwork = energyCable.getNetwork();
+				CustomEnergyStorage energyHandler = cableNetwork.energyStorage;
+				
+				textComponents.add(new StringTextComponent("-- Energy Cable --"));
+				textComponents.add(new StringTextComponent(energyHandler.getEnergyStored() + " / " + energyHandler.getMaxEnergyStored() + " FE"));
+				textComponents.add(new StringTextComponent("Network Infos (" + EnergyCableNetwork.NETWORK_LIST.indexOf(cableNetwork) + ") :"));
+				textComponents.add(new StringTextComponent("Cable Amount: " + cableNetwork.CABLES.size()));
+				textComponents.add(new StringTextComponent("Consumer Amount: " + cableNetwork.CONSUMERS.size()));
+				for(ITextComponent iTextComponent : textComponents) {
+					if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);
 				}
-				if(energyHandler != null) {
-					List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
-					
-					textComponents.add(new StringTextComponent("-- Energy Storage --"));
-					textComponents.add(new StringTextComponent(energyHandler.getEnergyStored() + " / " + energyHandler.getMaxEnergyStored() + " FE"));
-					
-					for(ITextComponent iTextComponent : textComponents) {
-						player.sendStatusMessage(iTextComponent, false);
-					}
-					success = true;
+				
+				return ActionResultType.SUCCESS;
+			}
+			
+			IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
+			IEnergyStorage energyHandler = tileEntity.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+			if(fluidHandler != null) {
+				List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
+				
+				textComponents.add(new StringTextComponent("-- Fluid Handler --"));
+				String fluid = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().getLocalizedName() : "none";
+				int capacity = fluidHandler.getTankProperties()[0].getCapacity();
+				int amount = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().amount : 0;
+				textComponents.add(new StringTextComponent("Fluid: " + fluid));
+				textComponents.add(new StringTextComponent("Tank: " + amount + " / " + capacity + " mB"));
+				
+				for(ITextComponent iTextComponent : textComponents) {
+					if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);
 				}
+				success = true;
+			}
+			if(energyHandler != null) {
+				List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
+				
+				textComponents.add(new StringTextComponent("-- Energy Storage --"));
+				textComponents.add(new StringTextComponent(energyHandler.getEnergyStored() + " / " + energyHandler.getMaxEnergyStored() + " FE"));
+				
+				for(ITextComponent iTextComponent : textComponents) {
+					if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);
+				}
+				success = true;
 			}
 		}
 		return success ? ActionResultType.SUCCESS : ActionResultType.PASS;

@@ -8,13 +8,11 @@ import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.world.feature.UselessCropsFeature;
 import tk.themcbros.uselessmod.world.feature.UselessFlowersFeature;
 import tk.themcbros.uselessmod.world.feature.UselessTreeFeature;
-import tk.themcbros.uselessmod.world.structures.UselessHutStructure;
 
 public class ModFeatures {
 
 	public static final Feature<NoFeatureConfig> USELESS_FLOWERS = new UselessFlowersFeature(NoFeatureConfig::deserialize);
 	public static final Feature<NoFeatureConfig> USELESS_CROPS = new UselessCropsFeature(NoFeatureConfig::deserialize);
-	public static final UselessHutStructure USELESS_HUT = new UselessHutStructure(NoFeatureConfig::deserialize);
 	public static final Feature<NoFeatureConfig> USELESS_TREES = new UselessTreeFeature(NoFeatureConfig::deserialize, false, false);
 	
 	public static void register() {

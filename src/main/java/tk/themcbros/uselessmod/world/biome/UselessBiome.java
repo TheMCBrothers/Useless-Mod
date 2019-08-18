@@ -1,7 +1,6 @@
 package tk.themcbros.uselessmod.world.biome;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +22,7 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
+import tk.themcbros.uselessmod.blocks.IUselessCrop;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.lists.ModFeatures;
 
@@ -48,7 +48,6 @@ public class UselessBiome extends Biome {
         this.addStructure(Feature.MINESHAFT, new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL));
         this.addStructure(Feature.STRONGHOLD, IFeatureConfig.NO_FEATURE_CONFIG);
         this.addStructure(Feature.SWAMP_HUT, NoFeatureConfig.NO_FEATURE_CONFIG);
-        this.addStructure(ModFeatures.USELESS_HUT, NoFeatureConfig.NO_FEATURE_CONFIG);
 
         // Underground
         DefaultBiomeFeatures.addCarvers(this);
@@ -65,7 +64,14 @@ public class UselessBiome extends Biome {
         this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.DOUBLE_PLANT, new DoublePlantConfig(ModBlocks.LARGE_USELESS_FERN.getDefaultState()), Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(2)));
         this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.BUSH, new BushConfig(Blocks.BROWN_MUSHROOM.getDefaultState()), Placement.CHANCE_HEIGHTMAP_DOUBLE, new ChanceConfig(4)));
         this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.BUSH, new BushConfig(Blocks.RED_MUSHROOM.getDefaultState()), Placement.CHANCE_HEIGHTMAP_DOUBLE, new ChanceConfig(8)));
-        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.BUSH, new BushConfig(ModBlocks.COFFEE_SEEDS.getDefaultState().with(CropsBlock.AGE, 7)), Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(10)));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,
+				Biome.createDecoratedFeature(Feature.BUSH,
+						new BushConfig(((IUselessCrop) ModBlocks.WILD_COFFEE_SEEDS).getMaturePlant()),
+						Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(1)));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,
+				Biome.createDecoratedFeature(Feature.BUSH,
+						new BushConfig(((IUselessCrop) ModBlocks.WILD_USELESS_WHEAT).getMaturePlant()),
+						Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(1)));
         
         // Other Features
         DefaultBiomeFeatures.addSprings(this);

@@ -12,9 +12,11 @@ import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -24,17 +26,23 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.lists.ModItems;
+import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 
 public class CoffeeTableBlock extends Block implements IWaterLoggable {
 	
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty TALL = BooleanProperty.create("tall");
+	public static final BooleanProperty CABLE = BooleanProperty.create("cable");
 	
 	private final VoxelShape SHAPE;
 	private final VoxelShape SHAPE_TALL;
 	
 	public CoffeeTableBlock(Properties builder) {
 		super(builder);
+		this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE).with(TALL, Boolean.FALSE).with(CABLE, Boolean.FALSE));
 		SHAPE = this.generateShape();
 		SHAPE_TALL = this.generateTallShape();
 	}
@@ -68,20 +76,32 @@ public class CoffeeTableBlock extends Block implements IWaterLoggable {
 		}
 		return result.simplify();
 	}
-
+	
+	private VoxelShape endResultShape(BlockState state) {
+		VoxelShape result = state.get(TALL) ? SHAPE_TALL : SHAPE;
+		
+		if(state.get(CABLE)) {
+			result = VoxelShapes.combine(result, EnergyCableBlock.getCableShape(state), IBooleanFunction.OR);
+		}
+		
+		return result.simplify();
+	}
+	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		if(state.get(TALL) && state.get(CABLE) && context.func_216378_a(VoxelShapes.fullCube(), pos, false))
+			return EnergyCableBlock.getCableShape(state);
 		return state.get(TALL) ? SHAPE_TALL : SHAPE;
 	}
 	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return state.get(TALL) ? SHAPE_TALL : SHAPE;
+		return this.endResultShape(state);
 	}
 	
 	@Override
 	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return state.get(TALL) ? SHAPE_TALL : SHAPE;
+		return this.endResultShape(state);
 	}
 	
 	@Override
@@ -96,7 +116,7 @@ public class CoffeeTableBlock extends Block implements IWaterLoggable {
 	
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED, TALL);
+		builder.add(WATERLOGGED, TALL, CABLE);
 	}
 	
 	@Nullable
@@ -105,17 +125,37 @@ public class CoffeeTableBlock extends Block implements IWaterLoggable {
 		BlockPos blockpos = context.getPos();
 		BlockState blockstate = context.getWorld().getBlockState(blockpos);
 		IFluidState ifluidstate = context.getWorld().getFluidState(blockpos);
-		if (blockstate.getBlock() == this) {
-			blockstate = blockstate.with(TALL, Boolean.valueOf(true));
+		ItemStack stack = context.getItem();
+		if (blockstate.getBlock() == this && stack.getItem() == ModItems.STRIPPED_OAK_COFFEE_TABLE) {
+			blockstate = this.getDefaultState().with(TALL, Boolean.valueOf(true));
+		} else if (blockstate.getBlock() == ModBlocks.STRIPPED_OAK_COFFEE_TABLE) {
+			blockstate = this.getDefaultState().with(CABLE, Boolean.valueOf(true)).with(TALL, Boolean.valueOf(true));
 		} else {
-			blockstate = this.getDefaultState().with(TALL, Boolean.valueOf(false));
+			blockstate = this.getDefaultState();
 		}
 		return blockstate.with(WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER));
 	}
 	
 	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if(state.getBlock() == this && state.get(TALL) && newState.getBlock() == ModBlocks.ENERGY_CABLE) {
+			worldIn.setBlockState(pos, state.with(CABLE, Boolean.TRUE), 3);
+		}
+	}
+	
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		return state.get(CABLE);
+	}
+	
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		return state.get(CABLE) ? new EnergyCableTileEntity() : null;
+	}
+	
+	@Override
 	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
-		return (useContext.getItem().getItem() == this.asItem() && !state.get(TALL));
+		return (useContext.getItem().getItem() == this.asItem() && !state.get(TALL)) || (useContext.getItem().getItem() == ModItems.ENERGY_CABLE && state.get(TALL) && !state.get(CABLE));
 	}
 
 	@Override
@@ -136,6 +176,13 @@ public class CoffeeTableBlock extends Block implements IWaterLoggable {
 			BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.get(WATERLOGGED)) {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+		}
+		
+		if(stateIn.get(CABLE)) {
+			TileEntity tileEntity = worldIn.getTileEntity(currentPos);
+			if(tileEntity instanceof EnergyCableTileEntity) {
+				((EnergyCableTileEntity) tileEntity).updateConnections();
+			}
 		}
 
 		return stateIn;

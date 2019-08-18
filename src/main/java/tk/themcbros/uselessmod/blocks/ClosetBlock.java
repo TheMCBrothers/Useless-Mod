@@ -1,6 +1,7 @@
 package tk.themcbros.uselessmod.blocks;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -11,7 +12,6 @@ import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -75,13 +75,22 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 		if(hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
 			if(!worldIn.isRemote) {
 				TileEntity tileEntity = worldIn.getTileEntity(pos);
-				if(tileEntity instanceof ClosetTileEntity && player instanceof ServerPlayerEntity) {
-					((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
+				if(tileEntity instanceof ClosetTileEntity) {
+					player.openContainer((INamedContainerProvider) tileEntity);
 				}
 			}
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void tick(BlockState blockState, World world, BlockPos pos, Random random) {
+		UselessMod.LOGGER.debug(blockState.toString() + " is ticking");
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity instanceof ClosetTileEntity) {
+			((ClosetTileEntity) tileEntity).onScheduledTick();
+		}
 	}
 	
 	@Override

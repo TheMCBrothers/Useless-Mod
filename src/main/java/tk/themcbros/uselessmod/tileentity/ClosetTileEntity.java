@@ -3,24 +3,26 @@ package tk.themcbros.uselessmod.tileentity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
@@ -29,9 +31,10 @@ import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
 import tk.themcbros.uselessmod.closet.IClosetMaterial;
 import tk.themcbros.uselessmod.container.ClosetContainer;
+import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 
-public class ClosetTileEntity extends TileEntity implements ISidedInventory, INamedContainerProvider {
+public class ClosetTileEntity extends LockableLootTileEntity {
 
 	private IClosetMaterial casingId = IClosetMaterial.NULL;
 	private IClosetMaterial beddingId = IClosetMaterial.NULL;
@@ -44,73 +47,100 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	public static ModelProperty<Boolean> OPEN = new ModelProperty<Boolean>();
 	
 	private NonNullList<ItemStack> closetContents = NonNullList.withSize(15, ItemStack.EMPTY);
-	private int openCount;
-	
-	private static final int[] SLOTS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+	private int playerCount = 0;
 	
 	public ClosetTileEntity() {
 		super(ModTileEntities.CLOSET);
 	}
 	
-	@Override
 	public void openInventory(PlayerEntity player) {
-		UselessMod.LOGGER.debug("OPEN BARREL");
+		UselessMod.LOGGER.debug("OPEN CLOSET");
 		if (!player.isSpectator()) {
-			if (this.openCount < 0) {
-				this.openCount = 0;
+			if (this.playerCount < 0) {
+				this.playerCount = 0;
 			}
 
-			++this.openCount;
+			++this.playerCount;
 			BlockState blockstate = this.getBlockState();
 			boolean flag = blockstate.get(BlockStateProperties.OPEN);
 			if (!flag) {
-				this.playSound(blockstate, SoundEvents.BLOCK_BARREL_OPEN);
-				this.setState(blockstate, true);
-				this.setOpen(true);
-				UselessMod.LOGGER.debug("OPENED BARREL");
+				this.playDoorSound(blockstate, SoundEvents.BLOCK_BARREL_OPEN);
+				this.setDoorState(blockstate, true);
+				UselessMod.LOGGER.debug("OPENED CLOSET");
 			}
 
-			this.func_213964_r();
-			if(this.world.isRemote) ModelDataManager.requestModelDataRefresh(this);
+			this.sheduleTick();
+		}
+
+	}
+
+	public void sheduleTick() {
+		this.world.getPendingBlockTicks().scheduleTick(this.getPos(), this.getBlockState().getBlock(), 5);
+	}
+
+	public void onScheduledTick() {
+		int i = this.pos.getX();
+		int j = this.pos.getY();
+		int k = this.pos.getZ();
+		this.playerCount = getPlayersUsing(this.world, this, i, j, k);
+		UselessMod.LOGGER.debug("CLOSETTILEENTITY:ONSHEDULEDTICK --> CLOSET PLAYER COUNT : " + playerCount);
+		if (this.playerCount > 0) {
+			this.sheduleTick();
+		} else {
+			BlockState blockstate = this.getBlockState();
+			if (blockstate.getBlock() != ModBlocks.CLOSET) {
+				this.remove();
+				return;
+			}
+
+			boolean flag = blockstate.get(BlockStateProperties.OPEN);
+			if (flag) {
+				this.playDoorSound(blockstate, SoundEvents.BLOCK_BARREL_CLOSE);
+				this.setDoorState(blockstate, false);
+				UselessMod.LOGGER.debug("CLOSED CLOSET");
+			}
 		}
 
 	}
 	
-	public void closeInventory(PlayerEntity player) {
-		UselessMod.LOGGER.debug("CLOSE BARREL");
-		if (!player.isSpectator()) {
-			--this.openCount;
-			
-			if(this.openCount <= 0) {
-				BlockState blockstate = this.getBlockState();
-				boolean flag = blockstate.get(BlockStateProperties.OPEN);
-				if (flag) {
-					this.playSound(blockstate, SoundEvents.BLOCK_BARREL_CLOSE);
-					this.setState(blockstate, false);
-					this.setOpen(false);
-					UselessMod.LOGGER.debug("CLOSED BARREL");
-				}
+	public static int getPlayersUsing(World worldIn, LockableTileEntity tileEntity, int x, int y, int z) {
+		int i = 0;
+		float f = 5.0F;
+		
+		for (PlayerEntity playerentity : worldIn.getEntitiesWithinAABB(PlayerEntity.class,
+				new AxisAlignedBB((double) ((float) x - f), (double) ((float) y - f), (double) ((float) z - f),
+						(double) ((float) (x + 1) + f), (double) ((float) (y + 1) + f),
+						(double) ((float) (z + 1) + f)))) {
+			if (playerentity.openContainer instanceof ClosetContainer) {
+				IInventory iinventory = ((ClosetContainer) playerentity.openContainer).getClosetInventory();
+				if (iinventory == tileEntity)
+					++i;
+
 			}
-			if(this.world.isRemote) ModelDataManager.requestModelDataRefresh(this);
+		}
+		
+		return i;
+	}
+
+	public void closeInventory(PlayerEntity player) {
+		UselessMod.LOGGER.debug("CLOSE CLOSET");
+		if (!player.isSpectator()) {
+			--this.playerCount;
 		}
 
 	}
 
-	private void setState(BlockState p_213963_1_, boolean p_213963_2_) {
+	private void setDoorState(BlockState p_213963_1_, boolean p_213963_2_) {
 		this.world.setBlockState(this.getPos(),
 				p_213963_1_.with(BlockStateProperties.OPEN, Boolean.valueOf(p_213963_2_)), 3);
 	}
 
-	private void func_213964_r() {
-		this.world.getPendingBlockTicks().scheduleTick(this.getPos(), this.getBlockState().getBlock(), 5);
-	}
-
-	private void playSound(BlockState p_213965_1_, SoundEvent p_213965_2_) {
-		Vec3i vec3i = p_213965_1_.get(BlockStateProperties.HORIZONTAL_FACING).getDirectionVec();
+	private void playDoorSound(BlockState state, SoundEvent sound) {
+		Vec3i vec3i = state.get(BlockStateProperties.HORIZONTAL_FACING).getDirectionVec();
 		double d0 = (double) this.pos.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
 		double d1 = (double) this.pos.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
 		double d2 = (double) this.pos.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
-		this.world.playSound((PlayerEntity) null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.5F,
+		this.world.playSound((PlayerEntity) null, d0, d1, d2, sound, SoundCategory.BLOCKS, 0.5F,
 				this.world.rand.nextFloat() * 0.1F + 0.9F);
 	}
 	
@@ -215,18 +245,8 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	}
 
 	@Override
-	public ItemStack decrStackSize(int arg0, int arg1) {
-		return ItemStackHelper.getAndSplit(closetContents, arg0, arg1);
-	}
-
-	@Override
 	public int getSizeInventory() {
 		return 15;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int arg0) {
-		return this.closetContents.get(arg0);
 	}
 
 	@Override
@@ -241,56 +261,23 @@ public class ClosetTileEntity extends TileEntity implements ISidedInventory, INa
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this) {
-			return false;
-		} else {
-			return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-					(double) this.pos.getZ() + 0.5D) <= 64.0D;
-		}
+	protected ITextComponent getDefaultName() {
+		return new TranslationTextComponent("container.uselessmod.closet");
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int arg0) {
-		return ItemStackHelper.getAndRemove(closetContents, arg0);
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new ClosetContainer(id, player, this);
 	}
 
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) {
-		this.closetContents.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
-		}
+	protected NonNullList<ItemStack> getItems() {
+		return this.closetContents;
 	}
 
 	@Override
-	public void clear() {
-		this.closetContents.clear();
-	}
-
-	@Override
-	public boolean canExtractItem(int arg0, ItemStack arg1, Direction arg2) {
-		return true;
-	}
-
-	@Override
-	public boolean canInsertItem(int arg0, ItemStack arg1, Direction arg2) {
-		return true;
-	}
-
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return SLOTS;
-	}
-
-	@Override
-	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new ClosetContainer(id, playerInventory, this);
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		 return new TranslationTextComponent("container.uselessmod.closet");
+	protected void setItems(NonNullList<ItemStack> stacks) {
+		this.closetContents = stacks;
 	}
 
 }

@@ -77,5 +77,9 @@ public class ClosetContainer extends Container {
 		super.onContainerClosed(playerIn);
 		this.closetInventory.closeInventory(playerIn);
 	}
+	
+	public IInventory getClosetInventory() {
+		return closetInventory;
+	}
 
 }

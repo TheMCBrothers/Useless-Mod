@@ -1,0 +1,33 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "particle": "uselessmod:block/light_switch",
+        "light_switch": "uselessmod:block/light_switch"
+    },
+    "elements": [
+        {
+            "from": [ 5, 0, 2 ], 
+            "to": [ 11, 1, 14 ], 
+            "faces": {
+                "north": { "texture": "#light_switch", "uv": [ 5, 1, 11, 2 ] },
+                "east": { "texture": "#light_switch", "uv": [ 1, 15, 13, 16 ] },
+                "south": { "texture": "#light_switch", "uv": [ 5, 14, 11, 15 ] },
+                "west": { "texture": "#light_switch", "uv": [ 4, 14, 16, 15 ] },
+                "up": { "texture": "#light_switch", "uv": [ 5, 2, 11, 14 ] },
+                "down": { "texture": "#light_switch", "uv": [ 5, 2, 11, 14 ] }
+            }
+        },
+        {
+            "from": [ 6.8, 1, 10.5 ], 
+            "to": [ 9.2, 2, 11.5 ], 
+            "faces": {
+                "north": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 2 ] },
+                "east": { "texture": "#light_switch", "uv": [ 0, 0, 1, 1 ] },
+                "south": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 2 ] },
+                "west": { "texture": "#light_switch", "uv": [ 0, 0, 1, 1 ] },
+                "up": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 1 ] },
+                "down": { "texture": "#light_switch", "uv": [ 0, 0, 2.4, 1 ] }
+            }
+        }
+    ]
+}

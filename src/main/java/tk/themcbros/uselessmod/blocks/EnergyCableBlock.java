@@ -1,12 +1,17 @@
 package tk.themcbros.uselessmod.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -21,12 +26,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 
 public class EnergyCableBlock extends Block implements IWaterLoggable {
 
-	private final int maxTransfer;
-	
 	public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
 	public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
 	public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -36,16 +40,15 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	private static final VoxelShape CENTER_SHAPE = Block.makeCuboidShape(5, 5, 5, 11, 11, 11);
-	private static final VoxelShape NORTH_SHAPE = Block.makeCuboidShape(0, 0, 0, 0, 0, 0);
-	private static final VoxelShape SOUTH_SHAPE = Block.makeCuboidShape(0, 0, 0, 0, 0, 0);
-	private static final VoxelShape EAST_SHAPE = Block.makeCuboidShape(0, 0, 0, 0, 0, 0);
-	private static final VoxelShape WEST_SHAPE = Block.makeCuboidShape(0, 0, 0, 0, 0, 0);
+	private static final VoxelShape NORTH_SHAPE = Block.makeCuboidShape(5, 5, 0, 11, 11, 5);
+	private static final VoxelShape SOUTH_SHAPE = Block.makeCuboidShape(5, 5, 11, 11, 11, 16);
+	private static final VoxelShape EAST_SHAPE = Block.makeCuboidShape(11, 5, 5, 16, 11, 11);
+	private static final VoxelShape WEST_SHAPE = Block.makeCuboidShape(0, 5, 5, 5, 11, 11);
 	private static final VoxelShape UP_SHAPE = Block.makeCuboidShape(5, 11, 5, 11, 16, 11);
 	private static final VoxelShape DOWN_SHAPE = Block.makeCuboidShape(5, 0, 5, 11, 5, 11);
 	
-	public EnergyCableBlock(Properties properties, int maxTransfer) {
+	public EnergyCableBlock(Properties properties) {
 		super(properties);
-		this.maxTransfer = maxTransfer;
 		
 		this.setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.FALSE)
@@ -57,19 +60,35 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 				.with(WATERLOGGED, Boolean.FALSE));
 	}
 	
-	private VoxelShape getCableShape(BlockState state) {
-		VoxelShape shape = CENTER_SHAPE;
-		if(state.get(NORTH)) VoxelShapes.combine(shape, NORTH_SHAPE, IBooleanFunction.OR);
-		if(state.get(SOUTH)) VoxelShapes.combine(shape, SOUTH_SHAPE, IBooleanFunction.OR);
-		if(state.get(EAST)) VoxelShapes.combine(shape, EAST_SHAPE, IBooleanFunction.OR);
-		if(state.get(WEST)) VoxelShapes.combine(shape, WEST_SHAPE, IBooleanFunction.OR);
-		if(state.get(UP)) VoxelShapes.combine(shape, UP_SHAPE, IBooleanFunction.OR);
-		if(state.get(DOWN)) VoxelShapes.combine(shape, DOWN_SHAPE, IBooleanFunction.OR);
-		return shape.simplify();
+	public static VoxelShape getCableShape(BlockState state) {
+		List<VoxelShape> shapes = new ArrayList<>();
+		if(state.has(NORTH) && state.get(NORTH)) shapes.add(NORTH_SHAPE);
+		if(state.has(SOUTH) && state.get(SOUTH)) shapes.add(SOUTH_SHAPE);
+		if(state.has(EAST) && state.get(EAST)) shapes.add(EAST_SHAPE);
+		if(state.has(WEST) && state.get(WEST)) shapes.add(WEST_SHAPE);
+		if(state.has(UP) && state.get(UP)) shapes.add(UP_SHAPE);
+		if(state.has(DOWN) && state.get(DOWN)) shapes.add(DOWN_SHAPE);
+		
+		VoxelShape result = CENTER_SHAPE;
+		for (VoxelShape shape : shapes) {
+			result = VoxelShapes.combine(result, shape, IBooleanFunction.OR);
+		}
+		return result.simplify();
 	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return getCableShape(state);
+	}
+	
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
+			ISelectionContext context) {
+		return getCableShape(state);
+	}
+	
+	@Override
+	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return getCableShape(state);
 	}
 	
@@ -85,7 +104,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 	
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new EnergyCableTileEntity(maxTransfer);
+		return new EnergyCableTileEntity();
 	}
 	
 	@Override
@@ -101,8 +120,21 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 		if (stateIn.get(WATERLOGGED)) {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 		}
-
+		
+		TileEntity tileEntity = worldIn.getTileEntity(currentPos);
+		if(tileEntity instanceof EnergyCableTileEntity) {
+			((EnergyCableTileEntity) tileEntity).updateConnections();
+		}
+ 
 		return stateIn;
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		if(tileEntity instanceof EnergyCableTileEntity) {
+			((EnergyCableTileEntity) tileEntity).updateConnections();
+		}
 	}
 	
 	public IFluidState getFluidState(BlockState state) {

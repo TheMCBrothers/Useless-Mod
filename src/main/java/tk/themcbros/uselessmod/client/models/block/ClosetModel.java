@@ -41,17 +41,22 @@ public class ClosetModel implements IBakedModel {
 
 	private ModelLoader modelLoader;
 	private BlockModel model;
-	private IBakedModel bakedModel, openBakedModel;
+	private IBakedModel bakedModel;
+	private final boolean open;
 
 	private final VertexFormat format;
 	private final Map<String, IBakedModel> cache = Maps.newHashMap();
 
-	public ClosetModel(ModelLoader modelLoader, BlockModel model, IBakedModel bakedModel, IBakedModel openBakedModel, VertexFormat format) {
+	public ClosetModel(ModelLoader modelLoader, BlockModel model, IBakedModel bakedModel, VertexFormat format, boolean open) {
 		this.modelLoader = modelLoader;
 		this.model = model;
 		this.bakedModel = bakedModel;
-		this.openBakedModel = openBakedModel;
 		this.format = format;
+		this.open = open;
+	}
+	
+	public boolean isOpen() {
+		return open;
 	}
 
 	public IBakedModel getCustomModel(IClosetMaterial casing, IClosetMaterial bedding, Direction facing, Boolean open) {
@@ -59,11 +64,12 @@ public class ClosetModel implements IBakedModel {
         if (casing == null) { casing = ClosetRegistry.CASINGS.getKeys().get(0); }
         if (bedding == null) { bedding = ClosetRegistry.BEDDINGS.getKeys().get(0); }
         if (facing == null) { facing = Direction.NORTH; }
+        if (open == null) { open = Boolean.FALSE; }
 		
 		String casingTex = casing.getTexture();
 		String beddingTex = bedding.getTexture();
 
-		return this.getCustomModel(casingTex, beddingTex, facing, open);
+		return this.getCustomModel(casingTex, beddingTex, facing);
 	}
 
 	@Override
@@ -119,10 +125,10 @@ public class ClosetModel implements IBakedModel {
 	}
 
 	public IBakedModel getCustomModel(@Nonnull String casingResource, @Nonnull String beddingResource,
-			@Nonnull Direction facing, @Nonnull Boolean open) {
-		IBakedModel customModel = open ? this.openBakedModel : this.bakedModel;
+			@Nonnull Direction facing) {
+		IBakedModel customModel = this.bakedModel;
 
-		String key = casingResource + "," + beddingResource + "," + facing.toString() + "," + open.toString();
+		String key = casingResource + "," + beddingResource + "," + facing.toString();
 
 		IBakedModel possibleModel = this.cache.get(key);
 
