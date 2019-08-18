@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"RRR",
+		"IGI",
+		"RRR"
+	],
+	"key": {
+		"R": { "item": "minecraft:redstone" },
+		"G": { "tag": "minecraft:glass" },
+		"I": { "item": "uselessmod:useless_ingot" }
+	},
+	"result": {
+		"item": "uselessmod:energy_cable",
+		"count": 12
+	}
+}
