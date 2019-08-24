@@ -13,6 +13,8 @@ import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 
 public class ElectricFurnaceContainer extends Container {
@@ -20,18 +22,24 @@ public class ElectricFurnaceContainer extends Container {
 	private IIntArray fields;
 	private IInventory inventory;
 	private World world;
+	
+	private final int machineSlotCount = 5;
 
 	public ElectricFurnaceContainer(int id, PlayerInventory playerInventory) {
-		this(id, playerInventory, new Inventory(2), new IntArray(4));
+		this(id, playerInventory, new Inventory(2), new Inventory(3), new IntArray(4));
 	}
 
-	public ElectricFurnaceContainer(int id, PlayerInventory playerInventory, IInventory inventory, IIntArray fields) {
+	public ElectricFurnaceContainer(int id, PlayerInventory playerInventory, IInventory inventory, IInventory upgradeInventory, IIntArray fields) {
 		super(ModContainerTypes.ELECTRIC_FURNACE, id);
 		this.inventory = inventory;
 		this.fields = fields;
 		this.addSlot(new Slot(inventory, 0, 56, 35));
 		this.addSlot(new Slot(inventory, 1, 116, 35));
 		this.world = playerInventory.player.world;
+		
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 0, 8, 8));
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 1, 8, 26));
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 2, 8, 44));
 
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -59,24 +67,28 @@ public class ElectricFurnaceContainer extends Container {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index == 1) {
-				if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
+				if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index != 1 && index != 0) {
-				if (this.canSmelt(itemstack1)) {
+			} else if (index >= machineSlotCount) {
+				if (this.canSmelt(itemstack1)) { // Input Slot
 					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 2 && index < 29) {
-					if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
+				} else if (itemstack1.getItem() instanceof UpgradeItem) { // Upgrade Slots
+					if (!this.mergeItemStack(itemstack1, 2, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 29 && index < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
+				} else if (index >= machineSlotCount && index < machineSlotCount + 27) { // Inventory
+					if (!this.mergeItemStack(itemstack1, machineSlotCount + 27, machineSlotCount + 36, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount + 27 && index < machineSlotCount + 36 && !this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 27, false)) { // Hotbar
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
+			} else if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
 				return ItemStack.EMPTY;
 			}
 

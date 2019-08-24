@@ -17,13 +17,13 @@ public class CreativePowerBlockTileEntity extends TileEntity implements ITickabl
 
 	public CreativePowerBlockTileEntity() {
 		super(ModTileEntities.CREATIVE_POWER_BLOCK);
-		energyStorage = new CustomEnergyStorage(2000000000, 32000, 32000, 2000000000);
+		energyStorage = new CustomEnergyStorage(2000000000, 0, 32000, 2000000000);
 	}
 	
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		energyStorage = new CustomEnergyStorage(2000000000, 32000, 32000, 2000000000);
+		energyStorage = new CustomEnergyStorage(2000000000, 0, 32000, 2000000000);
 	}
 	
 	private void sendEnergy() {

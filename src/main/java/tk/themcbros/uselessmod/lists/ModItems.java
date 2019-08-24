@@ -31,7 +31,9 @@ import tk.themcbros.uselessmod.items.HammerItem;
 import tk.themcbros.uselessmod.items.LampBlockItem;
 import tk.themcbros.uselessmod.items.LightSwitchBlockItem;
 import tk.themcbros.uselessmod.items.PaintBrushItem;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.items.UselessItem;
+import tk.themcbros.uselessmod.machine.Upgrade;
 
 @ObjectHolder(UselessMod.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
@@ -110,6 +112,7 @@ public class ModItems {
 	
 	public static final BlockItem STRIPPED_OAK_COFFEE_TABLE = registerBlockItem("stripped_oak_coffee_table", ModBlocks.STRIPPED_OAK_COFFEE_TABLE);
 	public static final BlockItem LIGHT_SWITCH = registerBlockItem("light_switch", new LightSwitchBlockItem(ModBlocks.LIGHT_SWITCH, new Item.Properties().group(GROUP)));
+	public static final BlockItem LIGHT_SWITCH_BLOCK = registerBlockItem("light_switch_block", new LightSwitchBlockItem(ModBlocks.LIGHT_SWITCH_BLOCK, new Item.Properties().group(GROUP)));
 	
 	// Items
 	public static final Item USELESS_ITEM = registerItem("useless_item", new UselessItem(new Item.Properties().group(GROUP)));
@@ -140,6 +143,8 @@ public class ModItems {
 	public static final Item USELESS_PLATE = registerItem("useless_plate");
 	public static final Item SUPER_USELESS_PLATE = registerItem("super_useless_plate");
 	public static final Item MACHINEFRAME = registerItem("machineframe");
+	public static final Item BLANK_UPGRADE = registerItem("blank_upgrade", new UpgradeItem(new Item.Properties().group(GROUP), Upgrade.NULL));
+	public static final Item SPEED_UPGRADE = registerItem("speed_upgrade", new UpgradeItem(new Item.Properties().group(GROUP), Upgrade.SPEED));
 
 	public static final Item USELESS_SWORD = registerItem("useless_sword", new SwordItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
 	public static final Item USELESS_AXE = registerItem("useless_axe", new AxeItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
@@ -166,7 +171,7 @@ public class ModItems {
 	
 	public static final Item GREENSTONE = registerItem("greenstone", new BlockNamedItem(ModBlocks.GREENSTONE_WIRE, new Item.Properties().group(GROUP)));
 	
-	public static final Item USELESS_ENTITY_SPAWN_EGG = registerItem("useless_entity_spawn_egg", new SpawnEggItem(ModEntityTypes.USELESS_ENTITY, 0x2b8a4a, 0x195c19, new Item.Properties().group(GROUP)));
+	public static final Item USELESS_ENTITY_SPAWN_EGG = registerItem("useless_cow_spawn_egg", new SpawnEggItem(ModEntityTypes.USELESS_COW, 0x2b8a4a, 0x195c19, new Item.Properties().group(GROUP)));
 	public static final Item GRENADE = registerItem("grenade", new GrenadeItem(new Item.Properties().group(GROUP)));
 	
 	@SubscribeEvent

@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" G ",
+		"UBU",
+		" G "
+	],
+	"key": {
+		"B": { "item": "uselessmod:blank_upgrade" },
+		"U": { "item": "uselessmod:super_useless_plate" },
+		"G": { "item": "minecraft:gold_ingot" }
+	},
+	"result": {
+		"item": "uselessmod:speed_upgrade",
+		"count": 2
+	}
+}

@@ -21,18 +21,16 @@ public class CommonProxy {
 
 	public CommonProxy() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.common_config);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.client_config);
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
+		
+		Config.loadConfig(Config.common_config, FMLPaths.CONFIGDIR.get().resolve("uselessmod-common.toml").toString());
 	}
 	
 	protected void preInit(FMLCommonSetupEvent event) {
 		UselessMod.LOGGER.debug("CommonProxy preInit method");
-		
-		Config.loadConfig(Config.client_config, FMLPaths.CONFIGDIR.get().resolve("uselessmod-client.toml").toString());
-		Config.loadConfig(Config.common_config, FMLPaths.CONFIGDIR.get().resolve("uselessmod-common.toml").toString());
 		
 		OreGeneration.setupOreGeneration();
 		OreGeneration.setupNetherOreGeneration();

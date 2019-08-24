@@ -1,9 +1,12 @@
 package tk.themcbros.uselessmod.lists;
 
+import com.google.common.collect.Maps;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.FireBlock;
+import net.minecraft.item.AxeItem;
 import net.minecraft.util.IItemProvider;
 
 public class VanillaCompat {
@@ -37,8 +40,8 @@ public class VanillaCompat {
 	}
 
 	public static void registerStrippable(Block log, Block stripped_log) {
-//		AxeItem.BLOCK_STRIPPING_MAP = Maps.newHashMap(AxeItem.BLOCK_STRIPPING_MAP);
-//		AxeItem.BLOCK_STRIPPING_MAP.put(log, stripped_log);
+		AxeItem.BLOCK_STRIPPING_MAP = Maps.newHashMap(AxeItem.BLOCK_STRIPPING_MAP);
+		AxeItem.BLOCK_STRIPPING_MAP.put(log, stripped_log);
 	}
 
 	public static void registerCompostable(float chance, IItemProvider itemIn) {

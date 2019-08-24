@@ -42,6 +42,7 @@ import tk.themcbros.uselessmod.blocks.GlowstoneGeneratorBlock;
 import tk.themcbros.uselessmod.blocks.GreenstoneWireBlock;
 import tk.themcbros.uselessmod.blocks.LampBlock;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlock;
+import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 import tk.themcbros.uselessmod.blocks.ModDoorBlock;
 import tk.themcbros.uselessmod.blocks.ModPaneBlock;
 import tk.themcbros.uselessmod.blocks.PaintBucketBlock;
@@ -129,6 +130,7 @@ public class ModBlocks {
 	
 	public static final Block STRIPPED_OAK_COFFEE_TABLE = register("stripped_oak_coffee_table", new CoffeeTableBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD)));
 	public static final Block LIGHT_SWITCH = register("light_switch", new LightSwitchBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.2f)));
+	public static final Block LIGHT_SWITCH_BLOCK = register("light_switch_block", new LightSwitchBlockBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.4f)));
 	public static final Block UNLIT_LANTERN = register("unlit_lantern", new UnlitLanternBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).lootFrom(Blocks.LANTERN)));
 	
 	@SubscribeEvent

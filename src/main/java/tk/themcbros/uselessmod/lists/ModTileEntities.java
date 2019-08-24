@@ -59,10 +59,10 @@ public class ModTileEntities {
 			registry.register(TileEntityType.Builder.create(GlowstoneGeneratorTileEntity::new, ModBlocks.GLOWSTONE_GENERATOR).build(null).setRegistryName(BlockNames.GLOWSTONE_GENERATOR));
 			registry.register(TileEntityType.Builder.create(CoffeeMachineTileEntity::new, ModBlocks.COFFEE_MACHINE).build(null).setRegistryName(BlockNames.COFFEE_MACHINE));
 			registry.register(TileEntityType.Builder.create(CreativePowerBlockTileEntity::new, ModBlocks.CREATIVE_POWER_BLOCK).build(null).setRegistryName(BlockNames.CREATIVE_POWER_BLOCK));
-			registry.register(TileEntityType.Builder.create(EnergyCableTileEntity::new, ModBlocks.ENERGY_CABLE).build(null).setRegistryName(ModBlocks.ENERGY_CABLE.getRegistryName()));
+			registry.register(TileEntityType.Builder.create(EnergyCableTileEntity::new, ModBlocks.ENERGY_CABLE, ModBlocks.STRIPPED_OAK_COFFEE_TABLE).build(null).setRegistryName(ModBlocks.ENERGY_CABLE.getRegistryName()));
 			registry.register(TileEntityType.Builder.create(ClosetTileEntity::new, ModBlocks.CLOSET).build(null).setRegistryName(BlockNames.CLOSET));
 			registry.register(TileEntityType.Builder.create(ColorableTileEntity::new, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET).build(null).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "colorable")));
-			registry.register(TileEntityType.Builder.create(LightSwitchTileEntity::new, ModBlocks.LIGHT_SWITCH).build(null).setRegistryName(ModBlocks.LIGHT_SWITCH.getRegistryName()));
+			registry.register(TileEntityType.Builder.create(LightSwitchTileEntity::new, ModBlocks.LIGHT_SWITCH, ModBlocks.LIGHT_SWITCH_BLOCK).build(null).setRegistryName(ModBlocks.LIGHT_SWITCH.getRegistryName()));
 			
 			UselessMod.LOGGER.info("Registered TileEntities");
 		}

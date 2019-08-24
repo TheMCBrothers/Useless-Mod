@@ -16,10 +16,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.GreenstoneWireBlock;
 import tk.themcbros.uselessmod.blocks.LampBlock;
@@ -31,6 +34,7 @@ import tk.themcbros.uselessmod.client.gui.ElectricCrusherScreen;
 import tk.themcbros.uselessmod.client.gui.ElectricFurnaceScreen;
 import tk.themcbros.uselessmod.client.gui.GlowstoneGeneratorScreen;
 import tk.themcbros.uselessmod.client.renders.entity.UselessRenderRegistry;
+import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.lists.CoffeeType;
 import tk.themcbros.uselessmod.lists.ModBiomes;
 import tk.themcbros.uselessmod.lists.ModBlocks;
@@ -45,7 +49,12 @@ public class ClientProxy extends CommonProxy {
 
 	public ClientProxy() {
 		super();
+		
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.client_config);
+		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+
+		Config.loadConfig(Config.client_config, FMLPaths.CONFIGDIR.get().resolve("uselessmod-client.toml").toString());
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event) {
@@ -62,7 +71,6 @@ public class ClientProxy extends CommonProxy {
 		UselessRenderRegistry.registerEntityRenders();
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(EnergyCableTileEntity.class, new EnergyCableTileEntityRenderer());
-		
 		OBJLoader.INSTANCE.addDomain(UselessMod.MOD_ID);
 	}
 	

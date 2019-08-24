@@ -19,7 +19,7 @@ public class ModItemGroups {
 			return new ItemStack(ModItems.USELESS_INGOT);
 		}
 		
-		public boolean hasSearchBar() { return true; };
+		public boolean hasSearchBar() { return false; };
 		
 		public net.minecraft.util.ResourceLocation getBackgroundImage() {
 			return new net.minecraft.util.ResourceLocation("uselessmod:textures/gui/container/creative_inventory/tab_useless.png");
@@ -33,7 +33,7 @@ public class ModItemGroups {
 	public static final ItemGroup CLOSET_GROUP = new ItemGroup("uselessmod.closets") {
 		
 		private Random random = new Random();
-		private int ticks = 0;
+		private int counter = 0;
 		private ItemStack currentIcon = ItemStack.EMPTY;
 
 		@Override
@@ -46,16 +46,18 @@ public class ModItemGroups {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack getIcon() {
-			if(this.currentIcon.isEmpty() || ticks > 250) {
+			if(this.currentIcon.isEmpty() || counter > 250) {
 				this.currentIcon = this.createIcon();
-				ticks = 0;
+				counter = 0;
 			}
-			ticks++;
+			counter++;
 			return this.currentIcon;
 		}
 		
+		public boolean hasSearchBar() { return false; };
+		
 		public net.minecraft.util.ResourceLocation getBackgroundImage() {
-			return new net.minecraft.util.ResourceLocation("uselessmod:textures/gui/container/creative_inventory/tab_useless_no_bar.png");
+			return new net.minecraft.util.ResourceLocation("uselessmod:textures/gui/container/creative_inventory/tab_useless.png");
 		};
 		
 		public net.minecraft.util.ResourceLocation getTabsImage() {

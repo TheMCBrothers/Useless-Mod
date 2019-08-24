@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"R": { "item": "minecraft:redstone" },
-		"G": { "tag": "minecraft:glass" },
+		"G": { "item": "minecraft:glass" },
 		"I": { "item": "uselessmod:useless_ingot" }
 	},
 	"result": {

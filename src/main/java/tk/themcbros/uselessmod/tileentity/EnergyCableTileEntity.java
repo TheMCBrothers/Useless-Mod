@@ -1,5 +1,10 @@
 package tk.themcbros.uselessmod.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -10,46 +15,72 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 
 public class EnergyCableTileEntity extends TileEntity implements ITickableTileEntity {
 	
-	private EnergyCableNetwork network = new EnergyCableNetwork(100);
+	private EnergyCableNetwork network = EnergyCableNetwork.EMPTY;
+	private int maxTransfer = MachineConfig.energy_cable_max_transfer.get();
 	
 	public EnergyCableNetwork getNetwork() {
-		return network;
+		return this.network;
 	}
 
 	public EnergyCableTileEntity(int maxTransfer) {
 		super(ModTileEntities.ENERGY_CABLE);
+		this.maxTransfer = maxTransfer;
 	}
 	
 	public EnergyCableTileEntity() {
-		this(100);
+		super(ModTileEntities.ENERGY_CABLE);
+	}
+	
+	@Nullable
+	public EnergyCableTileEntity getOffsetCableTE(Direction dir) {
+		TileEntity tileEntity = this.world.getTileEntity(this.pos.offset(dir));
+		if(tileEntity != null && tileEntity instanceof EnergyCableTileEntity) {
+			if(tileEntity.getBlockState().getBlock() == this.getBlockState().getBlock())
+				return (EnergyCableTileEntity) tileEntity;
+		}
+		return null;
 	}
 	
 	public void updateNetwork() {
-		for(Direction direction : Direction.values()) {
-			TileEntity tileEntity = this.world.getTileEntity(this.pos.offset(direction));
-			if(tileEntity != null && tileEntity instanceof EnergyCableTileEntity && EnergyCableNetwork.NETWORK_LIST.size() > 0) {
-				EnergyCableTileEntity energyCable = (EnergyCableTileEntity) tileEntity;
-				if(EnergyCableNetwork.NETWORK_LIST.contains(this.network))
-					EnergyCableNetwork.NETWORK_LIST.remove(this.network);
-				this.network = energyCable.network;
+		if(!this.world.isRemote) {
+			List<EnergyCableNetwork> existingNetworks = new ArrayList<EnergyCableNetwork>();
+			for(Direction direction : Direction.values()) {
+				TileEntity tileEntity = this.world.getTileEntity(this.pos.offset(direction));
+				if(tileEntity != null && tileEntity instanceof EnergyCableTileEntity && tileEntity.getBlockState().getBlock() == this.getBlockState().getBlock()) {
+					EnergyCableNetwork network = ((EnergyCableTileEntity) tileEntity).getNetwork();
+					if(!existingNetworks.contains(network));
+						existingNetworks.add(network);
+				}
+			}
+			
+			if(existingNetworks.size() > 0 && this.network == EnergyCableNetwork.EMPTY) {
+				if(existingNetworks.size() == 1) {
+					this.network = existingNetworks.get(0);
+					this.network.addCable(this);
+					return;
+				}
+				EnergyCableNetwork[] networks = new EnergyCableNetwork[existingNetworks.size()];
+				for(int i = 0; i < existingNetworks.size(); i++) {
+					networks[i] = existingNetworks.get(i);
+				}
+				this.network = EnergyCableNetwork.combinedNetwork(networks);
+				this.network.addCable(this);
+				return;
+			} else if(this.network == EnergyCableNetwork.EMPTY) {
+				this.network = EnergyCableNetwork.createWithCable(this, maxTransfer);
 				return;
 			}
-			if(!this.network.CABLES.contains(this))
-				this.network.CABLES.add(this);
-			if(!EnergyCableNetwork.NETWORK_LIST.contains(this.network))
-				EnergyCableNetwork.NETWORK_LIST.add(this.network);
 		}
 	}
 	
 	public void updateConnections() {
-		this.updateNetwork();
-		this.network.CONSUMERS.clear();
+		if(this.network == EnergyCableNetwork.EMPTY) return;
 		boolean[] sides = new boolean[Direction.values().length];
 		for(Direction direction : Direction.values()) {
 			BlockPos pos = this.pos.offset(direction);
@@ -58,7 +89,8 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 				tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent((energyStorage) -> {
 					if(energyStorage.canExtract() || energyStorage.canReceive()) {
 						sides[direction.getIndex()] = true;
-						if(!(tileEntity instanceof EnergyCableTileEntity)) this.network.CONSUMERS.add(tileEntity);
+						if(!this.network.CONSUMERS.contains(tileEntity) && (tileEntity.getBlockState().getBlock() != this.getBlockState().getBlock()))
+							this.network.CONSUMERS.add(tileEntity);
 					}
 				});
 			}
@@ -76,45 +108,51 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 					.with(BlockStateProperties.UP, Boolean.valueOf(sides[Direction.UP.getIndex()]))
 					.with(BlockStateProperties.DOWN, Boolean.valueOf(sides[Direction.DOWN.getIndex()]));
 		}
-		this.markDirty();
 		
 		if(!state.equals(oldState)) {
+			this.updateNetwork();
 			this.world.setBlockState(this.pos, state, 3);
-		}
-	}
-	
-	private void transferEnergy() {
-		if(this.network.energyStorage.getEnergyStored() > 0) {
-			this.network.CONSUMERS.forEach(tileEntity -> {
-				tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler -> {
-					if(handler != null && handler.canReceive()) {
-						int accepted = handler.receiveEnergy(this.network.energyStorage.getMaxExtract(), false);
-						this.network.energyStorage.modifyEnergyStored(-accepted);
-					}
-				});
-			});
 			this.markDirty();
 		}
 	}
 	
 	@Override
-	public void tick() {
-		if(!world.isRemote) {
-			updateConnections();
-			transferEnergy();
-		}
-	}
-	
-	@Override
 	public CompoundNBT write(CompoundNBT compound) {
-		compound.put("Energy", this.network.energyStorage.serializeNBT());
+		compound.putString("NetworkKey", this.network.key != null ? this.network.key : "null");
+		compound.put("Network", this.network.serializeNBT());
 		return super.write(compound);
 	}
 	
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		this.network.energyStorage = CustomEnergyStorage.fromNBT(compound.getCompound("Energy"));
+		EnergyCableNetwork.addNetworkFromNBT(compound.getCompound("Network"));
+		this.network = EnergyCableNetwork.NETWORK_LIST.containsKey(compound.getString("NetworkKey"))
+				? EnergyCableNetwork.NETWORK_LIST.get(compound.getString("NetworkKey"))
+						: EnergyCableNetwork.EMPTY;
+//		updateNetwork();
+	}
+	
+	private void transferEnergy() {
+		if(this.network.energyStorage.getEnergyStored() > 0) {
+			for(TileEntity tileEntity : this.network.CONSUMERS) {
+				tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler -> {
+					if(handler != null && handler.canReceive()) {
+						int accepted = handler.receiveEnergy(this.network.energyStorage.getMaxExtract(), false);
+						this.network.energyStorage.modifyEnergyStored(-accepted);
+					}
+				});
+			}
+			this.markDirty();
+		}
+	}
+	
+	@Override
+	public void tick() {
+		if(!this.world.isRemote) {
+			this.updateConnections();
+			this.transferEnergy();
+		}
 	}
 	
 	@Override
@@ -126,8 +164,17 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 	@Override
 	public void remove() {
 		super.remove();
-		this.network.CABLES.remove(this);
-		if(this.network.CABLES.size() <= 0) EnergyCableNetwork.NETWORK_LIST.remove(this.network);
+		if(!this.world.isRemote)
+			this.network.removeCable(this);
+	}
+	
+	@Override
+	protected void invalidateCaps() {
+		super.invalidateCaps();
+	}
+
+	public void setNetwork(EnergyCableNetwork network2) {
+		this.network = network2;
 	}
 
 }

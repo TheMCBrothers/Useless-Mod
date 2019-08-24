@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-	  "name": "pool1",
+	  "name": "electric_furnace",
       "rolls": 1,
       "entries": [
         {
@@ -19,6 +19,11 @@
                 {
                   "source": "Items",
                   "target": "BlockEntityTag.Items",
+                  "op": "replace"
+                },
+                {
+                  "source": "Upgrades",
+                  "target": "BlockEntityTag.Upgrades",
                   "op": "replace"
                 },
                 {

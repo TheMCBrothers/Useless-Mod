@@ -18,7 +18,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.ElectricFurnaceContainer;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
+import tk.themcbros.uselessmod.machine.Upgrade;
 
 public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	
@@ -27,7 +29,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	private static final int[] SLOTS_BOTTOM = { 1 };
 	private static final int RF_PER_TICK = MachineConfig.furnace_rf_per_tick.get();
 	
-	private NonNullList<ItemStack> furnaceItemStacks = NonNullList.withSize(2, ItemStack.EMPTY);
+	private NonNullList<ItemStack> furnaceItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 	private int cookTime;
 	private int cookTimeTotal;
 	
@@ -71,7 +73,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	};
 
 	public ElectricFurnaceTileEntity() {
-		super(ModTileEntities.ELECTRIC_FURNACE);
+		super(ModTileEntities.ELECTRIC_FURNACE, 16000, 250, false);
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
 	@Override
 	public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-		return new ElectricFurnaceContainer(windowId, playerInventory, this, fields);
+		return new ElectricFurnaceContainer(windowId, playerInventory, this, this.upgradeInventory, fields);
 	}
 	
 	private boolean isBurning() {
@@ -133,8 +135,19 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	}
 
 	private int getCookTime() {
-		return this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
+		int cookTime = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
 				.map(FurnaceRecipe::getCookTime).orElse(200);
+		int speedUpgradeCount = 0;
+		for(ItemStack stack : this.upgradeInventory.getStacks()) {
+			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
+				if(((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
+					speedUpgradeCount += stack.getCount();
+				}
+			}
+		}
+		float speed = (float) (1.0 / 4.0 * speedUpgradeCount + 1.0);
+		cookTime = (int) (cookTime / speed);
+		return cookTime;
 	}
 
 	protected boolean canSmelt(@Nullable FurnaceRecipe irecipe) {
@@ -182,6 +195,10 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 			} else if (itemstack2.getItem() == itemstack1.getItem()) {
 				itemstack2.grow(itemstack1.getCount());
 			}
+			
+			if(!world.isRemote) {
+				this.setRecipeUsed(irecipe);
+			}
 
 			itemstack.shrink(1);
 		}
@@ -216,7 +233,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
 	@Override
 	public int getSizeInventory() {
-		return this.furnaceItemStacks.size();
+		return 2;
 	}
 
 	@Override
@@ -283,19 +300,25 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	}
 
 	@Override
-	public CompoundNBT writeRestorableToNBT(CompoundNBT compound) {
-		ItemStackHelper.saveAllItems(compound, furnaceItemStacks);
+	public CompoundNBT write(CompoundNBT compound) {
+		ItemStackHelper.saveAllItems(compound, furnaceItemStacks, false);
 		compound.putInt("CookTime", this.cookTime);
 		compound.putInt("CookTimeTotal", this.cookTimeTotal);
-		return compound;
+		return super.write(compound);
 	}
 
 	@Override
-	public void readRestorableFromNBT(CompoundNBT compound) {
+	public void read(CompoundNBT compound) {
+		super.read(compound);
 		this.furnaceItemStacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, furnaceItemStacks);
 		this.cookTime = compound.getInt("CookTime");
 		this.cookTimeTotal = compound.getInt("CookTimeTotal");
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new ElectricFurnaceContainer(id, player);
 	}
 
 }

@@ -20,7 +20,9 @@ import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CompressorContainer;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
+import tk.themcbros.uselessmod.machine.Upgrade;
 import tk.themcbros.uselessmod.recipes.CompressorRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
@@ -39,7 +41,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 	private IIntArray fields = new IIntArray() {
 		@Override
 		public int size() {
-			return 4;
+			return 5;
 		}
 		
 		@Override
@@ -57,6 +59,8 @@ public class CompressorTileEntity extends MachineTileEntity {
 			case 3:
 				CompressorTileEntity.this.compressTimeTotal = value;
 				break;
+			case 4:
+				CompressorTileEntity.this.recipesUsed = value;
 			}
 		}
 		
@@ -71,6 +75,8 @@ public class CompressorTileEntity extends MachineTileEntity {
 				return CompressorTileEntity.this.compressTime;
 			case 3:
 				return CompressorTileEntity.this.compressTimeTotal;
+			case 4:
+				return CompressorTileEntity.this.recipesUsed;
 			default:
 				return 0;
 			}
@@ -78,7 +84,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 	};
 	
 	public CompressorTileEntity() {
-		super(ModTileEntities.COMPRESSOR);
+		super(ModTileEntities.COMPRESSOR, 16000, 250, false);
 	}
 
 	@Override
@@ -88,7 +94,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 
 	@Override
 	public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-		return new CompressorContainer(windowId, playerInventory, this, fields);
+		return new CompressorContainer(windowId, playerInventory, this, this.upgradeInventory, fields);
 	}
 
 	private boolean isActive() {
@@ -135,8 +141,19 @@ public class CompressorTileEntity extends MachineTileEntity {
 	}
 	
 	protected int getCompressTime() {
-		return this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world)
+		int compressTime = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world)
 				.map(CompressorRecipe::getCompressTime).orElse(200);
+		int speedUpgradeCount = 0;
+		for(ItemStack stack : this.upgradeInventory.getStacks()) {
+			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
+				if(((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
+					speedUpgradeCount += stack.getCount();
+				}
+			}
+		}
+		float speed = (float) (1.0 / 4.0 * speedUpgradeCount + 1.0);
+		compressTime = (int) (compressTime / speed);
+		return compressTime;
 	}
 	
 	private boolean canCompress(@Nullable CompressorRecipe recipe) {
@@ -178,6 +195,10 @@ public class CompressorTileEntity extends MachineTileEntity {
 			} else if (itemstack2.getItem() == itemstack1.getItem()) {
 				itemstack2.grow(itemstack1.getCount());
 			}
+			
+			if(!world.isRemote) {
+				this.setRecipeUsed(recipe);
+			}
 
 			itemstack.shrink(1);
 		}
@@ -213,7 +234,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 
 	@Override
 	public int getSizeInventory() {
-		return this.compressorItemStacks.size();
+		return 2;
 	}
 
 	@Override
@@ -276,15 +297,16 @@ public class CompressorTileEntity extends MachineTileEntity {
 	}
 
 	@Override
-	public CompoundNBT writeRestorableToNBT(CompoundNBT compound) {
+	public CompoundNBT write(CompoundNBT compound) {
 		ItemStackHelper.saveAllItems(compound, compressorItemStacks);
 		compound.putInt("CompressTime", this.compressTime);
 		compound.putInt("CompressTimeTotal", this.compressTimeTotal);
-		return compound;
+		return super.write(compound);
 	}
 
 	@Override
-	public void readRestorableFromNBT(CompoundNBT compound) {
+	public void read(CompoundNBT compound) {
+		super.read(compound);
 		this.compressorItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, compressorItemStacks);
 		this.compressTime = compound.getInt("CompressTime");
@@ -314,6 +336,11 @@ public class CompressorTileEntity extends MachineTileEntity {
 		super.remove();
 		for (int x = 0; x < handlers.length; x++)
 			handlers[x].invalidate();
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new CompressorContainer(id, player);
 	}
 
 }

@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" U ",
+		"RGR",
+		" U "
+	],
+	"key": {
+		"U": { "item": "uselessmod:useless_plate" },
+		"G": { "item": "minecraft:glass" },
+		"R": { "item": "minecraft:redstone" }
+	},
+	"result": {
+		"item": "uselessmod:blank_upgrade",
+		"count": 4
+	}
+}

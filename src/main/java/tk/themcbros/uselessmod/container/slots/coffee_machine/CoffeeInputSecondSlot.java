@@ -14,5 +14,4 @@ public class CoffeeInputSecondSlot extends Slot {
 	public boolean isItemValid(ItemStack stack) {
 		return true;
 	}
-
 }

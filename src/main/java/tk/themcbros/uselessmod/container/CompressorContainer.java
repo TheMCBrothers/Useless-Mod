@@ -12,6 +12,8 @@ import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
@@ -20,12 +22,14 @@ public class CompressorContainer extends Container {
 	private IInventory inventory;
 	private IIntArray fields;
 	private World world;
+	
+	private final int machineSlotCount = 5;
 
 	public CompressorContainer(int id, PlayerInventory playerInventory) {
-		this(id, playerInventory, new Inventory(2), new IntArray(4));
+		this(id, playerInventory, new Inventory(2), new Inventory(3), new IntArray(4));
 	}
 	
-	public CompressorContainer(int id, PlayerInventory playerInventory, IInventory inventory, IIntArray fields) {
+	public CompressorContainer(int id, PlayerInventory playerInventory, IInventory inventory, IInventory upgradeInventory, IIntArray fields) {
 		super(ModContainerTypes.COMPRESSOR, id);
 		this.inventory = inventory;
 		this.fields = fields;
@@ -33,6 +37,10 @@ public class CompressorContainer extends Container {
 		
 		this.addSlot(new Slot(inventory, 0, 56, 35));
 		this.addSlot(new Slot(inventory, 1, 116, 35));
+		
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 0, 8, 8));
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 1, 8, 26));
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 2, 8, 44));
 
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -60,24 +68,28 @@ public class CompressorContainer extends Container {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index == 1) {
-				if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
+				if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index != 1 && index != 0) {
+			} else if (index >= machineSlotCount) {
 				if (this.canCompress(itemstack1)) {
 					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 2 && index < 29) {
-					if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
+				} else if (itemstack1.getItem() instanceof UpgradeItem) {
+					if (!this.mergeItemStack(itemstack1, 2, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 29 && index < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
+				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount + 27, machineSlotCount + 36, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount + 27 && index < machineSlotCount + 36 && !this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 27, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
+			} else if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
 				return ItemStack.EMPTY;
 			}
 

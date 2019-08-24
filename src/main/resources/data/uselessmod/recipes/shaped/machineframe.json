@@ -11,6 +11,7 @@
 		"G": { "item": "minecraft:glass" }
 	},
 	"result": {
-		"item": "uselessmod:machineframe"
+		"item": "uselessmod:machineframe",
+		"count": 2
 	}
 }

@@ -33,6 +33,12 @@ import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 
 public class CoffeeTableBlock extends Block implements IWaterLoggable {
 	
+	public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
+	public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
+	public static final BooleanProperty EAST = BlockStateProperties.EAST;
+	public static final BooleanProperty WEST = BlockStateProperties.WEST;
+	public static final BooleanProperty UP = BlockStateProperties.UP;
+	public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty TALL = BooleanProperty.create("tall");
 	public static final BooleanProperty CABLE = BooleanProperty.create("cable");
@@ -42,7 +48,16 @@ public class CoffeeTableBlock extends Block implements IWaterLoggable {
 	
 	public CoffeeTableBlock(Properties builder) {
 		super(builder);
-		this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE).with(TALL, Boolean.FALSE).with(CABLE, Boolean.FALSE));
+		this.setDefaultState(this.stateContainer.getBaseState()
+				.with(WATERLOGGED, Boolean.FALSE)
+				.with(TALL, Boolean.FALSE)
+				.with(CABLE, Boolean.FALSE)
+				.with(NORTH, Boolean.FALSE)
+				.with(SOUTH, Boolean.FALSE)
+				.with(EAST, Boolean.FALSE)
+				.with(WEST, Boolean.FALSE)
+				.with(UP, Boolean.FALSE)
+				.with(DOWN, Boolean.FALSE));
 		SHAPE = this.generateShape();
 		SHAPE_TALL = this.generateTallShape();
 	}
@@ -116,7 +131,7 @@ public class CoffeeTableBlock extends Block implements IWaterLoggable {
 	
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED, TALL, CABLE);
+		builder.add(WATERLOGGED, TALL, CABLE, NORTH, SOUTH, EAST, WEST, UP, DOWN);
 	}
 	
 	@Nullable

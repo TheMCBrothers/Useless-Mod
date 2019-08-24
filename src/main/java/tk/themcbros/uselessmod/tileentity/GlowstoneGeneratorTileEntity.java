@@ -19,7 +19,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.container.GlowstoneGeneratorContainer;
@@ -68,7 +67,7 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 	};
 	
 	public GlowstoneGeneratorTileEntity() {
-		super(ModTileEntities.GLOWSTONE_GENERATOR);
+		super(ModTileEntities.GLOWSTONE_GENERATOR, 16000, 500, true);
 	}
 
 	@Override
@@ -175,7 +174,7 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 
 	@Override
 	public int getSizeInventory() {
-		return this.generatorStacks.size();
+		return 1;
 	}
 
 	@Override
@@ -229,27 +228,35 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 	public void clear() {
 		this.generatorStacks.clear();
 	}
-
+	
 	@Override
-	public CompoundNBT writeRestorableToNBT(CompoundNBT compound) {
+	public CompoundNBT write(CompoundNBT compound) {
 		ItemStackHelper.saveAllItems(compound, generatorStacks);
 		compound.putInt("CookTime", this.cookTime);
-		return compound;
+		return super.write(compound);
 	}
 
 	@Override
-	public void readRestorableFromNBT(CompoundNBT compound) {
+	public void read(CompoundNBT compound) {
+		super.read(compound);
 		generatorStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, generatorStacks);
 		this.cookTime = compound.getInt("CookTime");
 	}
 	
-	private LazyOptional<? extends IItemHandler>[] itemHandler = net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.values());
+	private LazyOptional<? extends IItemHandler>[] itemHandler = net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return itemHandler[0].cast();
+		if (!this.removed && side != null
+				&& cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			if (side == Direction.UP)
+				return itemHandler[0].cast();
+			else if (side == Direction.DOWN)
+				return itemHandler[1].cast();
+			else
+				return itemHandler[2].cast();
+		}
 		return super.getCapability(cap, side);
 	}
 	
@@ -258,6 +265,11 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 		for(int i = 0; i < itemHandler.length; i++)
 			itemHandler[i].invalidate();
 		super.remove();
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new GlowstoneGeneratorContainer(id, player);
 	}
 
 }

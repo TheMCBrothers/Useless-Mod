@@ -123,6 +123,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 		
 		TileEntity tileEntity = worldIn.getTileEntity(currentPos);
 		if(tileEntity instanceof EnergyCableTileEntity) {
+			((EnergyCableTileEntity) tileEntity).updateNetwork();
 			((EnergyCableTileEntity) tileEntity).updateConnections();
 		}
  
@@ -133,6 +134,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
 		if(tileEntity instanceof EnergyCableTileEntity) {
+			((EnergyCableTileEntity) tileEntity).updateNetwork();
 			((EnergyCableTileEntity) tileEntity).updateConnections();
 		}
 	}

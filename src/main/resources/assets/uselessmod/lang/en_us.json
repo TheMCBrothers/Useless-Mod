@@ -37,6 +37,8 @@
 	"item.uselessmod.coffee_cup.sugar": "Sugar Coffee",
 	"item.uselessmod.coffee_cup.milk_sugar": "Milk-Sugar Coffee",
 	"item.uselessmod.machineframe": "Machine Frame",
+	"item.uselessmod.blank_upgrade": "Blank Upgrade",
+	"item.uselessmod.speed_upgrade": "Speed Upgrade",
 	"item.uselessmod.useless_soup": "Useless Soup",
 	
 	"item.uselessmod.useless_stick": "Useless Stick",
@@ -79,7 +81,7 @@
 	
 	"item.uselessmod.greenstone": "Greenstone Dust",
 	
-	"item.uselessmod.useless_entity_spawn_egg": "Useless Entity Spawn Egg",
+	"item.uselessmod.useless_cow_spawn_egg": "Useless Cow Spawn Egg",
 	"item.uselessmod.grenade": "Grenade",
 	
 	
@@ -155,6 +157,7 @@
 	"block.uselessmod.paint_bucket": "Paint Bucket",
 	"block.uselessmod.paint_bucket.tooltip": "\u00a77Color: %s",
 	"block.uselessmod.paint_bucket.tooltip_2": "\u00a77Filled with: %s",
+	"block.uselessmod.light_switch_block": "Light Switch Block",
 	"block.uselessmod.light_switch": "Light Switch",
 	"block.uselessmod.light_switch.tooltip": "Attached Block Positions:",
 	"block.uselessmod.unlit_lantern": "Unlit Lantern",
@@ -167,7 +170,7 @@
 	"container.uselessmod.closet": "Wall Closet",
 
 
-	"entity.uselessmod.useless_entity": "Useless Entity",
+	"entity.uselessmod.useless_cow": "Useless Cow",
 	"entity.uselessmod.grenade": "Grenade",
 
 
@@ -180,6 +183,7 @@
 	"tooltip.uselessmod.light_switch.clear": "\u00a77\u00a7oSneak and right click to clear configuration",
 	
 	"status.uselessmod.light_switch.block_added": "Added block at %s to Light Switch",
+	"status.uselessmod.light_switch.block_already_added": "Block is already added!",
 	"status.uselessmod.light_switch.cleared": "Light switch configuration cleared",
 	
 	"uselessmod.jei.paint_brush_desc": "Use the paint brush to paint the canvas\nTo get the right color, collect it from a paint bucket",

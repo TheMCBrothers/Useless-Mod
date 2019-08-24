@@ -35,7 +35,7 @@ public class UselessBiome extends Biome {
 				.precipitation(RainType.RAIN)
 				.category(Biome.Category.FOREST)
 				.depth(0.15F)
-				.scale(0.3F)
+				.scale(0.1F)
 				.temperature(0.7F)
 				.downfall(1.4F)
 				.waterColor(0x40B45F)

@@ -23,7 +23,7 @@ public class ModBeddings {
 			for(WoodType type : WoodType.values(WoodType.SubType.VANILLA)) {
 				casingReg.registerMaterial(type.getRegistryName(), type.getTextureLocation());
 			}
-
+			
 			if (ModList.get().isLoaded("biomesoplenty")) {
 				for (WoodType type : WoodType.values(WoodType.SubType.BOP)) {
 					casingReg.registerMaterial(type.getRegistryName(), type.getTextureLocation());

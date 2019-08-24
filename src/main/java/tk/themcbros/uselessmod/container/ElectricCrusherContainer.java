@@ -12,6 +12,8 @@ import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
@@ -20,12 +22,13 @@ public class ElectricCrusherContainer extends Container {
 	private IInventory inventory;
 	private IIntArray fields;
 	private World world;
+	private final int machineSlotCount = 6;
 
 	public ElectricCrusherContainer(int id, PlayerInventory playerInv) {
-		this(id, playerInv, new Inventory(3), new IntArray(4));
+		this(id, playerInv, new Inventory(3), new Inventory(3), new IntArray(4));
 	}
 
-	public ElectricCrusherContainer(int id, PlayerInventory playerInventory, IInventory inventory, IIntArray fields) {
+	public ElectricCrusherContainer(int id, PlayerInventory playerInventory, IInventory inventory, IInventory upgradeInventory, IIntArray fields) {
 		super(ModContainerTypes.ELECTRIC_CRUSHER, id);
 		this.inventory = inventory;
 		this.fields = fields;
@@ -34,6 +37,10 @@ public class ElectricCrusherContainer extends Container {
 		this.addSlot(new Slot(inventory, 0, 39, 35));
 		this.addSlot(new Slot(inventory, 1, 99, 24));
 		this.addSlot(new Slot(inventory, 2, 99, 48));
+		
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 0, 8, 8));
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 1, 8, 26));
+		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 2, 8, 44));
 
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -65,34 +72,38 @@ public class ElectricCrusherContainer extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (index == 2) {
-				if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
+			if (index == 2 || index == 1) {
+				if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index != 1 && index != 0) {
+			} else if (index >= machineSlotCount) {
 				if (this.canCrush(itemstack1)) {
 					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 3 && index < 30) {
-					if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
+				} else if(itemstack1.getItem() instanceof UpgradeItem) {
+					if(this.mergeItemStack(itemstack1, 3, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) {
+				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount + 27, machineSlotCount + 36, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount + 27 && index < machineSlotCount + 36 && !this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 27, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 3, 39, false)) {
+			} else if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
 				return ItemStack.EMPTY;
 			}
-
+			
 			if (itemstack1.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);
 			} else {
 				slot.onSlotChanged();
 			}
-
+			
 			if (itemstack1.getCount() == itemstack.getCount()) {
 				return ItemStack.EMPTY;
 			}

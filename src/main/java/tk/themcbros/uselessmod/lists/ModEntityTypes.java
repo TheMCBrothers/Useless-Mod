@@ -13,13 +13,13 @@ import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.config.EntityConfig;
 import tk.themcbros.uselessmod.entity.GrenadeEntity;
-import tk.themcbros.uselessmod.entity.UselessEntity;
+import tk.themcbros.uselessmod.entity.UselessCowEntity;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModEntityTypes {
 
-	public static final EntityType<UselessEntity> USELESS_ENTITY = EntityType.Builder.create(UselessEntity::new, EntityClassification.CREATURE).build(EntityNames.USELESS_ENTITY.toString());
-	public static final EntityType<GrenadeEntity> GRENADE = EntityType.Builder.<GrenadeEntity>create(GrenadeEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).build(EntityNames.GRENADE.toString());
+	public static final EntityType<UselessCowEntity> USELESS_COW = EntityType.Builder.create(UselessCowEntity::new, EntityClassification.CREATURE).build("uselessmod:useless_cow");
+	public static final EntityType<GrenadeEntity> GRENADE = EntityType.Builder.<GrenadeEntity>create(GrenadeEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).build("uselessmod:grenade");
 	
 	@Mod.EventBusSubscriber(modid = UselessMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -27,7 +27,7 @@ public class ModEntityTypes {
 		public static void onRegister(final RegistryEvent.Register<EntityType<?>> event) {
 			IForgeRegistry<EntityType<?>> registry = event.getRegistry();
 			
-			registry.register(USELESS_ENTITY.setRegistryName(EntityNames.USELESS_ENTITY));
+			registry.register(USELESS_COW.setRegistryName(EntityNames.USELESS_COW_ENTITY));
 			registry.register(GRENADE.setRegistryName(EntityNames.GRENADE));
 		}
 	}
@@ -42,7 +42,7 @@ public class ModEntityTypes {
 	
 	public static void registerEntityWorldSpawns() {
 		if(EntityConfig.useless_entity_enabled.get()) {
-			registerEntityWorldSpawn(USELESS_ENTITY, 1, 4, 4, Biomes.NETHER, ModBiomes.USELESS_BIOME);
+			registerEntityWorldSpawn(USELESS_COW, 1, 4, 4, Biomes.NETHER, ModBiomes.USELESS_BIOME);
 		}
 	}
 	

@@ -14,6 +14,9 @@ public class MachineConfig {
 	public static ForgeConfigSpec.IntValue furnace_rf_per_tick;
 	public static ForgeConfigSpec.IntValue compressor_rf_per_tick;
 	
+	public static ForgeConfigSpec.IntValue energy_cable_capacity;
+	public static ForgeConfigSpec.IntValue energy_cable_max_transfer;
+	
 	public static void init(ForgeConfigSpec.Builder common, ForgeConfigSpec.Builder client) {
 		common.comment("This is the ore generation config");
 		coffee_machine_rf_per_tick = common
@@ -41,6 +44,13 @@ public class MachineConfig {
 		compressor_rf_per_tick = common
 				.comment("How much RF per tick the compressor uses.")
 				.defineInRange("machines.compressor.rf_per_tick", 15, 1, 1000);
+		
+		energy_cable_capacity = common
+				.comment("How much RF one cable can store.")
+				.defineInRange("energy_cable.capacity", 4000, 20, 16000);
+		energy_cable_max_transfer = common
+				.comment("How much RF per tick the energy cable can transfer.")
+				.defineInRange("energy_cable.max_transfer", 200, 20, 128000);
 	}
 	
 }

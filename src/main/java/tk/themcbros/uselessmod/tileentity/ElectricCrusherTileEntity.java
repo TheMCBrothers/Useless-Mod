@@ -20,7 +20,9 @@ import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.ElectricCrusherContainer;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
+import tk.themcbros.uselessmod.machine.Upgrade;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
@@ -74,11 +76,11 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 	};
 
 	public ElectricCrusherTileEntity() {
-		super(ModTileEntities.ELECTRIC_CRUSHER);
+		super(ModTileEntities.ELECTRIC_CRUSHER, 16000, 250, false);
 	}
 
 	public int getSizeInventory() {
-		return this.crusherItemStacks.size();
+		return 3;
 	}
 
 	public boolean isEmpty() {
@@ -120,7 +122,8 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 
 	}
 
-	public void readRestorableFromNBT(CompoundNBT compound) {
+	public void read(CompoundNBT compound) {
+		super.read(compound);
 		this.crusherItemStacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, this.crusherItemStacks);
 		this.crushTime = compound.getInt("CrushTime");
@@ -132,7 +135,7 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 
 	}
 
-	public CompoundNBT writeRestorableToNBT(CompoundNBT compound) {
+	public CompoundNBT write(CompoundNBT compound) {
 		compound.putInt("CrushTime", this.crushTime);
 		compound.putInt("CrushTimeTotal", this.crushTimeTotal);
 		ItemStackHelper.saveAllItems(compound, this.crusherItemStacks);
@@ -141,7 +144,7 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 			compound.putString("CustomName", ITextComponent.Serializer.toJson(this.crusherCustomName));
 		}
 
-		return compound;
+		return super.write(compound);
 	}
 
 	/**
@@ -205,8 +208,19 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 	
 	
 	protected int getCrushTime() {
-		return this.world.getRecipeManager().getRecipe(RecipeTypes.CRUSHING, this, this.world)
+		int crushTime = this.world.getRecipeManager().getRecipe(RecipeTypes.CRUSHING, this, this.world)
 				.map(CrusherRecipe::getCrushTime).orElse(200);
+		int speedUpgradeCount = 0;
+		for(ItemStack stack : this.upgradeInventory.getStacks()) {
+			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
+				if(((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
+					speedUpgradeCount += stack.getCount();
+				}
+			}
+		}
+		float speed = (float) (1.0 / 4.0 * speedUpgradeCount + 1.0);
+		crushTime = (int) (crushTime / speed);
+		return crushTime;
 	}
 	
 	private boolean canCrush(@Nullable CrusherRecipe recipe) {
@@ -364,7 +378,12 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 
 	@Override
 	public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-		return new ElectricCrusherContainer(windowId, playerInventory, this, fields);
+		return new ElectricCrusherContainer(windowId, playerInventory, this, this.upgradeInventory, this.fields);
 	}
 
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new ElectricCrusherContainer(id, player);
+	}
+	
 }
