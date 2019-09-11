@@ -1,8 +1,0 @@
-{
-	"parent": "uselessmod:block/coffee_table",
-	"textures": {
-		"plate": "minecraft:block/stripped_oak_log",
-		"legs": "minecraft:block/oak_log",
-		"particle": "minecraft:block/stripped_oak_log"
-	}
-}

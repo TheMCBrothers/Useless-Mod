@@ -1,6 +1,0 @@
-{
-    "parent": "uselessmod:block/greenstone_dust_side_alt",
-    "textures": {
-        "line": "uselessmod:block/greenstone_dust_line0"
-    }
-}

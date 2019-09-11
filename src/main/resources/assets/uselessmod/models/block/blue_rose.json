@@ -1,7 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "cross": "uselessmod:block/blue_rose",
-		"particle": "uselessmod:block/blue_rose"
-    }
-}

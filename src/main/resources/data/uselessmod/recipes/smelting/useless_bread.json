@@ -1,9 +1,0 @@
-{
-	"type": "minecraft:smelting",
-	"ingredient": {
-		"item": "uselessmod:useless_flour"
-	},
-	"result": "uselessmod:useless_bread",
-	"experience": 0.75,
-	"cookingtime": 200
-}

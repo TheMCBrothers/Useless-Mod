@@ -1,6 +1,0 @@
-{
-	"variants": {
-		"lit=true": { "model": "uselessmod:block/lamp_on" },
-		"lit=false": { "model": "uselessmod:block/lamp_off" }
-	}
-}

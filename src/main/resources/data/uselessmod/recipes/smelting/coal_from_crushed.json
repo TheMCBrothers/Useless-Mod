@@ -1,9 +1,0 @@
-{
-	"type": "minecraft:smelting",
-	"ingredient": {
-		"item": "uselessmod:coal_dust"
-	},
-	"result": "minecraft:coal",
-	"experience": 0.75,
-	"cookingtime": 200
-}

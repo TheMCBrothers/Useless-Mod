@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "open=true":  { "model": "uselessmod:block/closet" },
-		"open=false": { "model": "uselessmod:block/closet_closed" }
-    }
-}

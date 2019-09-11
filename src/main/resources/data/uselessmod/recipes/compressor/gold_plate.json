@@ -1,9 +1,0 @@
-{
-	"type": "uselessmod:compressing",
-	"ingredient": {
-		"item": "minecraft:gold_ingot"
-	},
-	"result": "uselessmod:gold_plate",
-	"experience": 0.5,
-	"compresstime": 100
-}

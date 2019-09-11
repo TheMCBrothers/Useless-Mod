@@ -1,6 +1,0 @@
-{
-    "parent": "uselessmod:block/machine",
-    "textures": {
-        "front": "uselessmod:block/electric_furnace_front"
-    }
-}
