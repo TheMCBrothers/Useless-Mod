@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
@@ -22,7 +23,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
@@ -37,10 +42,9 @@ import tk.themcbros.uselessmod.recipes.RecipeTypes;
 public class CoffeeMachineTileEntity extends TileEntity implements ITickableTileEntity, ISidedInventory, INamedContainerProvider {
 
 	public static final int RF_PER_TICK = MachineConfig.coffee_machine_rf_per_tick.get();
-	private static final double WATER_PER_TICK = MachineConfig.coffee_machine_water_per_tick.get();
-	private static final int COFFEE_BEANS_PER_COFFEE = MachineConfig.coffee_machine_coffee_beans_per_coffee.get();
-	private static final int WATER_CAPACITY = MachineConfig.coffee_machine_water_capacity.get();
-	private static final int COFFEE_BEANS_CAPACITY = MachineConfig.coffee_machine_coffee_beans_capacity.get();
+	public static final double WATER_PER_TICK = MachineConfig.coffee_machine_water_per_tick.get();
+	public static final int COFFEE_BEANS_PER_COFFEE = MachineConfig.coffee_machine_coffee_beans_per_coffee.get();
+	public static final int WATER_CAPACITY = MachineConfig.coffee_machine_water_capacity.get();
 	
 	private static final int[] SLOTS_TOP = new int[] { 2,3,5 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 4 };
@@ -50,11 +54,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	
 	private CustomEnergyStorage energyStorage;
 	
-	private int waterAmount;
-	private int coffeeBeansAmount;
-	
-	private int maxWaterAmount = WATER_CAPACITY;
-	private int maxCoffeeBeansAmount = COFFEE_BEANS_CAPACITY;
+	private FluidTank waterTank = new FluidTank(WATER_CAPACITY, (stack) -> { return stack.getFluid() == Fluids.WATER; });
 	
 	private int cookTime;
 	private int cookTimeTotal;
@@ -62,7 +62,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	private IIntArray fields = new IIntArray() {
 		@Override
 		public int size() {
-			return 8;
+			return 6;
 		}
 		
 		@Override
@@ -75,21 +75,15 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				CoffeeMachineTileEntity.this.energyStorage.setCapacity(value);
 				break;
 			case 2:
-				CoffeeMachineTileEntity.this.waterAmount = value;
+				CoffeeMachineTileEntity.this.waterTank.getFluid().setAmount(value);
 				break;
 			case 3:
-				CoffeeMachineTileEntity.this.maxWaterAmount = value;
+				CoffeeMachineTileEntity.this.waterTank.setCapacity(value);
 				break;
 			case 4:
-				CoffeeMachineTileEntity.this.coffeeBeansAmount = value;
-				break;
-			case 5:
-				CoffeeMachineTileEntity.this.maxCoffeeBeansAmount = value;
-				break;
-			case 6:
 				CoffeeMachineTileEntity.this.cookTime = value;
 				break;
-			case 7:
+			case 5:
 				CoffeeMachineTileEntity.this.cookTimeTotal = value;
 				break;
 
@@ -106,16 +100,12 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 			case 1:
 				return CoffeeMachineTileEntity.this.energyStorage.getMaxEnergyStored();
 			case 2:
-				return CoffeeMachineTileEntity.this.waterAmount;
+				return CoffeeMachineTileEntity.this.waterTank.getFluidAmount();
 			case 3:
-				return CoffeeMachineTileEntity.this.maxWaterAmount;
+				return CoffeeMachineTileEntity.this.waterTank.getCapacity();
 			case 4:
-				return CoffeeMachineTileEntity.this.coffeeBeansAmount;
-			case 5:
-				return CoffeeMachineTileEntity.this.maxCoffeeBeansAmount;
-			case 6:
 				return CoffeeMachineTileEntity.this.cookTime;
-			case 7:
+			case 5:
 				return CoffeeMachineTileEntity.this.cookTimeTotal;
 			default:
 				return 0;
@@ -145,30 +135,25 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 			
 			if((cup && !flag1) || (!cup && flag1)) flag2 = true;
 			
-			if(this.coffeeMachineItemStacks.get(0).getItem() == Items.WATER_BUCKET && waterAmount <= maxWaterAmount-Fluid.BUCKET_VOLUME) {
+			if(this.coffeeMachineItemStacks.get(0).getItem() == Items.WATER_BUCKET && getWaterAmount() <= getMaxWaterAmount()-FluidAttributes.BUCKET_VOLUME) {
 				this.coffeeMachineItemStacks.set(0, new ItemStack(Items.BUCKET));
-				waterAmount += Fluid.BUCKET_VOLUME;
-				this.markDirty();
-			}
-			if(this.coffeeMachineItemStacks.get(1).getItem() == ModItems.COFFEE_BEANS && coffeeBeansAmount <= maxCoffeeBeansAmount-1) {
-				this.coffeeMachineItemStacks.get(1).shrink(1);
-				this.coffeeBeansAmount++;
+				this.waterTank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
 				this.markDirty();
 			}
 			
-			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.coffeeMachineItemStacks.get(0).isEmpty()) {
+			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.coffeeMachineItemStacks.get(1).isEmpty() && !this.coffeeMachineItemStacks.get(2).isEmpty() && !this.coffeeMachineItemStacks.get(3).isEmpty()) {
 				CoffeeRecipe coffeeRecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCook(coffeeRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					this.cookTime++;
-					this.waterAmount -= WATER_PER_TICK;
+					this.waterTank.drain((int) WATER_PER_TICK, FluidAction.EXECUTE);
 					flag2 = true;
 				}
 
 				if (this.isActive() && this.canCook(coffeeRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					this.cookTime++;
-					this.waterAmount -= WATER_PER_TICK;
+					this.waterTank.drain((int) WATER_PER_TICK, FluidAction.EXECUTE);
 					if (this.cookTime == this.cookTimeTotal) {
 						this.cookTime = 0;
 						this.cookTimeTotal = this.getCookTime();
@@ -193,6 +178,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	}
 	
 	protected int getCookTime() {
+		if(world == null) return 200;
 		return this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, this, this.world)
 				.map(CoffeeRecipe::getCookTime).orElse(200);
 	}
@@ -201,8 +187,8 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		final int waterUse = (int) (WATER_PER_TICK * (this.getCookTime()-this.cookTime));
 		if (!this.coffeeMachineItemStacks.get(3).isEmpty() 
 				&& !this.coffeeMachineItemStacks.get(2).isEmpty() 
-				&& coffeeBeansAmount >= COFFEE_BEANS_PER_COFFEE
-				&& waterAmount >= waterUse && recipe != null) {
+				&& this.coffeeMachineItemStacks.get(1).getCount() >= COFFEE_BEANS_PER_COFFEE
+				&& getWaterAmount() >= waterUse && recipe != null) {
 			ItemStack itemstack = recipe.getRecipeOutput();
 			if (itemstack.isEmpty()) {
 				return false;
@@ -213,16 +199,10 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				} else if (!itemstack1.isItemEqual(itemstack)) {
 					return false;
 				} else if (itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit()
-						&& itemstack1.getCount() < itemstack1.getMaxStackSize()) { // Forge fix: make furnace respect
-																					// stack sizes in furnace recipes
+						&& itemstack1.getCount() < itemstack1.getMaxStackSize()) {
 					return true;
 				} else {
-					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize(); // Forge fix:
-																										// make furnace
-																										// respect stack
-																										// sizes in
-																										// furnace
-																										// recipes
+					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize();
 				}
 			}
 		} else {
@@ -232,6 +212,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 
 	private void cookItem(@Nullable CoffeeRecipe recipe) {
 		if (recipe != null && this.canCook(recipe)) {
+			ItemStack beansStack = this.coffeeMachineItemStacks.get(1);
 			ItemStack itemstack = this.coffeeMachineItemStacks.get(2);
 			ItemStack itemstack1 = this.coffeeMachineItemStacks.get(3);
 			ItemStack itemstack2 = recipe.getRecipeOutput();
@@ -247,7 +228,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				this.coffeeMachineItemStacks.set(3, itemstack1.getContainerItem());
 			else
 				itemstack1.shrink(1);
-			this.coffeeBeansAmount -= COFFEE_BEANS_PER_COFFEE;
+			beansStack.shrink(COFFEE_BEANS_PER_COFFEE);
 		}
 	}
 	
@@ -255,11 +236,11 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	public CompoundNBT write(CompoundNBT compound) {
 		ItemStackHelper.saveAllItems(compound, coffeeMachineItemStacks);
 		compound.put("Energy", this.energyStorage.serializeNBT());
+		compound.put("WaterTank", this.waterTank.writeToNBT(new CompoundNBT()));
 		CompoundNBT machineCompound = new CompoundNBT();
-		machineCompound.putInt("WaterAmount", this.waterAmount);
-		machineCompound.putInt("MilkAmount",this. coffeeBeansAmount);
 		machineCompound.putInt("CookTime", this.cookTime);
-		machineCompound.putInt("CookTimeTotal",this. cookTimeTotal);
+		machineCompound.putInt("CookTimeTotal",this.cookTimeTotal);
+		machineCompound.putInt("WaterAmount", this.waterTank.getFluidAmount());
 		compound.put("Machine", machineCompound);
 		return super.write(compound);
 	}
@@ -271,26 +252,22 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 		ItemStackHelper.loadAllItems(compound, coffeeMachineItemStacks);
 		this.energyStorage.deserializeNBT(compound.getCompound("Energy"));
 		CompoundNBT machineCompound = compound.getCompound("Machine");
-		this.waterAmount = machineCompound.getInt("WaterAmount");
-		this.coffeeBeansAmount = machineCompound.getInt("MilkAmount");
+		this.waterTank.readFromNBT(compound);
+		this.waterTank.setFluid(new FluidStack(Fluids.WATER, machineCompound.getInt("WaterAmount")));
 		this.cookTime = machineCompound.getInt("CookTime");
 		this.cookTimeTotal = machineCompound.getInt("CookTimeTotal");
 	}
+	
+	public FluidTank getWaterTank() {
+		return waterTank;
+	}
 
 	public int getWaterAmount() {
-		return this.waterAmount;
-	}
-	
-	public int getMilkAmount() {
-		return this.coffeeBeansAmount;
+		return this.waterTank.getFluidAmount();
 	}
 	
 	public int getMaxWaterAmount() {
-		return this.maxWaterAmount;
-	}
-	
-	public int getMaxMilkAmount() {
-		return this.maxCoffeeBeansAmount;
+		return this.waterTank.getCapacity();
 	}
 
 	@Override
@@ -389,6 +366,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	private LazyOptional<? extends IItemHandler>[] handlers = net.minecraftforge.items.wrapper.SidedInvWrapper
 			.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	private LazyOptional<CustomEnergyStorage> energyHandler = LazyOptional.of(() -> this.energyStorage);
+	private LazyOptional<FluidTank> fluidHandler = LazyOptional.of(() -> this.waterTank);
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
@@ -399,9 +377,10 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 				return handlers[1].cast();
 			else
 				return handlers[2].cast();
-		}
-		if(capability == CapabilityEnergy.ENERGY) {
+		} else if(capability == CapabilityEnergy.ENERGY) {
 			return energyHandler.cast();
+		} else if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return fluidHandler.cast();
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -410,6 +389,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 	protected void invalidateCaps() {
 		super.invalidateCaps();
 		this.energyHandler.invalidate();
+		this.fluidHandler.invalidate();
 	}
 
 	/**

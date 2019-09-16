@@ -17,11 +17,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.lists.ModItems;
+import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
 public class CoffeeRecipe implements IRecipe<IInventory> {
 
 	private final ResourceLocation id;
 	private final String group;
+	private final Ingredient beansIngredient;
 	private final Ingredient cupIngredient;
 	private final Ingredient ingredient;
 	private final ItemStack result;
@@ -30,6 +32,7 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
 	public CoffeeRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, int cookTime) {
 		this.id = id;
 		this.group = group;
+		this.beansIngredient = Ingredient.fromStacks(new ItemStack(ModItems.COFFEE_BEANS, CoffeeMachineTileEntity.COFFEE_BEANS_PER_COFFEE));
 		this.cupIngredient = Ingredient.fromItems(ModItems.CUP);
 		this.ingredient = ingredient;
 		this.result = result;
@@ -44,6 +47,7 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> nonnulllist = NonNullList.create();
+		nonnulllist.add(this.beansIngredient);
 		nonnulllist.add(this.cupIngredient);
 		nonnulllist.add(this.ingredient);
 		return nonnulllist;
@@ -55,7 +59,7 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
 
 	@Override
 	public boolean matches(IInventory inv, World worldIn) {
-		return this.ingredient.test(inv.getStackInSlot(3)) && this.cupIngredient.test(inv.getStackInSlot(2));
+		return this.ingredient.test(inv.getStackInSlot(3)) && this.cupIngredient.test(inv.getStackInSlot(2)) && this.beansIngredient.test(inv.getStackInSlot(1));
 	}
 
 	@Override

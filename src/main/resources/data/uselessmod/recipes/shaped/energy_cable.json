@@ -7,11 +7,11 @@
 	],
 	"key": {
 		"R": { "item": "minecraft:redstone" },
-		"G": { "item": "minecraft:glass" },
-		"I": { "item": "uselessmod:useless_ingot" }
+		"G": { "tag": "forge:glass" },
+		"I": { "tag": "forge:ingots/useless" }
 	},
 	"result": {
 		"item": "uselessmod:energy_cable",
-		"count": 12
+		"count": 6
 	}
 }

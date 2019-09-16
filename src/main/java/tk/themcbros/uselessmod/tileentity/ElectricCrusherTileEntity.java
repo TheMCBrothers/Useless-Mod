@@ -31,7 +31,7 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 2, 1 };
 	private static final int[] SLOTS_SIDES = new int[] { 0 };
-	private static final int RF_PER_TICK = MachineConfig.crusher_rf_per_tick.get();
+	public static final int RF_PER_TICK = MachineConfig.crusher_rf_per_tick.get();
 	private NonNullList<ItemStack> crusherItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
 	private int crushTime;
 	private int crushTimeTotal;

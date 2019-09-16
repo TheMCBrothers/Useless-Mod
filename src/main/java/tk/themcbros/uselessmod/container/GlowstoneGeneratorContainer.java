@@ -98,7 +98,7 @@ public class GlowstoneGeneratorContainer extends Container {
 	public int getEnergyStoredScaled() {
 		int i = this.fields.get(0);
 		int j = this.fields.get(1);
-		return j != 0 && i != 0 ? i * 60 / j : 0;
+		return j != 0 && i != 0 ? i * 45 / j : 0;
 	}
 	
 	public int getEnergyStored() {

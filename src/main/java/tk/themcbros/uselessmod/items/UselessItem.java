@@ -26,6 +26,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
@@ -66,17 +67,20 @@ public class UselessItem extends Item {
 			
 			if(tileEntity instanceof EnergyCableTileEntity) {
 				EnergyCableTileEntity energyCable = (EnergyCableTileEntity) tileEntity;
-				List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
 				EnergyCableNetwork cableNetwork = energyCable.getNetwork();
-				CustomEnergyStorage energyHandler = cableNetwork.energyStorage;
-				
-				textComponents.add(new StringTextComponent("-- Energy Cable --"));
-				textComponents.add(new StringTextComponent("Network Infos (" + cableNetwork.key + ") :"));
-				textComponents.add(new StringTextComponent(energyHandler.getEnergyStored() + " / " + energyHandler.getMaxEnergyStored() + " FE"));
-				textComponents.add(new StringTextComponent("Cable Amount: " + cableNetwork.CABLES.size()));
-				textComponents.add(new StringTextComponent("Consumer Amount: " + cableNetwork.CONSUMERS.size()));
-				for(ITextComponent iTextComponent : textComponents) {
-					if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);
+				if(cableNetwork != null) {
+					CustomEnergyStorage energyHandler = cableNetwork.energyStorage;
+					if(energyHandler != null) {
+						List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
+						textComponents.add(new StringTextComponent("-- Energy Cable --"));
+						textComponents.add(new StringTextComponent("Network Infos (" + cableNetwork.key + ") :"));
+						textComponents.add(new StringTextComponent(energyHandler.getEnergyStored() + " / " + energyHandler.getMaxEnergyStored() + " FE"));
+						textComponents.add(new StringTextComponent("Cable Amount: " + cableNetwork.CABLES.size()));
+						textComponents.add(new StringTextComponent("Consumer Amount: " + cableNetwork.CONSUMERS.size()));
+						for(ITextComponent iTextComponent : textComponents) {
+							if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);
+						}
+					}
 				}
 				
 				return ActionResultType.SUCCESS;
@@ -110,11 +114,20 @@ public class UselessItem extends Item {
 				List<ITextComponent> textComponents = new ArrayList<ITextComponent>();
 				
 				textComponents.add(new StringTextComponent("-- Fluid Handler --"));
-				String fluid = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().getLocalizedName() : "none";
-				int capacity = fluidHandler.getTankProperties()[0].getCapacity();
-				int amount = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().amount : 0;
-				textComponents.add(new StringTextComponent("Fluid: " + fluid));
-				textComponents.add(new StringTextComponent("Tank: " + amount + " / " + capacity + " mB"));
+				for(int i = 0; i < fluidHandler.getTanks(); i++) {
+					int tankCapacity = fluidHandler.getTankCapacity(i);
+					FluidStack fluidStack = fluidHandler.getFluidInTank(i);
+					fluidStack.getDisplayName();
+					textComponents.add(new StringTextComponent("Fluid: " + fluidStack.getFluid()));
+					textComponents.add(new StringTextComponent("Amount: " + fluidStack.getAmount() + " / " + tankCapacity + " mB"));
+				}
+				
+				
+//				String fluid = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().getLocalizedName() : "none";
+//				int capacity = fluidHandler.getTankProperties()[0].getCapacity();
+//				int amount = fluidHandler.getTankProperties()[0].getContents() != null ? fluidHandler.getTankProperties()[0].getContents().amount : 0;
+//				textComponents.add(new StringTextComponent("Fluid: " + fluid));
+//				textComponents.add(new StringTextComponent("Tank: " + amount + " / " + capacity + " mB"));
 				
 				for(ITextComponent iTextComponent : textComponents) {
 					if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);

@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"item": "minecraft:nether_quartz_ore"
+	},
+	"result": {
+		"item": "minecraft:quartz",
+		"count": 3
+	},
+	"experience": 0.2,
+	"crushtime": 200
+}

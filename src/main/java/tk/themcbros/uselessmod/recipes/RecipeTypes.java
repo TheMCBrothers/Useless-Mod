@@ -7,5 +7,6 @@ public class RecipeTypes {
 	public static final IRecipeType<CrusherRecipe> CRUSHING = IRecipeType.register("uselessmod:crushing");
 	public static final IRecipeType<CompressorRecipe> COMPRESSING = IRecipeType.register("uselessmod:compressing");
 	public static final IRecipeType<CoffeeRecipe> COFFEE = IRecipeType.register("uselessmod:coffee");
+	public static final IRecipeType<GlowstoneGeneratorRecipe> GLOWSTONE_GENERATING = IRecipeType.register("uselessmod:glowstone_generating");
 	
 }

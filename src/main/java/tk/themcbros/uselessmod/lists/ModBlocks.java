@@ -46,6 +46,7 @@ import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 import tk.themcbros.uselessmod.blocks.ModDoorBlock;
 import tk.themcbros.uselessmod.blocks.ModPaneBlock;
 import tk.themcbros.uselessmod.blocks.PaintBucketBlock;
+import tk.themcbros.uselessmod.blocks.PowerControlBlock;
 import tk.themcbros.uselessmod.blocks.UnlitLanternBlock;
 import tk.themcbros.uselessmod.blocks.UselessCropsBlock;
 import tk.themcbros.uselessmod.blocks.UselessDoublePlantBlock;
@@ -117,12 +118,13 @@ public class ModBlocks {
 	public static final Block PAINT_BUCKET = register("paint_bucket", new PaintBucketBlock(Block.Properties.create(Material.WOOL).sound(SoundType.METAL).hardnessAndResistance(.25F)));
 	
 	public static final Block CRUSHER = register("crusher", new CrusherBlock(Block.Properties.create(Material.ROCK).sound(SoundType.METAL).hardnessAndResistance(3.5F)));
-	public static final Block ELECTRIC_CRUSHER = register("electric_crusher", new ElectricCrusherBlock(Block.Properties.from(CRUSHER)));
-	public static final Block ELECTRIC_FURNACE = register("electric_furnace", new ElectricFurnaceBlock(Block.Properties.from(CRUSHER)));
-	public static final Block COMPRESSOR = register("compressor", new CompressorBlock(Block.Properties.from(CRUSHER)));
-	public static final Block GLOWSTONE_GENERATOR = register("glowstone_generator", new GlowstoneGeneratorBlock(Block.Properties.from(CRUSHER)));
-	public static final Block CREATIVE_POWER_BLOCK = register("creative_power_block", new CreativePowerBlock(Block.Properties.from(CRUSHER)));
-	public static final Block COFFEE_MACHINE = register("coffee_machine", new CoffeeMachineBlock(Block.Properties.from(CRUSHER)));
+	public static final Block ELECTRIC_CRUSHER = register("electric_crusher", new ElectricCrusherBlock(Block.Properties.create(Material.ANVIL).sound(SoundType.METAL).hardnessAndResistance(3.5f)));
+	public static final Block ELECTRIC_FURNACE = register("electric_furnace", new ElectricFurnaceBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
+	public static final Block COMPRESSOR = register("compressor", new CompressorBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
+	public static final Block GLOWSTONE_GENERATOR = register("glowstone_generator", new GlowstoneGeneratorBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
+	public static final Block CREATIVE_POWER_BLOCK = register("creative_power_block", new CreativePowerBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
+	public static final Block POWER_CONTROL_BLOCK = register("power_control_block", new PowerControlBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
+	public static final Block COFFEE_MACHINE = register("coffee_machine", new CoffeeMachineBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block ENERGY_CABLE = register("energy_cable", new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.125F)));
 	public static final Block CLOSET = register("closet", new ClosetBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F)));
 	

@@ -106,6 +106,7 @@ public class ModItems {
 	public static final BlockItem COMPRESSOR = registerBlockItem("compressor", ModBlocks.COMPRESSOR);
 	public static final BlockItem GLOWSTONE_GENERATOR = registerBlockItem("glowstone_generator", ModBlocks.GLOWSTONE_GENERATOR);
 	public static final BlockItem CREATIVE_POWER_BLOCK = registerBlockItem("creative_power_block", ModBlocks.CREATIVE_POWER_BLOCK);
+	public static final BlockItem POWER_CONTROL_BLOCK = registerBlockItem("power_control_block", ModBlocks.POWER_CONTROL_BLOCK);
 	public static final BlockItem COFFEE_MACHINE = registerBlockItem("coffee_machine", ModBlocks.COFFEE_MACHINE);
 	public static final BlockItem ENERGY_CABLE = registerBlockItem("energy_cable", ModBlocks.ENERGY_CABLE);
 	public static final BlockItem CLOSET = registerBlockItem("closet", ModBlocks.CLOSET, ModItemGroups.CLOSET_GROUP);

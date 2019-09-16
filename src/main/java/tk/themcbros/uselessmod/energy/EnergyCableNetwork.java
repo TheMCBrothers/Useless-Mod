@@ -27,7 +27,7 @@ public class EnergyCableNetwork implements INBTSerializable<CompoundNBT> {
 	public final List<TileEntity> CONSUMERS = new ArrayList<TileEntity>();
 	public final List<EnergyCableTileEntity> CABLES = new ArrayList<EnergyCableTileEntity>();
 	
-	public CustomEnergyStorage energyStorage = new CustomEnergyStorage(4000, 250, 250, 2000);
+	public CustomEnergyStorage energyStorage = new CustomEnergyStorage(4000, 1000, 1000, 0);
 	public String key = "null";
 	
 	public LazyOptional<CustomEnergyStorage> energyHolder = LazyOptional.of(() -> { return this.energyStorage; });
@@ -69,6 +69,7 @@ public class EnergyCableNetwork implements INBTSerializable<CompoundNBT> {
 	public void addCable(EnergyCableTileEntity energyCable) {
 		if(!CABLES.contains(energyCable)) {
 			CABLES.add(energyCable);
+			energyCable.setNetwork(this);
 			this.updateNetwork();
 			UselessMod.LOGGER.debug("Added EnergyCable to network : {}", this.key);
 		}
@@ -95,10 +96,12 @@ public class EnergyCableNetwork implements INBTSerializable<CompoundNBT> {
 				network.key = StringHelper.randomAlphaNumeric(20);
 				NETWORK_LIST.put(network.key, network);
 				offsetCables.forEach((direction, offsetCable) -> {
-					NETWORK_LIST.remove(offsetCable.getNetwork().key, offsetCable.getNetwork());
-					offsetCable.getNetwork().CABLES.forEach(cable -> {
-						cable.setNetwork(network);
-					});
+					if(offsetCable.getNetwork() != null) {
+						NETWORK_LIST.remove(offsetCable.getNetwork().key, offsetCable.getNetwork());
+						offsetCable.getNetwork().CABLES.forEach(cable -> {
+							cable.setNetwork(network);
+						});
+					}
 				}); // BIS DA
 				UselessMod.LOGGER.debug("Remove EnergyCable from network : {}", offsetCables.size(), this.key);
 				UselessMod.LOGGER.debug("Split network {} into {} new networks", offsetCables.size(), this.key);
@@ -132,16 +135,28 @@ public class EnergyCableNetwork implements INBTSerializable<CompoundNBT> {
 	}
 	
 	public static void updateNetworks() {
-		NETWORK_LIST.forEach((networkKey, network) -> {
-			network.updateNetwork();
-		});
+		if(NETWORK_LIST.size() <= 0 || NETWORK_LIST == null || NETWORK_LIST.isEmpty()	) return;
+		for(String networkKey : NETWORK_LIST.keySet()) {
+			if(networkKey != null && !networkKey.equals("null")) {
+				for(Object network : NETWORK_LIST.values()) {
+					if(network != null && network instanceof EnergyCableNetwork) {
+						((EnergyCableNetwork) network).updateNetwork();
+					} else NETWORK_LIST.remove(networkKey, network);
+				}
+			} else {
+				NETWORK_LIST.remove(networkKey);
+			}
+		}
 	}
 	
 	public static EnergyCableNetwork createWithCable(EnergyCableTileEntity energyCable, int maxTransfer) {
 		EnergyCableNetwork network = new EnergyCableNetwork();
 		network.CABLES.add(energyCable);
 		network.key = StringHelper.randomAlphaNumeric(20);
+		if(energyCable.hasSavedEnergy())
+			network.energyStorage.setEnergyStored(energyCable.getSavedEnergy());
 		NETWORK_LIST.put(network.key, network);
+		energyCable.setNetwork(network);
 		network.updateNetwork();
 		UselessMod.LOGGER.debug("Created new EnergyCableNetwork with KEY : {}", network.key);
 		return network;
@@ -153,13 +168,14 @@ public class EnergyCableNetwork implements INBTSerializable<CompoundNBT> {
 		int maxTransfer = 0;
 		int capacity = 0;
 		for(EnergyCableNetwork cableNetwork : cableNetworks) {
-//			if(cableNetwork == EMPTY) return network; TODO
-			network.CABLES.addAll(cableNetwork.CABLES);
-			if(NETWORK_LIST.containsKey(cableNetwork.key)) NETWORK_LIST.remove(cableNetwork.key);
-			CustomEnergyStorage cableEnergy = cableNetwork.energyStorage;
-			if(cableEnergy != null) {
-				energy += cableEnergy.getEnergyStored();
-				if(cableEnergy.getMaxExtract() > maxTransfer) maxTransfer = cableEnergy.getMaxExtract();
+			if(cableNetwork != null) {
+				network.CABLES.addAll(cableNetwork.CABLES);
+				if(NETWORK_LIST.containsKey(cableNetwork.key)) NETWORK_LIST.remove(cableNetwork.key);
+				CustomEnergyStorage cableEnergy = cableNetwork.energyStorage;
+				if(cableEnergy != null) {
+					energy += cableEnergy.getEnergyStored();
+					if(cableEnergy.getMaxExtract() > maxTransfer) maxTransfer = cableEnergy.getMaxExtract();
+				}
 			}
 		}
 		capacity = network.CABLES.size() * ENERGY_CABLE_CAPACITY;
@@ -169,6 +185,7 @@ public class EnergyCableNetwork implements INBTSerializable<CompoundNBT> {
 			cable.setNetwork(network);
 		});
 		NETWORK_LIST.put(network.key, network);
+		network.updateNetwork();
 		UselessMod.LOGGER.debug("Combined EnergyCableNetwork Array together -> Key: {} Size: {}", network.key, cableNetworks.length);
 		return network;
 	}

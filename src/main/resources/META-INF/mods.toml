@@ -11,43 +11,35 @@ loaderVersion="[28,)" #mandatory (28 is current forge version)
 issueTrackerURL="https://minecraft.curseforge.com/projects/themcbros-useless-mod/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
-# The modid of the mod
-modId="uselessmod" #mandatory
-# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="${file.jarVersion}" #mandatory
- # A display name for the mod
-displayName="Useless Mod" #mandatory
-# A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://raw.githubusercontent.com/TheMCBrothers/UselessMod/mc-1.14/update.json" #optional
-# A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="http://uselessmod.tk" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
-logoFile="useless_logo.png" #optional
-# A text field displayed in the mod UI
-credits="Thanks for over 8300 downloads!" #optional
-# A text field displayed in the mod UI
-authors="TheMCBrothers -> TheMCLoveMan (Code) & TheMCCrazyMan (Textures)" #optional
-# The description text for the mod (multi line!) (#mandatory)
-description='''
-This is a useless mod for minecraft 1.14.4.
-This mod is not really useless. It adds some useful features
-'''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+	modId="uselessmod" #mandatory
+	version="${file.jarVersion}" #mandatory
+	displayName="Useless Mod" #mandatory
+	updateJSONURL="https://raw.githubusercontent.com/TheMCBrothers/UselessMod/master/update.json" #optional
+	displayURL="http://uselessmod.tk" #optional
+	logoFile="useless_logo.png" #optional
+	credits="Thanks for over 12000 downloads!" #optional
+	authors="TheMCLoveMan (Code) & TheMCCrazyMan (Textures)" #optional
+	
+	description='''
+	This is a useless mod for minecraft 1.14.4.
+	This mod is not really useless. It adds some useful features
+	'''
+
 [[dependencies.uselessmod]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[28.0.46,)" #mandatory "[28,)"
+    versionRange="[28.1.0,)" #mandatory "[28,)"
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
 [[dependencies.uselessmod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.14.4,)"
     ordering="NONE"
     side="BOTH"
+    

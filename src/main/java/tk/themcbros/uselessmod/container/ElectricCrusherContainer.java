@@ -34,9 +34,9 @@ public class ElectricCrusherContainer extends Container {
 		this.fields = fields;
 		this.world = playerInventory.player.world;
 
-		this.addSlot(new Slot(inventory, 0, 39, 35));
-		this.addSlot(new Slot(inventory, 1, 99, 24));
-		this.addSlot(new Slot(inventory, 2, 99, 48));
+		this.addSlot(new Slot(inventory, 0, 47, 35));
+		this.addSlot(new Slot(inventory, 1, 107, 24));
+		this.addSlot(new Slot(inventory, 2, 107, 48));
 		
 		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 0, 8, 8));
 		this.addSlot(new MachineUpgradeSlot(upgradeInventory, 1, 8, 26));
@@ -140,7 +140,7 @@ public class ElectricCrusherContainer extends Container {
 	public int getEnergyStoredScaled() {
 		int i = this.fields.get(0);
 		int j = this.fields.get(1);
-		return i != 0 && j != 0 ? i * 60 / j : 0;
+		return i != 0 && j != 0 ? i * 45 / j : 0;
 	}
 
 }

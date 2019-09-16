@@ -1,8 +1,9 @@
 package tk.themcbros.uselessmod.jei;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -11,50 +12,66 @@ import net.minecraft.item.crafting.RecipeManager;
 import tk.themcbros.uselessmod.recipes.CoffeeRecipe;
 import tk.themcbros.uselessmod.recipes.CompressorRecipe;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
+import tk.themcbros.uselessmod.recipes.GlowstoneGeneratorRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
 public class UselessRecipeValidator {
 
 	public static List<CrusherRecipe> getCrusherRecipes() {
-		List<CrusherRecipe> results = new ArrayList<CrusherRecipe>();
+		List<CrusherRecipe> results = Lists.newArrayList();
 		ClientWorld world = Minecraft.getInstance().world;
 		RecipeManager recipeManager = world.getRecipeManager();
 		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext()) {
 			IRecipe<?> recipe = it.next();
 			if (recipe.getType() == RecipeTypes.CRUSHING) {
-				CrusherRecipe chipalyzerrecipe = (CrusherRecipe) recipe;
-				results.add(chipalyzerrecipe);
+				CrusherRecipe crusherRecipe = (CrusherRecipe) recipe;
+				results.add(crusherRecipe);
 			}
 		}
 		return results;
 	}
 	
 	public static List<CompressorRecipe> getCompressorRecipes() {
-		List<CompressorRecipe> results = new ArrayList<CompressorRecipe>();
+		List<CompressorRecipe> results = Lists.newArrayList();
 		ClientWorld world = Minecraft.getInstance().world;
 		RecipeManager recipeManager = world.getRecipeManager();
 		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext()) {
 			IRecipe<?> recipe = it.next();
 			if (recipe.getType() == RecipeTypes.COMPRESSING) {
-				CompressorRecipe chipalyzerrecipe = (CompressorRecipe) recipe;
-				results.add(chipalyzerrecipe);
+				CompressorRecipe compressorRecipe = (CompressorRecipe) recipe;
+				results.add(compressorRecipe);
 			}
 		}
 		return results;
 	}
 	
 	public static List<CoffeeRecipe> getCoffeeRecipes() {
-		List<CoffeeRecipe> results = new ArrayList<CoffeeRecipe>();
+		List<CoffeeRecipe> results = Lists.newArrayList();
 		ClientWorld world = Minecraft.getInstance().world;
 		RecipeManager recipeManager = world.getRecipeManager();
 		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext()) {
 			IRecipe<?> recipe = it.next();
 			if (recipe.getType() == RecipeTypes.COFFEE) {
-				CoffeeRecipe chipalyzerrecipe = (CoffeeRecipe) recipe;
-				results.add(chipalyzerrecipe);
+				CoffeeRecipe coffeeRecipe = (CoffeeRecipe) recipe;
+				results.add(coffeeRecipe);
+			}
+		}
+		return results;
+	}
+	
+	public static List<GlowstoneGeneratorRecipe> getGlowstoneGeneratorRecipes() {
+		List<GlowstoneGeneratorRecipe> results = Lists.newArrayList();
+		ClientWorld world = Minecraft.getInstance().world;
+		RecipeManager recipeManager = world.getRecipeManager();
+		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
+		while (it.hasNext()) {
+			IRecipe<?> recipe = it.next();
+			if (recipe.getType() == RecipeTypes.GLOWSTONE_GENERATING) {
+				GlowstoneGeneratorRecipe glowstoneGeneratorRecipe = (GlowstoneGeneratorRecipe) recipe;
+				results.add(glowstoneGeneratorRecipe);
 			}
 		}
 		return results;

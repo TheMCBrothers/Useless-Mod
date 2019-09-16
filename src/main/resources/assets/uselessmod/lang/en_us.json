@@ -83,6 +83,7 @@
 	
 	"item.uselessmod.useless_cow_spawn_egg": "Useless Cow Spawn Egg",
 	"item.uselessmod.grenade": "Grenade",
+	"item.uselessmod.pudding_bucket": "Pudding Bucket",
 	
 	
 	"block.uselessmod.useless_grass_block": "Useless Grass Block",
@@ -147,6 +148,7 @@
 	"block.uselessmod.glowstone_generator": "Glowstone Generator",
 	"block.uselessmod.electric_furnace": "Electric Furnace",
 	"block.uselessmod.creative_power_block": "Creative Power Block",
+	"block.uselessmod.power_control_block": "Power Control Block",
 	"block.uselessmod.energy_cable": "Energy Cable",
 	"block.uselessmod.compressor": "Compressor",
 	"block.uselessmod.coffee_machine": "Coffee Machine",
@@ -163,6 +165,7 @@
 	"block.uselessmod.unlit_lantern": "Unlit Lantern",
 
 	"container.uselessmod.crusher": "Crusher",
+	"container.uselessmod.electric_crusher": "Electric Crusher",
 	"container.uselessmod.glowstone_generator": "Glowstone Generator",
 	"container.uselessmod.electric_furnace": "Electric Furnace",
 	"container.uselessmod.compressor": "Compressor",

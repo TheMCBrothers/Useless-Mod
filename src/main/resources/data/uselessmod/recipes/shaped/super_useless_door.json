@@ -9,6 +9,7 @@
 		"I": { "item": "uselessmod:super_useless_ingot" }
 	},
 	"result": {
-		"item": "uselessmod:super_useless_door"
+		"item": "uselessmod:super_useless_door",
+		"count": 3
 	}
 }

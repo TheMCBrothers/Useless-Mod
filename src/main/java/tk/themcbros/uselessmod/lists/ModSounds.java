@@ -17,7 +17,7 @@ public class ModSounds {
 		public static void onRegister(final RegistryEvent.Register<SoundEvent> event) {
 			IForgeRegistry<SoundEvent> registry = event.getRegistry();
 			
-			UselessMod.LOGGER.debug("Registered Sounds");
+			UselessMod.LOGGER.info("Registered Sounds");
 		}
 	}
 	

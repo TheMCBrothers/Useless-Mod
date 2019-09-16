@@ -8,6 +8,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 import tk.themcbros.uselessmod.closet.BeddingRegistryEvent;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
 import tk.themcbros.uselessmod.config.Config;
@@ -31,6 +32,8 @@ public class CommonProxy {
 	
 	protected void preInit(FMLCommonSetupEvent event) {
 		UselessMod.LOGGER.debug("CommonProxy preInit method");
+		
+		LightSwitchBlockBlock.init();
 		
 		OreGeneration.setupOreGeneration();
 		OreGeneration.setupNetherOreGeneration();

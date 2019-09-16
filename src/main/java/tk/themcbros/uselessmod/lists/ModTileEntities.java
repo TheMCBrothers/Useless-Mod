@@ -19,6 +19,7 @@ import tk.themcbros.uselessmod.tileentity.ElectricFurnaceTileEntity;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 import tk.themcbros.uselessmod.tileentity.GlowstoneGeneratorTileEntity;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
+import tk.themcbros.uselessmod.tileentity.PowerControlTileEntity;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModTileEntities {
@@ -45,6 +46,8 @@ public class ModTileEntities {
 	public static final TileEntityType<ColorableTileEntity> COLORABLE = null;
 	@ObjectHolder("light_switch")
 	public static final TileEntityType<LightSwitchTileEntity> LIGHT_SWITCH = null;
+	@ObjectHolder("power_control_block")
+	public static final TileEntityType<?> POWER_CONTROL_BLOCK = null;
 	
 	@Mod.EventBusSubscriber(modid = UselessMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -63,6 +66,7 @@ public class ModTileEntities {
 			registry.register(TileEntityType.Builder.create(ClosetTileEntity::new, ModBlocks.CLOSET).build(null).setRegistryName(BlockNames.CLOSET));
 			registry.register(TileEntityType.Builder.create(ColorableTileEntity::new, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET).build(null).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "colorable")));
 			registry.register(TileEntityType.Builder.create(LightSwitchTileEntity::new, ModBlocks.LIGHT_SWITCH, ModBlocks.LIGHT_SWITCH_BLOCK).build(null).setRegistryName(ModBlocks.LIGHT_SWITCH.getRegistryName()));
+			registry.register(TileEntityType.Builder.create(PowerControlTileEntity::new, ModBlocks.POWER_CONTROL_BLOCK).build(null).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "power_control_block")));
 			
 			UselessMod.LOGGER.info("Registered TileEntities");
 		}

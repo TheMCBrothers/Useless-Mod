@@ -27,15 +27,17 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 	private final Ingredient ingredient;
 	private final ItemStack result;
 	private final ItemStack secondResult;
+	private final float secondChance;
 	private final float experience;
 	private final int crushTime;
 	
-	public CrusherRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, ItemStack secondResult, float experience, int crushTime) {
+	public CrusherRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, ItemStack secondResult, float secondChance, float experience, int crushTime) {
 		this.id = id;
 		this.group = group;
 		this.ingredient = ingredient;
 		this.result = result;
 		this.secondResult = secondResult;
+		this.secondChance = secondChance;
 		this.experience = experience;
 		this.crushTime = crushTime;
 	}
@@ -62,6 +64,10 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 	
 	public ItemStack getSecondRecipeOutput() {
 		return secondResult;
+	}
+	
+	public float getSecondChance() {
+		return secondChance;
 	}
 
 	@Override
@@ -122,10 +128,14 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 			Ingredient ingredient = Ingredient.deserialize(jsonelement);
 			ItemStack result = deserializeItem(JSONUtils.getJsonObject(json, "result"));
 			ItemStack secondResult = ItemStack.EMPTY; 
-			if(JSONUtils.hasField(json, "secondresult")) secondResult = deserializeItem(JSONUtils.getJsonObject(json, "secondresult"));
+			float secondChance = 0.0f;
+			if(JSONUtils.hasField(json, "secondresult")) {
+				secondResult = deserializeItem(JSONUtils.getJsonObject(json, "secondresult"));
+				secondChance = JSONUtils.getInt(json, "secondchance") / 100.0f;
+			}
 			float f = JSONUtils.getFloat(json, "experience", 0.0F);
 			int i = JSONUtils.getInt(json, "crushtime", 200);
-			return new CrusherRecipe(recipeId, s, ingredient, result, secondResult, f, i);
+			return new CrusherRecipe(recipeId, s, ingredient, result, secondResult, secondChance, f, i);
 		}
 		
 		public CrusherRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
@@ -133,9 +143,10 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 			Ingredient ingredient = Ingredient.read(buffer);
 			ItemStack result = buffer.readItemStack();
 			ItemStack secondResult = buffer.readItemStack();
+			float secondChance = buffer.readFloat();
 			float f = buffer.readFloat();
 			int i = buffer.readVarInt();
-			return new CrusherRecipe(recipeId, s, ingredient, result, secondResult, f, i);
+			return new CrusherRecipe(recipeId, s, ingredient, result, secondResult, secondChance, f, i);
 		}
 
 		public void write(PacketBuffer buffer, CrusherRecipe recipe) {
@@ -143,6 +154,7 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 			recipe.ingredient.write(buffer);
 			buffer.writeItemStack(recipe.result);
 			buffer.writeItemStack(recipe.secondResult);
+			buffer.writeFloat(recipe.secondChance);
 			buffer.writeFloat(recipe.experience);
 			buffer.writeVarInt(recipe.crushTime);
 		}

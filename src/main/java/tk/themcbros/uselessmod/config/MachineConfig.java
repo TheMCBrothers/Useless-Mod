@@ -8,7 +8,6 @@ public class MachineConfig {
 	public static ForgeConfigSpec.DoubleValue coffee_machine_water_per_tick;
 	public static ForgeConfigSpec.IntValue coffee_machine_coffee_beans_per_coffee;
 	public static ForgeConfigSpec.IntValue coffee_machine_water_capacity;
-	public static ForgeConfigSpec.IntValue coffee_machine_coffee_beans_capacity;
 	
 	public static ForgeConfigSpec.IntValue crusher_rf_per_tick;
 	public static ForgeConfigSpec.IntValue furnace_rf_per_tick;
@@ -30,10 +29,7 @@ public class MachineConfig {
 				.defineInRange("machines.coffee_machine.beans_per_coffee", 2, 1, 64);
 		coffee_machine_water_capacity = common
 				.comment("Capacity of the water tank in the coffee machine")
-				.defineInRange("machines.coffee_machine.water_tank_capacity", 4000, 1000, 16000);
-		coffee_machine_coffee_beans_capacity = common
-				.comment("Capacity of the coffee beans in the coffee machine")
-				.defineInRange("machines.coffee_machine.beans_tank_capacity", 64, 16, 512);
+				.defineInRange("machines.coffee_machine.water_tank_capacity", 2000, 1000, 16000);
 		
 		crusher_rf_per_tick = common
 				.comment("How much RF per tick the electric crusher uses.")

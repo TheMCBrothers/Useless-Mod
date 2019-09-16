@@ -1,15 +1,14 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFaceBlock;
-import net.minecraft.block.LanternBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -33,21 +32,21 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import tk.themcbros.uselessmod.lists.ModBlocks;
+import net.minecraftforge.common.util.Constants;
+import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
 
 public class LightSwitchBlock extends HorizontalFaceBlock {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	
-	private final VoxelShape SHAPE_FLOOR_NORTH_SOUTH = Block.makeCuboidShape(4.0D, 0.0D, 1.0D, 12.0D, 2.0D, 15.0D);
-	private final VoxelShape SHAPE_FLOOR_EAST_WEST = Block.makeCuboidShape(1.0D, 0.0D, 4.0D, 15.0D, 2.0D, 12.0D);
-	private final VoxelShape SHAPE_CEILING_NORTH_SOUTH = Block.makeCuboidShape(4.0D, 14.0D, 1.0D, 12.0D, 16.0D, 15.0D);
-	private final VoxelShape SHAPE_CEILING_EAST_WEST = Block.makeCuboidShape(1.0D, 14.0D, 4.0D, 15.0D, 16.0D, 12.0D);
-	private final VoxelShape SHAPE_WALL_NORTH = Block.makeCuboidShape(4.0D, 1.0D, 14.0D, 12.0D, 15.0D, 16.0D);
-	private final VoxelShape SHAPE_WALL_SOUTH = Block.makeCuboidShape(4.0D, 1.0D, 0.0D, 12.0D, 15.0D, 2.0D);
-	private final VoxelShape SHAPE_WALL_EAST = Block.makeCuboidShape(0.0D, 1.0D, 4.0D, 2.0D, 15.0D, 12.0D);
-	private final VoxelShape SHAPE_WALL_WEST = Block.makeCuboidShape(14.0D, 1.0D, 4.0D, 16.0D, 15.0D, 12.0D);
+	private final VoxelShape FLOOR_SHAPE = Block.makeCuboidShape(4.5D, 0.0D, 4.5D, 11.5D, 1.5D, 11.5D);
+	private final VoxelShape CEILING_SHAPE = Block.makeCuboidShape(4.5D, 14.5D, 4.5D, 11.5D, 16.0D, 11.5D);
+	private final VoxelShape WALL_SHAPE = Block.makeCuboidShape(0.0D, 4.5D, 4.5D, 1.5D, 11.5D, 11.5D);
+	
+	private final VoxelShape[] FLOOR_SHAPES = ShapeUtils.getRotatedShapes(FLOOR_SHAPE);
+	private final VoxelShape[] CEILING_SHAPES = ShapeUtils.getRotatedShapes(CEILING_SHAPE);
+	private final VoxelShape[] WALL_SHAPES = ShapeUtils.getRotatedShapes(WALL_SHAPE);
 
 	public LightSwitchBlock(Properties properties) {
 		super(properties);
@@ -60,32 +59,31 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 		Direction facing = state.get(HORIZONTAL_FACING);
 		switch (state.get(FACE)) {
 		case FLOOR:
-			return facing == Direction.NORTH || facing == Direction.SOUTH ? SHAPE_FLOOR_NORTH_SOUTH : SHAPE_FLOOR_EAST_WEST;
+			return FLOOR_SHAPES[facing.getHorizontalIndex()];
 		case CEILING:
-			return facing == Direction.NORTH || facing == Direction.SOUTH ? SHAPE_CEILING_NORTH_SOUTH : SHAPE_CEILING_EAST_WEST;
+			return CEILING_SHAPES[facing.getHorizontalIndex()];
 		case WALL:
-			return  facing == Direction.NORTH ? SHAPE_WALL_NORTH :
-					facing == Direction.SOUTH ? SHAPE_WALL_SOUTH :
-					facing == Direction.EAST ? SHAPE_WALL_EAST :
-					facing == Direction.WEST ? SHAPE_WALL_WEST : VoxelShapes.fullCube();
+			return WALL_SHAPES[facing.getHorizontalIndex()];
 		}
 		return VoxelShapes.fullCube();
 	}
 	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		CompoundNBT tag = stack.getTag();
-		if(tag != null) {
-			if(tag.contains("blocks")) {
-				long[] longArray = tag.getLongArray("blocks");
-				List<BlockPos> blockPoss = new ArrayList<BlockPos>();
-				for(long l : longArray) {
-					blockPoss.add(BlockPos.fromLong(l));
-				}
-				TileEntity tileEntity = worldIn.getTileEntity(pos);
-				if(tileEntity != null && tileEntity instanceof LightSwitchTileEntity) {
-					((LightSwitchTileEntity) tileEntity).setBlockPositions(blockPoss);
-					tileEntity.markDirty();
+		if(stack.hasTag()) {
+			if(stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
+				CompoundNBT tag = stack.getChildTag("BlockEntityTag");
+				if(tag.contains("Lights", Constants.NBT.TAG_LONG_ARRAY)) {
+					long[] longArray = tag.getLongArray("Lights");
+					List<BlockPos> blockPoses = Lists.newArrayList();
+					for(long l : longArray) {
+						blockPoses.add(BlockPos.fromLong(l));
+					}
+					TileEntity tileEntity = worldIn.getTileEntity(pos);
+					if(tileEntity != null && tileEntity instanceof LightSwitchTileEntity) {
+						((LightSwitchTileEntity) tileEntity).setBlockPositions(blockPoses);
+						tileEntity.markDirty();
+					}
 				}
 			}
 		}
@@ -124,25 +122,13 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 			BlockRayTraceResult hit) {
 		
+		boolean trigger = state.get(POWERED);
 		state = state.cycle(POWERED);
 		worldIn.setBlockState(pos, state, 3);
-		SoundEvent sound = state.get(POWERED) ? SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON : SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF;
+		SoundEvent sound = trigger ? SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF : SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON;
 		this.playSound(player, worldIn, pos, sound);
 		
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
-		if(tileEntity != null && tileEntity instanceof LightSwitchTileEntity) {
-			LightSwitchTileEntity lightSwitch = (LightSwitchTileEntity) tileEntity;
-			for(BlockPos blockPos : lightSwitch.getBlockPositions()) {
-				BlockState blockState = worldIn.getBlockState(blockPos);
-				if(blockState.has(BlockStateProperties.LIT))
-					blockState = blockState.cycle(BlockStateProperties.LIT);
-				else if(blockState.getBlock() == ModBlocks.UNLIT_LANTERN)
-					blockState = Blocks.LANTERN.getDefaultState().with(LanternBlock.HANGING, blockState.get(LanternBlock.HANGING));
-				else if(blockState.getBlock() == Blocks.LANTERN)
-					blockState = ModBlocks.UNLIT_LANTERN.getDefaultState().with(LanternBlock.HANGING, blockState.get(LanternBlock.HANGING));
-				worldIn.setBlockState(blockPos, blockState, 3);
-			}
-		}
+		LightSwitchBlockBlock.switchLights(state, worldIn, pos);
 		
 		worldIn.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(worldIn));
 		return true;

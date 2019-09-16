@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.config.BiomeConfig;
 import tk.themcbros.uselessmod.world.biome.UselessBiome;
 
 @ObjectHolder(UselessMod.MOD_ID)
@@ -30,8 +31,10 @@ public class ModBiomes {
 	}
 	
 	public static void addBiomesToManager() {
-		BiomeManager.addSpawnBiome(USELESS_BIOME);
-		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(USELESS_BIOME, 30));
+		if(BiomeConfig.useless_biome_enabled.get()) {
+			BiomeManager.addSpawnBiome(USELESS_BIOME);
+			BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(USELESS_BIOME, BiomeConfig.useless_biome_weight.get()));
+		}
 	}
 	
 }

@@ -4,9 +4,9 @@
 		"item": "minecraft:coal_ore"
 	},
 	"result": {
-		"item": "uselessmod:coal_dust",
-		"count": 2
+		"item": "minecraft:coal",
+		"count": 3
 	},
-	"experience": 2.3,
+	"experience": 0.1,
 	"crushtime": 200
 }

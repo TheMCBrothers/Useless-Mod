@@ -16,6 +16,7 @@ public class UselessCropsBlock extends CropsBlock implements IUselessCrop {
 	public UselessCropsBlock(Properties properties, boolean wild) {
 		super(properties);
 		this.wild = wild;
+		if(wild) this.setDefaultState(this.stateContainer.getBaseState().with(this.getAgeProperty(), Integer.valueOf(getMaxAge())));
 	}
 	
 	@Override

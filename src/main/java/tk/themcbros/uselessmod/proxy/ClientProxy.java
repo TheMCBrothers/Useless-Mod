@@ -111,7 +111,7 @@ public class ClientProxy extends CommonProxy {
 
 		blockColors.register((p_210234_0_, p_210234_1_, p_210234_2_, p_210234_3_) -> {
 			return p_210234_1_ != null && p_210234_2_ != null ? BiomeColors.getGrassColor(p_210234_1_,
-					p_210234_0_.get(ShearableDoublePlantBlock.field_208063_b) == DoubleBlockHalf.UPPER
+					p_210234_0_.get(ShearableDoublePlantBlock.HALF) == DoubleBlockHalf.UPPER
 							? p_210234_2_.down()
 							: p_210234_2_)
 					: -1;

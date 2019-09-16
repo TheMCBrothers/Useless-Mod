@@ -3,12 +3,13 @@ package tk.themcbros.uselessmod.container;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
@@ -18,20 +19,25 @@ import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeInputSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeOutputSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.WaterTankSlot;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
+import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
 public class CoffeeMachineContainer extends Container {
 
 	private IInventory coffeeMachineInventory;
 	private IIntArray fields;
+	private BlockPos pos;
+	private World world;
 	
 	public CoffeeMachineContainer(int id, PlayerInventory playerInventory) {
-		this(id, playerInventory, new Inventory(6), new IntArray(8));
+		this(id, playerInventory, new CoffeeMachineTileEntity(), new IntArray(6));
 	}
 
-	public CoffeeMachineContainer(int id, PlayerInventory playerInventory, IInventory coffeeMachineInventory, IIntArray fields) {
+	public CoffeeMachineContainer(int id, PlayerInventory playerInventory, CoffeeMachineTileEntity coffeeMachineInventory, IIntArray fields) {
 		super(ModContainerTypes.COFFEE_MACHINE, id);
 		this.coffeeMachineInventory = coffeeMachineInventory;
 		this.fields = fields;
+		this.world = playerInventory.player.world;
+		this.pos = coffeeMachineInventory.getPos();
 		
 		// Machine Slots
 		this.addSlot(new WaterTankSlot(coffeeMachineInventory, 0, 7, 55));
@@ -108,16 +114,9 @@ public class CoffeeMachineContainer extends Container {
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public int getCoffeeBeansGuiHeight(int height) {
+	public int getCookTimeScaled() {
 		int i = this.fields.get(4);
 		int j = this.fields.get(5);
-		return j != 0 && i != 0 ? i * height / j : 0;
-	}
-	
-	@OnlyIn(Dist.CLIENT)
-	public int getCookTimeScaled() {
-		int i = this.fields.get(6);
-		int j = this.fields.get(7);
 		return j != 0 && i != 0 ? i * 41 / j : 0;
 	}
 	
@@ -137,20 +136,20 @@ public class CoffeeMachineContainer extends Container {
 		return this.fields.get(3);
 	}
 	
-	public int getMilkAmount() {
+	public int getCookTime() {
 		return this.fields.get(4);
 	}
 	
-	public int getMaxMilkAmount() {
+	public int getCookTimeTotal() {
 		return this.fields.get(5);
 	}
 	
-	public int getCookTime() {
-		return this.fields.get(6);
+	public BlockPos getPos() {
+		return pos;
 	}
 	
-	public int getCookTimeTotal() {
-		return this.fields.get(7);
+	public World getWorld() {
+		return world;
 	}
 
 }

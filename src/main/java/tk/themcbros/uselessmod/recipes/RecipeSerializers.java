@@ -19,6 +19,8 @@ public class RecipeSerializers {
 	public static final IRecipeSerializer<CompressorRecipe> COMPRESSING = null;
 	@ObjectHolder("coffee")
 	public static final IRecipeSerializer<CoffeeRecipe> COFFEE = null;
+	@ObjectHolder("generating")
+	public static final IRecipeSerializer<GlowstoneGeneratorRecipe> GENERATING = null;
 	
 	@ObjectHolder("closet")
 	public static final IRecipeSerializer<ClosetRecipe> CLOSET = null;
@@ -36,12 +38,13 @@ public class RecipeSerializers {
 			registry.register(new CrusherRecipe.Serializer().setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "crushing")));
 			registry.register(new CompressorRecipe.Serializer().setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "compressing")));
 			registry.register(new CoffeeRecipe.Serializer().setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "coffee")));
+			registry.register(new GlowstoneGeneratorRecipe.Serializer().setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "generating")));
 			
 			registry.register(new SpecialRecipeSerializer<>(ClosetRecipe::new).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "closet")));
 			registry.register(new SpecialRecipeSerializer<>(PaintBrushRecipe::new).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "paint_brush")));
 			registry.register(new SpecialRecipeSerializer<>(LightSwitchRecipe::new).setRegistryName(new ResourceLocation(UselessMod.MOD_ID, "light_switch")));
 
-			UselessMod.LOGGER.info("Registred Recipe Serializer");
+			UselessMod.LOGGER.debug("Registered Recipe Serializer");
 		}
 	}
 	

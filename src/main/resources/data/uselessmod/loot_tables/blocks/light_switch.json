@@ -9,6 +9,17 @@
 					"type": "minecraft:item",
 					"functions": [
 						{
+							"function": "minecraft:copy_nbt",
+							"source": "block_entity",
+							"ops": [
+								{
+									"source": "Lights",
+									"target": "BlockEntityTag.Lights",
+									"op": "replace"
+								}
+							]
+						},
+						{
 							"function": "minecraft:set_contents",
 							"entries": [
 								{
@@ -18,7 +29,7 @@
 							]
 						}
 					],
-					"name": "uselessmod:light_switch"
+					"name": "uselessmod:glowstone_generator"
 				}
 			],
 			"conditions": [

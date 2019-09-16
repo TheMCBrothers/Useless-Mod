@@ -1,7 +1,8 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -10,7 +11,7 @@ import tk.themcbros.uselessmod.lists.ModTileEntities;
 
 public class LightSwitchTileEntity extends TileEntity {
 	
-	private List<BlockPos> blockPositions = new ArrayList<BlockPos>();
+	private List<BlockPos> blockPositions = Lists.newArrayList();
 
 	public LightSwitchTileEntity() {
 		super(ModTileEntities.LIGHT_SWITCH);
@@ -19,9 +20,9 @@ public class LightSwitchTileEntity extends TileEntity {
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		blockPositions = new ArrayList<BlockPos>();
-		if(compound.contains("blocks")) {
-			for(long l : compound.getLongArray("blocks")) {
+		blockPositions = Lists.newArrayList();
+		if(compound.contains("Lights")) {
+			for(long l : compound.getLongArray("Lights")) {
 				blockPositions.add(BlockPos.fromLong(l));
 			}
 		}
@@ -29,12 +30,12 @@ public class LightSwitchTileEntity extends TileEntity {
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
-		List<Long> longs = new ArrayList<Long>();
+		List<Long> longs = Lists.newArrayList();
 		if(blockPositions.size() > 0) {
 			for(BlockPos blockPos : blockPositions) {
 				longs.add(blockPos.toLong());
 			}
-			compound.putLongArray("blocks", longs);
+			compound.putLongArray("Lights", longs);
 		}
 		return super.write(compound);
 	}

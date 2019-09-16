@@ -8,6 +8,7 @@
 		"I": { "item": "uselessmod:super_useless_ingot" }
 	},
 	"result": {
-		"item": "uselessmod:super_useless_bars"
+		"item": "uselessmod:super_useless_bars",
+		"count": 16
 	}
 }

@@ -1,5 +1,9 @@
 package tk.themcbros.uselessmod.client.gui;
 
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -8,11 +12,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.container.ElectricCrusherContainer;
+import tk.themcbros.uselessmod.helper.UselessGuiHelper;
 
 public class ElectricCrusherScreen extends ContainerScreen<ElectricCrusherContainer> {
 	
 	private static final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID, "textures/gui/container/electric_crusher.png");
 
+	private final Rectangle energyBar = new Rectangle(152, 6, 16, 45);
+	
 	public ElectricCrusherScreen(ElectricCrusherContainer container, PlayerInventory playerInv, ITextComponent title) {
 		super(container, playerInv, title);
 	}
@@ -30,8 +37,6 @@ public class ElectricCrusherScreen extends ContainerScreen<ElectricCrusherContai
 		this.font.drawString(s, (float) (this.xSize / 2 - this.font.getStringWidth(s) / 2), 6.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F,
 				(float) (this.ySize - 96 + 2), 4210752);
-		String s1 = ((ElectricCrusherContainer) this.container).getEnergyStored() + " / " + ((ElectricCrusherContainer) this.container).getMaxEnergyStored() + " FE";
-		this.font.drawString(s1, (float) (this.xSize - this.font.getStringWidth(s1) - 8.0F), (float) (this.ySize - 96 + 2), 4210752);
 	}
 
 	@Override
@@ -43,10 +48,23 @@ public class ElectricCrusherScreen extends ContainerScreen<ElectricCrusherContai
 		this.blit(i, j, 0, 0, this.xSize, this.ySize);
 
 		int k = ((ElectricCrusherContainer) this.container).getEnergyStoredScaled();
-		this.blit(i + 146, j + 9 + 60 - k, 193, 31, 15, k);
+		this.blit(i + this.energyBar.x, j + this.energyBar.y + this.energyBar.height - k, 177, 18, this.energyBar.width, k);
 		
 		int l = ((ElectricCrusherContainer) this.container).getCrushTimeScaled();
-		this.blit(i + 62, j + 34, 176, 14, l + 1, 16);
+		this.blit(i + 70, j + 34, 176, 0, l + 1, 16);
+	}
+	
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+		super.renderHoveredToolTip(mouseX, mouseY);
+		if (UselessGuiHelper.isInBounds(this.guiLeft, this.guiTop, mouseX, mouseY, energyBar)) {
+			int energy = this.container.getEnergyStored();
+			int maxEnergy = this.container.getMaxEnergyStored();
+			List<String> tooltip = new ArrayList<String>();
+			tooltip.add(energy + " / " + maxEnergy + " RF");
+			this.renderTooltip(tooltip, mouseX, mouseY,
+					(font == null ? this.font : font));
+		}
 	}
 
 }

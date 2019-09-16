@@ -21,8 +21,17 @@ import tk.themcbros.uselessmod.lists.ModTileEntities;
 
 public class EnergyCableTileEntity extends TileEntity implements ITickableTileEntity {
 	
-	private EnergyCableNetwork network = EnergyCableNetwork.EMPTY;
+	private EnergyCableNetwork network = null;
 	private int maxTransfer = MachineConfig.energy_cable_max_transfer.get();
+	private int savedEnergy = 0;
+	
+	public boolean hasSavedEnergy() {
+		return this.savedEnergy > 0;
+	}
+	
+	public int getSavedEnergy() {
+		return this.savedEnergy;
+	}
 	
 	public EnergyCableNetwork getNetwork() {
 		return this.network;
@@ -54,14 +63,17 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 				TileEntity tileEntity = this.world.getTileEntity(this.pos.offset(direction));
 				if(tileEntity != null && tileEntity instanceof EnergyCableTileEntity && tileEntity.getBlockState().getBlock() == this.getBlockState().getBlock()) {
 					EnergyCableNetwork network = ((EnergyCableTileEntity) tileEntity).getNetwork();
-					if(!existingNetworks.contains(network));
+					if(!existingNetworks.contains(network) && network != null && EnergyCableNetwork.NETWORK_LIST.containsKey(network.key));
 						existingNetworks.add(network);
 				}
 			}
 			
-			if(existingNetworks.size() > 0 && this.network == EnergyCableNetwork.EMPTY) {
+			if(existingNetworks.size() > 0 && this.network == null) {
 				if(existingNetworks.size() == 1) {
 					this.network = existingNetworks.get(0);
+					if(this.network == null) {
+						return;
+					}
 					this.network.addCable(this);
 					return;
 				}
@@ -72,7 +84,7 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 				this.network = EnergyCableNetwork.combinedNetwork(networks);
 				this.network.addCable(this);
 				return;
-			} else if(this.network == EnergyCableNetwork.EMPTY) {
+			} else if(this.network == null) {
 				this.network = EnergyCableNetwork.createWithCable(this, maxTransfer);
 				return;
 			}
@@ -80,7 +92,10 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 	}
 	
 	public void updateConnections() {
-		if(this.network == EnergyCableNetwork.EMPTY) return;
+		if (this.network == null) {
+			updateNetwork();
+			return;
+		}
 		boolean[] sides = new boolean[Direction.values().length];
 		for(Direction direction : Direction.values()) {
 			BlockPos pos = this.pos.offset(direction);
@@ -118,22 +133,27 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
-		compound.putString("NetworkKey", this.network.key != null ? this.network.key : "null");
-		compound.put("Network", this.network.serializeNBT());
+		if(this.savedEnergy > 0)
+			compound.putInt("SavedEnergy", this.savedEnergy);
+//		if(this.network != null) {
+//			compound.putString("NetworkKey", this.network.key != null ? this.network.key : "null");
+//			compound.put("Network", this.network.serializeNBT());
+//		}
 		return super.write(compound);
 	}
 	
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		EnergyCableNetwork.addNetworkFromNBT(compound.getCompound("Network"));
-		this.network = EnergyCableNetwork.NETWORK_LIST.containsKey(compound.getString("NetworkKey"))
-				? EnergyCableNetwork.NETWORK_LIST.get(compound.getString("NetworkKey"))
-						: EnergyCableNetwork.EMPTY;
-//		updateNetwork();
+//		this.network = EnergyCableNetwork.NETWORK_LIST.containsKey(compound.getString("NetworkKey"))
+//				? EnergyCableNetwork.NETWORK_LIST.get(compound.getString("NetworkKey"))
+//						: null;
+		this.savedEnergy = compound.getInt("SavedEnergy");
+		this.updateNetwork();
 	}
 	
 	private void transferEnergy() {
+		if(this.network == null) return;
 		if(this.network.energyStorage.getEnergyStored() > 0) {
 			for(TileEntity tileEntity : this.network.CONSUMERS) {
 				tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler -> {
@@ -157,14 +177,15 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if(cap == CapabilityEnergy.ENERGY) return this.network.energyHolder.cast();
+		if(cap == CapabilityEnergy.ENERGY && this.network != null && this.network.energyHolder != null)
+			return this.network.energyHolder.cast();
 		return super.getCapability(cap, side);
 	}
 	
 	@Override
 	public void remove() {
 		super.remove();
-		if(!this.world.isRemote)
+		if(!this.world.isRemote && this.network != null)
 			this.network.removeCable(this);
 	}
 	

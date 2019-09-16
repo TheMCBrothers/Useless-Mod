@@ -7,7 +7,6 @@ import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LanternBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +14,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -25,6 +23,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 
 public class LightSwitchBlockItem extends BlockItem {
 
@@ -36,9 +35,9 @@ public class LightSwitchBlockItem extends BlockItem {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		if(stack.hasTag() && stack.getTag() != null && stack.getTag().contains("blocks")) {
+		if(stack.hasTag() && stack.getTag().contains("BlockEntityTag") && stack.getChildTag("BlockEntityTag").contains("Lights")) {
 			if(GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
-				for(long l : stack.getTag().getLongArray("blocks")) {
+				for(long l : stack.getChildTag("BlockEntityTag").getLongArray("Lights")) {
 					BlockPos pos = BlockPos.fromLong(l);
 					BlockState state = worldIn.getBlockState(pos);
 					String modid = state.getBlock().getItem(worldIn, pos, state).getItem().getRegistryName().getNamespace();
@@ -61,18 +60,25 @@ public class LightSwitchBlockItem extends BlockItem {
 		BlockState state = world.getBlockState(pos);
 		ItemStack stack = context.getItem();
 		
-		if(state.has(BlockStateProperties.LIT) || state.getBlock() instanceof LanternBlock) {
-			if(!stack.hasTag() || stack.getTag() == null) stack.setTag(new CompoundNBT());
+		if(LightSwitchBlockBlock.LIGHTS_OFF_ON.containsKey(state) || LightSwitchBlockBlock.LIGHTS_ON_OFF.containsKey(state)) {
+//		if(state.has(BlockStateProperties.LIT) || state.getBlock() instanceof LanternBlock) {
+			if(!stack.hasTag()) stack.setTag(new CompoundNBT());
+			CompoundNBT blockEntityTag = stack.getOrCreateChildTag("BlockEntityTag");
 			List<Long> longList = new ArrayList<Long>();
-			if(stack.getTag().contains("blocks")) {
-				for(long l : stack.getTag().getLongArray("blocks")) {
+			if(blockEntityTag.contains("Lights")) {
+				for(long l : blockEntityTag.getLongArray("Lights")) {
 					longList.add(l);
 				}
 			}
-			longList.add(pos.toLong());
-			String bPos = "[x=" + pos.getX() + ",y=" + pos.getY() + ",z=" + pos.getZ() + "]";
-			player.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.block_added", bPos), true);
-			stack.getTag().putLongArray("blocks", longList);
+			
+			if(!longList.contains(pos.toLong())) {
+				longList.add(pos.toLong());
+				String bPos = "[" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
+				player.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.block_added", bPos), true);
+				blockEntityTag.putLongArray("Lights", longList);
+			} else {
+				player.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.block_already_added").applyTextStyle(TextFormatting.RED), true);
+			}
 			return ActionResultType.SUCCESS;
 		}
 		

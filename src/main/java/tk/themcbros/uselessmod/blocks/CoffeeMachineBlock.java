@@ -22,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -31,6 +32,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
 public class CoffeeMachineBlock extends Block implements IWaterLoggable {
@@ -97,7 +99,10 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof CoffeeMachineTileEntity && player instanceof ServerPlayerEntity) {
-				((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
+				if(FluidUtil.interactWithFluidHandler(player, handIn, ((CoffeeMachineTileEntity) tileEntity).getWaterTank()))
+					player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1f, 1f);
+				else
+					((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
 			}
 		}
 		return true;

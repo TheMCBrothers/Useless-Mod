@@ -12,8 +12,8 @@ import tk.themcbros.uselessmod.proxy.ServerProxy;
 @Mod(UselessMod.MOD_ID)
 public class UselessMod {
 
-	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String MOD_ID = "uselessmod";
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	public static UselessMod instance;
 	public static CommonProxy proxy;

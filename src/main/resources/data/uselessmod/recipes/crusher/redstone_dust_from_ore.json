@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"item": "minecraft:redstone_ore"
+	},
+	"result": {
+		"item": "minecraft:redstone",
+		"count": 6
+	},
+	"experience": 0,
+	"crushtime": 200
+}

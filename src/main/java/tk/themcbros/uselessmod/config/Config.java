@@ -21,6 +21,7 @@ public class Config {
 	static {
 		
 		OreGenConfig.init(common_builder, client_builder);
+		BiomeConfig.init(common_builder, client_builder);
 		MachineConfig.init(common_builder, client_builder);
 		EntityConfig.init(common_builder, client_builder);
 		
