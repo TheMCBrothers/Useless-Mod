@@ -1,4 +1,4 @@
-# Useless Mod [![Curseforge](http://cf.way2muchnoise.eu/full_322455_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/themcbros-useless-mod) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_322455_all.svg)](https://www.curseforge.com/minecraft/mc-mods/themcbros-useless-mod)
+# Useless Mod ![Minecraft](https://img.shields.io/badge/dynamic/json?label=Minecraft&query=%24.files%5B0%5D.version&url=https://api.cfwidget.com/minecraft/mc-mods/themcbros-useless-mod&style=for-the-badge&logo=appveyor) ![Issues](https://img.shields.io/github/issues/TheMCBrothers/UselessMod?style=for-the-badge&logo=appveyor)
 
 <pre>This is a mod by TheMCBros for Forge<br /></pre>
 </p>https://www.curseforge.com/minecraft/mc-mods/themcbros-useless-mod</p>
