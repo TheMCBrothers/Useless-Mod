@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"W",
+		"L",
+		"R"
+	],
+	"key": {
+		"W": { "tag": "forge:dyes/white" },
+		"L": { "item": "minecraft:lever" },
+		"R": { "item": "minecraft:redstone" }
+	},
+	"result": {
+		"item": "uselessmod:light_switch"
+	}
+}

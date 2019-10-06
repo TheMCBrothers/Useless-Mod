@@ -1,0 +1,17 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:cobblestone"
+	},
+	"result": {
+		"item": "minecraft:gravel",
+		"count": 1
+	},
+	"secondresult": {
+		"item": "minecraft:sand",
+		"count": 1
+	},
+	"secondchance": 10,
+	"experience": 0.0,
+	"crushtime": 200
+}

@@ -1,0 +1,9 @@
+{
+	"type": "uselessmod:compressing",
+	"ingredient": {
+		"tag": "forge:ingots/useless"
+	},
+	"result": "uselessmod:useless_plate",
+	"experience": 1.5,
+	"compresstime": 75
+}

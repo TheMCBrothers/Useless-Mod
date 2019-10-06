@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:ores/gold"
+	},
+	"result": {
+		"item": "uselessmod:gold_dust",
+		"count": 2
+	},
+	"experience": 2.3,
+	"crushtime": 200
+}

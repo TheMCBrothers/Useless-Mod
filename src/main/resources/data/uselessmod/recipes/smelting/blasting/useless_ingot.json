@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:blasting",
+	"ingredient": {
+		"tag": "forge:ores/useless"
+	},
+	"result": "uselessmod:useless_ingot",
+	"experience": 0.8,
+	"cookingtime": 100
+}

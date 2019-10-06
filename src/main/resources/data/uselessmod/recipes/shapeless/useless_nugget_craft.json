@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/useless"
+    }
+  ],
+  "result": {
+    "item": "uselessmod:useless_nugget",
+    "count": 9
+  }
+}

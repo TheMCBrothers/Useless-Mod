@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"III",
+		"III",
+		"III"
+	],
+	"key": {
+		"I": { "tag": "forge:nuggets/super_useless" }
+	},
+	"result": {
+		"item": "uselessmod:super_useless_ingot"
+	}
+}

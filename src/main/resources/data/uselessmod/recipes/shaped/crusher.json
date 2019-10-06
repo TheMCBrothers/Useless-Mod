@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CCC",
+		"#U#",
+		"CFC"
+	],
+	"key": {
+		"U": { "item": "uselessmod:useless_ingot" },
+		"#": { "item": "minecraft:flint" },
+		"F": { "item": "minecraft:furnace" },
+		"C": { "item": "minecraft:cobblestone" }
+	},
+	"result": {
+		"item": "uselessmod:crusher"
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"replace": false,
+	"values": [
+		"uselessmod:wooden_useless_door",
+		"uselessmod:useless_door",
+		"uselessmod:super_useless_door"
+	]
+}

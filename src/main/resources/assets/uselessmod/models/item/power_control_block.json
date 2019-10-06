@@ -1,0 +1,11 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "north": "uselessmod:block/power_control_none",
+        "south": "uselessmod:block/power_control_none",
+        "east": "uselessmod:block/power_control_none",
+        "west": "uselessmod:block/power_control_none",
+        "up": "uselessmod:block/power_control_none",
+        "down": "uselessmod:block/power_control_none"
+    }
+}

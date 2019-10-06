@@ -1,0 +1,17 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:ores/super_useless"
+	},
+	"result": {
+		"item": "uselessmod:super_useless_dust",
+		"count": 2
+	},
+	"secondresult": {
+		"item": "uselessmod:useless_dust",
+		"count": 1
+	},
+	"secondchance": 10,
+	"experience": 2.3,
+	"crushtime": 200
+}

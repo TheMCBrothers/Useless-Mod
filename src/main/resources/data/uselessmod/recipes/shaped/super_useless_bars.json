@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"III",
+		"III"
+	],
+	"key": {
+		"I": { "tag": "forge:ingots/super_useless" }
+	},
+	"result": {
+		"item": "uselessmod:super_useless_bars",
+		"count": 16
+	}
+}

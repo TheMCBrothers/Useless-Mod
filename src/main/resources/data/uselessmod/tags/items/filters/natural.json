@@ -1,0 +1,19 @@
+{
+	"replace": false,
+	"values": [
+		"uselessmod:useless_grass_block",
+		"uselessmod:useless_dirt",
+		"uselessmod:useless_grass",
+		"uselessmod:useless_fern",
+		"uselessmod:large_useless_fern",
+		"uselessmod:tall_useless_grass",
+		"uselessmod:useless_sapling",
+		"uselessmod:useless_leaves",
+		"uselessmod:red_rose",
+		"uselessmod:blue_rose",
+		"uselessmod:useless_wheat_seeds",
+		"uselessmod:useless_wheat",
+		"uselessmod:coffee_seeds",
+		"uselessmod:coffee_beans"
+	]
+}

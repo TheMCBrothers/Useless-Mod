@@ -1,0 +1,6 @@
+{
+    "parent": "block/crop",
+    "textures": {
+        "crop": "uselessmod:block/coffee_stage5"
+    }
+}

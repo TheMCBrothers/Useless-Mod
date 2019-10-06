@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"tag": "forge:dusts/useless"
+	},
+	"result": "uselessmod:useless_ingot",
+	"experience": 0.75,
+	"cookingtime": 200
+}

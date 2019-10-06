@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" # ",
+		"#C#",
+		"IFI"
+	],
+	"key": {
+		"#": { "item": "minecraft:flint" },
+		"I": { "item": "minecraft:iron_ingot" },
+		"F": { "item": "uselessmod:crusher" },
+		"C": { "item": "uselessmod:machineframe" }
+	},
+	"result": {
+		"item": "uselessmod:electric_crusher"
+	}
+}

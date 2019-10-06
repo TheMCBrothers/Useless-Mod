@@ -1,0 +1,17 @@
+{
+	"conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "silents_mechanisms"
+        }
+    ],
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:ores/silver"
+	},
+	"result": {
+		"item": "silents_mechanisms:silver_dust",
+		"count": 2
+	},
+	"crushtime": 200
+}

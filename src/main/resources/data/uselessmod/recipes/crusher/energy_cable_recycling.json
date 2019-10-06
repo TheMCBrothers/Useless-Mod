@@ -1,0 +1,17 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"item": "uselessmod:energy_cable"
+	},
+	"result": {
+		"item": "uselessmod:useless_nugget",
+		"count": 3
+	},
+	"secondresult": {
+		"item": "minecraft:redstone",
+		"count": 1
+	},
+	"secondchance": 100,
+	"experience": 0.2,
+	"crushtime": 200
+}

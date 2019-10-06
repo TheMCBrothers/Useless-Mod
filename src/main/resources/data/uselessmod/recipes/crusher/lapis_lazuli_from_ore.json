@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:ores/lapis"
+	},
+	"result": {
+		"item": "minecraft:lapis_lazuli",
+		"count": 10
+	},
+	"experience": 0.1,
+	"crushtime": 200
+}

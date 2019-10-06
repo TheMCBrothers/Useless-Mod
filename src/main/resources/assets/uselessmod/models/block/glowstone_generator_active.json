@@ -1,0 +1,6 @@
+{
+    "parent": "uselessmod:block/machine",
+    "textures": {
+        "front": "uselessmod:block/glowstone_generator_front_active"
+    }
+}

@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" I#",
+		" SI",
+		"S  "
+	],
+	"key": {
+		"I": { "item": "uselessmod:useless_ingot" },
+		"S": { "tag": "forge:rods/wooden" },
+		"#": { "item": "minecraft:string" }
+	},
+	"result": {
+		"item": "uselessmod:hammer"
+	}
+}

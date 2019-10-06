@@ -1,0 +1,16 @@
+{
+	"type": "uselessmod:magma_crucible",
+	"ingredient": [
+		{
+			"tag": "forge:netherrack"
+		},
+		{
+			"item": "minecraft:magma_block"
+		}
+	],
+	"result": {
+		"fluid": "minecraft:lava",
+		"amount": 1000
+	},
+	"cooktime": 100
+}

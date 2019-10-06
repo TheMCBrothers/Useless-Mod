@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"tag": "forge:dusts/diamond"
+	},
+	"result": "minecraft:diamond",
+	"experience": 0.75,
+	"cookingtime": 200
+}

@@ -1,0 +1,46 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "minecraft:block/cube",
+		"textures": {
+			"north": "uselessmod:block/power_control_none",
+			"south": "uselessmod:block/power_control_none",
+			"east": "uselessmod:block/power_control_none",
+			"west": "uselessmod:block/power_control_none",
+			"up": "uselessmod:block/power_control_none",
+			"down": "uselessmod:block/power_control_none"
+		}
+	},
+	"variants": {
+		"north": {
+			"none": { "textures": { "north": "uselessmod:block/power_control_none" } },
+			"input": { "textures": { "north": "uselessmod:block/power_control_input" } },
+			"output": { "textures": { "north": "uselessmod:block/power_control_output" } }
+		},
+		"south": {
+			"none": { "textures": { "south": "uselessmod:block/power_control_none" } },
+			"input": { "textures": { "south": "uselessmod:block/power_control_input" } },
+			"output": { "textures": { "south": "uselessmod:block/power_control_output" } }
+		},
+		"east": {
+			"none": { "textures": { "east": "uselessmod:block/power_control_none" } },
+			"input": { "textures": { "east": "uselessmod:block/power_control_input" } },
+			"output": { "textures": { "east": "uselessmod:block/power_control_output" } }
+		},
+		"west": {
+			"none": { "textures": { "west": "uselessmod:block/power_control_none" } },
+			"input": { "textures": { "west": "uselessmod:block/power_control_input" } },
+			"output": { "textures": { "west": "uselessmod:block/power_control_output" } }
+		},
+		"up": {
+			"none": { "textures": { "up": "uselessmod:block/power_control_none" } },
+			"input": { "textures": { "up": "uselessmod:block/power_control_input" } },
+			"output": { "textures": { "up": "uselessmod:block/power_control_output" } }
+		},
+		"down": {
+			"none": { "textures": { "down": "uselessmod:block/power_control_none" } },
+			"input": { "textures": { "down": "uselessmod:block/power_control_input" } },
+			"output": { "textures": { "down": "uselessmod:block/power_control_output" } }
+		}
+	}
+}

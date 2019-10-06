@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"UIU",
+		"IGI",
+		"UIU"
+	],
+	"key": {
+		"U": { "item": "uselessmod:useless_ingot" },
+		"I": { "item": "minecraft:iron_ingot" },
+		"G": { "item": "minecraft:glass" }
+	},
+	"result": {
+		"item": "uselessmod:machineframe",
+		"count": 2
+	}
+}

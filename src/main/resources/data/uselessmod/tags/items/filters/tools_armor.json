@@ -1,0 +1,25 @@
+{
+	"replace": false,
+	"values": [
+		"uselessmod:useless_sword",
+		"uselessmod:useless_axe",
+		"uselessmod:useless_pickaxe",
+		"uselessmod:useless_shovel",
+		"uselessmod:useless_hoe",
+		"uselessmod:super_useless_sword",
+		"uselessmod:super_useless_axe",
+		"uselessmod:super_useless_pickaxe",
+		"uselessmod:super_useless_shovel",
+		"uselessmod:super_useless_hoe",
+		"uselessmod:useless_helmet",
+		"uselessmod:useless_chestplate",
+		"uselessmod:useless_leggings",
+		"uselessmod:useless_boots",
+		"uselessmod:super_useless_helmet",
+		"uselessmod:super_useless_chestplate",
+		"uselessmod:super_useless_leggings",
+		"uselessmod:super_useless_boots",
+		"uselessmod:hammer",
+		"uselessmod:electric_useless_pickaxe"
+	]
+}

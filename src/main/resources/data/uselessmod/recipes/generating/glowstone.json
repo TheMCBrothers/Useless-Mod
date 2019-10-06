@@ -1,0 +1,8 @@
+{
+	"type": "uselessmod:generating",
+	"ingredient": {
+		"item": "minecraft:glowstone"
+	},
+	"result": 4000,
+	"cooktime": 50
+}

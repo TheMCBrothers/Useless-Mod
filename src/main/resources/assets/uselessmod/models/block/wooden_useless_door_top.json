@@ -1,0 +1,7 @@
+{
+	"parent": "block/door_top",
+	"textures": {
+		"bottom": "uselessmod:block/wooden_useless_door_bottom",
+		"top": "uselessmod:block/wooden_useless_door_top"
+	}
+}

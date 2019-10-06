@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"#S#",
+		"#S#"
+	],
+	"key": {
+		"#": { "item": "uselessmod:useless_planks" },
+		"S": { "tag": "forge:rods/wooden" }
+	},
+	"result": {
+		"item": "uselessmod:useless_fence",
+		"count": 3
+	}
+}

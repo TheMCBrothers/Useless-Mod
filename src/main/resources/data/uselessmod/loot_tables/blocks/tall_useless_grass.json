@@ -1,0 +1,48 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"name": "tall_useless_grass",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:alternatives",
+					"children": [
+						{
+							"type": "minecraft:item",
+							"conditions": [
+								{
+									"condition": "minecraft:match_tool",
+									"predicate": {
+										"item": "minecraft:shears"
+									}
+								}
+							],
+							"name": "uselessmod:useless_grass"
+						},
+						{
+							"type": "minecraft:item",
+							"conditions": [
+								{
+									"condition": "minecraft:survives_explosion"
+								},
+								{
+									"condition": "minecraft:block_state_property",
+									"block": "uselessmod:tall_useless_grass",
+									"properties": {
+										"half": "lower"
+									}
+								},
+								{
+									"condition": "minecraft:random_chance",
+									"chance": 0.125
+								}
+							],
+							"name": "uselessmod:useless_wheat_seeds"
+						}
+					]
+				}
+			]
+		}
+	]
+}

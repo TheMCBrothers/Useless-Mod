@@ -1,0 +1,12 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:ores/emerald"
+	},
+	"result": {
+		"item": "minecraft:emerald",
+		"count": 2
+	},
+	"experience": 0.5,
+	"crushtime": 200
+}
