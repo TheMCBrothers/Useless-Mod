@@ -1,42 +1,52 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraftforge.energy.CapabilityEnergy;
+import tk.themcbros.uselessmod.energy.ConnectionType;
+import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public class EnergyCableBlock extends Block implements IWaterLoggable {
 
-	public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
-	public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
-	public static final BooleanProperty EAST = BlockStateProperties.EAST;
-	public static final BooleanProperty WEST = BlockStateProperties.WEST;
-	public static final BooleanProperty UP = BlockStateProperties.UP;
-	public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
+	public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> SOUTH = EnumProperty.create("south", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> WEST = EnumProperty.create("west", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> UP = EnumProperty.create("up", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> DOWN = EnumProperty.create("down", ConnectionType.class);
+	public static final Map<Direction, EnumProperty<ConnectionType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
+		map.put(Direction.NORTH, NORTH);
+		map.put(Direction.EAST, EAST);
+		map.put(Direction.SOUTH, SOUTH);
+		map.put(Direction.WEST, WEST);
+		map.put(Direction.UP, UP);
+		map.put(Direction.DOWN, DOWN);
+	});
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	private static final VoxelShape CENTER_SHAPE = Block.makeCuboidShape(5, 5, 5, 11, 11, 11);
@@ -51,29 +61,24 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 		super(properties);
 		
 		this.setDefaultState(this.stateContainer.getBaseState()
-				.with(NORTH, Boolean.FALSE)
-				.with(SOUTH, Boolean.FALSE)
-				.with(EAST, Boolean.FALSE)
-				.with(WEST, Boolean.FALSE)
-				.with(UP, Boolean.FALSE)
-				.with(DOWN, Boolean.FALSE)
+				.with(NORTH, ConnectionType.NONE)
+				.with(SOUTH, ConnectionType.NONE)
+				.with(EAST, ConnectionType.NONE)
+				.with(WEST, ConnectionType.NONE)
+				.with(UP, ConnectionType.NONE)
+				.with(DOWN, ConnectionType.NONE)
 				.with(WATERLOGGED, Boolean.FALSE));
 	}
 	
 	public static VoxelShape getCableShape(BlockState state) {
-		List<VoxelShape> shapes = new ArrayList<>();
-		if(state.has(NORTH) && state.get(NORTH)) shapes.add(NORTH_SHAPE);
-		if(state.has(SOUTH) && state.get(SOUTH)) shapes.add(SOUTH_SHAPE);
-		if(state.has(EAST) && state.get(EAST)) shapes.add(EAST_SHAPE);
-		if(state.has(WEST) && state.get(WEST)) shapes.add(WEST_SHAPE);
-		if(state.has(UP) && state.get(UP)) shapes.add(UP_SHAPE);
-		if(state.has(DOWN) && state.get(DOWN)) shapes.add(DOWN_SHAPE);
-		
-		VoxelShape result = CENTER_SHAPE;
-		for (VoxelShape shape : shapes) {
-			result = VoxelShapes.combine(result, shape, IBooleanFunction.OR);
-		}
-		return result.simplify();
+		List<VoxelShape> shapes = Lists.newArrayList(CENTER_SHAPE);
+		if(getConnection(state, Direction.NORTH).canConnect()) shapes.add(NORTH_SHAPE);
+		if(getConnection(state, Direction.SOUTH).canConnect()) shapes.add(SOUTH_SHAPE);
+		if(getConnection(state, Direction.EAST).canConnect()) shapes.add(EAST_SHAPE);
+		if(getConnection(state, Direction.WEST).canConnect()) shapes.add(WEST_SHAPE);
+		if(getConnection(state, Direction.UP).canConnect()) shapes.add(UP_SHAPE);
+		if(getConnection(state, Direction.DOWN).canConnect()) shapes.add(DOWN_SHAPE);
+		return ShapeUtils.combineAll(shapes);
 	}
 	
 	@Override
@@ -110,8 +115,27 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-		return this.getDefaultState().with(WATERLOGGED,
+		return makeConnections(context.getWorld(), context.getPos()).with(WATERLOGGED,
 				Boolean.valueOf(ifluidstate.isTagged(FluidTags.WATER) && ifluidstate.getLevel() == 8));
+	}
+
+	public BlockState makeConnections(IBlockReader worldIn, BlockPos pos) {
+		return this.getDefaultState()
+				.with(DOWN, createConnection(worldIn, pos.down(), ConnectionType.NONE))
+				.with(UP, createConnection(worldIn, pos.up(), ConnectionType.NONE))
+				.with(NORTH, createConnection(worldIn, pos.north(), ConnectionType.NONE))
+				.with(EAST, createConnection(worldIn, pos.east(), ConnectionType.NONE))
+				.with(SOUTH, createConnection(worldIn, pos.south(), ConnectionType.NONE))
+				.with(WEST, createConnection(worldIn, pos.west(), ConnectionType.NONE));
+	}
+
+	private static ConnectionType createConnection(IBlockReader worldIn, BlockPos pos, ConnectionType current) {
+		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		if (tileEntity instanceof EnergyCableTileEntity)
+			return ConnectionType.BOTH;
+		if (tileEntity != null && tileEntity.getCapability(CapabilityEnergy.ENERGY).isPresent())
+			return current == ConnectionType.NONE ? ConnectionType.INPUT : current;
+		return ConnectionType.NONE;
 	}
 	
 	@Override
@@ -120,23 +144,10 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 		if (stateIn.get(WATERLOGGED)) {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 		}
-		
-		TileEntity tileEntity = worldIn.getTileEntity(currentPos);
-		if(tileEntity instanceof EnergyCableTileEntity) {
-			((EnergyCableTileEntity) tileEntity).updateNetwork();
-			((EnergyCableTileEntity) tileEntity).updateConnections();
-		}
- 
-		return stateIn;
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
-		if(tileEntity instanceof EnergyCableTileEntity) {
-			((EnergyCableTileEntity) tileEntity).updateNetwork();
-			((EnergyCableTileEntity) tileEntity).updateConnections();
-		}
+
+		EnumProperty<ConnectionType> property = FACING_TO_PROPERTY_MAP.get(facing);
+		ConnectionType current = stateIn.get(property);
+		return stateIn.with(property, createConnection(worldIn, facingPos, current));
 	}
 	
 	public IFluidState getFluidState(BlockState state) {
@@ -152,6 +163,9 @@ public class EnergyCableBlock extends Block implements IWaterLoggable {
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
-	
+
+	public static ConnectionType getConnection(BlockState state, Direction side) {
+		return state.get(FACING_TO_PROPERTY_MAP.get(side));
+	}
 	
 }

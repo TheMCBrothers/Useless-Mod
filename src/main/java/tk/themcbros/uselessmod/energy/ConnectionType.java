@@ -8,6 +8,7 @@ public enum ConnectionType implements IStringSerializable {
     NONE(false, false),
     INPUT(true, false),
     OUTPUT(false, true),
+    BOTH(true, true),
     BLOCKED(false, false);
 
     private final boolean canExtract, canReceive;

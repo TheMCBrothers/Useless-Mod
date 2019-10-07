@@ -30,9 +30,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
-import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
 import tk.themcbros.uselessmod.lists.ModItems;
-import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
 
 public class UselessItem extends Item {
@@ -65,7 +63,7 @@ public class UselessItem extends Item {
 		PlayerEntity player = context.getPlayer();
 		if(tileEntity != null) {
 			
-			if(tileEntity instanceof EnergyCableTileEntity) {
+			/*if(tileEntity instanceof EnergyCableTileEntity) {
 				EnergyCableTileEntity energyCable = (EnergyCableTileEntity) tileEntity;
 				EnergyCableNetwork cableNetwork = energyCable.getNetwork();
 				if(cableNetwork != null) {
@@ -84,7 +82,7 @@ public class UselessItem extends Item {
 				}
 				
 				return ActionResultType.SUCCESS;
-			}
+			}*/
 			
 			if(tileEntity instanceof LightSwitchTileEntity) {
 				LightSwitchTileEntity lightSwitch = (LightSwitchTileEntity) tileEntity;
@@ -183,7 +181,7 @@ public class UselessItem extends Item {
 	}
 	
 	private void chatNetworkList(World worldIn, PlayerEntity playerIn) {
-		if(EnergyCableNetwork.NETWORK_LIST.size() <= 0) {
+		/*if(EnergyCableNetwork.NETWORK_LIST.size() <= 0) {
 			if(worldIn.isRemote) playerIn.sendStatusMessage(new StringTextComponent("-- no cable networks available --"), false);
 			return;
 		}
@@ -198,7 +196,7 @@ public class UselessItem extends Item {
 			for(ITextComponent iTextComponent : textComponents) {
 				if(worldIn.isRemote) playerIn.sendStatusMessage(iTextComponent, false);
 			}
-		}
+		}*/
 	}
 
 	@Override

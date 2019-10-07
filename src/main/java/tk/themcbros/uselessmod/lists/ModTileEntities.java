@@ -41,7 +41,7 @@ public class ModTileEntities {
 	public static final TileEntityType<GlowstoneGeneratorTileEntity> GLOWSTONE_GENERATOR = register("glowstone_generator", GlowstoneGeneratorTileEntity::new, ModBlocks.GLOWSTONE_GENERATOR);
 	public static final TileEntityType<CoffeeMachineTileEntity> COFFEE_MACHINE = register("coffee_machine", CoffeeMachineTileEntity::new, ModBlocks.COFFEE_MACHINE);
 	public static final TileEntityType<CreativePowerBlockTileEntity> CREATIVE_POWER_BLOCK = register("creative_power_block", CreativePowerBlockTileEntity::new, ModBlocks.CREATIVE_POWER_BLOCK);
-	public static final TileEntityType<EnergyCableTileEntity> ENERGY_CABLE = register("energy_cable", EnergyCableTileEntity::new, ModBlocks.ENERGY_CABLE, ModBlocks.STRIPPED_OAK_COFFEE_TABLE);
+	public static final TileEntityType<EnergyCableTileEntity> ENERGY_CABLE = register("energy_cable", EnergyCableTileEntity::new, ModBlocks.ENERGY_CABLE);
 	public static final TileEntityType<ClosetTileEntity> CLOSET = register("closet", ClosetTileEntity::new, ModBlocks.CLOSET);
 	public static final TileEntityType<ColorableTileEntity> COLORABLE = register("colorable", ColorableTileEntity::new, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET);
 	public static final TileEntityType<LightSwitchTileEntity> LIGHT_SWITCH = register("light_switch", LightSwitchTileEntity::new, ModBlocks.LIGHT_SWITCH, ModBlocks.LIGHT_SWITCH_BLOCK);
