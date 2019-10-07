@@ -13,6 +13,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.lists.ToolMaterialList;
 
 public class HammerItem extends ToolItem {
@@ -37,6 +38,11 @@ public class HammerItem extends ToolItem {
 		BlockPos pos = context.getPos();
 		World world = context.getWorld();
 		BlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+
+		if (block instanceof IHammer) {
+			return ((IHammer) block).onHammer(context);
+		}
 		
 		BlockState newState = state.rotate(world, pos, Rotation.CLOCKWISE_90);
 		if(newState != state) {

@@ -1,119 +1,86 @@
 package tk.themcbros.uselessmod.blocks;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import tk.themcbros.uselessmod.lists.ModItems;
+import tk.themcbros.uselessmod.energy.ConnectionType;
+import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.tileentity.PowerControlTileEntity;
 
-public class PowerControlBlock extends Block {
-	
-	public static final EnumProperty<PowerSide> NORTH = EnumProperty.create("north", PowerSide.class);
-	public static final EnumProperty<PowerSide> EAST = EnumProperty.create("east", PowerSide.class);
-	public static final EnumProperty<PowerSide> SOUTH = EnumProperty.create("south", PowerSide.class);
-	public static final EnumProperty<PowerSide> WEST = EnumProperty.create("west", PowerSide.class);
-	public static final EnumProperty<PowerSide> UP = EnumProperty.create("up", PowerSide.class);
-	public static final EnumProperty<PowerSide> DOWN = EnumProperty.create("down", PowerSide.class);
+import java.util.Map;
+
+public class PowerControlBlock extends Block implements IHammer {
+
+	public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> SOUTH = EnumProperty.create("south", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> WEST = EnumProperty.create("west", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> UP = EnumProperty.create("up", ConnectionType.class);
+	public static final EnumProperty<ConnectionType> DOWN = EnumProperty.create("down", ConnectionType.class);
+	public static final Map<Direction, EnumProperty<ConnectionType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
+		map.put(Direction.NORTH, NORTH);
+		map.put(Direction.EAST, EAST);
+		map.put(Direction.SOUTH, SOUTH);
+		map.put(Direction.WEST, WEST);
+		map.put(Direction.UP, UP);
+		map.put(Direction.DOWN, DOWN);
+	});
 
 	public PowerControlBlock(Properties properties) {
 		super(properties);
-		
+
 		this.setDefaultState(this.stateContainer.getBaseState()
-				.with(NORTH, PowerSide.NONE)
-				.with(EAST, PowerSide.NONE)
-				.with(SOUTH, PowerSide.NONE)
-				.with(WEST, PowerSide.NONE)
-				.with(UP, PowerSide.NONE)
-				.with(DOWN, PowerSide.NONE));
+				.with(NORTH, ConnectionType.NONE)
+				.with(EAST, ConnectionType.NONE)
+				.with(SOUTH, ConnectionType.NONE)
+				.with(WEST, ConnectionType.NONE)
+				.with(UP, ConnectionType.NONE)
+				.with(DOWN, ConnectionType.NONE));
 	}
-	
+
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
 		builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN);
 	}
-	
-	public EnumProperty<PowerSide> sideFromFace(Direction face) {
-		switch (face) {
-		case NORTH:
-			return PowerControlBlock.NORTH;
-		case DOWN:
-			return PowerControlBlock.DOWN;
-		case EAST:
-			return PowerControlBlock.EAST;
-		case SOUTH:
-			return PowerControlBlock.SOUTH;
-		case UP:
-			return PowerControlBlock.UP;
-		case WEST:
-			return PowerControlBlock.WEST;
-		default:
-			return PowerControlBlock.NORTH;
-		}
-	}
-	
-	public PowerSide sideFromSide(BlockState state, Direction face) {
-		return (PowerSide) state.get(sideFromFace(face));
-	}
-	
+
 	public void swapSide(BlockState state, BlockPos pos, World worldIn, Direction face) {
-		EnumProperty<PowerSide> side = this.sideFromFace(face);
-		if(state.get(side) == PowerSide.NONE)
-			state = state.with(side, PowerSide.INPUT);
-		else if(state.get(side) == PowerSide.INPUT)
-			state = state.with(side, PowerSide.OUTPUT);
-		else if(state.get(side) == PowerSide.OUTPUT)
-			state = state.with(side, PowerSide.NONE);
-		else
-			state = state.with(side, PowerSide.NONE);
-		worldIn.setBlockState(pos, state, 3);
+		ConnectionType side = Util.getElementAfter(FACING_TO_PROPERTY_MAP.get(face).getAllowedValues(), getConnection(state, face));
+		if (side == ConnectionType.BLOCKED) side = ConnectionType.NONE;
+		state = state.with(FACING_TO_PROPERTY_MAP.get(face), side);
+		worldIn.setBlockState(pos, state, 18);
 	}
-	
+
+	public static ConnectionType getConnection(BlockState state, Direction side) {
+		return state.get(FACING_TO_PROPERTY_MAP.get(side));
+	}
+
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		final ItemStack stack = player.getHeldItem(handIn);
-		if (stack.getItem() == ModItems.HAMMER) {
-			swapSide(state, pos, worldIn, hit.getFace());
-		}
-		return false;
+	public ActionResultType onHammer(ItemUseContext context) {
+		World world = context.getWorld();
+		BlockPos pos = context.getPos();
+		BlockState state = world.getBlockState(pos);
+		swapSide(state, pos, world, context.getFace());
+		return ActionResultType.SUCCESS;
 	}
-	
+
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
-	
+
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new PowerControlTileEntity();
-	}
-	
-	public static enum PowerSide implements IStringSerializable {
-		NONE("none"),
-		INPUT("input"),
-		OUTPUT("output");
-
-		private final String name;
-		
-		private PowerSide(String name) {
-			this.name = name;
-		}
-		
-		@Override
-		public String getName() {
-			return name;
-		}
-		
 	}
 
 }
