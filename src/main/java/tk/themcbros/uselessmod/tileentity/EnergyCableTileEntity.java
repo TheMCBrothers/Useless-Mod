@@ -5,6 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import tk.themcbros.uselessmod.energy.EnergyCableNetworkManager;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 
 import javax.annotation.Nonnull;
@@ -23,11 +25,17 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		return super.getCapability(cap, side);
+		if (cap == CapabilityEnergy.ENERGY) {
+			return EnergyCableNetworkManager.getLazy(this.world, this.pos).cast();
+		}
+		return LazyOptional.empty();
 	}
 
 	@Override
 	public void remove() {
+		if (this.world != null) {
+			EnergyCableNetworkManager.invalidateNetwork(this.world, this.pos);
+		}
 		super.remove();
 	}
 
