@@ -19,6 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
+import tk.themcbros.uselessmod.container.slots.FluidContainerSlot;
 import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 import tk.themcbros.uselessmod.tileentity.MagmaCrucibleTileEntity;
@@ -43,12 +44,7 @@ public class MagmaCrucibleContainer extends Container {
 		
 		// Machine Slots
 		this.addSlot(new Slot(magmaCrucibleInventory, 0, 44, 30));
-		this.addSlot(new Slot(magmaCrucibleInventory, 1, 129, 11) {
-			@Override
-			public boolean isItemValid(ItemStack stack) {
-				return stack.getItem() == Items.BUCKET;
-			}
-		});
+		this.addSlot(new FluidContainerSlot(magmaCrucibleInventory, 1, 129, 11));
 		this.addSlot(new Slot(magmaCrucibleInventory, 2, 129, 48) {
 			@Override
 			public boolean isItemValid(ItemStack stack) {
@@ -82,7 +78,7 @@ public class MagmaCrucibleContainer extends Container {
 	}
 	
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		int numSlots = 6;
+		int numSlots = 7;
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {

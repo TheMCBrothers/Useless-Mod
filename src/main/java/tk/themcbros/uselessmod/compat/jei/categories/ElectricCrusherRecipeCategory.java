@@ -1,8 +1,5 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-import java.util.Arrays;
-import java.util.List;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -14,8 +11,6 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -26,6 +21,9 @@ import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
 import tk.themcbros.uselessmod.tileentity.ElectricCrusherTileEntity;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ElectricCrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
 
@@ -54,14 +52,6 @@ public class ElectricCrusherRecipeCategory implements IRecipeCategory<CrusherRec
 	@Override
 	public void draw(CrusherRecipe recipe, double mouseX, double mouseY) {
 		animatedArrow.draw(24, 16);
-		
-		float experience = recipe.getExperience();
-		if (experience > 0) {
-			String experienceString = new TranslationTextComponent("gui.jei.category.smelting.experience", experience).getFormattedText();
-			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			fontRenderer.drawString(experienceString, 0, 0, 0xFF808080);
-		}
 	}
 	
 	@Override

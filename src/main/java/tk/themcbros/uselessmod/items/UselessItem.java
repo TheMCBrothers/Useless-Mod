@@ -94,10 +94,14 @@ public class UselessItem extends Item {
 				for(BlockPos blockPos : blockPositions) {
 					Item item = world.getBlockState(pos).getBlock().getItem(world, blockPos, world.getBlockState(blockPos)).getItem();
 					String positionString = blockPos.getX() + "," + blockPos.getY() + "," + blockPos.getZ();
-					builder.append("[" + positionString + " > " + item.getName() + "],");
+					builder.append("[" + positionString + " > " + item.getName() + "], ");
 				}
-				builder.substring(0, builder.length() - 1);
-				textComponents.add(new StringTextComponent(new String(builder)));
+				if (builder.length() > 1) {
+					String string = builder.substring(0, builder.length() - 2);
+					textComponents.add(new StringTextComponent(string));
+				} else {
+					textComponents.add(new StringTextComponent("No lights"));
+				}
 				
 				for(ITextComponent iTextComponent : textComponents) {
 					if(!world.isRemote) player.sendStatusMessage(iTextComponent, false);

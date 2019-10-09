@@ -1,9 +1,6 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -14,9 +11,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.container.MagmaCrucibleContainer;
@@ -26,6 +25,8 @@ import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.machine.Upgrade;
 import tk.themcbros.uselessmod.recipes.MagmaCrucibleRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
+
+import javax.annotation.Nullable;
 
 public class MagmaCrucibleTileEntity extends MachineTileEntity {
 
@@ -123,11 +124,7 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 		this.cookTimeTotal = compound.getInt("CookTimeTotal");
 		this.tank.readFromNBT(compound.getCompound("Tank"));
 	}
-	
-	public Fluid getFluidInTank() {
-		return this.tank.getFluid().getFluid();
-	}
-	
+
 	private boolean isActive() {
 		return this.getEnergyStored() > 0 && this.cookTime > 0;
 	}
@@ -141,41 +138,33 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 			
 			this.receiveEnergyFromSlot(this.getSizeInventory() - 1);
 			
-			final ItemStack bucketSlotStack = this.items.get(1);
-			if(!bucketSlotStack.isEmpty()) {
-//				final ItemStack bucketOutStack = this.items.get(2);
-//				final ItemStack filledBucket = new ItemStack(this.getFluidInTank().getFilledBucket());
-//				if (bucketSlotStack.getItem() == filledBucket.getContainerItem().getItem()) {
-//					if (bucketOutStack.isEmpty()) {
-//						this.items.set(2, filledBucket);
-//						bucketSlotStack.shrink(1);
-//						this.tank.getFluid().shrink(FluidAttributes.BUCKET_VOLUME);
-//					} else if (bucketOutStack.getMaxStackSize() > 1 && bucketOutStack.getItem() == filledBucket.getItem()) {
-//						bucketOutStack.grow(filledBucket.getCount());
-//						bucketSlotStack.shrink(1);
-//						this.tank.getFluid().shrink(FluidAttributes.BUCKET_VOLUME);
-//					}
-//				}
-				bucketSlotStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(handler -> {
-					int i = handler.fill(MagmaCrucibleTileEntity.this.tank.getFluid(), FluidAction.EXECUTE);
-					MagmaCrucibleTileEntity.this.tank.drain(i, FluidAction.EXECUTE);
-				});
+			final ItemStack containerStack = this.items.get(1);
+			if(!containerStack.isEmpty()) {
+				final ItemStack bucketOutStack = this.items.get(2);
+				if(bucketOutStack.isEmpty()) {
+					FluidActionResult result = FluidUtil.tryFillContainer(containerStack, this.tank, FluidAttributes.BUCKET_VOLUME, null, true);
+					if (result.isSuccess()) {
+						ItemStack filledContainer = result.getResult();
+						this.items.set(2, filledContainer);
+						containerStack.shrink(1);
+					}
+				}
 			}
 			
 			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.items.get(0).isEmpty()) {
-				MagmaCrucibleRecipe irecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.MAGMA_CRUCIBLE, this, this.world).orElse(null);
-				if (!this.isActive() && this.canCook(irecipe)) {
+				MagmaCrucibleRecipe recipe = this.world.getRecipeManager().getRecipe(RecipeTypes.MAGMA_CRUCIBLE, this, this.world).orElse(null);
+				if (!this.isActive() && this.canCook(recipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					cookTime++;
 				}
 
-				if (this.isActive() && this.canCook(irecipe)) {
+				if (this.isActive() && this.canCook(recipe)) {
 					this.cookTime++;
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					if (this.cookTime == this.cookTimeTotal) {
 						this.cookTime = 0;
 						this.cookTimeTotal = this.getCookTime();
-						this.cookItem(irecipe);
+						this.cookItem(recipe);
 						flag1 = true;
 					}
 				} else {
@@ -185,7 +174,7 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 
 			if (flag != this.isActive()) {
 				flag1 = true;
-				this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.valueOf(this.isActive())), 3);
+				this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isActive()), 3);
 			}
 		}
 
@@ -226,11 +215,6 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 			} else if (fluidStack1.isFluidEqual(fluidStack2)) {
 				fluidStack2.grow(fluidStack1.getAmount());
 			}
-			
-			if(!world.isRemote) {
-				this.setRecipeUsed(recipe);
-			}
-
 			itemstack.shrink(1);
 		}
 	}
@@ -239,16 +223,7 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 		if(world == null) return 0;
 		int cookTime = this.world.getRecipeManager().getRecipe(RecipeTypes.MAGMA_CRUCIBLE, this, this.world)
 				.map(MagmaCrucibleRecipe::getCookTime).orElse(100);
-		float speed = this.machineTier.getMachineSpeed();
-		for(ItemStack stack : this.upgradeInventory.getStacks()) {
-			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
-				if(((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
-					speed += 0.2f;
-				}
-			}
-		}
-		cookTime = (int) (cookTime / speed);
-		return cookTime;
+		return this.getProcessTime(cookTime);
 	}
 
 	@Override

@@ -13,9 +13,7 @@ public class UselessRenderRegistry {
 
 	public static void registerEntityRenders() {
 		RenderingRegistry.registerEntityRenderingHandler(UselessCowEntity.class, new UselessCowEntityRender.RenderFactory());
-		RenderingRegistry.registerEntityRenderingHandler(GrenadeEntity.class, manager -> {
-			return new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer());
-		});
+		RenderingRegistry.registerEntityRenderingHandler(GrenadeEntity.class, manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
 	}
 	
 }

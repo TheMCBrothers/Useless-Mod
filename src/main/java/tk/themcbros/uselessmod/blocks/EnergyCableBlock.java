@@ -28,15 +28,18 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.energy.ConnectionType;
+import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
 import tk.themcbros.uselessmod.energy.EnergyCableNetworkManager;
 import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
@@ -164,7 +167,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 	@SuppressWarnings("unchecked")
 	private static <T extends Comparable<T>> BlockState cycleProperty(BlockState state, IProperty<T> propertyIn) {
 		T value = getAdjacentValue(propertyIn.getAllowedValues(), state.get(propertyIn));
-		if (value == ConnectionType.NONE)
+		if (value == ConnectionType.NONE || value == ConnectionType.BLOCKED)
 			value = (T) ConnectionType.INPUT;
 		return state.with(propertyIn, value);
 	}
@@ -210,12 +213,15 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 		}
 
+		if (worldIn.getTileEntity(facingPos) instanceof EnergyCableTileEntity)
+			EnergyCableNetworkManager.invalidateNetwork(worldIn, currentPos);
+
 		EnumProperty<ConnectionType> property = FACING_TO_PROPERTY_MAP.get(facing);
 		ConnectionType current = stateIn.get(property);
 		return stateIn.with(property, createConnection(worldIn, facingPos, current));
 	}
 	
-	public IFluidState getFluidState(BlockState state) {
+	public IFluidState getFluidState(@Nonnull BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
 	}
 	

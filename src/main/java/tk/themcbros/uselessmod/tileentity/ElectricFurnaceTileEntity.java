@@ -97,38 +97,40 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 		boolean flag1 = false;
 		ItemStack input = items.get(0);
 
-		if (energyStorage.getEnergyStored() >= RF_PER_TICK) {
-			if (cookTime > 0) {
-				energyStorage.modifyEnergyStored(-RF_PER_TICK);
-				cookTime++;
-				FurnaceRecipe irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
-						.orElse(null);
-				if (cookTime == this.cookTimeTotal) {
-					this.cookTime = 0;
-					this.cookTimeTotal = this.getCookTime();
-					this.smeltItem(irecipe);
-					flag1 = true;
-					return;
-				}
-			} else {
-				if (!input.isEmpty()) {
-					FurnaceRecipe irecipe = this.world.getRecipeManager()
-							.getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
-					if (this.canSmelt(irecipe)) {
-						cookTimeTotal = this.getCookTime();
-						cookTime++;
-						energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					} else {
-						cookTime = 0;
+		if (!this.world.isRemote) {
+			if (energyStorage.getEnergyStored() >= RF_PER_TICK) {
+				if (cookTime > 0) {
+					energyStorage.modifyEnergyStored(-RF_PER_TICK);
+					cookTime++;
+					FurnaceRecipe irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
+							.orElse(null);
+					if (cookTime == this.cookTimeTotal) {
+						this.cookTime = 0;
+						this.cookTimeTotal = this.getCookTime();
+						this.smeltItem(irecipe);
+						flag1 = true;
+						return;
+					}
+				} else {
+					if (!input.isEmpty()) {
+						FurnaceRecipe irecipe = this.world.getRecipeManager()
+								.getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
+						if (this.canSmelt(irecipe)) {
+							cookTimeTotal = this.getCookTime();
+							cookTime++;
+							energyStorage.modifyEnergyStored(-RF_PER_TICK);
+						} else {
+							cookTime = 0;
+						}
 					}
 				}
 			}
-		}
 
-		if (flag != isBurning()) {
-			flag1 = true;
-			this.world.setBlockState(this.pos,
-					this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.valueOf(this.isBurning())), 3);
+			if (flag != isBurning()) {
+				flag1 = true;
+				this.world.setBlockState(this.pos,
+						this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isBurning()), 3);
+			}
 		}
 
 		if (flag1) {
@@ -140,17 +142,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	private int getCookTime() {
 		int cookTime = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
 				.map(FurnaceRecipe::getCookTime).orElse(200);
-		int speedUpgradeCount = 0;
-		for (ItemStack stack : this.upgradeInventory.getStacks()) {
-			if (!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
-				if (((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
-					speedUpgradeCount += stack.getCount();
-				}
-			}
-		}
-		float speed = (float) (1.0 / 4.0 * speedUpgradeCount + 1.0);
-		cookTime = (int) (cookTime / speed);
-		return cookTime;
+		return this.getProcessTime(cookTime);
 	}
 
 	protected boolean canSmelt(@Nullable FurnaceRecipe irecipe) {
@@ -186,11 +178,6 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 			} else if (itemstack2.getItem() == itemstack1.getItem()) {
 				itemstack2.grow(itemstack1.getCount());
 			}
-
-			if (!world.isRemote) {
-				this.setRecipeUsed(irecipe);
-			}
-
 			itemstack.shrink(1);
 		}
 	}

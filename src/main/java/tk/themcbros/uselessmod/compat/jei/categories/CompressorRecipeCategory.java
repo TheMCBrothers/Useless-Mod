@@ -43,8 +43,8 @@ private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID
 	public CompressorRecipeCategory(IGuiHelper helper) {
 		staticEnergyBar = helper.createDrawable(TEXTURES, 239, 1, 16, 45);
 		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 300, StartDirection.TOP, true);
-		
-		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 176, 82, 24, 17);
+
+		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 232, 82, 24, 17);
 		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, StartDirection.LEFT, false);
 		
 		background = helper.createDrawable(TEXTURES, 0, 114, 114, 47);
@@ -63,12 +63,6 @@ private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID
 		
 		Minecraft minecraft = Minecraft.getInstance();
 		FontRenderer fontRenderer = minecraft.fontRenderer;
-		
-		float experience = recipe.getExperience();
-		if (experience > 0) {
-			String experienceString = new TranslationTextComponent("gui.jei.category.smelting.experience", experience).getFormattedText();
-			fontRenderer.drawString(experienceString, 0, 0, 0xFF808080);
-		}
 	}
 	
 	@Override

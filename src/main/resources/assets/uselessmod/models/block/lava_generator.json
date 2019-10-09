@@ -1,0 +1,6 @@
+{
+    "parent": "uselessmod:block/machine",
+    "textures": {
+        "front": "uselessmod:block/lava_generator_front"
+    }
+}

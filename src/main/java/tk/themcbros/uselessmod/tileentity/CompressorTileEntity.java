@@ -57,8 +57,6 @@ public class CompressorTileEntity extends MachineTileEntity {
 			case 3:
 				CompressorTileEntity.this.compressTimeTotal = value;
 				break;
-			case 4:
-				CompressorTileEntity.this.recipesUsed = value;
 			}
 		}
 		
@@ -73,8 +71,6 @@ public class CompressorTileEntity extends MachineTileEntity {
 				return CompressorTileEntity.this.compressTime;
 			case 3:
 				return CompressorTileEntity.this.compressTimeTotal;
-			case 4:
-				return CompressorTileEntity.this.recipesUsed;
 			default:
 				return 0;
 			}
@@ -144,17 +140,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 	protected int getCompressTime() {
 		int compressTime = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world)
 				.map(CompressorRecipe::getCompressTime).orElse(200);
-		int speedUpgradeCount = 0;
-		for(ItemStack stack : this.upgradeInventory.getStacks()) {
-			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
-				if(((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
-					speedUpgradeCount += stack.getCount();
-				}
-			}
-		}
-		float speed = (float) (1.0 / 4.0 * speedUpgradeCount + 1.0);
-		compressTime = (int) (compressTime / speed);
-		return compressTime;
+		return this.getProcessTime(compressTime);
 	}
 	
 	private boolean canCompress(@Nullable CompressorRecipe recipe) {
@@ -195,10 +181,6 @@ public class CompressorTileEntity extends MachineTileEntity {
 				this.items.set(1, itemstack1.copy());
 			} else if (itemstack2.getItem() == itemstack1.getItem()) {
 				itemstack2.grow(itemstack1.getCount());
-			}
-			
-			if(!world.isRemote) {
-				this.setRecipeUsed(recipe);
 			}
 
 			itemstack.shrink(1);

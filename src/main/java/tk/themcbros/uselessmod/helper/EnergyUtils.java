@@ -1,5 +1,6 @@
 package tk.themcbros.uselessmod.helper;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -12,12 +13,14 @@ public class EnergyUtils {
 
 	@Nullable
 	public static IEnergyStorage getEnergy(IBlockReader world, BlockPos pos) {
-		return world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY).orElse(null);
+		return getEnergy(world, pos, null);
 	}
 
 	@Nullable
-	public static IEnergyStorage getEnergy(IBlockReader world, BlockPos pos, Direction side) {
-		return world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, side).orElse(null);
+	public static IEnergyStorage getEnergy(IBlockReader world, BlockPos pos, @Nullable Direction side) {
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity == null) return null;
+		return tileEntity.getCapability(CapabilityEnergy.ENERGY, side).orElse(null);
 	}
 
 }

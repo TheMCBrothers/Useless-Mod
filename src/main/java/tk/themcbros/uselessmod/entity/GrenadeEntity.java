@@ -32,9 +32,10 @@ public class GrenadeEntity extends ProjectileItemEntity {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		final BlockPos blockPos = new BlockPos(this);
-		final boolean destroy = EntityConfig.grenade_enabled.get();
-		world.createExplosion(this, DamageSource.MAGIC, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 5, false, destroy ? Mode.DESTROY : Mode.NONE);
+		if (EntityConfig.grenade_enabled.get()) {
+			final BlockPos blockPos = new BlockPos(this);
+			world.createExplosion(this, DamageSource.MAGIC, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 5, false, Mode.DESTROY);
+		}
 		remove();
 	}
 

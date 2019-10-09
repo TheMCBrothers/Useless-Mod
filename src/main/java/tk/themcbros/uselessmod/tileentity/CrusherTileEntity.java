@@ -1,7 +1,5 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,6 +26,9 @@ import tk.themcbros.uselessmod.container.CrusherContainer;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.recipes.CrusherRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CrusherTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
 	
@@ -147,8 +148,7 @@ public class CrusherTileEntity extends LockableTileEntity implements ISidedInven
 			if (flag != this.isActive()) {
 				flag1 = true;
 				this.world.setBlockState(this.pos,
-						this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.valueOf(this.isActive())),
-						3);
+						this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isActive()), 3);
 			}
 		}
 
@@ -201,14 +201,8 @@ public class CrusherTileEntity extends LockableTileEntity implements ISidedInven
 		}
 	}
 	   
-	protected int getBurnTime(ItemStack stack) {
-		if (stack.isEmpty()) {
-			return 0;
-		} else {
-			int ret = stack.getBurnTime();
-			return net.minecraftforge.event.ForgeEventFactory.getItemBurnTime(stack,
-					ret == -1 ? ForgeHooks.getBurnTime(stack) : ret);
-		}
+	protected int getBurnTime(@Nonnull ItemStack stack) {
+		return ForgeHooks.getBurnTime(stack);
 	}
 
 	protected int getCrushTime() {

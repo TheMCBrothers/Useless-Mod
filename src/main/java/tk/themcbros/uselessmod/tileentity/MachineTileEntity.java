@@ -1,49 +1,39 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.annotation.Nullable;
-
-import com.google.common.collect.Maps;
-
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IRecipeHolder;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.machine.MachineUpgradeInventory;
+import tk.themcbros.uselessmod.machine.Upgrade;
 
-public abstract class MachineTileEntity extends LockableTileEntity implements ITickableTileEntity, ISidedInventory, IRecipeHolder {
+import javax.annotation.Nonnull;
+
+public abstract class MachineTileEntity extends LockableTileEntity implements ITickableTileEntity, ISidedInventory {
 	
 	protected static final int DEFAULT_RF_PER_TICK = 15;
 	
 	protected CustomEnergyStorage energyStorage;
 	protected MachineUpgradeInventory upgradeInventory;
-	protected MachineTier machineTier = MachineTier.STANDARD;
-	
-	protected Map<ResourceLocation, Integer> recipeUsedMap = Maps.newHashMap();
-	protected int recipesUsed;
+	protected MachineTier machineTier;
 	
 	protected NonNullList<ItemStack> items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 	
-	public MachineTileEntity(TileEntityType<?> tileEntityTypeIn, MachineTier machineTier, boolean generator) {
+	public MachineTileEntity(@Nonnull TileEntityType<?> tileEntityTypeIn, @Nonnull MachineTier machineTier, boolean generator) {
 		super(tileEntityTypeIn);
 		this.machineTier = machineTier;
 		this.energyStorage = new CustomEnergyStorage(machineTier.getMachineCapacity(), !generator ? machineTier.getMaxEnergyTransfer() : 0, generator ? machineTier.getMaxEnergyTransfer() : 0, 0);
@@ -57,16 +47,6 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		compound.put("Energy", this.energyStorage.serializeNBT());
 		this.upgradeInventory.write(compound);
 		ItemStackHelper.saveAllItems(compound, items, false);
-		
-		compound.putShort("RecipesUsedSize", (short) this.recipeUsedMap.size());
-		int i = 0;
-
-		for (Entry<ResourceLocation, Integer> entry : this.recipeUsedMap.entrySet()) {
-			compound.putString("RecipeLocation" + i, entry.getKey().toString());
-			compound.putInt("RecipeAmount" + i, entry.getValue());
-			++i;
-		}
-		
 		return compound;
 	}
 	
@@ -79,15 +59,6 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		ItemStackHelper.loadAllItems(compound, items);
 		this.upgradeInventory = new MachineUpgradeInventory(this);
 		this.upgradeInventory.read(compound);
-		
-//		this.recipesUsed = this.getBurnTime(this.items.get(1));
-		int i = compound.getShort("RecipesUsedSize");
-
-		for (int j = 0; j < i; ++j) {
-			ResourceLocation resourcelocation = new ResourceLocation(compound.getString("RecipeLocation" + j));
-			int k = compound.getInt("RecipeAmount" + j);
-			this.recipeUsedMap.put(resourcelocation, k);
-		}
 	}
 	
 	protected void receiveEnergyFromSlot(int index) {
@@ -100,7 +71,21 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 				this.energyStorage.modifyEnergyStored(handler.extractEnergy(accept, false));
 		}
 	}
-	
+
+	protected int getProcessTime(int defaultTime) {
+		if (this.world == null) return 0;
+		float speed = this.machineTier.getMachineSpeed();
+		for(ItemStack stack : this.upgradeInventory.getStacks()) {
+			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
+				if(((UpgradeItem) stack.getItem()).getUpgrade() == Upgrade.SPEED) {
+					speed += (0.5f * stack.getCount());
+				}
+			}
+		}
+		defaultTime = (int) (defaultTime / speed);
+		return defaultTime;
+	}
+
 	@Override
 	public boolean isEmpty() {
 		for (ItemStack itemstack : this.items) {
@@ -170,25 +155,6 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	@Override
 	protected ITextComponent getDefaultName() {
 		return this.getDisplayName();
-	}
-	
-	@Override
-	@Nullable
-	public IRecipe<?> getRecipeUsed() {
-		return null;
-	}
-
-	@Override
-	public void setRecipeUsed(@Nullable IRecipe<?> recipe) {
-		if (recipe != null) {
-	         this.recipeUsedMap.compute(recipe.getId(), (location, integer) -> {
-	            return 1 + (integer == null ? 0 : integer);
-	         });
-	      }
-	}
-
-	public void dropXP(PlayerEntity player) {
-		UselessMod.LOGGER.debug("TODO: Drop XP method"); // TODO: Drop XP method
 	}
 
 	public MachineTier getMachineTier() {

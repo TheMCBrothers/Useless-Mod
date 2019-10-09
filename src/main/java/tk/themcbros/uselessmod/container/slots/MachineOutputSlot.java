@@ -10,7 +10,6 @@ import tk.themcbros.uselessmod.tileentity.CompressorTileEntity;
 import tk.themcbros.uselessmod.tileentity.CrusherTileEntity;
 import tk.themcbros.uselessmod.tileentity.ElectricCrusherTileEntity;
 import tk.themcbros.uselessmod.tileentity.ElectricFurnaceTileEntity;
-import tk.themcbros.uselessmod.tileentity.MachineTileEntity;
 
 public class MachineOutputSlot extends Slot {
 	private final PlayerEntity player;
@@ -63,9 +62,6 @@ public class MachineOutputSlot extends Slot {
 	 */
 	protected void onCrafting(ItemStack stack) {
 		stack.onCrafting(this.player.world, this.player, this.removeCount);
-		if (!this.player.world.isRemote && this.inventory instanceof MachineTileEntity) {
-			((MachineTileEntity) this.inventory).dropXP(this.player);
-		}
 
 		this.removeCount = 0;
 		if (this.inventory instanceof CrusherTileEntity || this.inventory instanceof ElectricCrusherTileEntity)

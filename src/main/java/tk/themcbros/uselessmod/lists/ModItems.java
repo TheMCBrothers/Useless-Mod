@@ -110,6 +110,7 @@ public class ModItems {
 	public static final BlockItem COMPRESSOR = registerBlockItem("compressor", ModBlocks.COMPRESSOR);
 	public static final BlockItem MAGMA_CRUCIBLE = registerBlockItem("magma_crucible", ModBlocks.MAGMA_CRUCIBLE);
 	public static final BlockItem GLOWSTONE_GENERATOR = registerBlockItem("glowstone_generator", ModBlocks.GLOWSTONE_GENERATOR);
+	public static final BlockItem LAVA_GENERATOR = registerBlockItem("lava_generator", ModBlocks.LAVA_GENERATOR);
 	public static final BlockItem CREATIVE_POWER_BLOCK = registerBlockItem("creative_power_block", new CreativeEnergyBlockItem(ModBlocks.CREATIVE_POWER_BLOCK, new Item.Properties().group(GROUP)));
 	public static final BlockItem POWER_CONTROL_BLOCK = registerBlockItem("power_control_block", ModBlocks.POWER_CONTROL_BLOCK);
 	public static final BlockItem COFFEE_MACHINE = registerBlockItem("coffee_machine", ModBlocks.COFFEE_MACHINE);
@@ -180,7 +181,7 @@ public class ModItems {
 	public static final Item GREENSTONE = registerItem("greenstone", new BlockNamedItem(ModBlocks.GREENSTONE_WIRE, new Item.Properties().group(GROUP)));
 	
 	public static final Item USELESS_ENTITY_SPAWN_EGG = registerItem("useless_cow_spawn_egg", new SpawnEggItem(ModEntityTypes.USELESS_COW, 0x2b8a4a, 0x195c19, new Item.Properties().group(GROUP)));
-	public static final Item GRENADE = registerItem("grenade", new GrenadeItem(new Item.Properties().group(GROUP)));
+	public static final Item GRENADE = registerItem("grenade", new GrenadeItem(new Item.Properties().group(GROUP).maxStackSize(16)));
 	
 	public static final Item USELESS_WATER_BUCKET = registerItem("useless_water_bucket", new BucketItem(() -> ModFluids.USELESS_WATER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).maxStackSize(1).containerItem(Items.BUCKET)));
 	

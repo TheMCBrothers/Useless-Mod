@@ -149,6 +149,7 @@
 	"block.uselessmod.blue_rose": "Blue Rose",
 	"block.uselessmod.potted_blue_rose.name": "Potted Blue Rose",
 	"block.uselessmod.glowstone_generator": "Glowstone Generator",
+	"block.uselessmod.lava_generator": "Lava Generator",
 	"block.uselessmod.electric_furnace": "Electric Furnace",
 	"block.uselessmod.creative_power_block": "Creative Power Block",
 	"block.uselessmod.power_control_block": "Power Control Block",
@@ -189,6 +190,8 @@
 	"tooltip.uselessmod.machine": "Energy: %d",
 	"tooltip.uselessmod.press_shift": "\u00a77\u00a7o<Press Left Shift>",
 	"tooltip.uselessmod.light_switch.clear": "\u00a77\u00a7oSneak and right click to clear configuration",
+	"tooltip.uselessmod.upgrade.null": "Crafting Item",
+	"tooltip.uselessmod.upgrade.speed": "+?% Processing speed",
 	
 	"status.uselessmod.light_switch.block_added": "Added block at %s to Light Switch",
 	"status.uselessmod.light_switch.block_already_added": "Block is already added!",
