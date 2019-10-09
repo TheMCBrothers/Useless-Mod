@@ -115,6 +115,7 @@ public class ModItems {
 	public static final BlockItem POWER_CONTROL_BLOCK = registerBlockItem("power_control_block", ModBlocks.POWER_CONTROL_BLOCK);
 	public static final BlockItem COFFEE_MACHINE = registerBlockItem("coffee_machine", ModBlocks.COFFEE_MACHINE);
 	public static final BlockItem ENERGY_CABLE = registerBlockItem("energy_cable", ModBlocks.ENERGY_CABLE);
+	public static final BlockItem FLUID_TANK = registerBlockItem("fluid_tank", ModBlocks.FLUID_TANK);
 	public static final BlockItem CLOSET = registerBlockItem("closet", ModBlocks.CLOSET, ModItemGroups.CLOSET_GROUP);
 	
 	public static final BlockItem STRIPPED_OAK_COFFEE_TABLE = registerBlockItem("stripped_oak_coffee_table", ModBlocks.STRIPPED_OAK_COFFEE_TABLE);

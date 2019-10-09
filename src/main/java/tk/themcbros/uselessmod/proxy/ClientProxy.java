@@ -49,7 +49,9 @@ import tk.themcbros.uselessmod.lists.ModItemGroups;
 import tk.themcbros.uselessmod.lists.ModItems;
 import tk.themcbros.uselessmod.tileentity.ColorableTileEntity;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
+import tk.themcbros.uselessmod.tileentity.FluidTankTileEntity;
 import tk.themcbros.uselessmod.tileentity.renderer.EnergyCableTileEntityRenderer;
+import tk.themcbros.uselessmod.tileentity.renderer.FluidTankTileEntityRenderer;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -90,6 +92,7 @@ public class ClientProxy extends CommonProxy {
 		}
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(EnergyCableTileEntity.class, new EnergyCableTileEntityRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(FluidTankTileEntity.class, new FluidTankTileEntityRenderer());
 		OBJLoader.INSTANCE.addDomain(UselessMod.MOD_ID);
 	}
 	

@@ -28,39 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.blocks.CheeseMakerBlock;
-import tk.themcbros.uselessmod.blocks.ClosetBlock;
-import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
-import tk.themcbros.uselessmod.blocks.CoffeeSeedsBlock;
-import tk.themcbros.uselessmod.blocks.CoffeeTableBlock;
-import tk.themcbros.uselessmod.blocks.ColorableBlock;
-import tk.themcbros.uselessmod.blocks.CompressorBlock;
-import tk.themcbros.uselessmod.blocks.CreativePowerBlock;
-import tk.themcbros.uselessmod.blocks.CrusherBlock;
-import tk.themcbros.uselessmod.blocks.ElectricCrusherBlock;
-import tk.themcbros.uselessmod.blocks.ElectricFurnaceBlock;
-import tk.themcbros.uselessmod.blocks.EnergyCableBlock;
-import tk.themcbros.uselessmod.blocks.GlowstoneGeneratorBlock;
-import tk.themcbros.uselessmod.blocks.GreenstoneWireBlock;
-import tk.themcbros.uselessmod.blocks.LampBlock;
-import tk.themcbros.uselessmod.blocks.LavaGeneratorBlock;
-import tk.themcbros.uselessmod.blocks.LightSwitchBlock;
-import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
-import tk.themcbros.uselessmod.blocks.MagmaCrucibleBlock;
-import tk.themcbros.uselessmod.blocks.ModDoorBlock;
-import tk.themcbros.uselessmod.blocks.ModPaneBlock;
-import tk.themcbros.uselessmod.blocks.PaintBucketBlock;
-import tk.themcbros.uselessmod.blocks.PowerControlBlock;
-import tk.themcbros.uselessmod.blocks.UnlitLanternBlock;
-import tk.themcbros.uselessmod.blocks.UselessCropsBlock;
-import tk.themcbros.uselessmod.blocks.UselessDoublePlantBlock;
-import tk.themcbros.uselessmod.blocks.UselessFlowerBlock;
-import tk.themcbros.uselessmod.blocks.UselessGrassBlock;
-import tk.themcbros.uselessmod.blocks.UselessPressurePlateBlock;
-import tk.themcbros.uselessmod.blocks.UselessSaplingBlock;
-import tk.themcbros.uselessmod.blocks.UselessTallGrassBlock;
-import tk.themcbros.uselessmod.blocks.UselessTrapdoorBlock;
-import tk.themcbros.uselessmod.blocks.UselessWoodButtonBlock;
+import tk.themcbros.uselessmod.blocks.*;
 import tk.themcbros.uselessmod.world.feature.UselessTree;
 
 @ObjectHolder(UselessMod.MOD_ID)
@@ -135,6 +103,7 @@ public class ModBlocks {
 	public static final Block POWER_CONTROL_BLOCK = register("power_control_block", new PowerControlBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block COFFEE_MACHINE = register("coffee_machine", new CoffeeMachineBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block ENERGY_CABLE = register("energy_cable", new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.125F)));
+	public static final Block FLUID_TANK = register("fluid_tank", new FluidTankBlock(Block.Properties.from(Blocks.GLASS)));
 	public static final Block CLOSET = register("closet", new ClosetBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F)));
 	
 	public static final Block GREENSTONE_WIRE = register("greenstone_wire", new GreenstoneWireBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement()));

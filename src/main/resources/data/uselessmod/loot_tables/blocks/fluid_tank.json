@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+	  "name": "fluid_tank",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "FluidName",
+                  "target": "BlockEntityTag.FluidName",
+                  "op": "replace"
+                },
+                {
+                  "source": "Amount",
+                  "target": "BlockEntityTag.Amount",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
+          "name": "uselessmod:fluid_tank"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

@@ -14,20 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
-import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
-import tk.themcbros.uselessmod.tileentity.ColorableTileEntity;
-import tk.themcbros.uselessmod.tileentity.CompressorTileEntity;
-import tk.themcbros.uselessmod.tileentity.CreativePowerBlockTileEntity;
-import tk.themcbros.uselessmod.tileentity.CrusherTileEntity;
-import tk.themcbros.uselessmod.tileentity.ElectricCrusherTileEntity;
-import tk.themcbros.uselessmod.tileentity.ElectricFurnaceTileEntity;
-import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
-import tk.themcbros.uselessmod.tileentity.GlowstoneGeneratorTileEntity;
-import tk.themcbros.uselessmod.tileentity.LavaGeneratorTileEntity;
-import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
-import tk.themcbros.uselessmod.tileentity.MagmaCrucibleTileEntity;
-import tk.themcbros.uselessmod.tileentity.PowerControlTileEntity;
+import tk.themcbros.uselessmod.tileentity.*;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModTileEntities {
@@ -48,6 +35,7 @@ public class ModTileEntities {
 	public static final TileEntityType<PowerControlTileEntity> POWER_CONTROL_BLOCK = register("power_control_block", PowerControlTileEntity::new, ModBlocks.POWER_CONTROL_BLOCK);
 	public static final TileEntityType<MagmaCrucibleTileEntity> MAGMA_CRUCIBLE = register("magma_crucible", MagmaCrucibleTileEntity::new, ModBlocks.MAGMA_CRUCIBLE);
 	public static final TileEntityType<LavaGeneratorTileEntity> LAVA_GENERATOR = register("lava_generator", LavaGeneratorTileEntity::new, ModBlocks.LAVA_GENERATOR);
+	public static final TileEntityType<FluidTankTileEntity> FLUID_TANK = register("fluid_tank", FluidTankTileEntity::new, ModBlocks.FLUID_TANK);
 	
 	private static <T extends TileEntity> TileEntityType<T> register(String regName, Supplier<T> supplier, Block... blocks) {
 		TileEntityType<T> type = TileEntityType.Builder.create(supplier, blocks).build(null);
