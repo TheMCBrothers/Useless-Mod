@@ -13,15 +13,14 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.container.GlowstoneGeneratorContainer;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.machine.MachineTier;
+
+import javax.annotation.Nonnull;
 
 public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 
@@ -96,31 +95,6 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 		}
 	}
 	
-//	private void sendEnergy() {
-//		energy.ifPresent(energy -> {
-//			AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
-//			if (capacity.get() > 0) {
-//				for (Direction direction : Direction.values()) {
-//					TileEntity te = this.world.getTileEntity(this.pos.offset(direction));
-//					if (te != null) {
-//						boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
-//							if (handler.canExtract()) {
-//								int received = handler.receiveEnergy(Math.min(capacity.get(), 100), false);
-//								capacity.addAndGet(received);
-//								energy.extractEnergy(received, false);
-//								markDirty();
-//								return capacity.get() > 0;
-//							}
-//							return true;
-//						}).orElse(true);
-//						if (!doContinue)
-//							return;
-//					}
-//				}
-//			}
-//		});
-//	}
-	
 	private boolean isActive() {
 		return this.cookTime > 0;
 	}
@@ -139,7 +113,8 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 		}
 		
 		if(flag != isActive()) {
-			this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.valueOf(this.isActive())), 3);
+			assert this.world != null;
+			this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isActive()), 3);
 		}
 		
 		sendEnergy();
@@ -155,8 +130,9 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 		else return 0;
 	}
 
+	@Nonnull
 	@Override
-	public int[] getSlotsForFace(Direction side) {
+	public int[] getSlotsForFace(@Nonnull Direction side) {
 		return side == Direction.DOWN ? new int[] {} : SLOTS_IN;
 	}
 	
@@ -202,29 +178,6 @@ public class GlowstoneGeneratorTileEntity extends MachineTileEntity {
 	public void read(CompoundNBT compound) {
 		super.read(compound);
 		this.cookTime = compound.getInt("CookTime");
-	}
-	
-	private LazyOptional<? extends IItemHandler>[] itemHandler = net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-	
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (!this.removed && side != null
-				&& cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (side == Direction.UP)
-				return itemHandler[0].cast();
-			else if (side == Direction.DOWN)
-				return itemHandler[1].cast();
-			else
-				return itemHandler[2].cast();
-		}
-		return super.getCapability(cap, side);
-	}
-	
-	@Override
-	public void remove() {
-		for(int i = 0; i < itemHandler.length; i++)
-			itemHandler[i].invalidate();
-		super.remove();
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -18,23 +16,23 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
-import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
 import tk.themcbros.uselessmod.lists.ModItems;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.recipes.CoffeeRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CoffeeMachineTileEntity extends MachineTileEntity {
 
@@ -301,6 +299,7 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 		return this.isItemValidForSlot(arg0, arg1);
 	}
 
+	@Nonnull
 	@Override
 	public int[] getSlotsForFace(Direction side) {
 		if (side == Direction.DOWN) {
@@ -310,33 +309,23 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 		}
 	}
 
+	@Nonnull
 	@Override
-	public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+	public Container createMenu(int windowId, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
 		return new CoffeeMachineContainer(windowId, playerInventory, this, this.fields);
 	}
 
+	@Nonnull
 	@Override
 	public ITextComponent getDisplayName() {
 		return new TranslationTextComponent("container.uselessmod.coffee_machine");
 	}
-	
-	private LazyOptional<? extends IItemHandler>[] handlers = net.minecraftforge.items.wrapper.SidedInvWrapper
-			.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-	private LazyOptional<CustomEnergyStorage> energyHandler = LazyOptional.of(() -> this.energyStorage);
-	private LazyOptional<FluidTank> fluidHandler = LazyOptional.of(() -> this.waterTank);
+
+	private LazyOptional<? extends IFluidHandler> fluidHandler = LazyOptional.of(() -> this.waterTank);
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.removed && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (facing == Direction.UP)
-				return handlers[0].cast();
-			else if (facing == Direction.DOWN)
-				return handlers[1].cast();
-			else
-				return handlers[2].cast();
-		} else if(capability == CapabilityEnergy.ENERGY) {
-			return energyHandler.cast();
-		} else if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
 			return fluidHandler.cast();
 		}
 		return super.getCapability(capability, facing);
@@ -345,22 +334,12 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 	@Override
 	protected void invalidateCaps() {
 		super.invalidateCaps();
-		this.energyHandler.invalidate();
 		this.fluidHandler.invalidate();
 	}
 
-	/**
-	 * invalidates a tile entity
-	 */
+	@Nonnull
 	@Override
-	public void remove() {
-		super.remove();
-		for (int x = 0; x < handlers.length; x++)
-			handlers[x].invalidate();
-	}
-
-	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
+	protected Container createMenu(int id, @Nonnull PlayerInventory player) {
 		return createMenu(id, player, player.player);
 	}
 

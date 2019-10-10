@@ -1,7 +1,5 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -11,27 +9,20 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CompressorContainer;
-import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.machine.MachineTier;
-import tk.themcbros.uselessmod.machine.Upgrade;
 import tk.themcbros.uselessmod.recipes.CompressorRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CompressorTileEntity extends MachineTileEntity {
 
 	public static final int RF_PER_TICK = MachineConfig.compressor_rf_per_tick.get();
-	
-	private static final int[] SLOTS_TOP = new int[] { 0 };
-	private static final int[] SLOTS_BOTTOM = new int[] { 1 };
-	private static final int[] SLOTS_SIDES = new int[] { 0 };
 	
 	private int compressTime;
 	private int compressTimeTotal;
@@ -100,6 +91,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 		boolean flag = this.isActive();
 		boolean flag1 = false;
 
+		assert this.world != null;
 		if (!this.world.isRemote) {
 			
 			this.receiveEnergyFromSlot(this.getSizeInventory() - 1);
@@ -127,7 +119,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 
 			if (flag != this.isActive()) {
 				flag1 = true;
-				this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.valueOf(this.isActive())), 3);
+				this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isActive()), 3);
 			}
 		}
 
@@ -137,7 +129,8 @@ public class CompressorTileEntity extends MachineTileEntity {
 
 	}
 	
-	protected int getCompressTime() {
+	private int getCompressTime() {
+		assert this.world != null;
 		int compressTime = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world)
 				.map(CompressorRecipe::getCompressTime).orElse(200);
 		return this.getProcessTime(compressTime);
@@ -155,16 +148,10 @@ public class CompressorTileEntity extends MachineTileEntity {
 				} else if (!itemstack1.isItemEqual(itemstack)) {
 					return false;
 				} else if (itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit()
-						&& itemstack1.getCount() < itemstack1.getMaxStackSize()) { // Forge fix: make furnace respect
-																					// stack sizes in furnace recipes
+						&& itemstack1.getCount() < itemstack1.getMaxStackSize()) {
 					return true;
 				} else {
-					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize(); // Forge fix:
-																										// make furnace
-																										// respect stack
-																										// sizes in
-																										// furnace
-																										// recipes
+					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize();
 				}
 			}
 		} else {
@@ -187,32 +174,25 @@ public class CompressorTileEntity extends MachineTileEntity {
 		}
 	}
 
+	@Nonnull
 	@Override
-	public int[] getSlotsForFace(Direction side) {
-		if (side == Direction.DOWN) {
-			return SLOTS_BOTTOM;
-		} else {
-			return side == Direction.UP ? SLOTS_TOP : SLOTS_SIDES;
-		}
+	public int[] getSlotsForFace(@Nonnull Direction side) {
+		return side == Direction.DOWN ? new int[] { 1 } : new int[] { 0 };
 	}
 	
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		if (index == 1) {
-			return false;
-		} else {
-			return true;
-		}
+		return index != 1;
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction) {
+	public boolean canInsertItem(int index, @Nonnull ItemStack itemStackIn, Direction direction) {
 		return this.isItemValidForSlot(index, itemStackIn);
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
-		return true;
+	public boolean canExtractItem(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
+		return index == 1;
 	}
 
 	@Override
@@ -250,31 +230,6 @@ public class CompressorTileEntity extends MachineTileEntity {
 		super.read(compound);
 		this.compressTime = compound.getInt("CompressTime");
 		this.compressTimeTotal = compound.getInt("CompressTimeTotal");
-	}
-	
-	private LazyOptional<? extends IItemHandler>[] handlers = net.minecraftforge.items.wrapper.SidedInvWrapper
-			.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.removed && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (facing == Direction.UP)
-				return handlers[0].cast();
-			else if (facing == Direction.DOWN)
-				return handlers[1].cast();
-			else
-				return handlers[2].cast();
-		}
-		return super.getCapability(capability, facing);
-	}
-
-	/**
-	 * invalidates a tile entity
-	 */
-	@Override
-	public void remove() {
-		super.remove();
-		for (int x = 0; x < handlers.length; x++)
-			handlers[x].invalidate();
 	}
 
 	@Override

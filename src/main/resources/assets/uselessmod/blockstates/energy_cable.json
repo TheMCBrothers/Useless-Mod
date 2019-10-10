@@ -54,8 +54,8 @@
         {   "when": { "up": "output" },
             "apply": { "model": "uselessmod:block/energy_cable/side_output", "x": 270, "uvlock": true }
         },
-        {   "when": { "down": "both" },
-            "apply": { "model": "uselessmod:block/energy_cable/side", "x": 90, "uvlock": true }
+        {   "when": { "down": "output" },
+            "apply": { "model": "uselessmod:block/energy_cable/side_output", "x": 90, "uvlock": true }
         }
     ]
 }

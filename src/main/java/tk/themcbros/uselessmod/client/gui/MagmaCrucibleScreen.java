@@ -1,17 +1,15 @@
 package tk.themcbros.uselessmod.client.gui;
 
-import java.awt.Rectangle;
-
 import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fluids.FluidStack;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.MagmaCrucibleContainer;
 import tk.themcbros.uselessmod.helper.TextUtils;
+import tk.themcbros.uselessmod.tileentity.MagmaCrucibleTileEntity;
+
+import java.awt.*;
 
 public class MagmaCrucibleScreen extends MachineFluidScreen<MagmaCrucibleContainer> {
 
@@ -21,7 +19,7 @@ public class MagmaCrucibleScreen extends MachineFluidScreen<MagmaCrucibleContain
 	private Rectangle energyBar = new Rectangle(152, 6, 16, 45);
 	
 	public MagmaCrucibleScreen(MagmaCrucibleContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-		super(screenContainer, inv, titleIn, MachineConfig.coffee_machine_water_capacity.get());
+		super(screenContainer, inv, titleIn, MagmaCrucibleTileEntity.TANK_CAPACITY);
 	}
 	
 	@Override
@@ -74,7 +72,7 @@ public class MagmaCrucibleScreen extends MachineFluidScreen<MagmaCrucibleContain
 		GlStateManager.enableAlphaTest();
 
 		// Draw fluid
-		drawFluid(tankRectangle.x + i, tankRectangle.y + j, new FluidStack(this.container.getTankFluid(), this.container.getFluidAmount()));
+		drawFluid(tankRectangle.x + i, tankRectangle.y + j, this.container.getTankStack());
 
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		

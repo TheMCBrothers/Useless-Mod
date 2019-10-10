@@ -26,14 +26,16 @@ import tk.themcbros.uselessmod.machine.Upgrade;
 import tk.themcbros.uselessmod.recipes.MagmaCrucibleRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class MagmaCrucibleTileEntity extends MachineTileEntity {
 
 	public static final int RF_PER_TICK = DEFAULT_RF_PER_TICK;
+	public static final int TANK_CAPACITY = 4000; // todo make config entry
 	
 	private int cookTime, cookTimeTotal;
-	private FluidTank tank = new FluidTank(4000);
+	private FluidTank tank = new FluidTank(TANK_CAPACITY);
 	
 	@SuppressWarnings("deprecation")
 	private IIntArray fields = new IIntArray() {
@@ -98,7 +100,7 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 	private LazyOptional<FluidTank> fluidHandler = LazyOptional.of(() -> this.tank);
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
 		if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
 			return fluidHandler.cast();
 		return super.getCapability(cap, side);
@@ -236,9 +238,10 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 		return isItemValidForSlot(arg0, arg1);
 	}
 
+	@Nonnull
 	@Override
-	public int[] getSlotsForFace(Direction direction) {
-		return direction != Direction.DOWN ? new int[] {0} : new int[] {};
+	public int[] getSlotsForFace(@Nonnull Direction direction) {
+		return direction == Direction.DOWN ? new int[] { 2 } : new int[] { 0, 1 };
 	}
 
 	@Override

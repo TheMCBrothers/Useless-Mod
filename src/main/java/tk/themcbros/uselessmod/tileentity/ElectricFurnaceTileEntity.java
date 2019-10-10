@@ -1,5 +1,6 @@
 package tk.themcbros.uselessmod.tileentity;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +14,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.ElectricFurnaceContainer;
@@ -23,9 +25,6 @@ import tk.themcbros.uselessmod.machine.Upgrade;
 
 public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
-	private static final int[] SLOTS_TOP = { 0 };
-	private static final int[] SLOTS_SIDE = { 0 };
-	private static final int[] SLOTS_BOTTOM = { 1 };
 	private static final int RF_PER_TICK = MachineConfig.furnace_rf_per_tick.get();
 
 	private int cookTime;
@@ -86,50 +85,42 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 		return new ElectricFurnaceContainer(windowId, playerInventory, this, this.upgradeInventory, fields);
 	}
 
-	private boolean isBurning() {
-		return this.cookTime > 0 && this.energyStorage.getEnergyStored() > 0;
+	private boolean isActive() {
+		return this.cookTime > 0 && this.energyStorage.getEnergyStored() >= RF_PER_TICK;
 	}
 
 	@Override
 	public void tick() {
 
-		boolean flag = isBurning();
+		boolean flag = this.isActive();
 		boolean flag1 = false;
-		ItemStack input = items.get(0);
 
+		assert this.world != null;
 		if (!this.world.isRemote) {
-			if (energyStorage.getEnergyStored() >= RF_PER_TICK) {
-				if (cookTime > 0) {
-					energyStorage.modifyEnergyStored(-RF_PER_TICK);
+			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.items.get(0).isEmpty()) {
+				FurnaceRecipe furnaceRecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
+				if (!this.isActive() && this.canSmelt(furnaceRecipe)) {
+					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
 					cookTime++;
-					FurnaceRecipe irecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
-							.orElse(null);
-					if (cookTime == this.cookTimeTotal) {
+				}
+
+				if (this.isActive() && this.canSmelt(furnaceRecipe)) {
+					this.cookTime++;
+					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
+					if (this.cookTime == this.cookTimeTotal) {
 						this.cookTime = 0;
 						this.cookTimeTotal = this.getCookTime();
-						this.smeltItem(irecipe);
+						this.smeltItem(furnaceRecipe);
 						flag1 = true;
-						return;
 					}
 				} else {
-					if (!input.isEmpty()) {
-						FurnaceRecipe irecipe = this.world.getRecipeManager()
-								.getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
-						if (this.canSmelt(irecipe)) {
-							cookTimeTotal = this.getCookTime();
-							cookTime++;
-							energyStorage.modifyEnergyStored(-RF_PER_TICK);
-						} else {
-							cookTime = 0;
-						}
-					}
+					this.cookTime = 0;
 				}
 			}
 
-			if (flag != isBurning()) {
+			if (flag != this.isActive()) {
 				flag1 = true;
-				this.world.setBlockState(this.pos,
-						this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isBurning()), 3);
+				this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, this.isActive()), 3);
 			}
 		}
 
@@ -140,27 +131,28 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	}
 
 	private int getCookTime() {
+		assert this.world != null;
 		int cookTime = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world)
 				.map(FurnaceRecipe::getCookTime).orElse(200);
 		return this.getProcessTime(cookTime);
 	}
 
-	protected boolean canSmelt(@Nullable FurnaceRecipe irecipe) {
-		if (!this.items.get(0).isEmpty() && irecipe != null) {
-			ItemStack itemstack = irecipe.getRecipeOutput();
-			if (itemstack.isEmpty()) {
+	private boolean canSmelt(@Nullable FurnaceRecipe furnaceRecipe) {
+		if (!this.items.get(0).isEmpty() && furnaceRecipe != null) {
+			ItemStack recipeOutput = furnaceRecipe.getRecipeOutput();
+			if (recipeOutput.isEmpty()) {
 				return false;
 			} else {
-				ItemStack itemstack1 = this.items.get(1);
-				if (itemstack1.isEmpty()) {
+				ItemStack outputStack = this.items.get(1);
+				if (outputStack.isEmpty()) {
 					return true;
-				} else if (!itemstack1.isItemEqual(itemstack)) {
+				} else if (!outputStack.isItemEqual(recipeOutput)) {
 					return false;
-				} else if (itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit()
-						&& itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) {
+				} else if (outputStack.getCount() + recipeOutput.getCount() <= this.getInventoryStackLimit()
+						&& outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize()) {
 					return true;
 				} else {
-					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize();
+					return outputStack.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxStackSize();
 				}
 			}
 		} else {
@@ -168,10 +160,10 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 		}
 	}
 
-	private void smeltItem(@Nullable FurnaceRecipe irecipe) {
-		if (irecipe != null && this.canSmelt(irecipe)) {
+	private void smeltItem(@Nullable FurnaceRecipe furnaceRecipe) {
+		if (furnaceRecipe != null && this.canSmelt(furnaceRecipe)) {
 			ItemStack itemstack = this.items.get(0);
-			ItemStack itemstack1 = irecipe.getRecipeOutput();
+			ItemStack itemstack1 = furnaceRecipe.getRecipeOutput();
 			ItemStack itemstack2 = this.items.get(1);
 			if (itemstack2.isEmpty()) {
 				this.items.set(1, itemstack1.copy());
@@ -184,19 +176,13 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		if (index == 1) {
-			return false;
-		}
-		return true;
+		return index != 1;
 	}
 
+	@Nonnull
 	@Override
-	public int[] getSlotsForFace(Direction side) {
-		if (side == Direction.DOWN) {
-			return SLOTS_BOTTOM;
-		} else {
-			return side == Direction.UP ? SLOTS_TOP : SLOTS_SIDE;
-		}
+	public int[] getSlotsForFace(@Nonnull Direction side) {
+		return side == Direction.DOWN ? new int[] { 1 } : new int[] { 0 };
 	}
 
 	@Override
@@ -206,7 +192,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
-		return true;
+		return index == 1;
 	}
 
 	@Override
@@ -225,6 +211,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 		}
 
 		if (index == 0 && !flag) {
+			this.cookTimeTotal = this.getCookTime();
 			this.cookTime = 0;
 			this.markDirty();
 		}

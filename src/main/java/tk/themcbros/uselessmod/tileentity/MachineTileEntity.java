@@ -15,6 +15,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
 import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.machine.MachineTier;
@@ -61,7 +64,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		this.upgradeInventory.read(compound);
 	}
 	
-	protected void receiveEnergyFromSlot(int index) {
+	void receiveEnergyFromSlot(int index) {
 		final ItemStack energySlotStack = this.items.get(index);
 		if(!energySlotStack.isEmpty()) {
 			IEnergyStorage handler = energySlotStack.getCapability(CapabilityEnergy.ENERGY).orElse(null);
@@ -72,8 +75,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		}
 	}
 
-	protected int getProcessTime(int defaultTime) {
-		if (this.world == null) return 0;
+	int getProcessTime(int defaultTime) {
 		float speed = this.machineTier.getMachineSpeed();
 		for(ItemStack stack : this.upgradeInventory.getStacks()) {
 			if(!stack.isEmpty() && stack.getItem() instanceof UpgradeItem) {
@@ -97,16 +99,19 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return true;
 	}
 	
+	@Nonnull
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		return this.items.get(index);
 	}
 	
+	@Nonnull
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		return ItemStackHelper.getAndSplit(this.items, index, count);
 	}
 	
+	@Nonnull
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		return ItemStackHelper.getAndRemove(this.items, index);
@@ -118,7 +123,8 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	}
 	
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) {
+	public boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
+		assert this.world != null;
 		if (this.world.getTileEntity(this.pos) != this) {
 			return false;
 		} else {
@@ -132,16 +138,37 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return 64;
 	}
 	
-	protected final LazyOptional<IEnergyStorage> energyHandler = LazyOptional.of(this::createEnergyHandler);
-	
+	private final LazyOptional<? extends IEnergyStorage> energyHandler = LazyOptional.of(this::createEnergyHandler);
+	private final LazyOptional<? extends IItemHandler>[] itemHandlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
+
 	private IEnergyStorage createEnergyHandler() {
 		return this.energyStorage;
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if(cap == CapabilityEnergy.ENERGY) return energyHandler.cast();
-		return super.getCapability(cap, side);
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+		if (!this.removed && cap == CapabilityEnergy.ENERGY) {
+			return energyHandler.cast();
+		} else if (!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			if (side == Direction.UP)
+				return itemHandlers[0].cast();
+			else if (side == Direction.DOWN)
+				return itemHandlers[1].cast();
+			else
+				return itemHandlers[2].cast();
+		}
+		return LazyOptional.empty();
+	}
+
+	/**
+	 * invalidates a tile entity
+	 */
+	@Override
+	public void remove() {
+		super.remove();
+		energyHandler.invalidate();
+		for (int x = 0; x < itemHandlers.length; x++)
+			itemHandlers[x].invalidate();
 	}
 	
 	public int getEnergyStored() {
@@ -152,6 +179,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return this.machineTier.getMachineCapacity();
 	}
 	
+	@Nonnull
 	@Override
 	protected ITextComponent getDefaultName() {
 		return this.getDisplayName();
