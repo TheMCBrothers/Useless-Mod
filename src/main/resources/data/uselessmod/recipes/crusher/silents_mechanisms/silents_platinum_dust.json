@@ -1,0 +1,17 @@
+{
+	"conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "silents_mechanisms"
+        }
+    ],
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:ores/platinum"
+	},
+	"result": {
+		"item": "silents_mechanisms:platinum_dust",
+		"count": 2
+	},
+	"crushtime": 200
+}

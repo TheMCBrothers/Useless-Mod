@@ -1,0 +1,11 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": {
+		"tag": "forge:rods/blaze"
+	},
+	"result": {
+		"item": "minecraft:blaze_powder",
+		"count": 4
+	},
+	"crushtime": 200
+}

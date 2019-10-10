@@ -1,0 +1,22 @@
+{
+	"type": "uselessmod:crushing",
+	"ingredient": [
+		{
+			"item": "minecraft:quartz_block"
+		},
+		{
+			"item": "minecraft:chiseled_quartz_block"
+		},
+		{
+			"item": "minecraft:quartz_pillar"
+		},
+		{
+			"item": "minecraft:smooth_quartz"
+		}
+	],
+	"result": {
+		"item": "minecraft:quartz",
+		"count": 4
+	},
+	"crushtime": 200
+}

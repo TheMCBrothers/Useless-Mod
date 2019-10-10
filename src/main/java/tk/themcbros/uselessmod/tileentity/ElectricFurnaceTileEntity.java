@@ -1,8 +1,5 @@
 package tk.themcbros.uselessmod.tileentity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -14,14 +11,14 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.ElectricFurnaceContainer;
-import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.machine.MachineTier;
-import tk.themcbros.uselessmod.machine.Upgrade;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
