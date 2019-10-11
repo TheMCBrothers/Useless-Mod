@@ -6,9 +6,9 @@
 		"UIU"
 	],
 	"key": {
-		"U": { "item": "uselessmod:useless_ingot" },
-		"I": { "item": "minecraft:iron_ingot" },
-		"G": { "item": "minecraft:glass" }
+		"U": { "tag": "forge:ingots/useless" },
+		"I": { "tag": "forge:ingots/iron" },
+		"G": { "tag": "forge:glass/colorless" }
 	},
 	"result": {
 		"item": "uselessmod:machineframe",

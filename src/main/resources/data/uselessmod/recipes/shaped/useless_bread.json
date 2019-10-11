@@ -4,7 +4,7 @@
 		"WWW"
 	],
 	"key": {
-		"W": { "item": "uselessmod:useless_wheat" }
+		"W": { "tag": "forge:crops/useless_wheat" }
 	},
 	"result": {
 		"item": "uselessmod:useless_bread"

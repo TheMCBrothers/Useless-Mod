@@ -8,7 +8,7 @@
 	"key": {
 		"U": { "tag": "forge:plates/useless" },
 		"G": { "tag": "forge:glass/colorless" },
-		"R": { "item": "minecraft:redstone" }
+		"R": { "tag": "forge:dusts/redstone" }
 	},
 	"result": {
 		"item": "uselessmod:blank_upgrade",

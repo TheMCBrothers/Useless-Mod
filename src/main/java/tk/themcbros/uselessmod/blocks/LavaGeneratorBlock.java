@@ -1,7 +1,5 @@
 package tk.themcbros.uselessmod.blocks;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -20,7 +18,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import tk.themcbros.uselessmod.tileentity.LavaGeneratorTileEntity;
-import tk.themcbros.uselessmod.tileentity.MagmaCrucibleTileEntity;
+
+import javax.annotation.Nonnull;
 
 public class LavaGeneratorBlock extends MachineBlock {
 
@@ -43,7 +42,7 @@ public class LavaGeneratorBlock extends MachineBlock {
 			BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
-			if(tileEntity instanceof MagmaCrucibleTileEntity && player instanceof ServerPlayerEntity) {
+			if(tileEntity instanceof LavaGeneratorTileEntity && player instanceof ServerPlayerEntity) {
 				if(FluidUtil.getFluidHandler(worldIn, pos, hit.getFace()).map(handler -> tryEmptyContainer(player, handIn, handler)).orElse(false)) {
 					player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1f, 1f);
 				} else { // If not success open GUI

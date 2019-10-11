@@ -1,5 +1,6 @@
 package tk.themcbros.uselessmod.tileentity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -18,6 +19,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
 import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.machine.MachineTier;
@@ -178,7 +180,11 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	public int getMaxEnergyStored() {
 		return this.machineTier.getMachineCapacity();
 	}
-	
+
+	@Nonnull
+	@Override
+	public abstract ITextComponent getDisplayName();
+
 	@Nonnull
 	@Override
 	protected ITextComponent getDefaultName() {
@@ -187,6 +193,23 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 
 	public MachineTier getMachineTier() {
 		return this.machineTier;
+	}
+
+	protected void sendUpdate(BlockState newState, boolean force) {
+		if (world == null) return;
+		BlockState oldState = world.getBlockState(pos);
+		if (oldState != newState || force) {
+			world.setBlockState(pos, newState, 3);
+			world.notifyBlockUpdate(pos, oldState, newState, 3);
+		}
+	}
+
+	protected BlockState getActiveState() {
+		return this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.TRUE);
+	}
+
+	protected BlockState getInactiveState() {
+		return this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.FALSE);
 	}
 
 }

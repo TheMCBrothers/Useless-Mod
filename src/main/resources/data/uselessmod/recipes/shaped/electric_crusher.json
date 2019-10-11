@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"#": { "item": "minecraft:flint" },
-		"I": { "item": "minecraft:iron_ingot" },
+		"I": { "tag": "forge:ingots/iron" },
 		"F": { "item": "uselessmod:crusher" },
 		"C": { "item": "uselessmod:machineframe" }
 	},

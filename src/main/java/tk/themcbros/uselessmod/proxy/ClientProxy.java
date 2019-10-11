@@ -31,14 +31,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.GreenstoneWireBlock;
 import tk.themcbros.uselessmod.blocks.LampBlock;
-import tk.themcbros.uselessmod.client.gui.ClosetScreen;
-import tk.themcbros.uselessmod.client.gui.CoffeeMachineScreen;
-import tk.themcbros.uselessmod.client.gui.CompressorScreen;
-import tk.themcbros.uselessmod.client.gui.CrusherScreen;
-import tk.themcbros.uselessmod.client.gui.ElectricCrusherScreen;
-import tk.themcbros.uselessmod.client.gui.ElectricFurnaceScreen;
-import tk.themcbros.uselessmod.client.gui.GlowstoneGeneratorScreen;
-import tk.themcbros.uselessmod.client.gui.MagmaCrucibleScreen;
+import tk.themcbros.uselessmod.client.gui.*;
 import tk.themcbros.uselessmod.client.renders.entity.UselessRenderRegistry;
 import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.lists.CoffeeType;
@@ -75,6 +68,7 @@ public class ClientProxy extends CommonProxy {
 		ScreenManager.registerFactory(ModContainerTypes.COMPRESSOR, CompressorScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.MAGMA_CRUCIBLE, MagmaCrucibleScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.GLOWSTONE_GENRATOR, GlowstoneGeneratorScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.LAVA_GENERATOR, LavaGeneratorScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.COFFEE_MACHINE, CoffeeMachineScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.CLOSET, ClosetScreen::new);
 		

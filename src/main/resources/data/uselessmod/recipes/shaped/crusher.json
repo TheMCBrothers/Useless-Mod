@@ -6,10 +6,10 @@
 		"CFC"
 	],
 	"key": {
-		"U": { "item": "uselessmod:useless_ingot" },
+		"U": { "tag": "forge:ingots/useless" },
 		"#": { "item": "minecraft:flint" },
 		"F": { "item": "minecraft:furnace" },
-		"C": { "item": "minecraft:cobblestone" }
+		"C": { "tag": "forge:cobblestone" }
 	},
 	"result": {
 		"item": "uselessmod:crusher"

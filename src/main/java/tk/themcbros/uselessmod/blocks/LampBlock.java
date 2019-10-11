@@ -34,7 +34,7 @@ public class LampBlock extends Block {
 	public LampBlock(Properties props) {
 		super(props);
 		
-		this.setDefaultState(this.stateContainer.getBaseState().with(LIT, Boolean.valueOf(false)).with(COLOR, DyeColor.WHITE));
+		this.setDefaultState(this.stateContainer.getBaseState().with(LIT, Boolean.FALSE).with(COLOR, DyeColor.WHITE));
 	}
 	
 	@Override
@@ -124,14 +124,15 @@ public class LampBlock extends Block {
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		ItemStack heldStack = player.getHeldItem(handIn);
-		if(heldStack != null && heldStack.getItem() instanceof DyeItem) {
-			DyeColor color = ((DyeItem) heldStack.getItem()).getDyeColor();
+		DyeColor color = DyeColor.getColor(heldStack);
+		if(!heldStack.isEmpty() && color != null && state.get(COLOR) != color) {
+			if (!player.abilities.isCreativeMode)
+				heldStack.shrink(1);
 			state = state.with(COLOR, color);
 		} else {
-			if(state.get(LIT) == Boolean.valueOf(false)) state = state.with(LIT, Boolean.valueOf(true));
-			else state = state.with(LIT, Boolean.valueOf(false));
+			state = state.cycle(LIT);
 		}
-		
+
 		worldIn.setBlockState(pos, state, 3);
 		
 		return true;

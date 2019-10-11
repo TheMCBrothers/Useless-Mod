@@ -6,9 +6,9 @@
 		"IFI"
 	],
 	"key": {
-		"#": { "item": "uselessmod:useless_ingot" },
-		"I": { "item": "minecraft:iron_ingot" },
-		"F": { "item": "minecraft:stone" },
+		"#": { "tag": "forge:ingots/useless" },
+		"I": { "tag": "forge:ingots/iron" },
+		"F": { "tag": "forge:stone" },
 		"C": { "item": "uselessmod:machineframe" }
 	},
 	"result": {

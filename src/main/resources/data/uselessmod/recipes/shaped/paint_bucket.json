@@ -5,8 +5,8 @@
 		"B#B"
 	],
 	"key": {
-		"#": { "item": "uselessmod:useless_ingot" },
-		"B": { "item": "uselessmod:useless_block" },
+		"#": { "tag": "forge:ingots/useless" },
+		"B": { "tag": "forge:storage_blocks/useless" },
 		"D": { "tag": "forge:dyes" }
 	},
 	"result": {

@@ -1,18 +1,17 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		" B ",
+		" # ",
 		"#C#",
 		"IFI"
 	],
 	"key": {
-		"B": { "item": "minecraft:bucket" },
-		"#": { "tag": "forge:dusts/redstone" },
+		"#": { "item": "minecraft:magma_block" },
 		"I": { "tag": "forge:ingots/useless" },
-		"F": { "item": "minecraft:furnace" },
+		"F": { "tag": "forge:stone" },
 		"C": { "item": "uselessmod:machineframe" }
 	},
 	"result": {
-		"item": "uselessmod:magma_crucible"
+		"item": "uselessmod:lava_generator"
 	}
 }

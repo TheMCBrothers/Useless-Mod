@@ -163,7 +163,6 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 	
 	@Override
 	public boolean canFit(int w, int h) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

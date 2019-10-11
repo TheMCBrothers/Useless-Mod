@@ -3,6 +3,7 @@ package tk.themcbros.uselessmod.container;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
@@ -15,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 import tk.themcbros.uselessmod.tileentity.LavaGeneratorTileEntity;
@@ -38,6 +40,19 @@ public class LavaGeneratorContainer extends Container {
 		this.pos = lavaGeneratorInventory.getPos();
 		
 		// Machine Slots
+		this.addSlot(new Slot(lavaGeneratorInventory, 0, 28, 11) {
+			@Override
+			public boolean isItemValid(ItemStack stack) {
+				return stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
+						.map(handler -> handler.getFluidInTank(0).getRawFluid().equals(Fluids.LAVA)).orElse(false);
+			}
+		});
+		this.addSlot(new Slot(lavaGeneratorInventory, 1, 28, 48) {
+			@Override
+			public boolean isItemValid(ItemStack p_75214_1_) {
+				return false;
+			}
+		});
 		
 		// Upgrade Slots
 		
@@ -62,7 +77,7 @@ public class LavaGeneratorContainer extends Container {
 	
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		int machineSlotCount = 0;
+		int machineSlotCount = 2;
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
@@ -98,40 +113,36 @@ public class LavaGeneratorContainer extends Container {
 	
 	@OnlyIn(Dist.CLIENT)
 	public int getEnergyStoredScaled(int height) {
-		int i = this.fields.get(0);
-		int j = this.fields.get(1);
+		int i = this.getEnergyStored();
+		int j = this.getMaxEnergyStored();
 		return j != 0 && i != 0 ? i * height / j : 0;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public int getCookTimeScaled() {
-		int i = this.fields.get(2);
-		int j = this.fields.get(3);
-		return j != 0 && i != 0 ? i * 24 / j : 0;
+	public int getBurnTimeScaled(int scale) {
+		int i = this.getBurnTime();
+		int j = LavaGeneratorTileEntity.TICKS_PER_MB;
+		return j != 0 && i != 0 ? i * scale / j : 0;
 	}
 	
 	public int getEnergyStored() {
-		return this.fields.get(5);
+		return this.fields.get(4);
 	}
 	
 	public int getMaxEnergyStored() {
-		return this.fields.get(6);
+		return this.fields.get(5);
 	}
 	
 	public int getBurnTime() {
 		return this.fields.get(0);
 	}
 	
-	public int getTotalBurnTime() {
+	public int getFluidAmount() {
 		return this.fields.get(1);
 	}
 	
-	public int getFluidAmount() {
-		return this.fields.get(2);
-	}
-	
 	public int getMaxFluidAmount() {
-		return this.fields.get(3);
+		return this.fields.get(2);
 	}
 	
 	public BlockPos getPos() {
@@ -144,13 +155,14 @@ public class LavaGeneratorContainer extends Container {
 
 	@SuppressWarnings("deprecation")
 	public Fluid getTankFluid() {
-		return Registry.FLUID.getByValue(this.fields.get(4));
+		return Registry.FLUID.getByValue(this.fields.get(3));
 	}
 	
 	public FluidStack getTankStack() {
 		return new FluidStack(getTankFluid(), getFluidAmount());
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
 	public IFluidHandler getFluidTankHandler() {
 		return new IFluidHandler() {
 			

@@ -7,9 +7,9 @@
 	],
 	"key": {
 		"B": { "item": "minecraft:bucket" },
-		"#": { "item": "uselessmod:useless_ingot" },
-		"I": { "item": "minecraft:iron_ingot" },
-		"R": { "item": "minecraft:redstone" },
+		"#": { "tag": "forge:ingots/useless" },
+		"I": { "tag": "forge:ingots/iron" },
+		"R": { "tag": "forge:dusts/redstone" },
 		"C": { "item": "uselessmod:machineframe" }
 	},
 	"result": {

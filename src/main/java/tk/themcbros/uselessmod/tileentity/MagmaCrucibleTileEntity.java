@@ -18,6 +18,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.MagmaCrucibleContainer;
 import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
@@ -31,8 +32,8 @@ import javax.annotation.Nullable;
 
 public class MagmaCrucibleTileEntity extends MachineTileEntity {
 
-	public static final int RF_PER_TICK = DEFAULT_RF_PER_TICK;
-	public static final int TANK_CAPACITY = 4000; // todo make config entry
+	public static final int RF_PER_TICK = MachineConfig.magma_crucible_rf_per_tick.get();
+	public static final int TANK_CAPACITY = MachineConfig.magma_crucible_tank_capacity.get();
 	
 	private int cookTime, cookTimeTotal;
 	private FluidTank tank = new FluidTank(TANK_CAPACITY);

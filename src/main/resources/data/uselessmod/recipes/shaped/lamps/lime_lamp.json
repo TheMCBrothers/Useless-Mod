@@ -8,7 +8,7 @@
 	"key": {
 		"G": { "item": "minecraft:glowstone" },
 		"D": { "tag": "forge:dyes/lime" },
-		"#": { "item": "minecraft:glass_pane" }
+		"#": { "tag": "forge:glass_panes/colorless" }
 	},
 	"result": {
 		"item": "uselessmod:lime_lamp"

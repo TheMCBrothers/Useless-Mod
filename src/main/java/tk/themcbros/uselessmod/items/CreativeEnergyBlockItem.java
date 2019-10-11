@@ -23,12 +23,12 @@ public class CreativeEnergyBlockItem extends BlockItem implements IEnergyContain
 	
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
-		return stack.getCount() == 1; // TODO change to config value
+		return stack.getCount() == 1;
 	}
 	
 	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
-		return 0xFFFF0000; // TODO change to config value
+		return 0xFFFF0000;
 	}
 
 	/* IEnergyContainerItem */

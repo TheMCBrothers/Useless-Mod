@@ -8,7 +8,7 @@
 	"key": {
 		"W": { "tag": "forge:dyes/white" },
 		"L": { "item": "minecraft:lever" },
-		"R": { "item": "minecraft:redstone" }
+		"R": { "tag": "forge:dusts/redstone" }
 	},
 	"result": {
 		"item": "uselessmod:light_switch"

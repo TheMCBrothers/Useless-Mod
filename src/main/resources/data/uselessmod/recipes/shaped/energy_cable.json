@@ -6,7 +6,7 @@
 		"RRR"
 	],
 	"key": {
-		"R": { "item": "minecraft:redstone" },
+		"R": { "tag": "forge:dusts/redstone" },
 		"G": { "tag": "forge:glass" },
 		"I": { "tag": "forge:ingots/useless" }
 	},

@@ -6,9 +6,9 @@
 		"S  "
 	],
 	"key": {
-		"I": { "item": "uselessmod:useless_ingot" },
+		"I": { "tag": "forge:ingots/useless" },
 		"S": { "tag": "forge:rods/wooden" },
-		"#": { "item": "minecraft:string" }
+		"#": { "tag": "forge:string" }
 	},
 	"result": {
 		"item": "uselessmod:hammer"

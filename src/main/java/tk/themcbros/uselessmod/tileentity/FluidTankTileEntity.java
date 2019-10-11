@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 
 import javax.annotation.Nonnull;
@@ -17,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class FluidTankTileEntity extends TileEntity {
 
-	private FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 10); // todo make config entry
+	private FluidTank tank = new FluidTank(MachineConfig.fluid_tank_capacity.get());
 
 	public FluidTankTileEntity() {
 		super(ModTileEntities.FLUID_TANK);

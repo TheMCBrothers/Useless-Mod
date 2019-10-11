@@ -21,7 +21,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
 import tk.themcbros.uselessmod.container.slots.FluidContainerSlot;
 import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
+import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
+import tk.themcbros.uselessmod.recipes.RecipeTypes;
 import tk.themcbros.uselessmod.tileentity.MagmaCrucibleTileEntity;
 
 public class MagmaCrucibleContainer extends Container {
@@ -78,17 +80,35 @@ public class MagmaCrucibleContainer extends Container {
 	}
 	
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		int numSlots = 7;
+		int machineSlotCount = 7;
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (index < numSlots) {
-				if (!this.mergeItemStack(itemstack1, numSlots , this.inventorySlots.size(), true)) {
+			if (index == 2) {
+				if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 0, numSlots, false)) {
+
+				slot.onSlotChange(itemstack1, itemstack);
+			} else if (index >= machineSlotCount) {
+				if (this.canSmelt(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if(itemstack1.getItem() instanceof UpgradeItem) {
+					if(this.mergeItemStack(itemstack1, 4, machineSlotCount, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount + 27, machineSlotCount + 36, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount + 27 && index < machineSlotCount + 36 && !this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 27, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
 				return ItemStack.EMPTY;
 			}
 
@@ -100,6 +120,11 @@ public class MagmaCrucibleContainer extends Container {
 		}
 
 		return itemstack;
+	}
+
+	private boolean canSmelt(ItemStack p_217057_1_) {
+		return this.world.getRecipeManager().getRecipe(RecipeTypes.MAGMA_CRUCIBLE, new Inventory(p_217057_1_), this.world)
+				.isPresent();
 	}
 
 	/**

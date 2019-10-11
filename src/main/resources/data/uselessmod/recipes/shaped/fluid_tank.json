@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"G G",
+		"GBG",
+		"GGG"
+	],
+	"key": {
+		"B": { "item": "minecraft:bucket" },
+		"G": { "tag": "forge:glass_panes/colorless" }
+	},
+	"result": {
+		"item": "uselessmod:fluid_tank",
+		"count": 1
+	}
+}

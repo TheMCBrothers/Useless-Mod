@@ -6,8 +6,8 @@
 		"IFI"
 	],
 	"key": {
-		"#": { "item": "minecraft:redstone" },
-		"I": { "item": "minecraft:iron_ingot" },
+		"#": { "tag": "forge:dusts/redstone" },
+		"I": { "tag": "forge:ingots/iron" },
 		"F": { "item": "minecraft:furnace" },
 		"C": { "item": "uselessmod:machineframe" }
 	},
