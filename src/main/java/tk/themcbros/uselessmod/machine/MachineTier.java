@@ -18,9 +18,7 @@ public enum MachineTier implements IStringSerializable {
 
 	private static final MachineTier[] VALUES = values();
 	private static final Map<String, MachineTier> NAME_LOOKUP = Arrays.stream(VALUES)
-			.collect(Collectors.toMap(MachineTier::getName, (tier) -> {
-				return tier;
-			}));
+			.collect(Collectors.toMap(MachineTier::getName, (tier) -> tier));
 
 	private final int machineCapacity, maxTransfer;
 	private final float machineSpeed;

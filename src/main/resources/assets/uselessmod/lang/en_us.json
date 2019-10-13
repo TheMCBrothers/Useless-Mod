@@ -127,6 +127,7 @@
 	"block.uselessmod.crusher": "Crusher",
 	"block.uselessmod.electric_crusher": "Electric Crusher",
 	"block.uselessmod.magma_crucible": "Magma Crucible",
+	"block.uselessmod.charger": "Charger",
 	"block.uselessmod.lamp": "Lamp",
 	"block.uselessmod.lamp.white": "\u00a7fWhite Lamp",
 	"block.uselessmod.lamp.orange": "\u00a76Orange Lamp",
@@ -177,6 +178,7 @@
 	"container.uselessmod.electric_furnace": "Electric Furnace",
 	"container.uselessmod.compressor": "Compressor",
 	"container.uselessmod.magma_crucible": "Magma Crucible",
+	"container.uselessmod.charger": "Charger",
 	"container.uselessmod.coffee_machine": "Coffee Machine",
 	"container.uselessmod.closet": "Wall Closet",
 
@@ -193,7 +195,7 @@
 	"tooltip.uselessmod.press_shift": "\u00a77\u00a7o<Press Left Shift>",
 	"tooltip.uselessmod.light_switch.clear": "\u00a77\u00a7oSneak and right click to clear configuration",
 	"tooltip.uselessmod.upgrade.null": "Crafting Item",
-	"tooltip.uselessmod.upgrade.speed": "+?% Processing speed",
+	"tooltip.uselessmod.upgrade.speed": "Increases Processing speed",
 	
 	"status.uselessmod.light_switch.block_added": "Added block at %s to Light Switch",
 	"status.uselessmod.light_switch.block_already_added": "Block is already added!",

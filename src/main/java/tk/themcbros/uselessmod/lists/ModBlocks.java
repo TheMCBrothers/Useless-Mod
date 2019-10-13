@@ -97,6 +97,7 @@ public class ModBlocks {
 	public static final Block ELECTRIC_FURNACE = register("electric_furnace", new ElectricFurnaceBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block COMPRESSOR = register("compressor", new CompressorBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block MAGMA_CRUCIBLE = register("magma_crucible", new MagmaCrucibleBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
+	public static final Block CHARGER = register("charger", new ChargerBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block GLOWSTONE_GENERATOR = register("glowstone_generator", new GlowstoneGeneratorBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block LAVA_GENERATOR = register("lava_generator", new LavaGeneratorBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block CREATIVE_POWER_BLOCK = register("creative_power_block", new CreativePowerBlock(Block.Properties.from(ELECTRIC_CRUSHER)));

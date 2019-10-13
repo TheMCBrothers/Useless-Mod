@@ -172,11 +172,13 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		for (int x = 0; x < itemHandlers.length; x++)
 			itemHandlers[x].invalidate();
 	}
-	
+
+	@Deprecated
 	public int getEnergyStored() {
 		return this.energyStorage.getEnergyStored();
 	}
-	
+
+	@Deprecated
 	public int getMaxEnergyStored() {
 		return this.machineTier.getMachineCapacity();
 	}

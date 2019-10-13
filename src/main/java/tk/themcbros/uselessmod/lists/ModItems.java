@@ -109,6 +109,7 @@ public class ModItems {
 	public static final BlockItem ELECTRIC_FURNACE = registerBlockItem("electric_furnace", ModBlocks.ELECTRIC_FURNACE);
 	public static final BlockItem COMPRESSOR = registerBlockItem("compressor", ModBlocks.COMPRESSOR);
 	public static final BlockItem MAGMA_CRUCIBLE = registerBlockItem("magma_crucible", ModBlocks.MAGMA_CRUCIBLE);
+	public static final BlockItem CHARGER = registerBlockItem("charger", ModBlocks.CHARGER);
 	public static final BlockItem GLOWSTONE_GENERATOR = registerBlockItem("glowstone_generator", ModBlocks.GLOWSTONE_GENERATOR);
 	public static final BlockItem LAVA_GENERATOR = registerBlockItem("lava_generator", ModBlocks.LAVA_GENERATOR);
 	public static final BlockItem CREATIVE_POWER_BLOCK = registerBlockItem("creative_power_block", new CreativeEnergyBlockItem(ModBlocks.CREATIVE_POWER_BLOCK, new Item.Properties().group(GROUP)));

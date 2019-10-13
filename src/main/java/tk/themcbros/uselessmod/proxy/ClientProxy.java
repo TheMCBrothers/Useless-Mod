@@ -67,6 +67,7 @@ public class ClientProxy extends CommonProxy {
 		ScreenManager.registerFactory(ModContainerTypes.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.COMPRESSOR, CompressorScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.MAGMA_CRUCIBLE, MagmaCrucibleScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.CHARGER, ChargerScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.GLOWSTONE_GENRATOR, GlowstoneGeneratorScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.LAVA_GENERATOR, LavaGeneratorScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.COFFEE_MACHINE, CoffeeMachineScreen::new);

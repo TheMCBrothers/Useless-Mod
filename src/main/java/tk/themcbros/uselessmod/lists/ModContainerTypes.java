@@ -12,15 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.container.ClosetContainer;
-import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
-import tk.themcbros.uselessmod.container.CompressorContainer;
-import tk.themcbros.uselessmod.container.CrusherContainer;
-import tk.themcbros.uselessmod.container.ElectricCrusherContainer;
-import tk.themcbros.uselessmod.container.ElectricFurnaceContainer;
-import tk.themcbros.uselessmod.container.GlowstoneGeneratorContainer;
-import tk.themcbros.uselessmod.container.LavaGeneratorContainer;
-import tk.themcbros.uselessmod.container.MagmaCrucibleContainer;
+import tk.themcbros.uselessmod.container.*;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModContainerTypes {
@@ -34,6 +26,7 @@ public class ModContainerTypes {
 	public static final ContainerType<GlowstoneGeneratorContainer> GLOWSTONE_GENRATOR = register("glowstone_generator_gui", new ContainerType<GlowstoneGeneratorContainer>(GlowstoneGeneratorContainer::new));
 	public static final ContainerType<CoffeeMachineContainer> COFFEE_MACHINE = register("coffee_machine", new ContainerType<CoffeeMachineContainer>(CoffeeMachineContainer::new));
 	public static final ContainerType<MagmaCrucibleContainer> MAGMA_CRUCIBLE = register("magma_crucible", new ContainerType<MagmaCrucibleContainer>(MagmaCrucibleContainer::new));
+	public static final ContainerType<ChargerContainer> CHARGER = register("charger", new ContainerType<>(ChargerContainer::new));
 	public static final ContainerType<LavaGeneratorContainer> LAVA_GENERATOR = register("lava_generator", new ContainerType<LavaGeneratorContainer>(LavaGeneratorContainer::new));
 	public static final ContainerType<ClosetContainer> CLOSET = register("closet", new ContainerType<ClosetContainer>(ClosetContainer::new));
 	
