@@ -104,6 +104,7 @@ public class ModBlocks {
 	public static final Block POWER_CONTROL_BLOCK = register("power_control_block", new PowerControlBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block COFFEE_MACHINE = register("coffee_machine", new CoffeeMachineBlock(Block.Properties.from(ELECTRIC_CRUSHER)));
 	public static final Block ENERGY_CABLE = register("energy_cable", new EnergyCableBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.125F)));
+	public static final Block FLUID_PIPE = register("fluid_pipe", new FluidPipeBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.125F)));
 	public static final Block FLUID_TANK = register("fluid_tank", new FluidTankBlock(Block.Properties.from(Blocks.GLASS)));
 	public static final Block CLOSET = register("closet", new ClosetBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F)));
 	

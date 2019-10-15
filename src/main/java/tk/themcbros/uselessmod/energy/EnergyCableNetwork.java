@@ -55,7 +55,7 @@ public class EnergyCableNetwork implements IEnergyStorage {
 			BlockPos pos = entry.getKey();
 			Set<Connection> connections = entry.getValue();
 			for (Connection con : connections) {
-				if (con.type.canReceive()) {
+				if (con.type.canExtract()) {
 					IEnergyStorage energy = EnergyUtils.getEnergy(world, pos.offset(con.side), con.side.getOpposite());
 					if (energy != null) {
 						energySent += energy.extractEnergy(maxExtract - energySent, simulate);

@@ -13,7 +13,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IProperty;
-import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
@@ -28,23 +28,22 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.energy.ConnectionType;
-import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
 import tk.themcbros.uselessmod.energy.EnergyCableNetworkManager;
+import tk.themcbros.uselessmod.fluids.FluidPipeNetworkManager;
 import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
+import tk.themcbros.uselessmod.tileentity.FluidPipeTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
+public class FluidPipeBlock extends Block implements IWaterLoggable, IHammer {
 
 	public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
 	public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
@@ -61,7 +60,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 		map.put(Direction.DOWN, DOWN);
 	});
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	
+
 	private static final VoxelShape CENTER_SHAPE = Block.makeCuboidShape(5, 5, 5, 11, 11, 11);
 	private static final VoxelShape NORTH_SHAPE = Block.makeCuboidShape(5, 5, 0, 11, 11, 5);
 	private static final VoxelShape SOUTH_SHAPE = Block.makeCuboidShape(5, 5, 11, 11, 11, 16);
@@ -69,10 +68,10 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 	private static final VoxelShape WEST_SHAPE = Block.makeCuboidShape(0, 5, 5, 5, 11, 11);
 	private static final VoxelShape UP_SHAPE = Block.makeCuboidShape(5, 11, 5, 11, 16, 11);
 	private static final VoxelShape DOWN_SHAPE = Block.makeCuboidShape(5, 0, 5, 11, 5, 11);
-	
-	public EnergyCableBlock(Properties properties) {
+
+	public FluidPipeBlock(Properties properties) {
 		super(properties);
-		
+
 		this.setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, ConnectionType.NONE)
 				.with(SOUTH, ConnectionType.NONE)
@@ -82,8 +81,15 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 				.with(DOWN, ConnectionType.NONE)
 				.with(WATERLOGGED, Boolean.FALSE));
 	}
-	
-	public static VoxelShape getCableShape(BlockState state) {
+
+	@Override
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN, WATERLOGGED);
+	}
+
+	@Nonnull
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		List<VoxelShape> shapes = Lists.newArrayList(CENTER_SHAPE);
 		if(getConnection(state, Direction.NORTH).canConnect()) shapes.add(NORTH_SHAPE);
 		if(getConnection(state, Direction.SOUTH).canConnect()) shapes.add(SOUTH_SHAPE);
@@ -93,36 +99,16 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 		if(getConnection(state, Direction.DOWN).canConnect()) shapes.add(DOWN_SHAPE);
 		return ShapeUtils.combineAll(shapes);
 	}
-	
-	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return getCableShape(state);
-	}
-	
-	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-			ISelectionContext context) {
-		return getCableShape(state);
-	}
-	
-	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return getCableShape(state);
-	}
-	
-	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN, WATERLOGGED);
-	}
-	
+
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
-	
+
+	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new EnergyCableTileEntity();
+		return new FluidPipeTileEntity();
 	}
 
 	@Override
@@ -175,12 +161,12 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 	private static <T> T getAdjacentValue(Iterable<T> p_195959_0_, @Nullable T p_195959_1_) {
 		return Util.getElementAfter(p_195959_0_, p_195959_1_);
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
 		return makeConnections(context.getWorld(), context.getPos()).with(WATERLOGGED,
-				Boolean.valueOf(ifluidstate.isTagged(FluidTags.WATER) && ifluidstate.getLevel() == 8));
+				ifluidstate.isTagged(FluidTags.WATER) && ifluidstate.getLevel() == 8);
 	}
 
 	public BlockState makeConnections(IBlockReader worldIn, BlockPos pos) {
@@ -195,48 +181,48 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 
 	private static ConnectionType createConnection(IBlockReader worldIn, BlockPos pos, Direction facing, ConnectionType current) {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
-		if (tileEntity instanceof EnergyCableTileEntity)
+		if (tileEntity instanceof FluidPipeTileEntity)
 			return ConnectionType.BOTH;
-		if (tileEntity != null && tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).isPresent()) {
-			IEnergyStorage handler = tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).orElseThrow(IllegalStateException::new);
-			return current == ConnectionType.NONE && !handler.canExtract() && handler.canReceive() ? ConnectionType.OUTPUT
-					: current == ConnectionType.NONE && handler.canExtract() && !handler.canReceive() ? ConnectionType.INPUT
-					: current == ConnectionType.NONE && handler.canExtract() && handler.canReceive() ? ConnectionType.BOTH : current;
+		if (tileEntity != null && tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite()).isPresent()) {
+			return current == ConnectionType.NONE ? ConnectionType.BOTH : current;
 		}
 		return ConnectionType.NONE;
 	}
-	
+
+	@Nonnull
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
-			BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.get(WATERLOGGED)) {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 		}
 
-		if (worldIn.getTileEntity(facingPos) instanceof EnergyCableTileEntity)
-			EnergyCableNetworkManager.invalidateNetwork(worldIn, currentPos);
+		if (worldIn.getTileEntity(facingPos) instanceof FluidPipeTileEntity)
+			FluidPipeNetworkManager.invalidateNetwork(worldIn, currentPos);
 
 		EnumProperty<ConnectionType> property = FACING_TO_PROPERTY_MAP.get(facing);
 		ConnectionType current = stateIn.get(property);
 		return stateIn.with(property, createConnection(worldIn, facingPos, facing, current));
 	}
-	
+
+	@Nonnull
 	public IFluidState getFluidState(@Nonnull BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
 	}
-	
+
+	@Nonnull
 	@Override
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
-	
+
+	@Nonnull
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
+	@Nonnull
 	public static ConnectionType getConnection(BlockState state, Direction side) {
 		return state.get(FACING_TO_PROPERTY_MAP.get(side));
 	}
-	
 }

@@ -1,0 +1,32 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "fluid_pipe": "uselessmod:block/fluid_pipe",
+        "border": "minecraft:block/light_blue_concrete"
+    },
+    "elements": [
+        {
+            "from": [ 5, 5, 1 ], 
+            "to": [ 11, 11, 5 ], 
+            "faces": {
+                "east": { "texture": "#fluid_pipe", "uv": [ 11, 5, 15, 11 ] },
+                "south": { "texture": "#fluid_pipe", "uv": [ 5, 5, 11, 11 ] },
+                "west": { "texture": "#fluid_pipe", "uv": [ 1, 5, 5, 11 ] },
+                "up": { "texture": "#fluid_pipe", "uv": [ 5, 1, 11, 5 ] },
+                "down": { "texture": "#fluid_pipe", "uv": [ 5, 11, 11, 15 ] }
+            }
+        },
+        {
+            "from": [ 4, 4, 0 ], 
+            "to": [ 12, 12, 1 ], 
+            "faces": {
+                "north": { "texture": "#border", "uv": [ 4, 4, 12, 12 ] },
+                "east": { "texture": "#border", "uv": [ 15, 4, 16, 12 ] },
+                "south": { "texture": "#border", "uv": [ 4, 4, 12, 12 ] },
+                "west": { "texture": "#border", "uv": [ 0, 4, 1, 12 ] },
+                "up": { "texture": "#border", "uv": [ 4, 0, 12, 1 ] },
+                "down": { "texture": "#border", "uv": [ 4, 15, 12, 16 ] }
+            }
+        }
+    ]
+}

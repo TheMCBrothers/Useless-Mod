@@ -1,0 +1,61 @@
+{
+    "multipart": [
+        {   "apply": { "model": "uselessmod:block/fluid_pipe/center" }},
+        {   "when": { "north": "both" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side", "uvlock": true }
+        },
+        {   "when": { "east": "both" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side", "y": 90, "uvlock": true }
+        },
+        {   "when": { "south": "both" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side", "y": 180, "uvlock": true }
+        },
+        {   "when": { "west": "both" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side", "y": 270, "uvlock": true }
+        },
+        {   "when": { "up": "both" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side", "x": 270, "uvlock": true }
+        },
+        {   "when": { "down": "both" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side", "x": 90, "uvlock": true }
+        },
+
+        {   "when": { "north": "input" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_input", "uvlock": true }
+        },
+        {   "when": { "east": "input" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_input", "y": 90, "uvlock": true }
+        },
+        {   "when": { "south": "input" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_input", "y": 180, "uvlock": true }
+        },
+        {   "when": { "west": "input" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_input", "y": 270, "uvlock": true }
+        },
+        {   "when": { "up": "input" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_input", "x": 270, "uvlock": true }
+        },
+        {   "when": { "down": "input" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_input", "x": 90, "uvlock": true }
+        },
+
+        {   "when": { "north": "output" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_output", "uvlock": true }
+        },
+        {   "when": { "east": "output" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_output", "y": 90, "uvlock": true }
+        },
+        {   "when": { "south": "output" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_output", "y": 180, "uvlock": true }
+        },
+        {   "when": { "west": "output" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_output", "y": 270, "uvlock": true }
+        },
+        {   "when": { "up": "output" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_output", "x": 270, "uvlock": true }
+        },
+        {   "when": { "down": "output" },
+            "apply": { "model": "uselessmod:block/fluid_pipe/side_output", "x": 90, "uvlock": true }
+        }
+    ]
+}

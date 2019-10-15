@@ -1,0 +1,20 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "fluid_pipe": "uselessmod:block/fluid_pipe"
+    },
+    "elements": [
+        {
+            "from": [ 5, 5, 0 ], 
+            "to": [ 11, 11, 5 ], 
+            "faces": {
+                "north": { "texture": "#fluid_pipe", "uv": [ 5, 5, 11, 11 ] },
+                "east": { "texture": "#fluid_pipe", "uv": [ 11, 5, 16, 11 ] },
+                "south": { "texture": "#fluid_pipe", "uv": [ 5, 5, 11, 11 ] },
+                "west": { "texture": "#fluid_pipe", "uv": [ 0, 5, 5, 11 ] },
+                "up": { "texture": "#fluid_pipe", "uv": [ 5, 0, 11, 5 ] },
+                "down": { "texture": "#fluid_pipe", "uv": [ 5, 11, 11, 16 ] }
+            }
+        }
+    ]
+}

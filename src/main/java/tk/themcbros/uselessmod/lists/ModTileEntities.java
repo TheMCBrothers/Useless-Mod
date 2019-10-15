@@ -37,6 +37,7 @@ public class ModTileEntities {
 	public static final TileEntityType<LavaGeneratorTileEntity> LAVA_GENERATOR = register("lava_generator", LavaGeneratorTileEntity::new, ModBlocks.LAVA_GENERATOR);
 	public static final TileEntityType<FluidTankTileEntity> FLUID_TANK = register("fluid_tank", FluidTankTileEntity::new, ModBlocks.FLUID_TANK);
 	public static final TileEntityType<ChargerTileEntity> CHARGER = register("charger", ChargerTileEntity::new, ModBlocks.CHARGER);
+	public static final TileEntityType<FluidPipeTileEntity> FLUID_PIPE = register("fluid_pipe", FluidPipeTileEntity::new, ModBlocks.FLUID_PIPE);
 	
 	private static <T extends TileEntity> TileEntityType<T> register(String regName, Supplier<T> supplier, Block... blocks) {
 		TileEntityType<T> type = TileEntityType.Builder.create(supplier, blocks).build(null);
