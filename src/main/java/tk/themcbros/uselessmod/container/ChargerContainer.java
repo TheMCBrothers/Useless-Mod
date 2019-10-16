@@ -70,12 +70,16 @@ public class ChargerContainer extends Container {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index >= machineSlotCount) {
-				if (this.isEnergyItem(itemstack1)) {
+				if (this.isEnergyChargeItem(itemstack1)) {
 					if (!this.mergeItemStack(itemstack1, 0, 2, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (itemstack1.getItem() instanceof UpgradeItem) { // Upgrade Slots
-					if (!this.mergeItemStack(itemstack1, 2, machineSlotCount, false)) {
+				} else if (itemstack1.getItem() instanceof UpgradeItem) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 3, machineSlotCount, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if(this.isEnergySlotItem(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 4, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if (index >= machineSlotCount && index < machineSlotCount + 27) { // Inventory
@@ -105,10 +109,16 @@ public class ChargerContainer extends Container {
 		return itemstack;
 	}
 
-	private boolean isEnergyItem(ItemStack stack) {
+	private boolean isEnergyChargeItem(ItemStack stack) {
 		return !stack.isEmpty() && stack.getCapability(CapabilityEnergy.ENERGY)
 				.map(IEnergyStorage::canReceive).orElse(false);
 	}
+
+	private boolean isEnergySlotItem(ItemStack stack) {
+		return !stack.isEmpty() && stack.getCapability(CapabilityEnergy.ENERGY)
+				.map(IEnergyStorage::canExtract).orElse(false);
+	}
+
 
 	@OnlyIn(Dist.CLIENT)
 	public int getEnergyStoredScaled() {

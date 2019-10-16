@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
 import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
 import tk.themcbros.uselessmod.items.UpgradeItem;
@@ -24,8 +25,6 @@ public class CompressorContainer extends Container {
 	private IInventory inventory;
 	private IIntArray fields;
 	private World world;
-	
-	private final int machineSlotCount = 6;
 
 	public CompressorContainer(int id, PlayerInventory playerInventory) {
 		this(id, playerInventory, new Inventory(3), new Inventory(3), new IntArray(4));
@@ -65,6 +64,7 @@ public class CompressorContainer extends Container {
 	
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+		final int machineSlotCount = 6;
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
@@ -82,11 +82,11 @@ public class CompressorContainer extends Container {
 						return ItemStack.EMPTY;
 					}
 				} else if (itemstack1.getItem() instanceof UpgradeItem) {
-					if (!this.mergeItemStack(itemstack1, 2, machineSlotCount, false)) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 3, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if(this.isEnergyItem(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, machineSlotCount - 1, machineSlotCount, false)) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 4, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
@@ -117,7 +117,8 @@ public class CompressorContainer extends Container {
 	}
 
 	private boolean isEnergyItem(ItemStack itemstack1) {
-		return itemstack1.getCapability(CapabilityEnergy.ENERGY).isPresent();
+		return !itemstack1.isEmpty() && itemstack1.getCapability(CapabilityEnergy.ENERGY)
+				.map(IEnergyStorage::canExtract).orElse(false);
 	}
 
 	protected boolean canCompress(ItemStack stack) {

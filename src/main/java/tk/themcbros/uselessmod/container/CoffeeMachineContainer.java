@@ -4,9 +4,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +16,9 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeBeansSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeInputSecondSlot;
@@ -21,6 +26,8 @@ import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeInputSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.CoffeeOutputSlot;
 import tk.themcbros.uselessmod.container.slots.coffee_machine.WaterTankSlot;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
+import tk.themcbros.uselessmod.lists.ModItems;
+import tk.themcbros.uselessmod.recipes.RecipeTypes;
 import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
 public class CoffeeMachineContainer extends Container {
@@ -69,17 +76,48 @@ public class CoffeeMachineContainer extends Container {
 	}
 	
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		int numSlots = 6;
+		int machineSlotCount = 6;
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (index < numSlots) {
-				if (!this.mergeItemStack(itemstack1, numSlots , this.inventorySlots.size(), true)) {
+			if (index == machineSlotCount - 2) {
+				if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 0, numSlots, false)) {
+
+				slot.onSlotChange(itemstack1, itemstack);
+			} else if (index >= machineSlotCount) {
+
+				if (this.isValidFluidContainer(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (itemstack1.getItem() == ModItems.COFFEE_BEANS) {
+					if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (itemstack1.getItem() == ModItems.CUP) {
+					if (!this.mergeItemStack(itemstack1, 2, 3, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (this.canSmelt(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 3, 4, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if(this.isEnergyItem(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 1, machineSlotCount, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount + 27, machineSlotCount + 36, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount + 27 && index < machineSlotCount + 36 && !this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 27, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
 				return ItemStack.EMPTY;
 			}
 
@@ -91,6 +129,21 @@ public class CoffeeMachineContainer extends Container {
 		}
 
 		return itemstack;
+	}
+
+	private boolean isEnergyItem(ItemStack itemstack1) {
+		return !itemstack1.isEmpty() && itemstack1.getCapability(CapabilityEnergy.ENERGY)
+				.map(IEnergyStorage::canExtract).orElse(false);
+	}
+
+	private boolean isValidFluidContainer(ItemStack stack) {
+		return !stack.isEmpty() && stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
+				.map(handler -> handler.getFluidInTank(0).getFluid().isIn(FluidTags.WATER)).orElse(false);
+	}
+
+	private boolean canSmelt(ItemStack p_217057_1_) {
+		return this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, new Inventory(p_217057_1_), this.world)
+				.isPresent();
 	}
 
 	/**

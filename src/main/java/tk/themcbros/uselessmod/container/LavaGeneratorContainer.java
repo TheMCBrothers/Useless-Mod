@@ -8,6 +8,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +22,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.lists.ModContainerTypes;
 import tk.themcbros.uselessmod.tileentity.LavaGeneratorTileEntity;
 
+import javax.annotation.Nonnull;
+
 public class LavaGeneratorContainer extends Container {
 
 	private IInventory lavaGeneratorInventory;
@@ -32,7 +35,7 @@ public class LavaGeneratorContainer extends Container {
 		this(id, playerInventory, new LavaGeneratorTileEntity(), new IntArray(7));
 	}
 
-	public LavaGeneratorContainer(int id, PlayerInventory playerInventory, LavaGeneratorTileEntity lavaGeneratorInventory, IIntArray fields) {
+	public LavaGeneratorContainer(int id, @Nonnull PlayerInventory playerInventory, @Nonnull LavaGeneratorTileEntity lavaGeneratorInventory, IIntArray fields) {
 		super(ModContainerTypes.LAVA_GENERATOR, id);
 		this.lavaGeneratorInventory = lavaGeneratorInventory;
 		this.fields = fields;
@@ -75,6 +78,7 @@ public class LavaGeneratorContainer extends Container {
 		return this.lavaGeneratorInventory.isUsableByPlayer(playerIn);
 	}
 	
+	@Nonnull
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
 		int machineSlotCount = 2;
@@ -83,7 +87,25 @@ public class LavaGeneratorContainer extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
+			if (index == 1) {
+				if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, true)) {
+					return ItemStack.EMPTY;
+				}
+
+				slot.onSlotChange(itemstack1, itemstack);
+			} else if (index >= machineSlotCount) {
+				if (this.isValid(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount + 27, machineSlotCount + 36, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= machineSlotCount + 27 && index < machineSlotCount + 36 && !this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 27, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.mergeItemStack(itemstack1, machineSlotCount, machineSlotCount + 36, false)) {
 				return ItemStack.EMPTY;
 			}
 
@@ -92,15 +114,14 @@ public class LavaGeneratorContainer extends Container {
 			} else {
 				slot.onSlotChanged();
 			}
-
-			if (itemstack1.getCount() == itemstack.getCount()) {
-				return ItemStack.EMPTY;
-			}
-
-			slot.onTake(playerIn, itemstack1);
 		}
 
 		return itemstack;
+	}
+
+	private boolean isValid(@Nonnull ItemStack stack) {
+		return !stack.isEmpty() && stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
+				.map(handler -> handler.getFluidInTank(0).getFluid().isIn(FluidTags.LAVA)).orElse(false);
 	}
 
 	/**

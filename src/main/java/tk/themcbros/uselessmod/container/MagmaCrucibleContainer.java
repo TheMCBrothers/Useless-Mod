@@ -16,7 +16,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
 import tk.themcbros.uselessmod.container.slots.FluidContainerSlot;
@@ -97,8 +100,16 @@ public class MagmaCrucibleContainer extends Container {
 					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if(itemstack1.getItem() instanceof UpgradeItem) {
-					if(this.mergeItemStack(itemstack1, 4, machineSlotCount, false)) {
+				} else if (this.isEmptyFluidContainer(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (itemstack1.getItem() instanceof UpgradeItem) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 3, machineSlotCount, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if(this.isEnergyItem(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, machineSlotCount - 4, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if (index >= machineSlotCount && index < machineSlotCount + 27) {
@@ -120,6 +131,16 @@ public class MagmaCrucibleContainer extends Container {
 		}
 
 		return itemstack;
+	}
+
+	private boolean isEnergyItem(ItemStack itemstack1) {
+		return !itemstack1.isEmpty() && itemstack1.getCapability(CapabilityEnergy.ENERGY)
+				.map(IEnergyStorage::canExtract).orElse(false);
+	}
+
+	private boolean isEmptyFluidContainer(ItemStack stack) {
+		return !stack.isEmpty() && stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
+				.map(handler -> handler.getFluidInTank(0).isEmpty()).orElse(false);
 	}
 
 	private boolean canSmelt(ItemStack p_217057_1_) {

@@ -38,7 +38,7 @@ public class CanisterItem extends Item implements IFluidContainerItem {
 
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
-		return this.getFluid(stack).isEmpty() ? 64 : 1;
+		return this.getFluid(stack).isEmpty() ? 16 : 1;
 	}
 
 	@Nonnull

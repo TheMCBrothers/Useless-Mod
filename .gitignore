@@ -21,4 +21,6 @@ build
 eclipse
 run
 
+src/generated
+
 secret.json

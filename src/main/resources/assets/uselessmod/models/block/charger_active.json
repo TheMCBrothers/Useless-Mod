@@ -1,6 +1,6 @@
 {
 	"parent": "uselessmod:block/machine",
 	"textures": {
-		"front": "uselessmod:block/charger_front_active"
+		"front": "uselessmod:block/temp"
 	}
 }
