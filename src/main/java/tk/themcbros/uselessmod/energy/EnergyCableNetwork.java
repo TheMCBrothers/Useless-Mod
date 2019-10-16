@@ -104,6 +104,7 @@ public class EnergyCableNetwork implements IEnergyStorage {
 	}
 
 	private static Set<BlockPos> buildCableSet(IBlockReader world, BlockPos pos, Set<BlockPos> set) {
+		set.add(pos);
 		for (Direction side : Direction.values()) {
 			BlockPos pos1 = pos.offset(side);
 			ConnectionType type = EnergyCableBlock.getConnection(world.getBlockState(pos), side);
@@ -113,6 +114,11 @@ public class EnergyCableNetwork implements IEnergyStorage {
 			}
 		}
 		return set;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("EnergyCableNetwork %s (%d cables)", Integer.toHexString(hashCode()), connections.size());
 	}
 
 	public static class Connection {

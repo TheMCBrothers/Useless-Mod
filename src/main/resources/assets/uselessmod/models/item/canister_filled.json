@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "uselessmod:item/canister",
+    "layer1": "uselessmod:item/canister_fluid"
+  }
+}

@@ -1,5 +1,7 @@
 package tk.themcbros.uselessmod.helper;
 
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
@@ -31,26 +33,36 @@ public class TextUtils {
 		ITextComponent fluidName = fluid.getDisplayName();
 		String s1 = String.format(ENERGY_FORMAT, fluid.getAmount());
 		String s2 = String.format(ENERGY_FORMAT, tank.getTankCapacity(0));
-		return translate("misc", "fluidWithMaxName", fluidName, s1, s2);
+		return translate("misc", fluid.getAmount() > 0 ? "fluidWithMaxName" : "empty", fluidName, s1, s2);
 	}
 	
 	public static ITextComponent fluidWithMax(FluidStack fluid, int max) {
 		ITextComponent fluidName = fluid.getDisplayName();
 		String s1 = String.format(ENERGY_FORMAT, fluid.getAmount());
 		String s2 = String.format(ENERGY_FORMAT, max);
-		return translate("misc", "fluidWithMaxName", fluidName, s1, s2);
+		return translate("misc", fluid.getAmount() > 0 ? "fluidWithMaxName" : "empty", fluidName, s1, s2);
 	}
 	
 	public static ITextComponent fluidWithMax(String fluid, int amount, int max) {
 		String s1 = String.format(ENERGY_FORMAT, amount);
 		String s2 = String.format(ENERGY_FORMAT, max);
-		return translate("misc", "fluidWithMaxName", fluid, s1, s2);
+		return translate("misc", amount > 0 ? "fluidWithMaxName" : "empty", fluid, s1, s2);
 	}
 	
 	public static ITextComponent fluidWithMax(int amount, int max) {
 		String s1 = String.format(ENERGY_FORMAT, amount);
 		String s2 = String.format(ENERGY_FORMAT, max);
-		return translate("misc", "fluidWithMax", s1, s2);
+		return translate("misc", amount > 0 ? "fluidWithMax" : "empty", s1, s2);
+	}
+
+	public static ITextComponent fluidName(FluidStack stack) {
+		if (stack.isEmpty()) return translate("misc", "empty");
+		return stack.getDisplayName();
+	}
+
+	public static ITextComponent fluidName(Fluid fluid) {
+		if (fluid == Fluids.EMPTY) return translate("misc", "empty");
+		return fluid.getAttributes().getDisplayName(FluidStack.EMPTY);
 	}
 
 }

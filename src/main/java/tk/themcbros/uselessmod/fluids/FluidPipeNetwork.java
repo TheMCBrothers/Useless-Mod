@@ -8,18 +8,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tk.themcbros.uselessmod.blocks.EnergyCableBlock;
 import tk.themcbros.uselessmod.blocks.FluidPipeBlock;
 import tk.themcbros.uselessmod.energy.ConnectionType;
-import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
-import tk.themcbros.uselessmod.helper.EnergyUtils;
 import tk.themcbros.uselessmod.helper.FluidUtils;
-import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
+import tk.themcbros.uselessmod.tileentity.FluidPipeTileEntity;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -116,7 +112,7 @@ public class FluidPipeNetwork implements IFluidHandler {
 			Set<Connection> connections = Sets.newHashSet();
 			for (Direction direction : Direction.values()) {
 				TileEntity te = world.getTileEntity(p.offset(direction));
-				if (te != null && !(te instanceof EnergyCableTileEntity) && te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite()).isPresent()) {
+				if (te != null && !(te instanceof FluidPipeTileEntity) && te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite()).isPresent()) {
 					ConnectionType type = FluidPipeBlock.getConnection(world.getBlockState(p), direction);
 					connections.add(new Connection(type, direction));
 				}
@@ -128,10 +124,11 @@ public class FluidPipeNetwork implements IFluidHandler {
 	}
 
 	private static Set<BlockPos> buildCableSet(IBlockReader world, BlockPos pos, Set<BlockPos> set) {
+		set.add(pos);
 		for (Direction side : Direction.values()) {
 			BlockPos pos1 = pos.offset(side);
 			ConnectionType type = EnergyCableBlock.getConnection(world.getBlockState(pos), side);
-			if (!set.contains(pos1) && world.getTileEntity(pos1) instanceof EnergyCableTileEntity && type.canConnect()) {
+			if (!set.contains(pos1) && world.getTileEntity(pos1) instanceof FluidPipeTileEntity && type.canConnect()) {
 				set.add(pos1);
 				set.addAll(buildCableSet(world, pos1, set));
 			}
@@ -139,11 +136,16 @@ public class FluidPipeNetwork implements IFluidHandler {
 		return set;
 	}
 
-	public static class Connection {
+	@Override
+	public String toString() {
+		return String.format("FluidPipeNetwork %s (%d pipes)", Integer.toHexString(hashCode()), connections.size());
+	}
+
+	private static class Connection {
 		private final ConnectionType type;
 		private final Direction side;
 
-		public Connection(ConnectionType type, Direction side) {
+		private Connection(ConnectionType type, Direction side) {
 			this.type = type;
 			this.side = side;
 		}

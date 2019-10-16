@@ -51,7 +51,7 @@ public enum MachineTier implements IStringSerializable {
 	 */
 	@Nullable
 	public static MachineTier byName(@Nullable String name) {
-		return name == null ? null : NAME_LOOKUP.get(name.toLowerCase(Locale.ROOT));
+		return name == null ? STANDARD : NAME_LOOKUP.get(name.toLowerCase(Locale.ROOT));
 	}
 
 }

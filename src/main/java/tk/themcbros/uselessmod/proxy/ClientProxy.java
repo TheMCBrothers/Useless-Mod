@@ -20,6 +20,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -55,6 +57,8 @@ public class ClientProxy extends CommonProxy {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.client_config);
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerBlockColours);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerItemColors);
 
 		Config.loadConfig(Config.client_config, FMLPaths.CONFIGDIR.get().resolve("uselessmod-client.toml").toString());
 	}
@@ -135,42 +139,35 @@ public class ClientProxy extends CommonProxy {
 		}, ModBlocks.LARGE_USELESS_FERN, ModBlocks.TALL_USELESS_GRASS);
         
     }
-	
+
 	private void registerItemColors(ColorHandlerEvent.Item event) {
 		ItemColors itemColors = event.getItemColors();
 		
-		itemColors.register((stack, tintIndex) -> {
-			return stack.hasTag() && stack.getTag().contains("color") && tintIndex == 1 ? stack.getTag().getInt("color") : -1;
-		}, ModItems.PAINT_BRUSH);
+		itemColors.register((stack, tintIndex) -> stack.hasTag() && stack.getTag().contains("color", Constants.NBT.TAG_INT) && tintIndex == 1 ? stack.getTag().getInt("color") : -1, ModItems.PAINT_BRUSH);
+		itemColors.register((stack, tintIndex) -> stack.hasTag() && stack.getTag().contains("color", Constants.NBT.TAG_INT) ? stack.getTag().getInt("color") : -1, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET);
 		
 		itemColors.register((stack, tintIndex) -> {
-			return stack.hasTag() && stack.getTag().contains("color") ? stack.getTag().getInt("color") : -1;
-		}, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET);
-		
-		itemColors.register((stack, tintIndex) -> {
-			if(stack.hasTag() && stack.getTag().contains("CoffeeType")) {
+			if(stack.hasTag() && stack.getTag().contains("CoffeeType", Constants.NBT.TAG_STRING)) {
 				for(CoffeeType type : CoffeeType.values()) {
 					if(stack.getTag().getString("CoffeeType").equals(type.getName())) {
-						if(type != null) {
-							return type.getColor();
-						}
+						return type.getColor();
 					}
 				}
 			}
 			return -1;
 		}, ModItems.COFFEE_CUP);
 		
-		itemColors.register((stack, tintIndex) -> {
-			return ModBiomes.USELESS_BIOME.getGrassColor((BlockPos)null);
-		}, ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
+		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.getGrassColor((BlockPos)null), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
+
+		itemColors.register((stack, layer) -> layer == 1 ? ModItems.CANISTER.getFluid(stack).getFluid().getAttributes().getColor() : -1, ModItems.CANISTER);
 	}
 	
 	@Override
 	protected void postInit(InterModProcessEvent event) {
 		super.postInit(event);
 		
-		this.registerBlockColours(new ColorHandlerEvent.Block(Minecraft.getInstance().getBlockColors()));
-		this.registerItemColors(new ColorHandlerEvent.Item(Minecraft.getInstance().getItemColors(), Minecraft.getInstance().getBlockColors()));
+//		this.registerBlockColours(new ColorHandlerEvent.Block(Minecraft.getInstance().getBlockColors()));
+//		this.registerItemColors(new ColorHandlerEvent.Item(Minecraft.getInstance().getItemColors(), Minecraft.getInstance().getBlockColors()));
 	}
 	
 }

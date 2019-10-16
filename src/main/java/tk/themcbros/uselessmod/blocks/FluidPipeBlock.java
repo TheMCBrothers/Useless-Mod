@@ -29,13 +29,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.energy.ConnectionType;
-import tk.themcbros.uselessmod.energy.EnergyCableNetworkManager;
 import tk.themcbros.uselessmod.fluids.FluidPipeNetworkManager;
 import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
-import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
 import tk.themcbros.uselessmod.tileentity.FluidPipeTileEntity;
 
 import javax.annotation.Nonnull;
@@ -117,15 +114,14 @@ public class FluidPipeBlock extends Block implements IWaterLoggable, IHammer {
 		World world = context.getWorld();
 		BlockState state = world.getBlockState(pos);
 		Vec3d relative = context.getHitVec().subtract(pos.getX(), pos.getY(), pos.getZ());
-		UselessMod.LOGGER.debug("onHammer: {}", relative);
 
 		Direction side = getClickedConnection(relative);
 		if (side != null) {
 			TileEntity other = world.getTileEntity(pos.offset(side));
-			if (!(other instanceof EnergyCableTileEntity)) {
+			if (!(other instanceof FluidPipeTileEntity)) {
 				BlockState state1 = cycleProperty(state, FACING_TO_PROPERTY_MAP.get(side));
 				world.setBlockState(pos, state1, 18);
-				EnergyCableNetworkManager.invalidateNetwork(world, pos);
+				FluidPipeNetworkManager.invalidateNetwork(world, pos);
 				return ActionResultType.SUCCESS;
 			}
 		}

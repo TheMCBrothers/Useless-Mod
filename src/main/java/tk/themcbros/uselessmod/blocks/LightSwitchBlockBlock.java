@@ -89,10 +89,10 @@ public class LightSwitchBlockBlock extends Block {
 		boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());
 		boolean flag1 = state.get(POWERED);
 		if (flag && !flag1) {
-			worldIn.setBlockState(pos, state.with(POWERED, Boolean.valueOf(true)), 1 | 2 | 4);
+			worldIn.setBlockState(pos, state.with(POWERED, Boolean.TRUE), 1 | 2 | 4);
 			worldIn.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(worldIn));
 		} else if (!flag && flag1) {
-			worldIn.setBlockState(pos, state.with(POWERED, Boolean.valueOf(false)), 1 | 2 | 4);
+			worldIn.setBlockState(pos, state.with(POWERED, Boolean.FALSE), 1 | 2 | 4);
 			worldIn.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(worldIn));
 		}
 

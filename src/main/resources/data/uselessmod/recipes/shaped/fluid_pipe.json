@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"USU"
+	],
+	"key": {
+		"U": { "tag": "forge:plates/useless" },
+		"S": { "tag": "forge:plates/super_useless" }
+	},
+	"result": {
+		"item": "uselessmod:fluid_pipe",
+		"count": 6
+	}
+}

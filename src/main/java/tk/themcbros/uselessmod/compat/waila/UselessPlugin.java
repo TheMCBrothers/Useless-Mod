@@ -15,9 +15,7 @@ import tk.themcbros.uselessmod.blocks.LampBlock;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlock;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 import tk.themcbros.uselessmod.blocks.UselessCropsBlock;
-import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
-import tk.themcbros.uselessmod.tileentity.CrusherTileEntity;
-import tk.themcbros.uselessmod.tileentity.MachineTileEntity;
+import tk.themcbros.uselessmod.tileentity.*;
 
 @WailaPlugin(UselessMod.MOD_ID)
 public class UselessPlugin implements IWailaPlugin {
@@ -32,6 +30,7 @@ public class UselessPlugin implements IWailaPlugin {
     static final ResourceLocation CONFIG_LAMP = new ResourceLocation(UselessMod.MOD_ID, "lamp");
     static final ResourceLocation CONFIG_LANTERN = new ResourceLocation(UselessMod.MOD_ID, "lantern");
     static final ResourceLocation CONFIG_LIGHT_SWITCH = new ResourceLocation(UselessMod.MOD_ID, "light_switch");
+    static final ResourceLocation CONFIG_CABLES = new ResourceLocation(UselessMod.MOD_ID, "cables");
 
 	@Override
 	public void register(IRegistrar registrar) {
@@ -43,13 +42,13 @@ public class UselessPlugin implements IWailaPlugin {
         registrar.addConfig(CONFIG_LAMP, true);
         registrar.addConfig(CONFIG_LANTERN, true);
         registrar.addConfig(CONFIG_LIGHT_SWITCH, true);
+        registrar.addConfig(CONFIG_CABLES, false);
         
         registrar.registerTooltipRenderer(RENDER_ITEM, new TooltipRendererStack());
         registrar.registerTooltipRenderer(RENDER_SPACER, new TooltipRendererSpacer());
         registrar.registerTooltipRenderer(RENDER_CRUSHER_PROGRESS, new TooltipRendererProgressBar());
         
         registrar.registerStackProvider(HUDHandlerModFluids.INSTANCE, FlowingFluidBlock.class);
-//        registrar.registerComponentProvider(HUDHandlerModFluids.INSTANCE, TooltipPosition.HEAD, FlowingFluidBlock.class);
         registrar.registerStackProvider(HUDHandlerUselessMod.INSTANCE, UselessCropsBlock.class);
         registrar.registerComponentProvider(HUDHandlerUselessMod.INSTANCE, TooltipPosition.BODY, LampBlock.class);
         registrar.registerComponentProvider(HUDHandlerUselessMod.INSTANCE, TooltipPosition.BODY, LanternBlock.class);
@@ -61,6 +60,10 @@ public class UselessPlugin implements IWailaPlugin {
         registrar.registerBlockDataProvider(HUDHandlerCloset.INSTANCE, ClosetTileEntity.class);
         registrar.registerComponentProvider(HUDHandlerEnergy.INSTANCE, TooltipPosition.BODY, MachineTileEntity.class);
         registrar.registerBlockDataProvider(HUDHandlerEnergy.INSTANCE, MachineTileEntity.class);
+        registrar.registerComponentProvider(HUDHandlerCables.INSTANCE, TooltipPosition.BODY, EnergyCableTileEntity.class);
+        registrar.registerComponentProvider(HUDHandlerCables.INSTANCE, TooltipPosition.BODY, FluidPipeTileEntity.class);
+        registrar.registerBlockDataProvider(HUDHandlerCables.INSTANCE, EnergyCableTileEntity.class);
+        registrar.registerBlockDataProvider(HUDHandlerCables.INSTANCE, FluidPipeTileEntity.class);
 	}
 
 }

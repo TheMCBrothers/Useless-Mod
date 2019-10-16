@@ -1,5 +1,6 @@
 package tk.themcbros.uselessmod;
 
+import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +25,9 @@ public class UselessMod {
 		proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
 	}
-	
-	
+
+
+	public static ResourceLocation getId(String path) {
+		return new ResourceLocation(MOD_ID, path);
+	}
 }

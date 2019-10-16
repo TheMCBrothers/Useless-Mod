@@ -13,6 +13,8 @@ import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import tk.themcbros.uselessmod.container.slots.EnergyItemSlot;
 import tk.themcbros.uselessmod.container.slots.MachineUpgradeSlot;
 import tk.themcbros.uselessmod.items.UpgradeItem;
@@ -69,8 +71,10 @@ public class ChargerContainer extends Container {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index >= machineSlotCount) {
-				if (!this.mergeItemStack(itemstack1, 0, 2, false)) {
-					return ItemStack.EMPTY;
+				if (this.isEnergyItem(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, 2, false)) {
+						return ItemStack.EMPTY;
+					}
 				} else if (itemstack1.getItem() instanceof UpgradeItem) { // Upgrade Slots
 					if (!this.mergeItemStack(itemstack1, 2, machineSlotCount, false)) {
 						return ItemStack.EMPTY;
@@ -100,6 +104,11 @@ public class ChargerContainer extends Container {
 		}
 
 		return itemstack;
+	}
+
+	private boolean isEnergyItem(ItemStack stack) {
+		return !stack.isEmpty() && stack.getCapability(CapabilityEnergy.ENERGY)
+				.map(IEnergyStorage::canReceive).orElse(false);
 	}
 
 	@OnlyIn(Dist.CLIENT)

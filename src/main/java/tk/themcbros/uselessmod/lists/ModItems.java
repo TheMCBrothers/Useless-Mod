@@ -27,16 +27,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.items.CoffeeCupItem;
-import tk.themcbros.uselessmod.items.CreativeEnergyBlockItem;
-import tk.themcbros.uselessmod.items.EnergyPickaxeItem;
-import tk.themcbros.uselessmod.items.GrenadeItem;
-import tk.themcbros.uselessmod.items.HammerItem;
-import tk.themcbros.uselessmod.items.LampBlockItem;
-import tk.themcbros.uselessmod.items.LightSwitchBlockItem;
-import tk.themcbros.uselessmod.items.PaintBrushItem;
-import tk.themcbros.uselessmod.items.UpgradeItem;
-import tk.themcbros.uselessmod.items.UselessItem;
+import tk.themcbros.uselessmod.items.*;
 import tk.themcbros.uselessmod.machine.Upgrade;
 
 @ObjectHolder(UselessMod.MOD_ID)
@@ -49,10 +40,10 @@ public class ModItems {
 	// Block Items
 	public static final BlockItem USELESS_GRASS_BLOCK = registerBlockItem("useless_grass_block", ModBlocks.USELESS_GRASS_BLOCK);
 	public static final BlockItem USELESS_DIRT = registerBlockItem("useless_dirt", ModBlocks.USELESS_DIRT);
-	public static final BlockItem USELESS_GRASS = registerBlockItem("useless_grass", new TallBlockItem(ModBlocks.USELESS_GRASS, new Item.Properties().group(GROUP)));
-	public static final BlockItem USELESS_FERN = registerBlockItem("useless_fern", new TallBlockItem(ModBlocks.USELESS_FERN, new Item.Properties().group(GROUP)));
-	public static final BlockItem LARGE_USELESS_FERN = registerBlockItem("large_useless_fern", new TallBlockItem(ModBlocks.LARGE_USELESS_FERN, new Item.Properties().group(GROUP)));
-	public static final BlockItem TALL_USELESS_GRASS = registerBlockItem("tall_useless_grass", new TallBlockItem(ModBlocks.TALL_USELESS_GRASS, new Item.Properties().group(GROUP)));
+	public static final BlockItem USELESS_GRASS = registerItem("useless_grass", new TallBlockItem(ModBlocks.USELESS_GRASS, new Item.Properties().group(GROUP)));
+	public static final BlockItem USELESS_FERN = registerItem("useless_fern", new TallBlockItem(ModBlocks.USELESS_FERN, new Item.Properties().group(GROUP)));
+	public static final BlockItem LARGE_USELESS_FERN = registerItem("large_useless_fern", new TallBlockItem(ModBlocks.LARGE_USELESS_FERN, new Item.Properties().group(GROUP)));
+	public static final BlockItem TALL_USELESS_GRASS = registerItem("tall_useless_grass", new TallBlockItem(ModBlocks.TALL_USELESS_GRASS, new Item.Properties().group(GROUP)));
 	public static final BlockItem USELESS_LOG = registerBlockItem("useless_log", ModBlocks.USELESS_LOG);
 	public static final BlockItem STRIPPED_USELESS_LOG = registerBlockItem("stripped_useless_log", ModBlocks.STRIPPED_USELESS_LOG);
 	public static final BlockItem USELESS_WOOD = registerBlockItem("useless_wood", ModBlocks.USELESS_WOOD);
@@ -60,10 +51,10 @@ public class ModItems {
 	public static final BlockItem USELESS_PLANKS = registerBlockItem("useless_planks", ModBlocks.USELESS_PLANKS);
 	public static final BlockItem USELESS_SLAB = registerBlockItem("useless_slab", ModBlocks.USELESS_SLAB);
 	public static final BlockItem USELESS_STAIRS = registerBlockItem("useless_stairs", ModBlocks.USELESS_STAIRS);
-	public static final BlockItem USELESS_SAPLING = registerBlockItem("useless_sapling", new TallBlockItem(ModBlocks.USELESS_SAPLING, new Item.Properties().group(GROUP)));
+	public static final BlockItem USELESS_SAPLING = registerItem("useless_sapling", new TallBlockItem(ModBlocks.USELESS_SAPLING, new Item.Properties().group(GROUP)));
 	public static final BlockItem USELESS_LEAVES = registerBlockItem("useless_leaves", ModBlocks.USELESS_LEAVES);
 	public static final BlockItem USELESS_FENCE = registerBlockItem("useless_fence", ModBlocks.USELESS_FENCE);
-	public static final BlockItem USELESS_SIGN = registerBlockItem("useless_sign", new SignItem(new Item.Properties().group(GROUP), ModBlocks.USELESS_SIGN, ModBlocks.USELESS_WALL_SIGN));
+	public static final BlockItem USELESS_SIGN = registerItem("useless_sign", new SignItem(new Item.Properties().group(GROUP), ModBlocks.USELESS_SIGN, ModBlocks.USELESS_WALL_SIGN));
 	public static final BlockItem USELESS_PRESSURE_PLATE = registerBlockItem("useless_pressure_plate", ModBlocks.USELESS_PRESSURE_PLATE);
 	public static final BlockItem USELESS_TRAPDOOR = registerBlockItem("useless_trapdoor", ModBlocks.USELESS_TRAPDOOR);
 	public static final BlockItem USELESS_FENCE_GATE = registerBlockItem("useless_fence_gate", ModBlocks.USELESS_FENCE_GATE);
@@ -83,22 +74,22 @@ public class ModItems {
 	public static final BlockItem SUPER_USELESS_ORE_NETHER = registerBlockItem("super_useless_ore_nether", ModBlocks.SUPER_USELESS_ORE_NETHER);
 	public static final BlockItem SUPER_USELESS_ORE_END = registerBlockItem("super_useless_ore_end", ModBlocks.SUPER_USELESS_ORE_END);
 	public static final BlockItem CHEESE_MAKER = registerBlockItem("cheese_maker", ModBlocks.CHEESE_MAKER);
-	public static final BlockItem WHITE_LAMP = registerBlockItem("white_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.WHITE));
-	public static final BlockItem ORANGE_LAMP = registerBlockItem("orange_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.ORANGE));
-	public static final BlockItem MAGENTA_LAMP = registerBlockItem("magenta_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.MAGENTA));
-	public static final BlockItem LIGHT_BLUE_LAMP = registerBlockItem("light_blue_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.LIGHT_BLUE));
-	public static final BlockItem YELLOW_LAMP = registerBlockItem("yellow_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.YELLOW));
-	public static final BlockItem LIME_LAMP = registerBlockItem("lime_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.LIME));
-	public static final BlockItem PINK_LAMP = registerBlockItem("pink_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.PINK));
-	public static final BlockItem GRAY_LAMP = registerBlockItem("gray_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.GRAY));
-	public static final BlockItem LIGHT_GRAY_LAMP = registerBlockItem("light_gray_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.LIGHT_GRAY));
-	public static final BlockItem CYAN_LAMP = registerBlockItem("cyan_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.CYAN));
-	public static final BlockItem PURPLE_LAMP = registerBlockItem("purple_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.PURPLE));
-	public static final BlockItem BLUE_LAMP = registerBlockItem("blue_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.BLUE));
-	public static final BlockItem BROWN_LAMP = registerBlockItem("brown_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.BROWN));
-	public static final BlockItem GREEN_LAMP = registerBlockItem("green_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.GREEN));
-	public static final BlockItem RED_LAMP = registerBlockItem("red_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.RED));
-	public static final BlockItem BLACK_LAMP = registerBlockItem("black_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.BLACK));
+	public static final BlockItem WHITE_LAMP = registerItem("white_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.WHITE));
+	public static final BlockItem ORANGE_LAMP = registerItem("orange_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.ORANGE));
+	public static final BlockItem MAGENTA_LAMP = registerItem("magenta_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.MAGENTA));
+	public static final BlockItem LIGHT_BLUE_LAMP = registerItem("light_blue_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.LIGHT_BLUE));
+	public static final BlockItem YELLOW_LAMP = registerItem("yellow_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.YELLOW));
+	public static final BlockItem LIME_LAMP = registerItem("lime_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.LIME));
+	public static final BlockItem PINK_LAMP = registerItem("pink_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.PINK));
+	public static final BlockItem GRAY_LAMP = registerItem("gray_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.GRAY));
+	public static final BlockItem LIGHT_GRAY_LAMP = registerItem("light_gray_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.LIGHT_GRAY));
+	public static final BlockItem CYAN_LAMP = registerItem("cyan_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.CYAN));
+	public static final BlockItem PURPLE_LAMP = registerItem("purple_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.PURPLE));
+	public static final BlockItem BLUE_LAMP = registerItem("blue_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.BLUE));
+	public static final BlockItem BROWN_LAMP = registerItem("brown_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.BROWN));
+	public static final BlockItem GREEN_LAMP = registerItem("green_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.GREEN));
+	public static final BlockItem RED_LAMP = registerItem("red_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.RED));
+	public static final BlockItem BLACK_LAMP = registerItem("black_lamp", new LampBlockItem(new Item.Properties().group(GROUP), DyeColor.BLACK));
 	public static final BlockItem RED_ROSE = registerBlockItem("red_rose", ModBlocks.RED_ROSE);
 	public static final BlockItem BLUE_ROSE = registerBlockItem("blue_rose", ModBlocks.BLUE_ROSE);
 	public static final BlockItem CANVAS = registerBlockItem("canvas", ModBlocks.CANVAS);
@@ -112,7 +103,7 @@ public class ModItems {
 	public static final BlockItem CHARGER = registerBlockItem("charger", ModBlocks.CHARGER);
 	public static final BlockItem GLOWSTONE_GENERATOR = registerBlockItem("glowstone_generator", ModBlocks.GLOWSTONE_GENERATOR);
 	public static final BlockItem LAVA_GENERATOR = registerBlockItem("lava_generator", ModBlocks.LAVA_GENERATOR);
-	public static final BlockItem CREATIVE_POWER_BLOCK = registerBlockItem("creative_power_block", new CreativeEnergyBlockItem(ModBlocks.CREATIVE_POWER_BLOCK, new Item.Properties().group(GROUP)));
+	public static final BlockItem CREATIVE_POWER_BLOCK = registerItem("creative_power_block", new CreativeEnergyBlockItem(ModBlocks.CREATIVE_POWER_BLOCK, new Item.Properties().group(GROUP)));
 	public static final BlockItem POWER_CONTROL_BLOCK = registerBlockItem("power_control_block", ModBlocks.POWER_CONTROL_BLOCK);
 	public static final BlockItem COFFEE_MACHINE = registerBlockItem("coffee_machine", ModBlocks.COFFEE_MACHINE);
 	public static final BlockItem ENERGY_CABLE = registerBlockItem("energy_cable", ModBlocks.ENERGY_CABLE);
@@ -121,8 +112,8 @@ public class ModItems {
 	public static final BlockItem CLOSET = registerBlockItem("closet", ModBlocks.CLOSET, ModItemGroups.CLOSET_GROUP);
 	
 	public static final BlockItem STRIPPED_OAK_COFFEE_TABLE = registerBlockItem("stripped_oak_coffee_table", ModBlocks.STRIPPED_OAK_COFFEE_TABLE);
-	public static final BlockItem LIGHT_SWITCH = registerBlockItem("light_switch", new LightSwitchBlockItem(ModBlocks.LIGHT_SWITCH, new Item.Properties().group(GROUP)));
-	public static final BlockItem LIGHT_SWITCH_BLOCK = registerBlockItem("light_switch_block", new LightSwitchBlockItem(ModBlocks.LIGHT_SWITCH_BLOCK, new Item.Properties().group(GROUP)));
+	public static final BlockItem LIGHT_SWITCH = registerItem("light_switch", new LightSwitchBlockItem(ModBlocks.LIGHT_SWITCH, new Item.Properties().group(GROUP)));
+	public static final BlockItem LIGHT_SWITCH_BLOCK = registerItem("light_switch_block", new LightSwitchBlockItem(ModBlocks.LIGHT_SWITCH_BLOCK, new Item.Properties().group(GROUP)));
 	
 	// Items
 	public static final Item USELESS_ITEM = registerItem("useless_item", new UselessItem(new Item.Properties().group(GROUP)));
@@ -187,7 +178,8 @@ public class ModItems {
 	public static final Item GRENADE = registerItem("grenade", new GrenadeItem(new Item.Properties().group(GROUP).maxStackSize(16)));
 	
 	public static final Item USELESS_WATER_BUCKET = registerItem("useless_water_bucket", new BucketItem(() -> ModFluids.USELESS_WATER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).maxStackSize(1).containerItem(Items.BUCKET)));
-	
+	public static final CanisterItem CANISTER = registerItem("canister", new CanisterItem(new Item.Properties().group(GROUP)));
+
 	@SubscribeEvent
 	public static void onRegister(final RegistryEvent.Register<Item> event) {
 		ITEMS.forEach(item -> {
@@ -196,32 +188,18 @@ public class ModItems {
 		UselessMod.LOGGER.debug("Registered useless items");
 	}
 	
-	public static Item registerItem(String name, Item item) {
+	private static <T extends Item> T registerItem(String name, T item) {
 		ResourceLocation location = new ResourceLocation(UselessMod.MOD_ID, name);
 		item.setRegistryName(location);
 		ITEMS.add(item);
 		return item;
 	}
-	
-	public static Item registerItem(String name, ItemGroup group) {
-		Item item = new Item(new Item.Properties().group(group));
-		return registerItem(name, item);
+
+	private static Item registerItem(String name) {
+		return registerItem(name, new Item(new Item.Properties().group(GROUP)));
 	}
 	
-	public static Item registerItem(String name) {
-		return registerItem(name, GROUP);
-	}
-	
-	// Block Items
-	
-	public static BlockItem registerBlockItem(String name, BlockItem blockItem) {
-		ResourceLocation location = new ResourceLocation(UselessMod.MOD_ID, name);
-		blockItem.setRegistryName(location);
-		ITEMS.add(blockItem);
-		return blockItem;
-	}
-	
-	public static BlockItem registerBlockItem(String name, Block block, ItemGroup groupIn) {
+	private static BlockItem registerBlockItem(String name, Block block, ItemGroup groupIn) {
 		ResourceLocation location = new ResourceLocation(UselessMod.MOD_ID, name);
 		BlockItem blockItem = new BlockItem(block, new Item.Properties().group(groupIn));
 		blockItem.setRegistryName(location);
@@ -229,7 +207,7 @@ public class ModItems {
 		return blockItem;
 	}
 	
-	public static BlockItem registerBlockItem(String name, Block block) {
+	private static BlockItem registerBlockItem(String name, Block block) {
 		return registerBlockItem(name, block, GROUP);
 	}
 	

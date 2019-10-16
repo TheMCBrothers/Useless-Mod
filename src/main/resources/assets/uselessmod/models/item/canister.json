@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "uselessmod:item/canister"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "uselessmod:fluid_level": 1
+      },
+      "model": "uselessmod:item/canister_filled"
+    }
+  ]
+}

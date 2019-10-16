@@ -38,6 +38,7 @@ import tk.themcbros.uselessmod.energy.EnergyCableNetworkManager;
 import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
+import tk.themcbros.uselessmod.tileentity.PowerControlTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -83,7 +84,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 				.with(WATERLOGGED, Boolean.FALSE));
 	}
 	
-	public static VoxelShape getCableShape(BlockState state) {
+	private static VoxelShape getCableShape(BlockState state) {
 		List<VoxelShape> shapes = Lists.newArrayList(CENTER_SHAPE);
 		if(getConnection(state, Direction.NORTH).canConnect()) shapes.add(NORTH_SHAPE);
 		if(getConnection(state, Direction.SOUTH).canConnect()) shapes.add(SOUTH_SHAPE);
@@ -94,19 +95,22 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 		return ShapeUtils.combineAll(shapes);
 	}
 	
+	@Nonnull
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return getCableShape(state);
 	}
 	
+	@Nonnull
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-			ISelectionContext context) {
+	public VoxelShape getCollisionShape(BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos,
+										ISelectionContext context) {
 		return getCableShape(state);
 	}
 	
+	@Nonnull
 	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getRenderShape(BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos) {
 		return getCableShape(state);
 	}
 	
@@ -180,7 +184,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
 		return makeConnections(context.getWorld(), context.getPos()).with(WATERLOGGED,
-				Boolean.valueOf(ifluidstate.isTagged(FluidTags.WATER) && ifluidstate.getLevel() == 8));
+				ifluidstate.isTagged(FluidTags.WATER) && ifluidstate.getLevel() == 8);
 	}
 
 	public BlockState makeConnections(IBlockReader worldIn, BlockPos pos) {
@@ -197,15 +201,18 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
 		if (tileEntity instanceof EnergyCableTileEntity)
 			return ConnectionType.BOTH;
+		if (tileEntity instanceof PowerControlTileEntity)
+			return ((PowerControlTileEntity) tileEntity).getConnection(facing.getOpposite()).getOpposite();
 		if (tileEntity != null && tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).isPresent()) {
 			IEnergyStorage handler = tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).orElseThrow(IllegalStateException::new);
 			return current == ConnectionType.NONE && !handler.canExtract() && handler.canReceive() ? ConnectionType.OUTPUT
 					: current == ConnectionType.NONE && handler.canExtract() && !handler.canReceive() ? ConnectionType.INPUT
-					: current == ConnectionType.NONE && handler.canExtract() && handler.canReceive() ? ConnectionType.BOTH : current;
+					: current == ConnectionType.NONE && handler.canExtract() && handler.canReceive() ? ConnectionType.INPUT : current;
 		}
 		return ConnectionType.NONE;
 	}
 	
+	@Nonnull
 	@Override
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) {
@@ -221,15 +228,18 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 		return stateIn.with(property, createConnection(worldIn, facingPos, facing, current));
 	}
 	
+	@Nonnull
 	public IFluidState getFluidState(@Nonnull BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
 	}
 	
+	@Nonnull
 	@Override
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 	
+	@Nonnull
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;

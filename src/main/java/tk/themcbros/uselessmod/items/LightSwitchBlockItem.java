@@ -3,6 +3,7 @@ package tk.themcbros.uselessmod.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraftforge.common.util.Constants;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.Block;
@@ -36,15 +37,15 @@ public class LightSwitchBlockItem extends BlockItem {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		if(stack.hasTag() && stack.getTag().contains("BlockEntityTag") && stack.getChildTag("BlockEntityTag").contains("Lights")) {
+		if(stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND) && stack.getChildTag("BlockEntityTag").contains("Lights", Constants.NBT.TAG_LONG_ARRAY)) {
 			if(GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
 				for(long l : stack.getChildTag("BlockEntityTag").getLongArray("Lights")) {
 					BlockPos pos = BlockPos.fromLong(l);
 					BlockState state = worldIn.getBlockState(pos);
-					String modid = state.getBlock().getItem(worldIn, pos, state).getItem().getCreatorModId(stack);
+					String modid = state.getBlock().getItem(worldIn, pos, state).getItem().getRegistryName().getNamespace();
 					String txt = pos.getX() + "," + pos.getY() + "," + pos.getZ() + ": " + state.getBlock().getItem(worldIn, pos, state).getItem().getName().getFormattedText();
 					if(modid != "minecraft" && ModList.get().getModContainerById(modid).isPresent()) 
-						txt += " (" + ModList.get().getModContainerById(modid).orElse(null).getModInfo().getDisplayName() + ")";
+						txt += " (" + ModList.get().getModContainerById(modid).orElseThrow(IllegalStateException::new).getModInfo().getDisplayName() + ")";
 					tooltip.add(new StringTextComponent(txt).applyTextStyle(TextFormatting.GRAY));
 				}
 				tooltip.add(new TranslationTextComponent("tooltip.uselessmod.light_switch.clear"));

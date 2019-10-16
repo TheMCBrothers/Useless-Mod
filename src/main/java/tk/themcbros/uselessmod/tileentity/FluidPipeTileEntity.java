@@ -38,4 +38,9 @@ public class FluidPipeTileEntity extends TileEntity implements ITickableTileEnti
 		}
 		super.remove();
 	}
+
+	public String getNetworkInfos() {
+		if (this.world == null) return "error";
+		return FluidPipeNetworkManager.get(this.world, this.pos).toString();
+	}
 }

@@ -109,7 +109,7 @@ public class ChargerTileEntity extends MachineTileEntity {
 		}
 
 		if (this.ticks <= 0) {
-			this.sendUpdate(this.getInactiveState(), true);
+			this.sendUpdate(this.getInactiveState(), false);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class ChargerTileEntity extends MachineTileEntity {
 		if(!energySlotStack.isEmpty()) {
 			IEnergyStorage handler = energySlotStack.getCapability(CapabilityEnergy.ENERGY).orElse(null);
 			if(handler == null) return;
-			int accept = handler.receiveEnergy(Math.min(this.energyStorage.getMaxEnergyStored() - this.energyStorage.getEnergyStored(), this.getRfPerTick()), true);
+			int accept = handler.receiveEnergy(Math.min(Math.max(this.energyStorage.getEnergyStored(), this.energyStorage.getMaxEnergyStored() - this.energyStorage.getEnergyStored()), this.getRfPerTick()), true);
 			if(this.energyStorage.getEnergyStored() >= accept)
 				this.energyStorage.modifyEnergyStored(-handler.receiveEnergy(accept, false));
 		}

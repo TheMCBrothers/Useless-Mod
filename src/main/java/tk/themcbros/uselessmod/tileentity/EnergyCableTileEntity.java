@@ -39,4 +39,8 @@ public class EnergyCableTileEntity extends TileEntity implements ITickableTileEn
 		super.remove();
 	}
 
+	public String getNetworkInfos() {
+		if (world == null) return "error";
+		return EnergyCableNetworkManager.get(this.world, this.pos).toString();
+	}
 }

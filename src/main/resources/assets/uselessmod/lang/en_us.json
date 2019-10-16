@@ -86,6 +86,7 @@
 	"item.uselessmod.useless_cow_spawn_egg": "Useless Cow Spawn Egg",
 	"item.uselessmod.grenade": "Grenade",
 	"item.uselessmod.useless_water_bucket": "Useless Water Bucket",
+	"item.uselessmod.canister": "%s Canister",
 	
 	
 	"block.uselessmod.useless_grass_block": "Useless Grass Block",
@@ -213,7 +214,9 @@
 	"config.waila.plugin_uselessmod.lamp": "Lamp State",
 	"config.waila.plugin_uselessmod.lantern": "Lantern State",
 	"config.waila.plugin_uselessmod.light_switch": "Light Switch State",
-	
+	"config.waila.plugin_uselessmod.cables": "Cable information",
+
+	"misc.uselessmod.empty": "Empty",
 	"misc.uselessmod.energy": "%s FE",
 	"misc.uselessmod.energyWithMax": "%s / %s FE",
 	"misc.uselessmod.fluidWithMax": "%s / %s mB",
