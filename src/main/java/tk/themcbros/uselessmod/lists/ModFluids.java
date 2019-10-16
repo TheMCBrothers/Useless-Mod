@@ -17,6 +17,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
 
 @ObjectHolder(UselessMod.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
 public class ModFluids {
 
 	private static final List<Fluid> FLUIDS = Lists.newArrayList();
@@ -34,13 +35,11 @@ public class ModFluids {
 		FLUIDS.add(fluid);
 		return fluid;
 	}
-	
-	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
-	public static class Registration {
-		@SubscribeEvent
-		public static void onFluidRegister(final RegistryEvent.Register<Fluid> event) {
-			FLUIDS.forEach(fluid -> event.getRegistry().register(fluid));
-		}
+
+	@SubscribeEvent
+	public static void onFluidRegister(final RegistryEvent.Register<Fluid> event) {
+		FLUIDS.forEach(fluid -> event.getRegistry().register(fluid));
+		UselessMod.LOGGER.debug("Registered fluids");
 	}
 	
 }

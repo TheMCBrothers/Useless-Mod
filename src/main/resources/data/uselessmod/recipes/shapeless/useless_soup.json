@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:crops/useless_wheat"
+    },
+    {
+      "tag": "forge:crops/coffee"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "uselessmod:useless_soup"
+  }
+}

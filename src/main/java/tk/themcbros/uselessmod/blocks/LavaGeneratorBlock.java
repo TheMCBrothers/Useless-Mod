@@ -38,8 +38,8 @@ public class LavaGeneratorBlock extends MachineBlock {
 	}
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-			BlockRayTraceResult hit) {
+	public boolean onBlockActivated(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+									BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof LavaGeneratorTileEntity && player instanceof ServerPlayerEntity) {

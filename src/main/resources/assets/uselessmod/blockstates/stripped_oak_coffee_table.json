@@ -1,6 +1,0 @@
-{
-	"variants": {
-		"tall=true": { "model": "uselessmod:block/stripped_oak_coffee_table_tall" },
-		"tall=false": { "model": "uselessmod:block/stripped_oak_coffee_table" }
-	}
-}

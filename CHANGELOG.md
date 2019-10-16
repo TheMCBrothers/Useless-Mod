@@ -4,8 +4,11 @@
 - Added Fluid Pipe ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Blocks#Fluid-Pipe))
 - Added Fluid Canister ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Items#Fluid-Canister))
 - Added functionality to the Power Control Block ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Blocks#Power-Control-Block))
+- Added Useless Soup recipe
 - Fixed Purple Lamp recipe
 - Fixed Energy Cables
+- Organized registries
+- Removed Coffee Table
 
 ### 1.14.4-2.2.5
 - Added WAILA plugin

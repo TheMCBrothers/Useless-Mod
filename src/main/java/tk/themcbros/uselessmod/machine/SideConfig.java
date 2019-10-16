@@ -52,4 +52,16 @@ public class SideConfig implements INBTSerializable<ListNBT> {
 		});
 	}
 
+	public static SideConfig fromNBT(ListNBT sideList) {
+		SideConfig sideConfig = new SideConfig();
+		sideList.forEach(nbt -> {
+			if (!(nbt instanceof CompoundNBT)) return;
+			CompoundNBT tag = (CompoundNBT) nbt;
+			Direction side = Direction.byName(tag.getString("Side"));
+			ConnectionType type = ConnectionType.byName(tag.getString("Type"));
+			sideConfig.setConnectionType(side, type);
+		});
+		return sideConfig;
+	}
+
 }

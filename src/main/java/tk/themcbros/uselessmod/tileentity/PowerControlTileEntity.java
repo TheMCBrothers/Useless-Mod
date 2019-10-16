@@ -67,8 +67,7 @@ public class PowerControlTileEntity extends TileEntity implements ITickableTileE
 
 	@Override
 	public void read(CompoundNBT nbt) {
-//		this.sideConfig = new SideConfig(); todo fix not saving sides
-		this.sideConfig.deserializeNBT(nbt.getList("Sides", Constants.NBT.TAG_LIST));
+		this.sideConfig = SideConfig.fromNBT(nbt.getList("Sides", Constants.NBT.TAG_LIST));
 		super.read(nbt);
 	}
 
@@ -90,6 +89,7 @@ public class PowerControlTileEntity extends TileEntity implements ITickableTileE
 				.build();
 	}
 
+	@Nonnull
 	private CompoundNBT writeClientData(CompoundNBT tag) {
 		return write(tag);
 	}

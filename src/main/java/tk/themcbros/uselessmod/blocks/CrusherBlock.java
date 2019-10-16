@@ -18,6 +18,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import tk.themcbros.uselessmod.tileentity.CrusherTileEntity;
 
+import javax.annotation.Nonnull;
+
 public class CrusherBlock extends MachineBlock {
 
 	public CrusherBlock(Properties builder) {
@@ -44,7 +46,7 @@ public class CrusherBlock extends MachineBlock {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void animateTick(@Nonnull BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (stateIn.get(ACTIVE)) {
 			double d0 = (double) pos.getX() + 0.5D;
 			double d1 = (double) pos.getY();

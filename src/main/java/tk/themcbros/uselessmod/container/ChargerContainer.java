@@ -27,8 +27,6 @@ public class ChargerContainer extends Container {
 	private IIntArray fields;
 	private IInventory inventory;
 
-	private final int machineSlotCount = 5;
-
 	public ChargerContainer(int id, PlayerInventory playerInventory) {
 		this(id, playerInventory, new Inventory(2), new Inventory(3), new IntArray(4));
 	}
@@ -65,6 +63,7 @@ public class ChargerContainer extends Container {
 	@Nonnull
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+		final int machineSlotCount = 5;
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {

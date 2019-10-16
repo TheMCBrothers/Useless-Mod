@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public abstract class MachineBlock extends ContainerBlock {
@@ -30,18 +31,18 @@ public abstract class MachineBlock extends ContainerBlock {
 		super(builder);
 		this.setDefaultState(this.stateContainer.getBaseState()
 				.with(HORIZONTAL_FACING, Direction.NORTH)
-				.with(ACTIVE, Boolean.valueOf(false)));
+				.with(ACTIVE, Boolean.FALSE));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void fillStateContainer(@Nonnull Builder<Block, BlockState> builder) {
 		builder.add(HORIZONTAL_FACING, ACTIVE);
 	}
 	
 	public abstract void openContainer(World world, BlockPos pos, PlayerEntity player);
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public boolean onBlockActivated(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			openContainer(worldIn, pos, player);
 		}
@@ -49,25 +50,28 @@ public abstract class MachineBlock extends ContainerBlock {
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(@Nonnull BlockItemUseContext context) {
 		return this.getDefaultState().with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 	
+	@Nonnull
 	@Override
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
+	public BlockState mirror(@Nonnull BlockState state, @Nonnull Mirror mirrorIn) {
 		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING)));
 	}
 	
 	@Override
-	public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+	public BlockState rotate(@Nonnull BlockState state, IWorld world, BlockPos pos, @Nonnull Rotation direction) {
 		return state.with(HORIZONTAL_FACING, direction.rotate(state.get(HORIZONTAL_FACING)));
 	}
 	
+	@Nonnull
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 	
+	@Nonnull
 	@Override
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.SOLID;
@@ -85,7 +89,7 @@ public abstract class MachineBlock extends ContainerBlock {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void animateTick(@Nonnull BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (stateIn.get(ACTIVE)) {
 			double d0 = (double) pos.getX() + 0.5D;
 			double d1 = (double) pos.getY() + 0.0D;
