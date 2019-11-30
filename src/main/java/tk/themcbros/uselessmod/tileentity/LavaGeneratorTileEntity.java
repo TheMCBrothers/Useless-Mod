@@ -36,7 +36,7 @@ public class LavaGeneratorTileEntity extends MachineTileEntity {
 	public static final int TANK_CAPACITY = MachineConfig.lava_generator_tank_capacity.get();
 	public static final int RF_PER_TICK = MachineConfig.lava_generator_rf_per_tick.get();
 	
-	private FluidTank lavaTank = new FluidTank(TANK_CAPACITY, fluidStack -> fluidStack.getFluid() == Fluids.LAVA);
+	private FluidTank lavaTank = new FluidTank(TANK_CAPACITY, fluidStack -> fluidStack.getFluid().isIn(FluidTags.LAVA));
 	private int burnTime;
 	
 	@SuppressWarnings("deprecation")

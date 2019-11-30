@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "uselessmod:no_remaining_shapeless",
   "ingredients": [
     {
       "item": "minecraft:milk_bucket"

@@ -179,7 +179,7 @@ public class FluidPipeBlock extends Block implements IWaterLoggable, IHammer {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
 		if (tileEntity instanceof FluidPipeTileEntity)
 			return ConnectionType.BOTH;
-		if (tileEntity != null && tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite()).isPresent()) {
+		else if (tileEntity != null && tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite()).isPresent()) {
 			return current == ConnectionType.NONE ? ConnectionType.BOTH : current;
 		}
 		return ConnectionType.NONE;

@@ -82,11 +82,14 @@ public class FluidTankTileEntityRenderer extends TileEntityRenderer<FluidTankTil
 			BufferBuilder bufferBuilder = tessellator.getBuffer();
 			bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
 
+			float tankThickness1 = 0 + TANK_THICKNESS;
+			float tankThickness2 = 1 - TANK_THICKNESS;
+
 			// TOP
-			bufferBuilder.pos(TANK_THICKNESS, scale + TANK_THICKNESS, TANK_THICKNESS).tex(uMin, vMin).endVertex();
-			bufferBuilder.pos(TANK_THICKNESS, scale + TANK_THICKNESS, 1-TANK_THICKNESS).tex(uMin, vMax).endVertex();
-			bufferBuilder.pos(1-TANK_THICKNESS, scale + TANK_THICKNESS, 1-TANK_THICKNESS).tex(uMax, vMax).endVertex();
-			bufferBuilder.pos(1-TANK_THICKNESS, scale + TANK_THICKNESS, TANK_THICKNESS).tex(uMax, vMin).endVertex();
+			bufferBuilder.pos(tankThickness1, scale + tankThickness1, tankThickness1).tex(uMin, vMin).endVertex(); // TOP LEFT
+			bufferBuilder.pos(tankThickness1, scale + tankThickness1, tankThickness2).tex(uMin, vMax).endVertex(); // BOTTOM LEFT
+			bufferBuilder.pos(tankThickness2, scale + tankThickness1, tankThickness2).tex(uMax, vMax).endVertex(); // BOTTOM RIGHT
+			bufferBuilder.pos(tankThickness2, scale + tankThickness1, tankThickness1).tex(uMax, vMin).endVertex(); // TOP RIGHT
 
 			tessellator.draw();
 

@@ -232,6 +232,10 @@
 	"gui.tag_filter.uselessmod.filters.materials": "Materials",
 	"gui.tag_filter.uselessmod.filters.energy": "Energy",
 	"gui.tag_filter.uselessmod.filters.tools_armor": "Tools & Armor",
+
+	"crop.mysticalagriculture.useless": "Useless",
+	"crop.mysticalagriculture.super_useless": "Super-Useless",
+	"crop.mysticalagriculture.useless_cow": "Useless Cow",
 	
 	"closet.null": "Null",
 	"closet.missing": "Missing: %s",

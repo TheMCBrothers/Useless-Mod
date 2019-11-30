@@ -33,7 +33,7 @@ import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
 import tk.themcbros.uselessmod.lists.ModItems;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
 
-public class UselessItem extends Item {
+public class UselessItem extends DescriptionItem {
 
 	public UselessItem(Properties properties) {
 		super(properties.defaultMaxDamage(28));
@@ -201,15 +201,6 @@ public class UselessItem extends Item {
 				if(worldIn.isRemote) playerIn.sendStatusMessage(iTextComponent, false);
 			}
 		}*/
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		ITextComponent desc = new TranslationTextComponent("tooltip.uselessmod.press_shift");
-		int state = GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT);
-		if (state == GLFW.GLFW_PRESS)
-			desc = new TranslationTextComponent("item.uselessmod.useless_item.desc");
-		tooltip.add(desc);
 	}
 
 }

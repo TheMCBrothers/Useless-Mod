@@ -39,16 +39,16 @@ public class VanillaCompat {
 		registerCompostable(0.85F, ModItems.USELESS_BREAD);	
 	}
 
-	public static void registerStrippable(Block log, Block stripped_log) {
+	private static void registerStrippable(Block log, Block stripped_log) {
 		AxeItem.BLOCK_STRIPPING_MAP = Maps.newHashMap(AxeItem.BLOCK_STRIPPING_MAP);
 		AxeItem.BLOCK_STRIPPING_MAP.put(log, stripped_log);
 	}
 
-	public static void registerCompostable(float chance, IItemProvider itemIn) {
+	private static void registerCompostable(float chance, IItemProvider itemIn) {
 		ComposterBlock.CHANCES.put(itemIn.asItem(), chance);
 	}
 
-	public static void registerFlammable(Block blockIn, int encouragement, int flammability) {
+	private static void registerFlammable(Block blockIn, int encouragement, int flammability) {
 		FireBlock fireblock = (FireBlock) Blocks.FIRE;
 		fireblock.setFireInfo(blockIn, encouragement, flammability);
 	}

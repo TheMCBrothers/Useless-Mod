@@ -7,8 +7,8 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.registry.Registry;
@@ -16,12 +16,15 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.ItemHandlerHelper;
 import tk.themcbros.uselessmod.blocks.CoffeeMachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
@@ -45,7 +48,7 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 	private static final int[] SLOTS_BOTTOM = new int[] { 4 };
 	private static final int[] SLOTS_SIDES = new int[] { 0,1,2,3,5 };
 	
-	private FluidTank waterTank = new FluidTank(WATER_CAPACITY, (stack) -> { return stack.getFluid() == Fluids.WATER; });
+	private FluidTank waterTank = new FluidTank(WATER_CAPACITY, (stack) -> stack.getFluid().isIn(FluidTags.WATER));
 	
 	private int cookTime;
 	private int cookTimeTotal;
@@ -130,11 +133,22 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 			this.receiveEnergyFromSlot(this.getSizeInventory() - 1);
 			
 			if((cup && !flag1) || (!cup && flag1)) flag2 = true;
-			
-			if(this.items.get(0).getItem() == Items.WATER_BUCKET && getWaterAmount() <= getMaxWaterAmount()-FluidAttributes.BUCKET_VOLUME) {
-				this.items.set(0, new ItemStack(Items.BUCKET));
-				this.waterTank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-				this.markDirty();
+
+			final ItemStack bucketStack = this.items.get(0);
+			if (!bucketStack.isEmpty()) {
+				FluidActionResult result = FluidUtil.tryEmptyContainer(bucketStack, this.waterTank, FluidAttributes.BUCKET_VOLUME, null, true);
+				if (result.isSuccess()) {
+					ItemStack outputSlotStack = this.items.get(1);
+					ItemStack resultStack = result.getResult();
+					if (ItemHandlerHelper.canItemStacksStack(outputSlotStack, resultStack) && resultStack.getMaxStackSize() > 1 &&
+							outputSlotStack.getCount() <= outputSlotStack.getMaxStackSize() - resultStack.getCount()) {
+						outputSlotStack.grow(resultStack.getCount());
+						bucketStack.shrink(1);
+					} else if (outputSlotStack.isEmpty()) {
+						this.items.set(1, resultStack);
+						bucketStack.shrink(1);
+					}
+				}
 			}
 			
 			if (this.isActive() || this.energyStorage.getEnergyStored() >= RF_PER_TICK && !this.items.get(1).isEmpty() && !this.items.get(2).isEmpty() && !this.items.get(3).isEmpty()) {
@@ -166,14 +180,14 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 			
 			if(flag2) {
 				BlockState state = world.getBlockState(pos);
-				state = state.with(CoffeeMachineBlock.ACTIVE, Boolean.valueOf(this.isActive()))
-						.with(CoffeeMachineBlock.CUP, Boolean.valueOf(cup));
+				state = state.with(CoffeeMachineBlock.ACTIVE, this.isActive())
+						.with(CoffeeMachineBlock.CUP, cup);
 				this.world.setBlockState(pos, state);
 			}
 		}
 	}
 	
-	protected int getCookTime() {
+	private int getCookTime() {
 		if(world == null) return 200;
 		return this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, this, this.world)
 				.map(CoffeeRecipe::getCookTime).orElse(200);
@@ -244,7 +258,7 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 		super.read(compound);
 		CompoundNBT machineCompound = compound.getCompound("Machine");
 		this.waterTank.readFromNBT(compound);
-		this.waterTank.setFluid(new FluidStack(Fluids.WATER, machineCompound.getInt("WaterAmount")));
+		this.waterTank.setFluid(new FluidStack(this.waterTank.getFluid(), machineCompound.getInt("WaterAmount")));
 		this.cookTime = machineCompound.getInt("CookTime");
 		this.cookTimeTotal = machineCompound.getInt("CookTimeTotal");
 	}

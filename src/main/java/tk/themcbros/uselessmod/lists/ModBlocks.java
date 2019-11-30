@@ -70,10 +70,10 @@ public class ModBlocks {
 	public static final Block BLUE_ROSE = register("blue_rose", new UselessFlowerBlock(Effects.SPEED, 6, Block.Properties.create(Material.PLANTS).doesNotBlockMovement().sound(SoundType.PLANT)));
 	public static final Block POTTED_RED_ROSE = register("potted_red_rose", new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, () -> RED_ROSE, Block.Properties.create(Material.MISCELLANEOUS)));
 	public static final Block POTTED_BLUE_ROSE = register("potted_blue_rose", new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, () -> BLUE_ROSE, Block.Properties.create(Material.MISCELLANEOUS)));
-	public static final Block USELESS_WHEAT = register("useless_wheat", new UselessCropsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), false));
-	public static final Block WILD_USELESS_WHEAT = register("wild_useless_wheat", new UselessCropsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), true));
-	public static final Block COFFEE_SEEDS = register("coffee_seeds", new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), false));
-	public static final Block WILD_COFFEE_SEEDS = register("wild_coffee_seeds", new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), true));
+	public static final UselessCropsBlock USELESS_WHEAT = register("useless_wheat", new UselessCropsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), false));
+	public static final UselessCropsBlock WILD_USELESS_WHEAT = register("wild_useless_wheat", new UselessCropsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), true));
+	public static final UselessCropsBlock COFFEE_SEEDS = register("coffee_seeds", new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), false));
+	public static final UselessCropsBlock WILD_COFFEE_SEEDS = register("wild_coffee_seeds", new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), true));
 
 	// Metal
 	public static final Block USELESS_BLOCK = register("useless_block", new Block(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));

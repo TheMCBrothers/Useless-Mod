@@ -1,26 +1,8 @@
 package tk.themcbros.uselessmod.lists;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockNamedItem;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.Items;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SignItem;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.TallBlockItem;
+import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +11,9 @@ import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.items.*;
 import tk.themcbros.uselessmod.machine.Upgrade;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 @ObjectHolder(UselessMod.MOD_ID)
@@ -160,29 +145,30 @@ public class ModItems {
 	public static final Item SUPER_USELESS_PLATE = registerItem("super_useless_plate");
 
 	// Tools
-	public static final Item USELESS_SWORD = registerItem("useless_sword", new SwordItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_AXE = registerItem("useless_axe", new AxeItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_PICKAXE = registerItem("useless_pickaxe", new PickaxeItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_SHOVEL = registerItem("useless_shovel", new ShovelItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_HOE = registerItem("useless_hoe", new HoeItem(ToolMaterialList.useless, 1f, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_SWORD = registerItem("super_useless_sword", new SwordItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_AXE = registerItem("super_useless_axe", new AxeItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_PICKAXE = registerItem("super_useless_pickaxe", new PickaxeItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_SHOVEL = registerItem("super_useless_shovel", new ShovelItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_HOE = registerItem("super_useless_hoe", new HoeItem(ToolMaterialList.super_useless, 1f, new Item.Properties().group(GROUP)));
+	public static final SwordItem USELESS_SWORD = registerItem("useless_sword", new SwordItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final AxeItem USELESS_AXE = registerItem("useless_axe", new AxeItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final PickaxeItem USELESS_PICKAXE = registerItem("useless_pickaxe", new PickaxeItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final ShovelItem USELESS_SHOVEL = registerItem("useless_shovel", new ShovelItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final HoeItem USELESS_HOE = registerItem("useless_hoe", new HoeItem(ToolMaterialList.useless, 1f, new Item.Properties().group(GROUP)));
+	public static final SwordItem SUPER_USELESS_SWORD = registerItem("super_useless_sword", new SwordItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final AxeItem SUPER_USELESS_AXE = registerItem("super_useless_axe", new AxeItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final PickaxeItem SUPER_USELESS_PICKAXE = registerItem("super_useless_pickaxe", new PickaxeItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final ShovelItem SUPER_USELESS_SHOVEL = registerItem("super_useless_shovel", new ShovelItem(ToolMaterialList.super_useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final HoeItem SUPER_USELESS_HOE = registerItem("super_useless_hoe", new HoeItem(ToolMaterialList.super_useless, 1f, new Item.Properties().group(GROUP)));
 
 	// TODO: Make all energy tools
-	public static final Item ELECTRIC_USELESS_PICKAXE = registerItem("electric_useless_pickaxe", new EnergyPickaxeItem(ToolMaterialList.useless, -2, 1f, new Item.Properties().group(GROUP)));
+	public static final SwordItem ELECTRIC_USELESS_SWORD = registerItem("electric_useless_sword", new EnergySwordItem(ToolMaterialList.useless, 0, 1f, new Item.Properties().group(GROUP)));
+	public static final PickaxeItem ELECTRIC_USELESS_PICKAXE = registerItem("electric_useless_pickaxe", new EnergyPickaxeItem(ToolMaterialList.useless, -2, 1f, new Item.Properties().group(GROUP)));
 
 	// Armor
-	public static final Item USELESS_HELMET = registerItem("useless_helmet", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.HEAD, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_CHESTPLATE = registerItem("useless_chestplate", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.CHEST, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_LEGGINGS = registerItem("useless_leggings", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.LEGS, new Item.Properties().group(GROUP)));
-	public static final Item USELESS_BOOTS = registerItem("useless_boots", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.FEET, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_HELMET = registerItem("super_useless_helmet", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.HEAD, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_CHESTPLATE = registerItem("super_useless_chestplate", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.CHEST, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_LEGGINS = registerItem("super_useless_leggings", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.LEGS, new Item.Properties().group(GROUP)));
-	public static final Item SUPER_USELESS_BOOTS = registerItem("super_useless_boots", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.FEET, new Item.Properties().group(GROUP)));
+	public static final ArmorItem USELESS_HELMET = registerItem("useless_helmet", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.HEAD, new Item.Properties().group(GROUP)));
+	public static final ArmorItem USELESS_CHESTPLATE = registerItem("useless_chestplate", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.CHEST, new Item.Properties().group(GROUP)));
+	public static final ArmorItem USELESS_LEGGINGS = registerItem("useless_leggings", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.LEGS, new Item.Properties().group(GROUP)));
+	public static final ArmorItem USELESS_BOOTS = registerItem("useless_boots", new ArmorItem(ArmorMaterialList.USELESS, EquipmentSlotType.FEET, new Item.Properties().group(GROUP)));
+	public static final ArmorItem SUPER_USELESS_HELMET = registerItem("super_useless_helmet", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.HEAD, new Item.Properties().group(GROUP)));
+	public static final ArmorItem SUPER_USELESS_CHESTPLATE = registerItem("super_useless_chestplate", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.CHEST, new Item.Properties().group(GROUP)));
+	public static final ArmorItem SUPER_USELESS_LEGGINS = registerItem("super_useless_leggings", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.LEGS, new Item.Properties().group(GROUP)));
+	public static final ArmorItem SUPER_USELESS_BOOTS = registerItem("super_useless_boots", new ArmorItem(ArmorMaterialList.SUPER_USELESS, EquipmentSlotType.FEET, new Item.Properties().group(GROUP)));
 
 	// Misc Tools
 	public static final HammerItem HAMMER = registerItem("hammer", new HammerItem(new Item.Properties().group(GROUP)));

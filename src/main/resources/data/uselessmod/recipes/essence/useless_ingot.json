@@ -1,0 +1,35 @@
+{
+  "type": "cucumber:shaped_no_mirror",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mysticalagriculture"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "cucumber"
+    },
+    {
+      "type": "forge:item_exists",
+      "item": "mysticalagriculture:useless_essence"
+    },
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:useless"
+    }
+  ],
+  "pattern": [
+    "EEE",
+    "E E",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "mysticalagriculture:useless_essence"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_ingot",
+    "count": 6
+  }
+}

@@ -29,6 +29,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import tk.themcbros.uselessmod.UselessMod;
@@ -171,7 +172,7 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 	@SuppressWarnings("unchecked")
 	private static <T extends Comparable<T>> BlockState cycleProperty(BlockState state, IProperty<T> propertyIn) {
 		T value = getAdjacentValue(propertyIn.getAllowedValues(), state.get(propertyIn));
-		if (value == ConnectionType.NONE || value == ConnectionType.BLOCKED)
+		if (value == ConnectionType.NONE || value == ConnectionType.BLOCKED || value == ConnectionType.BOTH)
 			value = (T) ConnectionType.INPUT;
 		return state.with(propertyIn, value);
 	}
@@ -199,15 +200,20 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 
 	private static ConnectionType createConnection(IBlockReader worldIn, BlockPos pos, Direction facing, ConnectionType current) {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
-		if (tileEntity instanceof EnergyCableTileEntity)
+		if (tileEntity instanceof EnergyCableTileEntity) {
 			return ConnectionType.BOTH;
-		if (tileEntity instanceof PowerControlTileEntity)
+		} else if (tileEntity instanceof PowerControlTileEntity) {
 			return ((PowerControlTileEntity) tileEntity).getConnection(facing.getOpposite()).getOpposite();
-		if (tileEntity != null && tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).isPresent()) {
-			IEnergyStorage handler = tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).orElseThrow(IllegalStateException::new);
-			return current == ConnectionType.NONE && !handler.canExtract() && handler.canReceive() ? ConnectionType.OUTPUT
-					: current == ConnectionType.NONE && handler.canExtract() && !handler.canReceive() ? ConnectionType.INPUT
-					: current == ConnectionType.NONE && handler.canExtract() && handler.canReceive() ? ConnectionType.INPUT : current;
+		} else if (tileEntity != null) {
+			LazyOptional<IEnergyStorage> lazyOptional = tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
+			if (lazyOptional.isPresent()) {
+				IEnergyStorage energy = lazyOptional.orElseThrow(IllegalStateException::new);
+				if (energy.canExtract()) {
+					return current == ConnectionType.NONE ? ConnectionType.INPUT : current;
+				} else if (energy.canReceive()) {
+					return current == ConnectionType.NONE ? ConnectionType.OUTPUT : current;
+				}
+			}
 		}
 		return ConnectionType.NONE;
 	}

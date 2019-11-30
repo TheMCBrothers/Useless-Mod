@@ -9,6 +9,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.PlantType;
 import tk.themcbros.uselessmod.lists.ModItems;
 
+import javax.annotation.Nonnull;
+
 public class UselessCropsBlock extends CropsBlock {
 
 	private boolean wild;
@@ -16,7 +18,6 @@ public class UselessCropsBlock extends CropsBlock {
 	public UselessCropsBlock(Properties properties, boolean wild) {
 		super(properties);
 		this.wild = wild;
-		if(wild) this.setDefaultState(this.stateContainer.getBaseState().with(this.getAgeProperty(), Integer.valueOf(getMaxAge())));
 	}
 	
 	@Override
@@ -27,6 +28,7 @@ public class UselessCropsBlock extends CropsBlock {
 		return super.isValidGround(state, worldIn, pos);
 	}
 
+	@Nonnull
 	@Override
 	protected IItemProvider getSeedsItem() {
 		return ModItems.USELESS_WHEAT_SEEDS;

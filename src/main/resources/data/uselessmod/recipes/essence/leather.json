@@ -1,0 +1,35 @@
+{
+  "type": "cucumber:shaped_no_mirror",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mysticalagriculture"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "cucumber"
+    },
+    {
+      "type": "forge:item_exists",
+      "item": "mysticalagriculture:useless_cow_essence"
+    },
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:useless_cow"
+    }
+  ],
+  "pattern": [
+    "   ",
+    "EEE",
+    "   "
+  ],
+  "key": {
+    "E": {
+      "item": "mysticalagriculture:useless_cow_essence"
+    }
+  },
+  "result": {
+    "item": "minecraft:leather",
+    "count": 6
+  }
+}

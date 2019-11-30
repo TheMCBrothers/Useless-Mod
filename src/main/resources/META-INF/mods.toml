@@ -20,10 +20,10 @@ issueTrackerURL="https://minecraft.curseforge.com/projects/themcbros-useless-mod
 	credits="Thanks for over 12000 downloads!" #optional
 	authors="TheMCLoveMan (Code) & TheMCCrazyMan (Textures)" #optional
 	
-	description='''
-	This is a useless mod for minecraft 1.14.4.
-	This mod is not really useless. It adds some useful features
-	'''
+description='''
+This is a useless mod for minecraft 1.14.4.
+This mod is not really useless. It adds some useful features
+'''
 
 [[dependencies.uselessmod]] #optional
     # the modid of the dependency
@@ -48,4 +48,15 @@ issueTrackerURL="https://minecraft.curseforge.com/projects/themcbros-useless-mod
     versionRange="[1.14.4,)"
     ordering="AFTER"
     side="CLIENT"
-    
+[[dependencies.uselessmod]]
+    modId="ironjetpacks"
+    mandatory=false
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.uselessmod]]
+    modId="mysticalagriculture"
+    mandatory=false
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"

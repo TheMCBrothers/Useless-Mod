@@ -1,23 +1,13 @@
 package tk.themcbros.uselessmod.items;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Multimap;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -33,6 +23,9 @@ import tk.themcbros.uselessmod.energy.IEnergyContainerItem;
 import tk.themcbros.uselessmod.helper.NBTHelper;
 import tk.themcbros.uselessmod.helper.TextUtils;
 import tk.themcbros.uselessmod.machine.MachineTier;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class EnergyPickaxeItem extends PickaxeItem implements IEnergyContainerItem {
 
@@ -68,7 +61,7 @@ public class EnergyPickaxeItem extends PickaxeItem implements IEnergyContainerIt
 	public boolean showDurabilityBar(ItemStack stack) {
 		return true;
 	}
-	
+
 	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
 		return 0xFFFF0000;
@@ -156,11 +149,6 @@ public class EnergyPickaxeItem extends PickaxeItem implements IEnergyContainerIt
 			this.extractEnergy(stack, RF_PER_BREAK, false);
 		}
 		return true;
-	}
-	
-	@Override
-	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
-		return !this.hasEnoughEnergy(stack);
 	}
 
 	/* IEnergyContainerItem */

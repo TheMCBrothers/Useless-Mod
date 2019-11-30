@@ -1,11 +1,9 @@
 package tk.themcbros.uselessmod.proxy;
 
-import com.mrcrayfish.filters.Filters;
 import net.minecraft.block.ShearableDoublePlantBlock;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -72,16 +70,17 @@ public class ClientProxy extends CommonProxy {
 		
 		UselessRenderRegistry.registerEntityRenders();
 		
-		if (ModList.get().isLoaded("filters")) {
-			Filters.get().register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/natural"), new ItemStack(ModBlocks.USELESS_FERN));
-			Filters.get().register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/wood"), new ItemStack(ModBlocks.USELESS_LOG));
-			Filters.get().register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/colored"), new ItemStack(ModBlocks.PAINT_BUCKET));
-			Filters.get().register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/materials"), new ItemStack(ModItems.SUPER_USELESS_INGOT));
-			Filters.get().register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/energy"), new ItemStack(ModBlocks.ENERGY_CABLE));
-			Filters.get().register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/tools_armor"), new ItemStack(ModItems.USELESS_PICKAXE));
-			
-			Filters.get().register(ModItemGroups.CLOSET_GROUP, UselessMod.getId("filters/closets"), new ItemStack(ModBlocks.CLOSET));
-		}
+//		if (ModList.get().isLoaded("filters")) {
+//			com.mrcrayfish.filters.Filters filters = com.mrcrayfish.filters.Filters.get();
+//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/natural"), new ItemStack(ModBlocks.USELESS_FERN));
+//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/wood"), new ItemStack(ModBlocks.USELESS_LOG));
+//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/colored"), new ItemStack(ModBlocks.PAINT_BUCKET));
+//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/materials"), new ItemStack(ModItems.SUPER_USELESS_INGOT));
+//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/energy"), new ItemStack(ModBlocks.ENERGY_CABLE));
+//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/tools_armor"), new ItemStack(ModItems.USELESS_PICKAXE));
+//
+//			filters.register(ModItemGroups.CLOSET_GROUP, UselessMod.getId("filters/closets"), new ItemStack(ModBlocks.CLOSET));
+//		}
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(EnergyCableTileEntity.class, new EnergyCableTileEntityRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(FluidTankTileEntity.class, new FluidTankTileEntityRenderer());

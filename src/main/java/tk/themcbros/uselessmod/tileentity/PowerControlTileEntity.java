@@ -130,7 +130,7 @@ public class PowerControlTileEntity extends TileEntity implements ITickableTileE
 		assert this.world != null;
 		if (this.world.isRemote) {
 			ModelDataManager.requestModelDataRefresh(this);
-			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 16 | 2 | 1);
+			this.world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2 | 1);
 		}
 	}
 
