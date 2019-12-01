@@ -7,7 +7,7 @@
     ],
 	"type": "uselessmod:crushing",
 	"ingredient": {
-		"tag": "forge:ores/bauxite"
+		"tag": "forge:ores/aluminum"
 	},
 	"result": {
 		"item": "silents_mechanisms:aluminum_dust",

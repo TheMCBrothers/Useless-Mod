@@ -27,6 +27,11 @@
                   "op": "replace"
                 },
                 {
+                  "source": "Tier",
+                  "target": "BlockEntityTag.Tier",
+                  "op": "replace"
+                },
+                {
                   "source": "Energy",
                   "target": "BlockEntityTag.Energy",
                   "op": "replace"

@@ -148,12 +148,8 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return 64;
 	}
 	
-	private final LazyOptional<? extends IEnergyStorage> energyHandler = LazyOptional.of(this::createEnergyHandler);
+	private final LazyOptional<? extends IEnergyStorage> energyHandler = LazyOptional.of(() -> this.energyStorage);
 	private final LazyOptional<? extends IItemHandler>[] itemHandlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-
-	private IEnergyStorage createEnergyHandler() {
-		return this.energyStorage;
-	}
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
