@@ -148,7 +148,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return 64;
 	}
 	
-	private final LazyOptional<? extends IEnergyStorage> energyHandler = LazyOptional.of(() -> this.energyStorage);
+	private LazyOptional<? extends IEnergyStorage> energyHandler = LazyOptional.of(() -> this.energyStorage);
 	private final LazyOptional<? extends IItemHandler>[] itemHandlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	
 	@Override
@@ -203,6 +203,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 
 	public void setMachineTier(MachineTier machineTier) {
 		this.machineTier = machineTier;
+		this.energyStorage = CustomEnergyStorage.fromMachine(this, this.energyStorage.serializeNBT());
 		this.markDirty();
 	}
 
