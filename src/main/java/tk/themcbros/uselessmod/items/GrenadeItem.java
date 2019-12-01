@@ -31,7 +31,7 @@ public class GrenadeItem extends Item {
 			playerEntity.getCooldownTracker().setCooldown(this, 20);
 			if (!worldIn.isRemote) {
 				GrenadeEntity grenadeEntity = new GrenadeEntity(worldIn, playerEntity);
-				grenadeEntity.func_213884_b(stack);
+				grenadeEntity.setItem(stack);
 				grenadeEntity.shoot(playerEntity, playerEntity.rotationPitch, playerEntity.rotationYaw, 0.0F, 1.5F, 1.0F);
 				worldIn.addEntity(grenadeEntity);
 			}

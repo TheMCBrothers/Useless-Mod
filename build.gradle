@@ -116,6 +116,9 @@ dependencies {
     // Filters
     compile "filters:Filters-${filters_version}:deobf"
 
+    // cucumber
+    compile "curse.maven:cucumber:2815719"
+
     // mystical-agriculture
     compile "curse.maven:mystical-agriculture:2824832"
 
