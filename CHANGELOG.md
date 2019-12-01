@@ -1,10 +1,14 @@
 
 ### 1.14.4-2.2.6
+- Added compatibility for [Mystical Agriculture](https://www.curseforge.com/minecraft/mc-mods/mystical-agriculture)
+- Added compatibility for [The One Probe](https://www.curseforge.com/minecraft/mc-mods/the-one-probe)
 - Added Charger ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Blocks#Charger))
+- Added Electric Useless Sword ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Items#Electric-Tools))
 - Added Fluid Pipe ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Blocks#Fluid-Pipe))
 - Added Fluid Canister ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Items#Fluid-Canister))
 - Added functionality to the Power Control Block ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Blocks#Power-Control-Block))
 - Added Useless Soup recipe
+- Added machine tier upgrades
 - Fixed Purple Lamp recipe
 - Fixed Energy Cables
 - Organized registries

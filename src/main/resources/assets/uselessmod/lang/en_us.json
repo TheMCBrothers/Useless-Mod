@@ -26,6 +26,8 @@
 	"item.uselessmod.machineframe": "Machine Frame",
 	"item.uselessmod.blank_upgrade": "Blank Upgrade",
 	"item.uselessmod.speed_upgrade": "Speed Upgrade",
+	"item.uselessmod.useless_tier_upgrade": "Useless Tier Upgrade",
+	"item.uselessmod.super_useless_tier_upgrade": "Super-Useless Tier Upgrade",
 	"item.uselessmod.useless_wheat_seeds": "Useless Wheat Seeds",
 	"item.uselessmod.useless_wheat": "Useless Wheat",
 	"item.uselessmod.useless_bread": "Useless Bread",

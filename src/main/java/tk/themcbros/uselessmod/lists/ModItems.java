@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.items.*;
+import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.machine.Upgrade;
 
 import java.util.ArrayList;
@@ -117,6 +118,8 @@ public class ModItems {
 	public static final Item MACHINEFRAME = registerItem("machineframe");
 	public static final Item BLANK_UPGRADE = registerItem("blank_upgrade", new UpgradeItem(new Item.Properties().group(GROUP), Upgrade.NULL));
 	public static final Item SPEED_UPGRADE = registerItem("speed_upgrade", new UpgradeItem(new Item.Properties().group(GROUP), Upgrade.SPEED));
+	public static final Item USELESS_TIER_UPGRADE = registerItem("useless_tier_upgrade", new TierUpgradeItem(new Item.Properties().group(GROUP), Upgrade.TIER_USELESS, MachineTier.USELESS));
+	public static final Item SUPER_USELESS_TIER_UPGRADE = registerItem("super_useless_tier_upgrade", new TierUpgradeItem(new Item.Properties().group(GROUP), Upgrade.TIER_SUPER_USELESS, MachineTier.SUPER_USELESS));
 
 	// Natural / Food
 	public static final Item USELESS_WHEAT_SEEDS = registerItem("useless_wheat_seeds", new BlockNamedItem(ModBlocks.USELESS_WHEAT, new Item.Properties().group(GROUP)));

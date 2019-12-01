@@ -9,12 +9,14 @@ import java.util.Locale;
 public enum Upgrade implements IStringSerializable {
 
 	NULL(0, "tooltip.uselessmod.upgrade.null"),
-	SPEED(10, "tooltip.uselessmod.upgrade.speed");
+	SPEED(10, "tooltip.uselessmod.upgrade.speed"),
+	TIER_USELESS(20, null),
+	TIER_SUPER_USELESS(30, null);
 
 	private final int additionalEnergyUsage;
 	private final String translationKey;
 	
-	private Upgrade(@Nonnull int additionalEnergyUsage, @Nullable String translationKey) {
+	Upgrade(int additionalEnergyUsage, @Nullable String translationKey) {
 		this.additionalEnergyUsage = additionalEnergyUsage;
 		this.translationKey = translationKey;
 	}
@@ -25,7 +27,6 @@ public enum Upgrade implements IStringSerializable {
 		return name().toLowerCase(Locale.ROOT);
 	}
 
-	@Nonnull
 	public int getAdditionalEnergyUsage() {
 		return additionalEnergyUsage;
 	}

@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"UGU",
+		"RBR",
+		"UGU"
+	],
+	"key": {
+		"B": { "item": "uselessmod:useless_tier_upgrade" },
+		"U": { "tag": "forge:plates/super_useless" },
+		"G": { "tag": "forge:glass/colorless" },
+		"R": { "tag": "forge:dusts/redstone" }
+	},
+	"result": {
+		"item": "uselessmod:super_useless_tier_upgrade",
+		"count": 1
+	}
+}

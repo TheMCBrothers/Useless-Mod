@@ -1,17 +1,18 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		" I ",
-		"RGR",
-		" I "
+		"UGU",
+		"RBR",
+		"UGU"
 	],
 	"key": {
-		"I": { "tag": "forge:plates/iron" },
+		"B": { "item": "uselessmod:blank_upgrade" },
+		"U": { "tag": "forge:plates/useless" },
 		"G": { "tag": "forge:glass/colorless" },
 		"R": { "tag": "forge:dusts/redstone" }
 	},
 	"result": {
-		"item": "uselessmod:blank_upgrade",
-		"count": 4
+		"item": "uselessmod:useless_tier_upgrade",
+		"count": 1
 	}
 }

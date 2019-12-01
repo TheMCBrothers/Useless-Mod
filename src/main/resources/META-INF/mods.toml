@@ -1,28 +1,19 @@
-# This is an example mods.toml file. It contains the data relating to the loading mods.
-# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
-# The overall format is standard TOML format, v0.5.0.
-# Note that there are a couple of TOML lists in this file.
-# Find more information on toml format here:  https://github.com/toml-lang/toml
-# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
-# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[28,)" #mandatory (28 is current forge version)
-# A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://minecraft.curseforge.com/projects/themcbros-useless-mod/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
-	modId="uselessmod" #mandatory
-	version="${file.jarVersion}" #mandatory
-	displayName="Useless Mod" #mandatory
-	updateJSONURL="https://raw.githubusercontent.com/TheMCBrothers/UselessMod/master/update.json" #optional
-	displayURL="http://uselessmod.tk" #optional
-	logoFile="useless_logo.png" #optional
-	credits="Thanks for over 12000 downloads!" #optional
-	authors="TheMCLoveMan (Code) & TheMCCrazyMan (Textures)" #optional
-	
+modId="uselessmod" #mandatory
+version="${file.jarVersion}" #mandatory
+displayName="Useless Mod" #mandatory
+updateJSONURL="https://raw.githubusercontent.com/TheMCBrothers/UselessMod/master/update.json" #optional
+displayURL="http://uselessmod.tk" #optional
+logoFile="useless_logo.png" #optional
+credits="Thanks for over 26000 downloads!" #optional
+authors="TheMCLoveMan (Code) & TheMCCrazyMan (Textures)" #optional
 description='''
-This is a useless mod for minecraft 1.14.4.
-This mod is not really useless. It adds some useful features
+This ia a not really useless mod for minecraft 1.14.4.
+Enjoy this mod with technology and other things!
 '''
 
 [[dependencies.uselessmod]] #optional
@@ -45,7 +36,7 @@ This mod is not really useless. It adds some useful features
 [[dependencies.uselessmod]]
     modId="filters"
     mandatory=false
-    versionRange="[1.14.4,)"
+    versionRange="[1.1.1,)"
     ordering="AFTER"
     side="CLIENT"
 [[dependencies.uselessmod]]

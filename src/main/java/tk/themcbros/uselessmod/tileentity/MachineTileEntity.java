@@ -38,9 +38,16 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	protected MachineTier machineTier;
 	
 	protected NonNullList<ItemStack> items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-	
+
+	private final boolean isGenerator;
+
+	public boolean isGenerator() {
+		return isGenerator;
+	}
+
 	public MachineTileEntity(@Nonnull TileEntityType<?> tileEntityTypeIn, @Nonnull MachineTier machineTier, boolean generator) {
 		super(tileEntityTypeIn);
+		this.isGenerator = generator;
 		this.machineTier = machineTier;
 		this.energyStorage = new CustomEnergyStorage(machineTier.getMachineCapacity(), !generator ? machineTier.getMaxEnergyTransfer() : 0, generator ? machineTier.getMaxEnergyTransfer() : 0, 0);
 		this.upgradeInventory = new MachineUpgradeInventory(this);
@@ -60,7 +67,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	public void read(CompoundNBT compound) {
 		super.read(compound);
 		this.machineTier = MachineTier.byName(compound.getString("Tier"));
-		this.energyStorage = CustomEnergyStorage.fromNBT(compound.getCompound("Energy"));
+		this.energyStorage = CustomEnergyStorage.fromMachine(this, compound.getCompound("Energy"));
 		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, items);
 		this.upgradeInventory = new MachineUpgradeInventory(this);
@@ -196,6 +203,11 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 
 	public MachineTier getMachineTier() {
 		return this.machineTier;
+	}
+
+	public void setMachineTier(MachineTier machineTier) {
+		this.machineTier = machineTier;
+		this.markDirty();
 	}
 
 	protected void sendUpdate(BlockState newState, boolean force) {
