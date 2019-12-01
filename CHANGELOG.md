@@ -9,6 +9,7 @@
 - Added functionality to the Power Control Block ([?](https://github.com/TheMCBrothers/UselessMod/wiki/Blocks#Power-Control-Block))
 - Added Useless Soup recipe
 - Added machine tier upgrades
+- Useless Blocks and Super Useless Blocks can be used as beacon base
 - Fixed Purple Lamp recipe
 - Fixed Energy Cables
 - Organized registries
