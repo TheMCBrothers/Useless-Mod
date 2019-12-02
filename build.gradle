@@ -116,6 +116,9 @@ dependencies {
     // Filters
     compile "filters:Filters-${filters_version}:deobf"
 
+    // Farming for Blockheads
+    compile "farming-for-blockheads:FarmingForBlockheads_${farmingforblockheads_version}"
+
     // cucumber
     compile "curse.maven:cucumber:2815719"
 

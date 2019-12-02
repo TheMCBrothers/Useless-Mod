@@ -17,6 +17,7 @@ import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 import tk.themcbros.uselessmod.closet.BeddingRegistryEvent;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
+import tk.themcbros.uselessmod.compat.farmingforblockheads.FarmingForBlockheadsCompat;
 import tk.themcbros.uselessmod.compat.top.TheOneProbeSupport;
 import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.handler.ForgeEventHandlers;
@@ -25,7 +26,7 @@ import tk.themcbros.uselessmod.lists.ModBiomes;
 import tk.themcbros.uselessmod.lists.ModEntityTypes;
 import tk.themcbros.uselessmod.lists.ModItems;
 import tk.themcbros.uselessmod.lists.VanillaCompat;
-import tk.themcbros.uselessmod.world.FlowerGeneration;
+import tk.themcbros.uselessmod.world.FeatureGeneration;
 import tk.themcbros.uselessmod.world.OreGeneration;
 
 public class CommonProxy {
@@ -50,7 +51,7 @@ public class CommonProxy {
 		OreGeneration.setupOreGeneration();
 		OreGeneration.setupNetherOreGeneration();
 
-		FlowerGeneration.setupFlowerGeneration();
+		FeatureGeneration.setupFeatureGeneration();
 
 		VanillaCompat.register();
 
@@ -79,6 +80,11 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
 		InterModComms.sendTo("theoneprobe", "getTheOneProbe", TheOneProbeSupport::new);
+
+		if (ModList.get().isLoaded("farmingforblockheads")) {
+			FarmingForBlockheadsCompat.init();
+		}
+
 	}
 	
 	protected void postInit(InterModProcessEvent event) {
