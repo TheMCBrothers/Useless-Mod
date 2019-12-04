@@ -1,4 +1,7 @@
 
+### 1.14.4-2.2.7
+- Fixed upgrading machine does not consume item
+
 ### 1.14.4-2.2.6
 - Added compatibility for [Mystical Agriculture](https://www.curseforge.com/minecraft/mc-mods/mystical-agriculture)
 - Added compatibility for [The One Probe](https://www.curseforge.com/minecraft/mc-mods/the-one-probe)

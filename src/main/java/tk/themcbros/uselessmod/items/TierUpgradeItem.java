@@ -4,7 +4,9 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.machine.Upgrade;
@@ -30,7 +32,12 @@ public class TierUpgradeItem extends UpgradeItem {
 			MachineTier machineTier = machine.getMachineTier();
 			if (machineTier.getIndex() == tier.getIndex() - 1) {
 				machine.setMachineTier(tier);
-				if (context.getPlayer() != null) context.getPlayer().sendStatusMessage(new StringTextComponent("Upgraded machine to tier " + tier.name()), true);
+				if (context.getPlayer() != null) {
+					ITextComponent text = new StringTextComponent("Upgraded machine to tier ").applyTextStyle(TextFormatting.GREEN);
+					text = text.appendSibling(new StringTextComponent(tier.getName()).applyTextStyle(TextFormatting.DARK_GREEN));
+					context.getPlayer().sendStatusMessage(text, true);
+					context.getItem().shrink(1);
+				}
 				return ActionResultType.SUCCESS;
 			}
 		}
