@@ -79,7 +79,9 @@ public class CommonProxy {
 		UselessMod.LOGGER.debug("CommonProxy init method");
 		MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
-		InterModComms.sendTo("theoneprobe", "getTheOneProbe", TheOneProbeSupport::new);
+		if (ModList.get().isLoaded("theoneprobe")) {
+			InterModComms.sendTo("theoneprobe", "getTheOneProbe", TheOneProbeSupport::new);
+		}
 
 		if (ModList.get().isLoaded("farmingforblockheads")) {
 			FarmingForBlockheadsCompat.init();

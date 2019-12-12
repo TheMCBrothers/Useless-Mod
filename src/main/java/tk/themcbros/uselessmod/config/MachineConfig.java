@@ -20,6 +20,8 @@ public class MachineConfig {
 	public static ForgeConfigSpec.IntValue lava_generator_tank_capacity;
 	public static ForgeConfigSpec.IntValue lava_generator_ticks_per_mb;
 	public static ForgeConfigSpec.IntValue lava_generator_rf_per_tick;
+
+	public static ForgeConfigSpec.IntValue energy_cable_capacity;
 	
 	public static void init(ForgeConfigSpec.Builder common, ForgeConfigSpec.Builder client) {
 		common.comment("This is the machine config");
@@ -67,6 +69,11 @@ public class MachineConfig {
 		lava_generator_rf_per_tick = common
 				.comment("How much RF is produced by lava generator")
 				.defineInRange("machines.lava_generator.rf_per_tick", 120, 1, 10000);
+
+		// Energy Cable
+		energy_cable_capacity = common
+				.comment("How much FE is stored in one Energy Cable")
+				.defineInRange("energy_cable.capacity", 1000, 100, 10000);
 
 		// Other
 		fluid_tank_capacity = common
