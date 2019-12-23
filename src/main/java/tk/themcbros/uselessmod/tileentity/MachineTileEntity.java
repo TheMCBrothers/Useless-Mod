@@ -25,6 +25,7 @@ import tk.themcbros.uselessmod.energy.CustomEnergyStorage;
 import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.machine.MachineUpgradeInventory;
+import tk.themcbros.uselessmod.machine.RedstoneMode;
 import tk.themcbros.uselessmod.machine.Upgrade;
 
 import javax.annotation.Nonnull;
@@ -36,6 +37,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	protected CustomEnergyStorage energyStorage;
 	protected MachineUpgradeInventory upgradeInventory;
 	protected MachineTier machineTier;
+	protected RedstoneMode redstoneMode;
 	
 	protected NonNullList<ItemStack> items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
@@ -57,6 +59,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
 		compound.putString("Tier", this.machineTier != null ? this.machineTier.getName() : "error");
+		compound.putString("RedstoneMode", this.redstoneMode != null ? this.redstoneMode.getName() : "ignored");
 		compound.put("Energy", this.energyStorage.serializeNBT());
 		this.upgradeInventory.write(compound);
 		ItemStackHelper.saveAllItems(compound, items, false);
@@ -67,6 +70,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	public void read(CompoundNBT compound) {
 		super.read(compound);
 		this.machineTier = MachineTier.byName(compound.getString("Tier"));
+		this.redstoneMode = RedstoneMode.byName(compound.getString("RedstoneMode"));
 		this.energyStorage = CustomEnergyStorage.fromMachine(this, compound.getCompound("Energy"));
 		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, items);
@@ -201,9 +205,18 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return this.machineTier;
 	}
 
+	public RedstoneMode getRedstoneMode() {
+		return redstoneMode;
+	}
+
 	public void setMachineTier(MachineTier machineTier) {
 		this.machineTier = machineTier;
 		this.energyStorage = CustomEnergyStorage.fromMachine(this, this.energyStorage.serializeNBT());
+		this.markDirty();
+	}
+
+	public void setRedstoneMode(RedstoneMode redstoneMode) {
+		this.redstoneMode = redstoneMode;
 		this.markDirty();
 	}
 
@@ -217,10 +230,12 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	}
 
 	protected BlockState getActiveState() {
+		assert this.world != null;
 		return this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.TRUE);
 	}
 
 	protected BlockState getInactiveState() {
+		assert this.world != null;
 		return this.world.getBlockState(this.pos).with(MachineBlock.ACTIVE, Boolean.FALSE);
 	}
 
