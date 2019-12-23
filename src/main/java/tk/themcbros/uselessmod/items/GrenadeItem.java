@@ -9,6 +9,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import tk.themcbros.uselessmod.config.EntityConfig;
 import tk.themcbros.uselessmod.entity.GrenadeEntity;
@@ -27,7 +28,8 @@ public class GrenadeItem extends Item {
 				stack.shrink(1);
 			}
 
-			worldIn.playSound((PlayerEntity) null, playerEntity.posX, playerEntity.posY, playerEntity.posZ, SoundEvents.ENTITY_EGG_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+			BlockPos pos = playerEntity.getPosition();
+			worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 			playerEntity.getCooldownTracker().setCooldown(this, 20);
 			if (!worldIn.isRemote) {
 				GrenadeEntity grenadeEntity = new GrenadeEntity(worldIn, playerEntity);

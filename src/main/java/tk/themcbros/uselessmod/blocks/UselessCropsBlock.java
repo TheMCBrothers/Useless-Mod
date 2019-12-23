@@ -1,6 +1,7 @@
 package tk.themcbros.uselessmod.blocks;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.IItemProvider;
@@ -23,7 +24,7 @@ public class UselessCropsBlock extends CropsBlock {
 	@Override
 	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		if(wild) {
-			return state.isIn(BlockTags.DIRT_LIKE);
+			return state.getBlock() == Blocks.GRASS_BLOCK;
 		}
 		return super.isValidGround(state, worldIn, pos);
 	}

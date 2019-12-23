@@ -1,24 +1,7 @@
 package tk.themcbros.uselessmod.compat.waila;
 
-import mcp.mobius.waila.api.IRegistrar;
-import mcp.mobius.waila.api.IWailaPlugin;
-import mcp.mobius.waila.api.TooltipPosition;
-import mcp.mobius.waila.api.WailaPlugin;
-import mcp.mobius.waila.overlay.tooltiprenderers.TooltipRendererProgressBar;
-import mcp.mobius.waila.overlay.tooltiprenderers.TooltipRendererSpacer;
-import mcp.mobius.waila.overlay.tooltiprenderers.TooltipRendererStack;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.util.ResourceLocation;
-import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.blocks.LampBlock;
-import tk.themcbros.uselessmod.blocks.LightSwitchBlock;
-import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
-import tk.themcbros.uselessmod.blocks.UselessCropsBlock;
-import tk.themcbros.uselessmod.tileentity.*;
-
-@WailaPlugin(UselessMod.MOD_ID)
-public class UselessPlugin implements IWailaPlugin {
+//@WailaPlugin(UselessMod.MOD_ID)
+public class UselessPlugin /*implements IWailaPlugin {
 	
 	static final ResourceLocation RENDER_ITEM = new ResourceLocation(UselessMod.MOD_ID, "item");
     static final ResourceLocation RENDER_SPACER = new ResourceLocation(UselessMod.MOD_ID, "spacer");
@@ -67,3 +50,4 @@ public class UselessPlugin implements IWailaPlugin {
 	}
 
 }
+*/{}

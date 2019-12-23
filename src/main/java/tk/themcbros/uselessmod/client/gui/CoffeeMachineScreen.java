@@ -1,9 +1,6 @@
 package tk.themcbros.uselessmod.client.gui;
 
-import java.awt.Rectangle;
-
-import com.mojang.blaze3d.platform.GlStateManager;
-
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -12,6 +9,8 @@ import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
 import tk.themcbros.uselessmod.helper.TextUtils;
+
+import java.awt.*;
 
 public class CoffeeMachineScreen extends MachineFluidScreen<CoffeeMachineContainer> {
 
@@ -55,8 +54,8 @@ public class CoffeeMachineScreen extends MachineFluidScreen<CoffeeMachineContain
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		int i = this.guiLeft;
 		int j = this.guiTop;
@@ -71,21 +70,21 @@ public class CoffeeMachineScreen extends MachineFluidScreen<CoffeeMachineContain
 		// Draw Arrow
 		int l = this.container.getCookTimeScaled();
 		this.blit(i + 67, j + 43, 176, 0, l + 1, 18);
-		
-		GlStateManager.enableBlend();
-		GlStateManager.enableAlphaTest();
+
+		RenderSystem.enableBlend();
+		RenderSystem.enableAlphaTest();
 
 		// Draw fluid
 		drawFluid(waterTankRectangle.x + i, waterTankRectangle.y + j, new FluidStack(this.container.getWaterTankFluid(), this.container.getWaterAmount()));
 
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		// Draw lines over fluid
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		this.blit(waterTankRectangle.x + i, waterTankRectangle.y + j, 195, 19, waterTankRectangle.width, waterTankRectangle.height);
-		
-		GlStateManager.disableAlphaTest();
-		GlStateManager.disableBlend();
+
+		RenderSystem.disableAlphaTest();
+		RenderSystem.disableBlend();
 	}
 	
 	@Override

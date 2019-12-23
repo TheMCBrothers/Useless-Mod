@@ -1,18 +1,6 @@
 package tk.themcbros.uselessmod.compat.waila;
 
-import java.util.List;
-
-import mcp.mobius.waila.Waila;
-import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IDataAccessor;
-import mcp.mobius.waila.api.IPluginConfig;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-
-public class HUDHandlerModFluids implements IComponentProvider {
+public class HUDHandlerModFluids /*implements IComponentProvider {
 
 	static final HUDHandlerModFluids INSTANCE = new HUDHandlerModFluids();
 
@@ -32,3 +20,4 @@ public class HUDHandlerModFluids implements IComponentProvider {
 	}
 
 }
+*/{}

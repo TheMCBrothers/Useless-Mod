@@ -5,37 +5,26 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.blocks.GreenstoneWireBlock;
 import tk.themcbros.uselessmod.blocks.LampBlock;
 import tk.themcbros.uselessmod.client.gui.*;
 import tk.themcbros.uselessmod.client.renders.entity.UselessRenderRegistry;
 import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.lists.*;
 import tk.themcbros.uselessmod.tileentity.ColorableTileEntity;
-import tk.themcbros.uselessmod.tileentity.EnergyCableTileEntity;
-import tk.themcbros.uselessmod.tileentity.FluidTankTileEntity;
-import tk.themcbros.uselessmod.tileentity.renderer.EnergyCableTileEntityRenderer;
-import tk.themcbros.uselessmod.tileentity.renderer.FluidTankTileEntityRenderer;
 
 import javax.annotation.Nonnull;
 
@@ -81,18 +70,13 @@ public class ClientProxy extends CommonProxy {
 //
 //			filters.register(ModItemGroups.CLOSET_GROUP, UselessMod.getId("filters/closets"), new ItemStack(ModBlocks.CLOSET));
 //		}
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(EnergyCableTileEntity.class, new EnergyCableTileEntityRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(FluidTankTileEntity.class, new FluidTankTileEntityRenderer());
-		OBJLoader.INSTANCE.addDomain(UselessMod.MOD_ID);
+
 	}
 	
 	private void registerBlockColours(@Nonnull ColorHandlerEvent.Block event) {
         BlockColors blockColors = event.getBlockColors();
         
-        blockColors.register((state, world, pos, tintIndex) -> world != null && pos != null ? world.getBiome(pos).getWaterColor() : -1, ModBlocks.CHEESE_MAKER);
-        
-        blockColors.register((state, world, pos, tintIndex) -> GreenstoneWireBlock.colorMultiplier(state.get(BlockStateProperties.POWER_0_15)), ModBlocks.GREENSTONE_WIRE);
+        blockColors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.func_228363_c_(world, pos) : -1, ModBlocks.CHEESE_MAKER);
         
         blockColors.register((state, world, pos, tintIndex) -> {
         	if(world != null && pos != null) {
@@ -113,10 +97,10 @@ public class ClientProxy extends CommonProxy {
             return colour;
         }, ModBlocks.LAMP);
         
-		blockColors.register((state, world, pos, tint_index) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.get(0.5D, 1.0D), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_FERN, ModBlocks.USELESS_GRASS,
+		blockColors.register((state, world, pos, tint_index) -> world != null && pos != null ? BiomeColors.func_228358_a_(world, pos) : GrassColors.get(0.5D, 1.0D), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_FERN, ModBlocks.USELESS_GRASS,
 				ModBlocks.POTTED_USELESS_FERN);
 
-		blockColors.register((p_210234_0_, p_210234_1_, p_210234_2_, p_210234_3_) -> p_210234_1_ != null && p_210234_2_ != null ? BiomeColors.getGrassColor(p_210234_1_,
+		blockColors.register((p_210234_0_, p_210234_1_, p_210234_2_, p_210234_3_) -> p_210234_1_ != null && p_210234_2_ != null ? BiomeColors.func_228358_a_(p_210234_1_,
 				p_210234_0_.get(ShearableDoublePlantBlock.HALF) == DoubleBlockHalf.UPPER
 						? p_210234_2_.down()
 						: p_210234_2_)
@@ -144,7 +128,7 @@ public class ClientProxy extends CommonProxy {
 		}, ModItems.COFFEE_CUP);
 
 		// Useless Plants
-		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.getGrassColor(BlockPos.ZERO), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
+		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.func_225529_c_(), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
 
 		// Fluid Canister
 		itemColors.register((stack, layer) -> layer == 1 ? ModItems.CANISTER.getFluid(stack).getFluid().getAttributes().getColor() : -1, ModItems.CANISTER);

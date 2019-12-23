@@ -22,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
@@ -97,14 +98,14 @@ public class LightSwitchBlockBlock extends Block {
 		}
 
 	}
-	
+
 	@Override
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+	public void func_225534_a_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) { // tick?
 		if(!worldIn.isRemote) {
 			switchLights(state, worldIn, pos);
 		}
 	}
-	
+
 	protected static void switchLights(BlockState state, World worldIn, BlockPos pos) {
 		Boolean value = state.get(POWERED);
 		TileEntity tileEntity = worldIn.getTileEntity(pos);

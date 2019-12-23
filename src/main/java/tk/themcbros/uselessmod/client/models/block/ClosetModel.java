@@ -1,41 +1,6 @@
 package tk.themcbros.uselessmod.client.models.block;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.vecmath.Matrix4f;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.model.BakedQuad;
-import net.minecraft.client.renderer.model.BlockModel;
-import net.minecraft.client.renderer.model.BlockPart;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IEnviromentBlockReader;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.common.model.TRSRTransformation;
-import tk.themcbros.uselessmod.closet.ClosetRegistry;
-import tk.themcbros.uselessmod.closet.IClosetMaterial;
-import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
-
-@SuppressWarnings("deprecation")
-public class ClosetModel implements IBakedModel {
+public class ClosetModel /*implements IBakedModel {
 	
 	public static ClosetItemOverride ITEM_OVERIDE = new ClosetItemOverride();
 
@@ -88,8 +53,8 @@ public class ClosetModel implements IBakedModel {
 	}
 
 	@Override
-	public IModelData getModelData(@Nonnull IEnviromentBlockReader world, @Nonnull BlockPos pos,
-			@Nonnull BlockState state, @Nonnull IModelData tileData) {
+	public IModelData getModelData(@Nonnull ILightReader world, @Nonnull BlockPos pos,
+								   @Nonnull BlockState state, @Nonnull IModelData tileData) {
 		IClosetMaterial casing = ClosetRegistry.CASINGS.getKeys().get(0);
 		IClosetMaterial bedding = ClosetRegistry.BEDDINGS.getKeys().get(0);
 		Direction facing = Direction.NORTH;
@@ -181,4 +146,4 @@ public class ClosetModel implements IBakedModel {
 		return Pair.of(this, this.bakedModel.handlePerspective(cameraTransformType).getRight());
 	}
 
-}
+}*/{}

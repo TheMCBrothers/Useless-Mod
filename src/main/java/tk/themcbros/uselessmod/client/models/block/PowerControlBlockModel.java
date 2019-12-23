@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class PowerControlBlockModel implements IDynamicBakedModel {
+public class PowerControlBlockModel/* implements IDynamicBakedModel {
 
 	private VertexFormat format;
 
@@ -193,3 +193,4 @@ public class PowerControlBlockModel implements IDynamicBakedModel {
 		return ItemOverrideList.EMPTY;
 	}
 }
+*/{}

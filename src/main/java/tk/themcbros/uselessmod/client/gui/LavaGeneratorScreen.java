@@ -1,6 +1,6 @@
 package tk.themcbros.uselessmod.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -51,8 +51,8 @@ public class LavaGeneratorScreen extends MachineFluidScreen<LavaGeneratorContain
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		int i = this.guiLeft;
 		int j = this.guiTop;
@@ -70,20 +70,20 @@ public class LavaGeneratorScreen extends MachineFluidScreen<LavaGeneratorContain
 			this.blit(i + 81, j + 30 + 12 - l, 200, 12 - l, 14, l + 1);
 		}
 
-		GlStateManager.enableBlend();
-		GlStateManager.enableAlphaTest();
+		RenderSystem.enableBlend();
+		RenderSystem.enableAlphaTest();
 
 		// Draw fluid
 		drawFluid(tankRectangle.x + i, tankRectangle.y + j, this.container.getTankStack());
 
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		// Draw lines over fluid
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		this.blit(tankRectangle.x + i, tankRectangle.y + j, 195, 18, tankRectangle.width, tankRectangle.height);
 
-		GlStateManager.disableAlphaTest();
-		GlStateManager.disableBlend();
+		RenderSystem.disableAlphaTest();
+		RenderSystem.disableBlend();
 	}
 	
 	@Override

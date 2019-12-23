@@ -1,6 +1,6 @@
 package tk.themcbros.uselessmod.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -51,8 +51,8 @@ public class MagmaCrucibleScreen extends MachineFluidScreen<MagmaCrucibleContain
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		int i = this.guiLeft;
 		int j = this.guiTop;
@@ -68,20 +68,20 @@ public class MagmaCrucibleScreen extends MachineFluidScreen<MagmaCrucibleContain
 		int l = this.container.getCookTimeScaled();
 		this.blit(i + 73, j + 29, 176, 0, l + 1, 17);
 		
-		GlStateManager.enableBlend();
-		GlStateManager.enableAlphaTest();
+		RenderSystem.enableBlend();
+		RenderSystem.enableAlphaTest();
 
 		// Draw fluid
 		drawFluid(tankRectangle.x + i, tankRectangle.y + j, this.container.getTankStack());
 
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		// Draw lines over fluid
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		this.blit(tankRectangle.x + i, tankRectangle.y + j, 195, 18, tankRectangle.width, tankRectangle.height);
-		
-		GlStateManager.disableAlphaTest();
-		GlStateManager.disableBlend();
+
+		RenderSystem.disableAlphaTest();
+		RenderSystem.disableBlend();
 	}
 	
 	@Override

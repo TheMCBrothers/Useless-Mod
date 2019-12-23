@@ -173,7 +173,7 @@ public class UselessItem extends DescriptionItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		final ItemStack stack = playerIn.getHeldItem(handIn);
-		if(playerIn.isSneaking()) {
+		if(playerIn.isCrouching()) { //TODO wrong
 			toggleEmpowered(stack);
 		} else if(isEmpowered(stack)) {
 			chatNetworkList(worldIn, playerIn);

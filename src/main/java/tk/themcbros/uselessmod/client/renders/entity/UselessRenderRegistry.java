@@ -5,15 +5,14 @@ import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import tk.themcbros.uselessmod.entity.GrenadeEntity;
-import tk.themcbros.uselessmod.entity.UselessCowEntity;
+import tk.themcbros.uselessmod.lists.ModEntityTypes;
 
 @OnlyIn(Dist.CLIENT)
 public class UselessRenderRegistry {
 
 	public static void registerEntityRenders() {
-		RenderingRegistry.registerEntityRenderingHandler(UselessCowEntity.class, new UselessCowEntityRender.RenderFactory());
-		RenderingRegistry.registerEntityRenderingHandler(GrenadeEntity.class, manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.USELESS_COW, new UselessCowEntityRender.RenderFactory());
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GRENADE, manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
 	}
 	
 }

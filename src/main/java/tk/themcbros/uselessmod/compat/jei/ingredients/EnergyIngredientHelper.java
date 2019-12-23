@@ -1,8 +1,6 @@
 package tk.themcbros.uselessmod.compat.jei.ingredients;
 
-import mezz.jei.api.ingredients.IIngredientHelper;
-
-public class EnergyIngredientHelper implements IIngredientHelper<EnergyIngredient> {
+public class EnergyIngredientHelper /*implements IIngredientHelper<EnergyIngredient> {
 
 	@Override
 	public EnergyIngredient getMatch(Iterable<EnergyIngredient> ingredients, EnergyIngredient ingredientToMatch) {
@@ -53,3 +51,4 @@ public class EnergyIngredientHelper implements IIngredientHelper<EnergyIngredien
 	}
 
 }
+*/{}

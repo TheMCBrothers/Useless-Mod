@@ -18,7 +18,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -28,13 +27,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.energy.ConnectionType;
-import tk.themcbros.uselessmod.energy.EnergyCableNetwork;
 import tk.themcbros.uselessmod.energy.EnergyCableNetworkManager;
 import tk.themcbros.uselessmod.helper.IHammer;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
@@ -237,12 +234,6 @@ public class EnergyCableBlock extends Block implements IWaterLoggable, IHammer {
 	@Nonnull
 	public IFluidState getFluidState(@Nonnull BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
-	}
-	
-	@Nonnull
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
 	}
 	
 	@Nonnull

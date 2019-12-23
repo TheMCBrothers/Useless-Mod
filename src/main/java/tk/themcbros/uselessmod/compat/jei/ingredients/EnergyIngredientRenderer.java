@@ -1,18 +1,6 @@
 package tk.themcbros.uselessmod.compat.jei.ingredients;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import com.mojang.blaze3d.platform.GlStateManager;
-
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.ingredients.IIngredientRenderer;
-import net.minecraft.client.util.ITooltipFlag;
-import tk.themcbros.uselessmod.helper.TextUtils;
-
-public class EnergyIngredientRenderer implements IIngredientRenderer<EnergyIngredient> {
+public class EnergyIngredientRenderer /*implements IIngredientRenderer<EnergyIngredient> {
 
 	private final IDrawable overlay;
 
@@ -35,3 +23,4 @@ public class EnergyIngredientRenderer implements IIngredientRenderer<EnergyIngre
 	}
 
 }
+*/{}

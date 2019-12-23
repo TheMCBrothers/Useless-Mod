@@ -19,12 +19,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -95,9 +90,9 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 		}
 		return VoxelShapes.fullCube();
 	}
-	
+
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof CoffeeMachineTileEntity && player instanceof ServerPlayerEntity) {
@@ -107,7 +102,7 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 					((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
 			}
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override
@@ -158,11 +153,6 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 	
 	public IFluidState getFluidState(BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
-	}
-	
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
 	}
 	
 	@Override

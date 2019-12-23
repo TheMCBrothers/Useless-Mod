@@ -6,6 +6,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -38,8 +39,8 @@ public class LavaGeneratorBlock extends MachineBlock {
 	}
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-									BlockRayTraceResult hit) {
+	public ActionResultType func_225533_a_(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+										   BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof LavaGeneratorTileEntity && player instanceof ServerPlayerEntity) {
@@ -50,7 +51,7 @@ public class LavaGeneratorBlock extends MachineBlock {
 				}
 			}
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 	
 	private boolean tryEmptyContainer(@Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull IFluidHandler handler) {

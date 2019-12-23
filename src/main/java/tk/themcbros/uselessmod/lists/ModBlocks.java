@@ -3,21 +3,7 @@ package tk.themcbros.uselessmod.lists;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.LogBlock;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.StandingSignBlock;
-import net.minecraft.block.WallSignBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.potion.Effects;
@@ -47,8 +33,8 @@ public class ModBlocks {
 	public static final Block USELESS_SLAB = register("useless_slab", new SlabBlock(Block.Properties.from(USELESS_PLANKS)));
 	public static final Block USELESS_STAIRS = register("useless_stairs", new StairsBlock(ModBlocks.USELESS_PLANKS::getDefaultState, Block.Properties.from(USELESS_PLANKS)));
 	public static final Block USELESS_FENCE = register("useless_fence", new FenceBlock(Block.Properties.from(USELESS_PLANKS)));
-	public static final Block USELESS_SIGN = register("useless_sign", new StandingSignBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD)));
-	public static final Block USELESS_WALL_SIGN = register("useless_wall_sign", new WallSignBlock(Block.Properties.from(USELESS_SIGN)));
+	public static final Block USELESS_SIGN = register("useless_sign", new StandingSignBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodType.field_227038_a_));
+	public static final Block USELESS_WALL_SIGN = register("useless_wall_sign", new WallSignBlock(Block.Properties.from(USELESS_SIGN), WoodType.field_227038_a_));
 	public static final Block USELESS_PRESSURE_PLATE = register("useless_pressure_plate", new UselessPressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
 	public static final Block USELESS_TRAPDOOR = register("useless_trapdoor", new UselessTrapdoorBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0F).sound(SoundType.WOOD)));
 	public static final Block USELESS_FENCE_GATE = register("useless_fence_gate", new FenceGateBlock(Block.Properties.from(USELESS_FENCE)));
@@ -57,7 +43,7 @@ public class ModBlocks {
 
 	// Natural
 	public static final Block USELESS_SAPLING = register("useless_sapling", new UselessSaplingBlock(new UselessTree(), Block.Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly().doesNotBlockMovement()));
-	public static final Block POTTED_USELESS_SAPLING = register("potted_useless_sapling", new FlowerPotBlock(USELESS_SAPLING, Block.Properties.create(Material.MISCELLANEOUS)));
+	public static final Block POTTED_USELESS_SAPLING = register("potted_useless_sapling", new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, USELESS_SAPLING.delegate, Block.Properties.create(Material.MISCELLANEOUS)));
 	public static final Block USELESS_LEAVES = register("useless_leaves", new LeavesBlock(Block.Properties.create(Material.LEAVES).tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.PLANT)));
 	public static final Block USELESS_GRASS_BLOCK = register("useless_grass_block", new UselessGrassBlock(Block.Properties.create(Material.ORGANIC).tickRandomly().hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
 	public static final Block USELESS_DIRT = register("useless_dirt", new Block(Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND)));
@@ -114,7 +100,6 @@ public class ModBlocks {
 	public static final Block LIGHT_SWITCH = register("light_switch", new LightSwitchBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.2f)));
 	public static final Block LIGHT_SWITCH_BLOCK = register("light_switch_block", new LightSwitchBlockBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.4f)));
 	public static final Block UNLIT_LANTERN = register("unlit_lantern", new UnlitLanternBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).lootFrom(Blocks.LANTERN)));
-	public static final Block GREENSTONE_WIRE = register("greenstone_wire", new GreenstoneWireBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement()));
 
 	// Fluid Blocks
 	public static final FlowingFluidBlock USELESS_WATER = register("useless_water", new FlowingFluidBlock(() -> ModFluids.USELESS_WATER, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));

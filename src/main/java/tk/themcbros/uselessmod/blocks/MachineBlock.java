@@ -16,8 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -40,15 +38,16 @@ public abstract class MachineBlock extends ContainerBlock {
 	}
 	
 	public abstract void openContainer(World world, BlockPos pos, PlayerEntity player);
-	
+
+	@Nonnull
 	@Override
-	public boolean onBlockActivated(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			openContainer(worldIn, pos, player);
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(@Nonnull BlockItemUseContext context) {
 		return this.getDefaultState().with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
@@ -70,25 +69,13 @@ public abstract class MachineBlock extends ContainerBlock {
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
-	
-	@Nonnull
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.SOLID;
-	}
-	
-	@Override
-	public boolean isSolid(BlockState state) {
-		return true;
-	}
-	
+
 	@Override
 	public boolean hasTileEntity() {
 		return true;
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public void animateTick(@Nonnull BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (stateIn.get(ACTIVE)) {
 			double d0 = (double) pos.getX() + 0.5D;

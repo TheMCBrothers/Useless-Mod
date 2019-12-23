@@ -1,23 +1,6 @@
 package tk.themcbros.uselessmod.compat.waila;
 
-import java.util.List;
-
-import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IDataAccessor;
-import mcp.mobius.waila.api.IPluginConfig;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import tk.themcbros.uselessmod.blocks.LampBlock;
-import tk.themcbros.uselessmod.blocks.LightSwitchBlock;
-import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
-import tk.themcbros.uselessmod.lists.ModBlocks;
-import tk.themcbros.uselessmod.lists.ModItems;
-
-public class HUDHandlerUselessMod implements IComponentProvider {
+public class HUDHandlerUselessMod /*implements IComponentProvider {
 	
 	static final HUDHandlerUselessMod INSTANCE = new HUDHandlerUselessMod();
 
@@ -50,4 +33,4 @@ public class HUDHandlerUselessMod implements IComponentProvider {
 		}
 	}
 	
-}
+}*/{}

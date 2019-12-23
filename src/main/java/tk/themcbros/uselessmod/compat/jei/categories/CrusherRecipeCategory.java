@@ -1,26 +1,6 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
-import mezz.jei.api.gui.drawable.IDrawableStatic;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
-import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
-import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.compat.jei.RecipeCategoryUid;
-import tk.themcbros.uselessmod.lists.ModBlocks;
-import tk.themcbros.uselessmod.recipes.CrusherRecipe;
-
-public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
+public class CrusherRecipeCategory /*implements IRecipeCategory<CrusherRecipe> {
 
 	private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/crusher.png");
 	
@@ -98,4 +78,4 @@ public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
 		stacks.set(ingredients);
 	}
 	
-}
+}*/{}

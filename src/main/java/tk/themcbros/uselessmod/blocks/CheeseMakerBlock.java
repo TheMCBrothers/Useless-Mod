@@ -39,7 +39,7 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 	public CheeseMakerBlock(Properties properties) {
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH)
-				.with(WATERLOGGED, Boolean.valueOf(false)).with(ACTIVE, Boolean.valueOf(false)).with(LAVALOGGED, Boolean.valueOf(false)));
+				.with(WATERLOGGED, Boolean.FALSE).with(ACTIVE, Boolean.FALSE).with(LAVALOGGED, Boolean.FALSE));
 		SHAPE = this.generateShape();
 	}
 
@@ -77,11 +77,6 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 		return RAYTRACE_SHAPE;
 	}
 
-	@Override
-	public boolean isSolid(BlockState state) {
-		return false;
-	}
-
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (!worldIn.isRemote) {
 			boolean flag = worldIn.isBlockPowered(pos);
@@ -105,10 +100,10 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 		iblockstate = iblockstate.with(HORIZONTAL_FACING, enumfacing.getOpposite());
 
 		if (context.getWorld().isBlockPowered(context.getPos())) {
-			iblockstate = iblockstate.with(ACTIVE, Boolean.valueOf(true));
+			iblockstate = iblockstate.with(ACTIVE, Boolean.TRUE);
 		}
 
-		return iblockstate.with(WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER)).with(LAVALOGGED, ifluidstate.getFluid() == Fluids.LAVA);
+		return iblockstate.with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER).with(LAVALOGGED, ifluidstate.getFluid() == Fluids.LAVA);
 	}
 
 	@Override
@@ -123,10 +118,10 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 
 	public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
 		if (state.get(WATERLOGGED)) {
-			worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(false)), 3);
+			worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.FALSE), 3);
 			return Fluids.WATER;
 		} else if (state.get(LAVALOGGED)) {
-			worldIn.setBlockState(pos, state.with(LAVALOGGED, Boolean.valueOf(false)), 3);
+			worldIn.setBlockState(pos, state.with(LAVALOGGED, Boolean.FALSE), 3);
 			return Fluids.LAVA;
 		} else {
 			return Fluids.EMPTY;
@@ -147,7 +142,7 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 	public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn) {
 		if (!state.get(WATERLOGGED) && fluidStateIn.getFluid() == Fluids.WATER) {
 			if (!worldIn.isRemote()) {
-				worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
+				worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.TRUE), 3);
 				worldIn.getPendingFluidTicks().scheduleTick(pos, fluidStateIn.getFluid(),
 						fluidStateIn.getFluid().getTickRate(worldIn));
 			}
@@ -155,7 +150,7 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 			return true;
 		} else if (!state.get(LAVALOGGED) && fluidStateIn.getFluid() == Fluids.LAVA) {
 			if (!worldIn.isRemote()) {
-				worldIn.setBlockState(pos, state.with(LAVALOGGED, Boolean.valueOf(true)), 3);
+				worldIn.setBlockState(pos, state.with(LAVALOGGED, Boolean.TRUE), 3);
 				worldIn.getPendingFluidTicks().scheduleTick(pos, fluidStateIn.getFluid(),
 						fluidStateIn.getFluid().getTickRate(worldIn));
 			}

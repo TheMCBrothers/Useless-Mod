@@ -1,52 +1,7 @@
 package tk.themcbros.uselessmod.compat.jei;
 
-import java.util.Collections;
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IModIngredientRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.client.gui.CoffeeMachineScreen;
-import tk.themcbros.uselessmod.client.gui.CompressorScreen;
-import tk.themcbros.uselessmod.client.gui.CrusherScreen;
-import tk.themcbros.uselessmod.client.gui.ElectricCrusherScreen;
-import tk.themcbros.uselessmod.client.gui.ElectricFurnaceScreen;
-import tk.themcbros.uselessmod.client.gui.GlowstoneGeneratorScreen;
-import tk.themcbros.uselessmod.closet.ClosetRegistry;
-import tk.themcbros.uselessmod.closet.IClosetMaterial;
-import tk.themcbros.uselessmod.compat.jei.categories.CoffeeRecipeCategory;
-import tk.themcbros.uselessmod.compat.jei.categories.CompressorRecipeCategory;
-import tk.themcbros.uselessmod.compat.jei.categories.CrusherRecipeCategory;
-import tk.themcbros.uselessmod.compat.jei.categories.ElectricCrusherRecipeCategory;
-import tk.themcbros.uselessmod.compat.jei.categories.GlowstoneGeneratorRecipeCategory;
-import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredient;
-import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientHelper;
-import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
-import tk.themcbros.uselessmod.container.CoffeeMachineContainer;
-import tk.themcbros.uselessmod.container.CompressorContainer;
-import tk.themcbros.uselessmod.container.CrusherContainer;
-import tk.themcbros.uselessmod.container.ElectricCrusherContainer;
-import tk.themcbros.uselessmod.container.GlowstoneGeneratorContainer;
-import tk.themcbros.uselessmod.lists.ModBlocks;
-import tk.themcbros.uselessmod.lists.ModItems;
-
-@JeiPlugin
-public class JEICompat implements IModPlugin {
+//@JeiPlugin
+public class JEICompat /*implements IModPlugin {
 	
 	public static final ResourceLocation ID = new ResourceLocation(UselessMod.MOD_ID, "jeicompat");
 
@@ -139,3 +94,4 @@ public class JEICompat implements IModPlugin {
 	}
 
 }
+*/{}

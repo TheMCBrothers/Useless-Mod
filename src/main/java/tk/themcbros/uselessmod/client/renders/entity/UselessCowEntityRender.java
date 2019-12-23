@@ -19,7 +19,7 @@ public class UselessCowEntityRender extends LivingRenderer<UselessCowEntity, Use
 	}
 	
 	@Override
-	protected ResourceLocation getEntityTexture(UselessCowEntity arg0) {
+	public ResourceLocation getEntityTexture(UselessCowEntity arg0) {
 		return new ResourceLocation(UselessMod.MOD_ID, "textures/entity/useless_entity.png");
 	}
 	

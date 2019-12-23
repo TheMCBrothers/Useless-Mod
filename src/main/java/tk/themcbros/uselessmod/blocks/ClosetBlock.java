@@ -25,12 +25,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -42,6 +37,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -70,7 +66,7 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	}
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
 			if(!worldIn.isRemote) {
 				TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -78,11 +74,11 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 					NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity);
 				}
 			}
-			return true;
+			return ActionResultType.SUCCESS;
 		}
-		return false;
+		return ActionResultType.PASS;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -96,15 +92,15 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 			super.onReplaced(state, worldIn, pos, newState, isMoving);
 		}
 	}
-	
-	@Override
-	public void tick(BlockState blockState, World world, BlockPos pos, Random random) {
+
+	@Override // Tick?
+	public void func_225534_a_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof ClosetTileEntity) {
 			((ClosetTileEntity) tileEntity).onScheduledTick();
 		}
 	}
-	
+
 	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
 		Direction dir = state.get(BlockStateProperties.HORIZONTAL_FACING);
@@ -117,7 +113,7 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (stack != null) {
 			if (stack.hasTag() && stack.getTag().contains("uselessmod")) {
 				CompoundNBT tag = stack.getTag().getCompound("uselessmod");
@@ -184,12 +180,7 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 		IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
 		
 		blockstate = blockstate.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
-		return blockstate.with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER));
-	}
-	
-	@Override
-	public boolean isSolid(BlockState state) {
-		return false;
+		return blockstate.with(BlockStateProperties.WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
 	}
 	
 	public IFluidState getFluidState(BlockState state) {
@@ -213,11 +204,6 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	@Override
 	public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
 		return state.with(BlockStateProperties.HORIZONTAL_FACING, direction.rotate(state.get(BlockStateProperties.HORIZONTAL_FACING)));
-	}
-	
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
 	}
 	
 	@Override

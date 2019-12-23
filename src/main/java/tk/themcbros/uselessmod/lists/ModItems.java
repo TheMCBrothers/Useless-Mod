@@ -178,7 +178,6 @@ public class ModItems {
 	public static final PaintBrushItem PAINT_BRUSH = registerItem("paint_brush", new PaintBrushItem(new Item.Properties().maxStackSize(1).group(GROUP)));
 
 	// Misc
-	public static final BlockNamedItem GREENSTONE = registerItem("greenstone", new BlockNamedItem(ModBlocks.GREENSTONE_WIRE, new Item.Properties().group(GROUP)));
 	public static final SpawnEggItem USELESS_ENTITY_SPAWN_EGG = registerItem("useless_cow_spawn_egg", new SpawnEggItem(ModEntityTypes.USELESS_COW, 0x2b8a4a, 0x195c19, new Item.Properties().group(GROUP)));
 	public static final GrenadeItem GRENADE = registerItem("grenade", new GrenadeItem(new Item.Properties().group(GROUP).maxStackSize(16)));
 	public static final BucketItem USELESS_WATER_BUCKET = registerItem("useless_water_bucket", new BucketItem(() -> ModFluids.USELESS_WATER, new Item.Properties().group(ModItemGroups.USELESS_ITEM_GROUP).maxStackSize(1).containerItem(Items.BUCKET)));

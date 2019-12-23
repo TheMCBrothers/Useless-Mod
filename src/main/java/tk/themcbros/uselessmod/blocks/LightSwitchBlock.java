@@ -19,11 +19,7 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -102,7 +98,7 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 
 	/**
 	 * @deprecated call via
-	 *             {@link BlockState#getWeakPower(IBlockAccess,BlockPos,EnumFacing)}
+	 *             {@link BlockState#getWeakPower(IBlockReader,BlockPos,Direction)}
 	 *             whenever possible. Implementing/overriding is fine.
 	 */
 	public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
@@ -111,7 +107,7 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 
 	/**
 	 * @deprecated call via
-	 *             {@link BlockState#getStrongPower(IBlockAccess,BlockPos,EnumFacing)}
+	 *             {@link BlockState#getStrongPower(IBlockReader,BlockPos,Direction)}
 	 *             whenever possible. Implementing/overriding is fine.
 	 */
 	public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
@@ -119,8 +115,8 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-			BlockRayTraceResult hit) {
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+										   BlockRayTraceResult hit) {
 		
 		boolean trigger = state.get(POWERED);
 		state = state.cycle(POWERED);
@@ -131,7 +127,7 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 		LightSwitchBlockBlock.switchLights(state, worldIn, pos);
 		
 		worldIn.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(worldIn));
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 
 	private void playSound(@Nullable PlayerEntity playerIn, IWorld worldIn, BlockPos pos, SoundEvent sound) {

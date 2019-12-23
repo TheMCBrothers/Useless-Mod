@@ -1,15 +1,7 @@
 package tk.themcbros.uselessmod.client.models.block;
 
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemOverrideList;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
-import tk.themcbros.uselessmod.closet.ClosetRegistry;
+public class ClosetItemOverride /*extends ItemOverrideList {
 
-public class ClosetItemOverride extends ItemOverrideList {
 
 	@Override
 	public IBakedModel getModelWithOverrides(IBakedModel modelOriginal, ItemStack stack, World worldIn, LivingEntity entityIn) {
@@ -26,3 +18,4 @@ public class ClosetItemOverride extends ItemOverrideList {
 	}
 
 }
+*/{}

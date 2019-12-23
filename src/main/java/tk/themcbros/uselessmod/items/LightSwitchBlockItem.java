@@ -38,7 +38,7 @@ public class LightSwitchBlockItem extends BlockItem {
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		if(stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND) && stack.getChildTag("BlockEntityTag").contains("Lights", Constants.NBT.TAG_LONG_ARRAY)) {
-			if(GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
+			if(/*GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS*/false) {
 				for(long l : stack.getChildTag("BlockEntityTag").getLongArray("Lights")) {
 					BlockPos pos = BlockPos.fromLong(l);
 					BlockState state = worldIn.getBlockState(pos);
@@ -92,7 +92,7 @@ public class LightSwitchBlockItem extends BlockItem {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		final ItemStack stack = playerIn.getHeldItem(handIn);
 		
-		if(playerIn.isSneaking()) {
+		if(playerIn.isCrouching()) { // TODO
 			stack.setTag(new CompoundNBT());
 			playerIn.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.cleared"), true);
 			return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);

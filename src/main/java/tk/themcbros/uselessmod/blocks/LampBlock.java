@@ -14,17 +14,20 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IEnviromentBlockReader;
+import net.minecraft.world.ILightReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import tk.themcbros.uselessmod.items.LampBlockItem;
 import tk.themcbros.uselessmod.lists.ModItems;
+
+import javax.annotation.Nonnull;
 
 public class LampBlock extends Block {
 
@@ -36,7 +39,7 @@ public class LampBlock extends Block {
 		
 		this.setDefaultState(this.stateContainer.getBaseState().with(LIT, Boolean.FALSE).with(COLOR, DyeColor.WHITE));
 	}
-	
+
 	@Override
 	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
 		IItemProvider provider = this;
@@ -94,8 +97,7 @@ public class LampBlock extends Block {
 			break;
 		}
 
-		ItemStack stack = new ItemStack(provider);
-		return stack;
+		return new ItemStack(provider);
 	}
 
 	@Override
@@ -113,16 +115,17 @@ public class LampBlock extends Block {
 		return this.getItem(world, pos, state);
 	}
 	
+	@Nonnull
 	@Override
-	public List<ItemStack> getDrops(BlockState state, net.minecraft.world.storage.loot.LootContext.Builder builder) {
+	public List<ItemStack> getDrops(@Nonnull BlockState state, @Nonnull net.minecraft.world.storage.loot.LootContext.Builder builder) {
 		List<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(this.getItem(null, null, state));
 		return drops;
 	}
-	
-	
+
+	@Nonnull
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		ItemStack heldStack = player.getHeldItem(handIn);
 		DyeColor color = DyeColor.getColor(heldStack);
 		if(!heldStack.isEmpty() && color != null && state.get(COLOR) != color) {
@@ -134,11 +137,10 @@ public class LampBlock extends Block {
 		}
 
 		worldIn.setBlockState(pos, state, 3);
-		
-		return true;
+
+		return ActionResultType.SUCCESS;
 	}
 
-	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		BlockState state = this.getDefaultState();
@@ -149,12 +151,12 @@ public class LampBlock extends Block {
 		}
 		return state;
 	}
-	
+
 	@Override
-	public int getLightValue(BlockState state, IEnviromentBlockReader world, BlockPos pos) {
+	public int getLightValue(BlockState state, ILightReader world, BlockPos pos) {
 		return getLightValue(state);
 	}
-	
+
 	@Override
 	public int getLightValue(BlockState state) {
 		return state.get(LIT) ? 15 : 0;
