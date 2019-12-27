@@ -1,40 +1,10 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/themcbros-useless-mod",
-  "changelog": "https://github.com/TheMCBrothers/UselessMod/blob/mc-1.14.x/CHANGELOG.md",
-  "1.14.4": {
-    "1.14.4-2.2.6": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.6",
-    "1.14.4-2.2.5": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.5",
-    "1.14.4-2.2.4": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.4",
-    "1.14.4-2.2.3": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.3",
-    "1.14.4-2.2.2": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.2",
-    "1.14.4-2.2.1": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.1",
-    "1.14.4-2.2.0": "https://github.com/TheMCBrothers/UselessMod/releases/tag/1.14.4-2.2.0"
-  },
-  "1.14.3": {
-    "2.1.3": "Added paint brush, canvas, paint bucket and grenade / Bug fixes",
-    "2.1.2": "Added wall closet / Custom item group bg / Bug fixes",
-    "2.1.1": "Added Greenstone / Readded recipes / Added JEI Integration",
-    "2.1.0": "Updated to 1.14.3 / Added useless/super-useless doors and bars / Retextured lamps"
-  },
-  "1.14.2": {
-    "2.0.3": "Added block drops / removed machine recipes -> made crusher and compressor useless (for now)",
-    "2.0.2": "Readded armor and world generation / some textures were repainted",
-    "2.0.1": "Compressor recipes now working / changed registries",
-    "2.0.0": "Updated to 1.14.2 / bug fixes / barrel, energy cable and fluid tank removed"
-  },
-  "1.13.2": {
-    "1.3.2": "Texture improvements and bug fixes"
-  },
   "promos": {
+    "1.15.1-latest": "1.15.1-3.0.0",
     "1.14.4-latest": "1.14.4-2.2.4",
-    "1.14.4-recommended": "1.14.4-2.2.4",
     "1.14.3-latest": "2.1.3",
-    "1.14.3-recommended": "2.1.3",
     "1.14.2-latest": "2.0.3",
-    "1.14.2-recommended": "2.0.3",
-    "1.13.2-latest": "1.3.2",
-    "1.13.2-recommended": "1.3.2",
-    "recommended": "1.14.4-2.2.6",
-    "latest": "1.14.4-2.2.6"
+    "1.13.2-latest": "1.3.2"
   }
 }
