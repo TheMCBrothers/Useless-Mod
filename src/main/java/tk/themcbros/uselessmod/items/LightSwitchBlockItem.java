@@ -27,6 +27,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.ModList;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 
+import javax.annotation.Nullable;
+
 public class LightSwitchBlockItem extends BlockItem {
 
 	public LightSwitchBlockItem(Block blockIn, Properties builder) {
@@ -35,10 +37,11 @@ public class LightSwitchBlockItem extends BlockItem {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
+		assert worldIn != null;
 		if(stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND) && stack.getChildTag("BlockEntityTag").contains("Lights", Constants.NBT.TAG_LONG_ARRAY)) {
-			if(/*GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS*/false) {
+			if(GLFW.glfwGetKey(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
 				for(long l : stack.getChildTag("BlockEntityTag").getLongArray("Lights")) {
 					BlockPos pos = BlockPos.fromLong(l);
 					BlockState state = worldIn.getBlockState(pos);
@@ -77,9 +80,10 @@ public class LightSwitchBlockItem extends BlockItem {
 			if(!longList.contains(pos.toLong())) {
 				longList.add(pos.toLong());
 				String bPos = "[" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
-				player.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.block_added", bPos), true);
+				if (player != null)
+					player.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.block_added", bPos), true);
 				blockEntityTag.putLongArray("Lights", longList);
-			} else {
+			} else if (player != null) {
 				player.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.block_already_added").applyTextStyle(TextFormatting.RED), true);
 			}
 			return ActionResultType.SUCCESS;

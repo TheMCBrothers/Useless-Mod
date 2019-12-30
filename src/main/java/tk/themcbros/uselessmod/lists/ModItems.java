@@ -1,5 +1,6 @@
 package tk.themcbros.uselessmod.lists;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -22,7 +23,7 @@ import java.util.List;
 public class ModItems {
 	
 	private static final ItemGroup GROUP = ModItemGroups.USELESS_ITEM_GROUP;
-	private static final List<Item> ITEMS = new ArrayList<Item>();
+	private static final List<Item> ITEMS = Lists.newArrayList();
 
 	// Block Items
 	// Wood

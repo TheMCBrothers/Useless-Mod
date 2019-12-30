@@ -11,7 +11,7 @@ import tk.themcbros.uselessmod.lists.ModEntityTypes;
 public class UselessRenderRegistry {
 
 	public static void registerEntityRenders() {
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.USELESS_COW, new UselessCowEntityRender.RenderFactory());
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.USELESS_COW, UselessCowEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GRENADE, manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
 	}
 	

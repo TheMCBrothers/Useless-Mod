@@ -1,10 +1,5 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.List;
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -38,14 +33,16 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
 import tk.themcbros.uselessmod.closet.IClosetMaterial;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class ClosetBlock extends Block implements IWaterLoggable {
 	
@@ -139,7 +136,6 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	}
 	 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 
