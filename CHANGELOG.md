@@ -1,6 +1,8 @@
 
 ### 1.14.4-2.2.7
+- Useless Ingots can be used as beacon payment
 - Fixed upgrading machine does not consume item
+- Fixed crash on startup when TOP isn't installed (#19)
 
 ### 1.14.4-2.2.6
 - Added compatibility for [Mystical Agriculture](https://www.curseforge.com/minecraft/mc-mods/mystical-agriculture)
