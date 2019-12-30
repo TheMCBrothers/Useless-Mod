@@ -27,7 +27,7 @@
 								},
 								{
 									"condition": "minecraft:block_state_property",
-									"block": "minecraft:large_useless_fern",
+									"block": "uselessmod:large_useless_fern",
 									"properties": {
 										"half": "lower"
 									}

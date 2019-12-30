@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -98,12 +99,10 @@ public abstract class MachineFluidScreen<T extends Container> extends ContainerS
 
 	private static TextureAtlasSprite getStillFluidSprite(FluidStack fluidStack) {
 		Minecraft minecraft = Minecraft.getInstance();
-//		AtlasTexture textureMapBlocks = minecraft.getTextureMap();
-		AtlasTexture textureMapBlocks = new AtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
 		Fluid fluid = fluidStack.getFluid();
 		FluidAttributes attributes = fluid.getAttributes();
 		ResourceLocation fluidStill = attributes.getStillTexture(fluidStack);
-		return textureMapBlocks.getSprite(fluidStill);
+		return minecraft.func_228015_a_(PlayerContainer.field_226615_c_).apply(fluidStill);
 	}
 
 	private static void setGLColorFromInt(int color) {
@@ -116,22 +115,22 @@ public abstract class MachineFluidScreen<T extends Container> extends ContainerS
 	}
 
 	private static void drawTextureWithMasking(double xCoord, double yCoord, TextureAtlasSprite textureSprite, int maskTop, int maskRight, double zLevel) {
-//		double uMin = textureSprite.getMinU();
-//		double uMax = textureSprite.getMaxU();
-//		double vMin = textureSprite.getMinV();
-//		double vMax = textureSprite.getMaxV();
-//		uMax = uMax - (maskRight / 16.0 * (uMax - uMin));
-//		vMax = vMax - (maskTop / 16.0 * (vMax - vMin));
-//
-//		Tessellator tessellator = Tessellator.getInstance();
-//		BufferBuilder bufferBuilder = tessellator.getBuffer();
-//		bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-//		bufferBuilder.func_225582_a_(xCoord, yCoord + 16, zLevel).tex(uMin, vMax).endVertex();
-//		bufferBuilder.func_225582_a_(xCoord + 16 - maskRight, yCoord + 16, zLevel).tex(uMax, vMax).endVertex();
-//		bufferBuilder.func_225582_a_(xCoord + 16 - maskRight, yCoord + maskTop, zLevel).tex(uMax, vMin).endVertex();
-//		bufferBuilder.func_225582_a_(xCoord, yCoord + maskTop, zLevel).tex(uMin, vMin).endVertex();
-//
-//		tessellator.draw();
+		double uMin = textureSprite.getMinU();
+		double uMax = textureSprite.getMaxU();
+		double vMin = textureSprite.getMinV();
+		double vMax = textureSprite.getMaxV();
+		uMax = uMax - (maskRight / 16.0 * (uMax - uMin));
+		vMax = vMax - (maskTop / 16.0 * (vMax - vMin));
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferBuilder.func_225582_a_(xCoord, yCoord + 16, zLevel).func_225583_a_((float) uMin, (float) vMax).endVertex();
+		bufferBuilder.func_225582_a_(xCoord + 16 - maskRight, yCoord + 16, zLevel).func_225583_a_((float) uMax, (float) vMax).endVertex();
+		bufferBuilder.func_225582_a_(xCoord + 16 - maskRight, yCoord + maskTop, zLevel).func_225583_a_((float) uMax, (float) vMin).endVertex();
+		bufferBuilder.func_225582_a_(xCoord, yCoord + maskTop, zLevel).func_225583_a_((float) uMin, (float) vMin).endVertex();
+
+		tessellator.draw();
 	}
 	
 }

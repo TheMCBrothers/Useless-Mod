@@ -1,6 +1,14 @@
 
+### 1.15.1-3.0.1
+- Fluids in guis render again
+
+### 1.15.1-3.0.0
+- Initial 1.15.1 release
+- Many rendering issues are present
+
 ### 1.14.4-2.2.7
 - Fixed upgrading machine does not consume item
+- Useless Ingots are now valid beacon payment
 
 ### 1.14.4-2.2.6
 - Added compatibility for [Mystical Agriculture](https://www.curseforge.com/minecraft/mc-mods/mystical-agriculture)
