@@ -128,7 +128,7 @@ public class ClientProxy extends CommonProxy {
 		}, ModItems.COFFEE_CUP);
 
 		// Useless Plants
-		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.func_225529_c_(), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
+		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.func_225528_a_(0, 0), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
 
 		// Fluid Canister
 		itemColors.register((stack, layer) -> layer == 1 ? ModItems.CANISTER.getFluid(stack).getFluid().getAttributes().getColor() : -1, ModItems.CANISTER);

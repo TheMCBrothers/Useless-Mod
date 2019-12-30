@@ -20,7 +20,6 @@ import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import tk.themcbros.uselessmod.lists.ModBiomeFeatures;
-import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.lists.ModEntityTypes;
 
 public class UselessBiome extends Biome {
@@ -32,7 +31,7 @@ public class UselessBiome extends Biome {
 				.precipitation(RainType.RAIN)
 				.category(Biome.Category.FOREST)
 				.depth(0.15F)
-				.scale(0.1F)
+				.scale(0.05F)
 				.temperature(0.7F)
 				.downfall(1.4F)
 				.waterColor(0x40B45F)
@@ -65,17 +64,15 @@ public class UselessBiome extends Biome {
         // Vegetation
 		DefaultBiomeFeatures.addMushrooms(this);
 		DefaultBiomeFeatures.addDefaultFlowers(this);
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.func_225566_b_(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.func_225566_b_(ModBiomeFeatures.FANCY_USELESS_TREE).func_227227_a_(0.33333334F)), Feature.NORMAL_TREE.func_225566_b_(ModBiomeFeatures.USELESS_TREE))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.USELESS_WHEAT).func_227228_a_(Placement.CHANCE_HEIGHTMAP_DOUBLE.func_227446_a_(new ChanceConfig(1))));
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.COFFEE_SEEDS).func_227228_a_(Placement.CHANCE_HEIGHTMAP_DOUBLE.func_227446_a_(new ChanceConfig(1))));
-
-
-		// TODO 1.15: Vegetation generation!
-//		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.RANDOM_SELECTOR, new MultipleRandomFeatureConfig(new Feature[]{ModFeatures.USELESS_TREES, ModFeatures.FANCY_USELESS_TREE}, new IFeatureConfig[]{IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG}, new float[]{0.2F, 0.1F}, ModFeatures.USELESS_TREES, IFeatureConfig.NO_FEATURE_CONFIG), Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(10, 0.1F, 1)));
-////        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(ModFeatures.USELESS_TREES, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(8, 0.5F, 1)));
-//        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(ModFeatures.USELESS_FLOWERS, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(8)));
-//        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.DOUBLE_PLANT, new DoublePlantConfig(ModBlocks.TALL_USELESS_GRASS.getDefaultState()), Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(5)));
-//        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.DOUBLE_PLANT, new DoublePlantConfig(ModBlocks.LARGE_USELESS_FERN.getDefaultState()), Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(2)));
+		DefaultBiomeFeatures.addDoubleFlowers(this);
+		DefaultBiomeFeatures.addGrass(this);
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.func_225566_b_(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.func_225566_b_(ModBiomeFeatures.FANCY_USELESS_TREE_BEEHIVE).func_227227_a_(0.1F)), Feature.NORMAL_TREE.func_225566_b_(ModBiomeFeatures.USELESS_TREE_BEEHIVE))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(6, 0.1F, 1))));
+//		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.func_225566_b_(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.func_225566_b_(ModBiomeFeatures.FANCY_USELESS_TREE_BEEHIVE).func_227227_a_(0.33333334F)), Feature.NORMAL_TREE.func_225566_b_(ModBiomeFeatures.USELESS_TREE_BEEHIVE))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.USELESS_WHEAT).func_227228_a_(Placement.CHANCE_HEIGHTMAP_DOUBLE.func_227446_a_(new ChanceConfig(1)))); // Wild Useless Wheat
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.COFFEE_SEEDS).func_227228_a_(Placement.CHANCE_HEIGHTMAP_DOUBLE.func_227446_a_(new ChanceConfig(1)))); // Wild Coffee
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227247_y_.func_225566_b_(ModBiomeFeatures.USELESS_FLOWERS).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(2)))); // Useless Flowers
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.TALL_USELESS_GRASS).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(7)))); // Tall Grass (5)
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.LARGE_USELESS_FERN).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(7)))); // Large Fern (2)
 
         // Entities
 		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.SHEEP, 12, 4, 4));
@@ -95,8 +92,13 @@ public class UselessBiome extends Biome {
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.OCELOT, 2, 1, 1));
 	}
 
-	@Override // Grass Color
+	@Override // Sky Color
 	public int func_225529_c_() {
+		return 0x40B45F;
+	}
+
+	@Override // Grass Color
+	public int func_225528_a_(double p_225528_1_, double p_225528_3_) {
 		return 0x40B45F;
 	}
 

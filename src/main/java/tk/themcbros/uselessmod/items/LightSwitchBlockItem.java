@@ -96,7 +96,7 @@ public class LightSwitchBlockItem extends BlockItem {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		final ItemStack stack = playerIn.getHeldItem(handIn);
 		
-		if(playerIn.isCrouching()) { // TODO
+		if(playerIn.isCrouching()) {
 			stack.setTag(new CompoundNBT());
 			playerIn.sendStatusMessage(new TranslationTextComponent("status.uselessmod.light_switch.cleared"), true);
 			return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
