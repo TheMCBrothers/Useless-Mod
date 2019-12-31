@@ -3,6 +3,7 @@
 - Fluids in guis render again
 - Fixed some render type issues (still some present)
 - Fixed Large Useless Fern Loot Table
+- Useless Ingots are now valid beacon payment
 
 ### 1.15.1-3.0.0
 - Initial 1.15.1 release
