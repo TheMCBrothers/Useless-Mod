@@ -6,12 +6,16 @@ import java.util.List;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.*;
@@ -111,6 +115,42 @@ public class ModBlocks {
 			event.getRegistry().register(block);
 		});
 		UselessMod.LOGGER.debug("Registered useless blocks");
+
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			RenderType transparentRenderType = RenderType.func_228641_d_();
+			RenderType cutoutRenderType = RenderType.func_228643_e_();
+			RenderType translucentRenderType = RenderType.func_228645_f_();
+
+			RenderTypeLookup.setRenderLayer(USELESS_GRASS_BLOCK, transparentRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_LEAVES, transparentRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_BARS, transparentRenderType);
+			RenderTypeLookup.setRenderLayer(SUPER_USELESS_BARS, transparentRenderType);
+
+			RenderTypeLookup.setRenderLayer(USELESS_SAPLING, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_GRASS, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_FERN, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(LARGE_USELESS_FERN, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(TALL_USELESS_GRASS, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(RED_ROSE, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(BLUE_ROSE, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_WHEAT, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(WILD_USELESS_WHEAT, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(COFFEE_SEEDS, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(WILD_COFFEE_SEEDS, cutoutRenderType);
+
+			RenderTypeLookup.setRenderLayer(POTTED_USELESS_SAPLING, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(POTTED_USELESS_FERN, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(POTTED_RED_ROSE, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(POTTED_BLUE_ROSE, cutoutRenderType);
+
+			RenderTypeLookup.setRenderLayer(USELESS_DOOR, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(SUPER_USELESS_DOOR, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(WOODEN_USELESS_DOOR, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_TRAPDOOR, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(FLUID_TANK, cutoutRenderType);
+			RenderTypeLookup.setRenderLayer(CLOSET, cutoutRenderType);
+		}
+
 	}
 	
 	public static <T extends Block> T register(String name, T block) {
