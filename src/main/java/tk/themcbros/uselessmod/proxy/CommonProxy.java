@@ -1,6 +1,8 @@
 package tk.themcbros.uselessmod.proxy;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -12,13 +14,15 @@ import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 import tk.themcbros.uselessmod.closet.BeddingRegistryEvent;
 import tk.themcbros.uselessmod.closet.ClosetRegistry;
+import tk.themcbros.uselessmod.compat.farmingforblockheads.FarmingForBlockheadsCompat;
+import tk.themcbros.uselessmod.compat.top.TheOneProbeSupport;
 import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.handler.ForgeEventHandlers;
 import tk.themcbros.uselessmod.handler.UselessPlayerEvents;
 import tk.themcbros.uselessmod.lists.ModBiomes;
 import tk.themcbros.uselessmod.lists.ModEntityTypes;
 import tk.themcbros.uselessmod.lists.VanillaCompat;
-import tk.themcbros.uselessmod.world.FeatureGeneration;
+import tk.themcbros.uselessmod.world.OreGeneration;
 
 public class CommonProxy {
 
@@ -39,10 +43,7 @@ public class CommonProxy {
 
 		LightSwitchBlockBlock.init();
 
-//		OreGeneration.setupOreGeneration();
-//		OreGeneration.setupNetherOreGeneration(); TODO ore generation
-
-		FeatureGeneration.setupFeatureGeneration();
+		OreGeneration.setupOreGeneration();
 
 		VanillaCompat.register();
 
@@ -70,13 +71,13 @@ public class CommonProxy {
 		UselessMod.LOGGER.debug("CommonProxy init method");
 		MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
-//		if (ModList.get().isLoaded("theoneprobe")) {
-//			InterModComms.sendTo("theoneprobe", "getTheOneProbe", TheOneProbeSupport::new);
-//		}
-//
-//		if (ModList.get().isLoaded("farmingforblockheads")) {
-//			FarmingForBlockheadsCompat.init();
-//		}
+		if (ModList.get().isLoaded("theoneprobe")) {
+			InterModComms.sendTo("theoneprobe", "getTheOneProbe", TheOneProbeSupport::new);
+		}
+
+		if (ModList.get().isLoaded("farmingforblockheads")) {
+			FarmingForBlockheadsCompat.init();
+		}
 
 	}
 	

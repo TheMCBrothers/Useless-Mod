@@ -1,7 +1,32 @@
 package tk.themcbros.uselessmod.compat.jei;
 
-//@JeiPlugin
-public class JEICompat /*implements IModPlugin {
+import com.google.common.collect.Lists;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
+import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.client.gui.*;
+import tk.themcbros.uselessmod.closet.ClosetRegistry;
+import tk.themcbros.uselessmod.closet.IClosetMaterial;
+import tk.themcbros.uselessmod.compat.jei.categories.*;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredient;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientHelper;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
+import tk.themcbros.uselessmod.container.*;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.lists.ModItems;
+
+import java.util.Collections;
+import java.util.List;
+
+@JeiPlugin
+public class JEICompat implements IModPlugin {
 	
 	public static final ResourceLocation ID = new ResourceLocation(UselessMod.MOD_ID, "jeicompat");
 
@@ -94,4 +119,3 @@ public class JEICompat /*implements IModPlugin {
 	}
 
 }
-*/{}

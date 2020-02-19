@@ -1,8 +1,5 @@
 package tk.themcbros.uselessmod.lists;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -21,6 +18,9 @@ import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.blocks.*;
 import tk.themcbros.uselessmod.world.feature.UselessTree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("unused")
 @ObjectHolder(UselessMod.MOD_ID)
 @Mod.EventBusSubscriber(bus = Bus.MOD, modid = UselessMod.MOD_ID)
@@ -37,8 +37,8 @@ public class ModBlocks {
 	public static final Block USELESS_SLAB = register("useless_slab", new SlabBlock(Block.Properties.from(USELESS_PLANKS)));
 	public static final Block USELESS_STAIRS = register("useless_stairs", new StairsBlock(ModBlocks.USELESS_PLANKS::getDefaultState, Block.Properties.from(USELESS_PLANKS)));
 	public static final Block USELESS_FENCE = register("useless_fence", new FenceBlock(Block.Properties.from(USELESS_PLANKS)));
-	public static final Block USELESS_SIGN = register("useless_sign", new StandingSignBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodType.field_227038_a_));
-	public static final Block USELESS_WALL_SIGN = register("useless_wall_sign", new WallSignBlock(Block.Properties.from(USELESS_SIGN), WoodType.field_227038_a_));
+	public static final Block USELESS_SIGN = register("useless_sign", new StandingSignBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodType.OAK));
+	public static final Block USELESS_WALL_SIGN = register("useless_wall_sign", new WallSignBlock(Block.Properties.from(USELESS_SIGN), WoodType.OAK));
 	public static final Block USELESS_PRESSURE_PLATE = register("useless_pressure_plate", new UselessPressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
 	public static final Block USELESS_TRAPDOOR = register("useless_trapdoor", new UselessTrapdoorBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0F).sound(SoundType.WOOD)));
 	public static final Block USELESS_FENCE_GATE = register("useless_fence_gate", new FenceGateBlock(Block.Properties.from(USELESS_FENCE)));
@@ -46,7 +46,7 @@ public class ModBlocks {
 	public static final Block WOODEN_USELESS_DOOR = register("wooden_useless_door", new ModDoorBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(3.0F)));
 
 	// Natural
-	public static final Block USELESS_SAPLING = register("useless_sapling", new UselessSaplingBlock(new UselessTree(), Block.Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly().doesNotBlockMovement()));
+	public static final SaplingBlock USELESS_SAPLING = register("useless_sapling", new UselessSaplingBlock(new UselessTree(), Block.Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly().doesNotBlockMovement()));
 	public static final Block POTTED_USELESS_SAPLING = register("potted_useless_sapling", new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, USELESS_SAPLING.delegate, Block.Properties.create(Material.MISCELLANEOUS)));
 	public static final Block USELESS_LEAVES = register("useless_leaves", new LeavesBlock(Block.Properties.create(Material.LEAVES).tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.PLANT)));
 	public static final Block USELESS_GRASS_BLOCK = register("useless_grass_block", new UselessGrassBlock(Block.Properties.create(Material.ORGANIC).tickRandomly().hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
@@ -117,9 +117,9 @@ public class ModBlocks {
 		UselessMod.LOGGER.debug("Registered useless blocks");
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
-			RenderType transparentRenderType = RenderType.func_228641_d_();
-			RenderType cutoutRenderType = RenderType.func_228643_e_();
-			RenderType translucentRenderType = RenderType.func_228645_f_();
+			RenderType transparentRenderType = RenderType.getTranslucentNoCrumbling();
+			RenderType cutoutRenderType = RenderType.getCutout();
+			RenderType translucentRenderType = RenderType.getTranslucent();
 
 			RenderTypeLookup.setRenderLayer(USELESS_GRASS_BLOCK, transparentRenderType);
 			RenderTypeLookup.setRenderLayer(USELESS_LEAVES, transparentRenderType);

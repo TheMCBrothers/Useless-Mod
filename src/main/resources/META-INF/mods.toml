@@ -12,19 +12,19 @@ issueTrackerURL="https://minecraft.curseforge.com/projects/themcbros-useless-mod
     credits="Thanks for over 28000 downloads!" #optional
     authors="TheMCLoveMan (Code) & TheMCCrazyMan (Textures)" #optional
     description='''
-    This ia a not really useless mod for minecraft 1.15.1. Enjoy this mod with technology and other things!
+    This ia a not really useless mod for minecraft 1.15.2. Enjoy this mod with technology and other things!
     '''
 
 [[dependencies.uselessmod]]
     modId="forge"
     mandatory=true
-    versionRange="[30,)"
+    versionRange="[31,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.uselessmod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.1,)"
+    versionRange="[1.15.2,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.uselessmod]]
@@ -42,6 +42,6 @@ issueTrackerURL="https://minecraft.curseforge.com/projects/themcbros-useless-mod
 [[dependencies.uselessmod]]
     modId="mysticalagriculture"
     mandatory=false
-    versionRange="[2.0.0,)"
+    versionRange="[3.0.0,)"
     ordering="AFTER"
     side="BOTH"

@@ -1,24 +1,42 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-public class CrusherRecipeCategory /*implements IRecipeCategory<CrusherRecipe> {
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
+import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.compat.jei.RecipeCategoryUid;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.recipes.CrusherRecipe;
 
-	private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/crusher.png");
+public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
+
+    private final ResourceLocation TEXTURES = UselessMod.getId("textures/gui/container/jei_machines.png");
 	
 	private static final int input = 0;
 	private static final int output = 2;
-	
-	private final IDrawableStatic staticFlame;
-	private final IDrawableAnimated animatedFlame;
+
+    private final IDrawableAnimated animatedFlame;
 	private final IDrawableAnimated animatedArrow;
 	
 	private final IDrawable background, icon;
 	
 	public CrusherRecipeCategory(IGuiHelper helper) {
-		staticFlame = helper.createDrawable(TEXTURES, 176, 0, 14, 14);
-		animatedFlame = helper.createAnimatedDrawable(staticFlame, 300, StartDirection.TOP, true);
+        IDrawableStatic staticFlame = helper.createDrawable(TEXTURES, 176, 0, 14, 14);
+		animatedFlame = helper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
 		
 		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 176, 14, 24, 17);
-		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, StartDirection.LEFT, false);
+		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, IDrawableAnimated.StartDirection.LEFT, false);
 		
 		background = helper.createDrawable(TEXTURES, 55, 16, 82, 54);
 		icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.CRUSHER));
@@ -78,4 +96,4 @@ public class CrusherRecipeCategory /*implements IRecipeCategory<CrusherRecipe> {
 		stacks.set(ingredients);
 	}
 	
-}*/{}
+}

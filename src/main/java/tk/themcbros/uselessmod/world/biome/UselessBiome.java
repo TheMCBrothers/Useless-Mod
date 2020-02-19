@@ -39,12 +39,12 @@ public class UselessBiome extends Biome {
 				.parent((String)null));
 		
 		 // Structures
-		this.func_226711_a_(Feature.VILLAGE.func_225566_b_(new VillageConfig("village/plains/town_centers", 6)));
-		this.func_226711_a_(Feature.JUNGLE_TEMPLE.func_225566_b_(IFeatureConfig.NO_FEATURE_CONFIG));
-		this.func_226711_a_(Feature.PILLAGER_OUTPOST.func_225566_b_(IFeatureConfig.NO_FEATURE_CONFIG));
-		this.func_226711_a_(Feature.MINESHAFT.func_225566_b_(new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL)));
-		this.func_226711_a_(Feature.STRONGHOLD.func_225566_b_(IFeatureConfig.NO_FEATURE_CONFIG));
-		this.func_226711_a_(Feature.SWAMP_HUT.func_225566_b_(IFeatureConfig.NO_FEATURE_CONFIG));
+		this.addStructure(Feature.VILLAGE.withConfiguration(new VillageConfig("village/plains/town_centers", 6)));
+		this.addStructure(Feature.JUNGLE_TEMPLE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+		this.addStructure(Feature.PILLAGER_OUTPOST.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+		this.addStructure(Feature.MINESHAFT.withConfiguration(new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL)));
+		this.addStructure(Feature.STRONGHOLD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+		this.addStructure(Feature.SWAMP_HUT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
 
         // Underground
         DefaultBiomeFeatures.addCarvers(this);
@@ -60,19 +60,20 @@ public class UselessBiome extends Biome {
 		DefaultBiomeFeatures.addBamboo(this);
 		DefaultBiomeFeatures.addReedsAndPumpkins(this);
 		DefaultBiomeFeatures.addFossils(this);
+		DefaultBiomeFeatures.addLakes(this);
 
         // Vegetation
 		DefaultBiomeFeatures.addMushrooms(this);
 		DefaultBiomeFeatures.addDefaultFlowers(this);
 		DefaultBiomeFeatures.addDoubleFlowers(this);
 		DefaultBiomeFeatures.addGrass(this);
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.func_225566_b_(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.func_225566_b_(ModBiomeFeatures.FANCY_USELESS_TREE_BEEHIVE).func_227227_a_(0.1F)), Feature.NORMAL_TREE.func_225566_b_(ModBiomeFeatures.USELESS_TREE_BEEHIVE))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(6, 0.1F, 1))));
-//		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.func_225566_b_(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.func_225566_b_(ModBiomeFeatures.FANCY_USELESS_TREE_BEEHIVE).func_227227_a_(0.33333334F)), Feature.NORMAL_TREE.func_225566_b_(ModBiomeFeatures.USELESS_TREE_BEEHIVE))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.USELESS_WHEAT).func_227228_a_(Placement.CHANCE_HEIGHTMAP_DOUBLE.func_227446_a_(new ChanceConfig(1)))); // Wild Useless Wheat
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.COFFEE_SEEDS).func_227228_a_(Placement.CHANCE_HEIGHTMAP_DOUBLE.func_227446_a_(new ChanceConfig(1)))); // Wild Coffee
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227247_y_.func_225566_b_(ModBiomeFeatures.USELESS_FLOWERS).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(2)))); // Useless Flowers
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.TALL_USELESS_GRASS).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(7)))); // Tall Grass (5)
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(ModBiomeFeatures.LARGE_USELESS_FERN).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(7)))); // Large Fern (2)
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.withConfiguration(ModBiomeFeatures.FANCY_TREE_WITH_BEEHIVES_CONFIG).func_227227_a_(0.1F)), Feature.NORMAL_TREE.withConfiguration(ModBiomeFeatures.USELESS_TREE_WITH_BEEHIVES_CONFIG))).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(6, 0.1F, 1))));
+//		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.FANCY_TREE.func_225566_b_(ModBiomeFeatures.FANCY_USELESS_TREE_BEEHIVE).func_227227_a_(0.33333334F)), Feature.NORMAL_TREE.func_225566_b_(ModBiomeFeatures.USELESS_TREE_BEEHIVE))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(ModBiomeFeatures.USELESS_WHEAT).withPlacement(Placement.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceConfig(1)))); // Wild Useless Wheat
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(ModBiomeFeatures.COFFEE_SEEDS).withPlacement(Placement.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceConfig(1)))); // Wild Coffee
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.FLOWER.withConfiguration(ModBiomeFeatures.USELESS_FLOWERS).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(new FrequencyConfig(2)))); // Useless Flowers
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(ModBiomeFeatures.TALL_USELESS_GRASS).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(new FrequencyConfig(7)))); // Tall Grass (5)
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(ModBiomeFeatures.LARGE_USELESS_FERN).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(new FrequencyConfig(7)))); // Large Fern (2)
 
         // Entities
 		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.SHEEP, 12, 4, 4));
@@ -92,18 +93,18 @@ public class UselessBiome extends Biome {
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.OCELOT, 2, 1, 1));
 	}
 
-	@Override // Sky Color
-	public int func_225529_c_() {
+	@Override
+	public int getSkyColor() {
 		return 0x40B45F;
 	}
 
-	@Override // Grass Color
-	public int func_225528_a_(double p_225528_1_, double p_225528_3_) {
+	@Override
+	public int getGrassColor(double p_225528_1_, double p_225528_3_) {
 		return 0x40B45F;
 	}
 
-	@Override // Foliage Color
-	public int func_225527_a_() {
+	@Override
+	public int getFoliageColor() {
 		return 0x3FBF6A;
 	}
 

@@ -108,35 +108,36 @@ dependencies {
     // JEI
 //    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
 //    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
-    //compile fg.deobf("mezz.jei:jei-${jei_version}")
+    compile fg.deobf("mezz.jei:jei-${jei_version}")
 
     // Hwyla
-    //compile fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
+    compile fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
 
     // Filters
     //compile "filters:Filters-${filters_version}:deobf"
 
     // Farming for Blockheads
-    //compile "farming-for-blockheads:FarmingForBlockheads_${farmingforblockheads_version}"
+    compile fg.deobf("farming-for-blockheads:FarmingForBlockheads_${farmingforblockheads_version}")
 
     // cucumber
-    //compile "curse.maven:cucumber:2815719"
+    //compile fg.deobf("curse.maven:cucumber:2871235")
 
     // mystical-agriculture
-    //compile "curse.maven:mystical-agriculture:2824832"
+    //compile fg.deobf("curse.maven:mystical-agriculture:2871238")
 
     // blue-power
-    //compile "curse.maven:blue-power:2834228"
+    compile fg.deobf("curse.maven:blue-power:2873759")
 
     // iron-jetpacks
-    //compile "curse.maven:iron-jetpacks:2819308"
+    //compile("curse.maven:iron-jetpacks:2866289")
 
     // silent-gear
-    // compile "curse.maven:silent-gear:2799927"
+    //compile "curse.maven:silent-gear:2799927"
 
     // TheOneProbe
-    //compileOnly("mcjty.theoneprobe:TheOneProbe-${top_version}:api")
-    //runtimeOnly("mcjty.theoneprobe:TheOneProbe-${top_version}")
+//    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${top_version}:api")
+//    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${top_version}")
+    compile fg.deobf("mcjty.theoneprobe:TheOneProbe-${top_version}")
 }
 
 jar {

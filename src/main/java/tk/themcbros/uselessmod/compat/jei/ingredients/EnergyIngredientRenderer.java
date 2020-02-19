@@ -1,6 +1,16 @@
 package tk.themcbros.uselessmod.compat.jei.ingredients;
 
-public class EnergyIngredientRenderer /*implements IIngredientRenderer<EnergyIngredient> {
+import com.mojang.blaze3d.systems.RenderSystem;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.ingredients.IIngredientRenderer;
+import net.minecraft.client.util.ITooltipFlag;
+import tk.themcbros.uselessmod.helper.TextUtils;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+
+public class EnergyIngredientRenderer implements IIngredientRenderer<EnergyIngredient> {
 
 	private final IDrawable overlay;
 
@@ -9,18 +19,17 @@ public class EnergyIngredientRenderer /*implements IIngredientRenderer<EnergyIng
 	}
 
 	@Override
-	public void render(int xPosition, int yPosition, EnergyIngredient ingredient) {
+	public void render(int xPosition, int yPosition, @Nullable EnergyIngredient ingredient) {
 		if (ingredient != null) {
 			if (this.overlay != null)
 				this.overlay.draw(xPosition, yPosition);
-			GlStateManager.color4f(1, 1, 1, 1);
+			RenderSystem.color4f(1, 1, 1, 1);
 		}
 	}
 
-	@Override
+    @Override
 	public List<String> getTooltip(EnergyIngredient ingredient, ITooltipFlag tooltipFlag) {
-		return Arrays.asList(TextUtils.energy(ingredient.getEnergy()).getFormattedText());
+		return Collections.singletonList(TextUtils.energy(ingredient.getEnergy()).getFormattedText());
 	}
 
 }
-*/{}

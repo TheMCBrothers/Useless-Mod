@@ -1,6 +1,30 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-public class ElectricCrusherRecipeCategory /*implements IRecipeCategory<CrusherRecipe> {
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
+import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.compat.jei.RecipeCategoryUid;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredient;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.recipes.CrusherRecipe;
+import tk.themcbros.uselessmod.tileentity.ElectricCrusherTileEntity;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class ElectricCrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
 
 	private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/jei_machines.png");
 	
@@ -15,10 +39,10 @@ public class ElectricCrusherRecipeCategory /*implements IRecipeCategory<CrusherR
 	
 	public ElectricCrusherRecipeCategory(IGuiHelper helper) {
 		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 232, 65, 24, 17);
-		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, StartDirection.LEFT, false);
+		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, IDrawableAnimated.StartDirection.LEFT, false);
 
 		IDrawableStatic staticEnergyBar = helper.createDrawable(TEXTURES, 239, 1, 16, 45);
-		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 200, StartDirection.TOP, true);
+		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 200, IDrawableAnimated.StartDirection.TOP, true);
 		
 		background = helper.createDrawable(TEXTURES, 0, 67, 105, 47);
 		icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ELECTRIC_CRUSHER));
@@ -86,4 +110,3 @@ public class ElectricCrusherRecipeCategory /*implements IRecipeCategory<CrusherR
 	}
 	
 }
-*/{}

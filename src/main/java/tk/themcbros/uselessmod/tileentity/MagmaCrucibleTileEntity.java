@@ -20,10 +20,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import tk.themcbros.uselessmod.blocks.MachineBlock;
 import tk.themcbros.uselessmod.config.MachineConfig;
 import tk.themcbros.uselessmod.container.MagmaCrucibleContainer;
-import tk.themcbros.uselessmod.items.UpgradeItem;
 import tk.themcbros.uselessmod.lists.ModTileEntities;
 import tk.themcbros.uselessmod.machine.MachineTier;
-import tk.themcbros.uselessmod.machine.Upgrade;
 import tk.themcbros.uselessmod.recipes.MagmaCrucibleRecipe;
 import tk.themcbros.uselessmod.recipes.RecipeTypes;
 
@@ -34,8 +32,7 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 
 	public static final int RF_PER_TICK = MachineConfig.magma_crucible_rf_per_tick.get();
 	public static final int TANK_CAPACITY = MachineConfig.magma_crucible_tank_capacity.get();
-	
-	private int cookTime, cookTimeTotal;
+
 	private FluidTank tank = new FluidTank(TANK_CAPACITY);
 	
 	@SuppressWarnings("deprecation")
@@ -55,10 +52,10 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 				MagmaCrucibleTileEntity.this.energyStorage.setCapacity(value);
 				break;
 			case 2:
-				MagmaCrucibleTileEntity.this.cookTime = value;
+				MagmaCrucibleTileEntity.this.processTime = value;
 				break;
 			case 3:
-				MagmaCrucibleTileEntity.this.cookTimeTotal = value;
+				MagmaCrucibleTileEntity.this.processTimeTotal = value;
 				break;
 			case 4:
 				MagmaCrucibleTileEntity.this.tank.setFluid(new FluidStack(MagmaCrucibleTileEntity.this.tank.getFluid().getFluid(), value));
@@ -79,9 +76,9 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 			case 1:
 				return MagmaCrucibleTileEntity.this.getMaxEnergyStored();
 			case 2:
-				return MagmaCrucibleTileEntity.this.cookTime;
+				return MagmaCrucibleTileEntity.this.processTime;
 			case 3:
-				return MagmaCrucibleTileEntity.this.cookTimeTotal;
+				return MagmaCrucibleTileEntity.this.processTimeTotal;
 			case 4:
 				return MagmaCrucibleTileEntity.this.tank.getFluidAmount();
 			case 5:
@@ -114,8 +111,6 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
-		compound.putInt("CookTime", this.cookTime);
-		compound.putInt("CookTimeTotal", this.cookTimeTotal);
 		compound.put("Tank", this.tank.writeToNBT(new CompoundNBT()));
 		return super.write(compound);
 	}
@@ -123,13 +118,11 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		this.cookTime = compound.getInt("CookTime");
-		this.cookTimeTotal = compound.getInt("CookTimeTotal");
 		this.tank.readFromNBT(compound.getCompound("Tank"));
 	}
 
 	private boolean isActive() {
-		return this.getEnergyStored() > 0 && this.cookTime > 0;
+		return this.getEnergyStored() > 0 && this.processTime > 0;
 	}
 	
 	@Override
@@ -137,6 +130,7 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 		boolean flag = this.isActive();
 		boolean flag1 = false;
 
+		assert this.world != null;
 		if (!this.world.isRemote) {
 			
 			this.receiveEnergyFromSlot(this.getSizeInventory() - 1);
@@ -158,20 +152,20 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 				MagmaCrucibleRecipe recipe = this.world.getRecipeManager().getRecipe(RecipeTypes.MAGMA_CRUCIBLE, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCook(recipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					cookTime++;
+					processTime++;
 				}
 
 				if (this.isActive() && this.canCook(recipe)) {
-					this.cookTime++;
+					this.processTime++;
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					if (this.cookTime == this.cookTimeTotal) {
-						this.cookTime = 0;
-						this.cookTimeTotal = this.getCookTime();
+					if (this.processTime == this.processTimeTotal) {
+						this.processTime = 0;
+						this.processTimeTotal = this.getCookTime();
 						this.cookItem(recipe);
 						flag1 = true;
 					}
 				} else {
-					this.cookTime = 0;
+					this.processTime = 0;
 				}
 			}
 
@@ -261,8 +255,8 @@ public class MagmaCrucibleTileEntity extends MachineTileEntity {
 		}
 
 		if (index == 0 && !flag) {
-			this.cookTimeTotal = this.getCookTime();
-			this.cookTime = 0;
+			this.processTimeTotal = this.getCookTime();
+			this.processTime = 0;
 			this.markDirty();
 		}
 	}

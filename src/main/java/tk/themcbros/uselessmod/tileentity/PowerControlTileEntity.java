@@ -112,7 +112,7 @@ public class PowerControlTileEntity extends TileEntity implements ITickableTileE
 		if (this.sideConfig != old) {
 			ModelDataManager.requestModelDataRefresh(this);
 			assert world != null;
-			world.func_225319_b(this.getPos(), null, null);
+			world.markBlockRangeForRenderUpdate(this.getPos(), null, null);
 		}
 	}
 

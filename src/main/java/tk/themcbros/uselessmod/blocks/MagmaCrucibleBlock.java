@@ -1,7 +1,5 @@
 package tk.themcbros.uselessmod.blocks;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -23,6 +21,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import tk.themcbros.uselessmod.tileentity.MagmaCrucibleTileEntity;
 
+import javax.annotation.Nonnull;
+
 public class MagmaCrucibleBlock extends MachineBlock {
 
 	public MagmaCrucibleBlock(Properties builder) {
@@ -40,7 +40,7 @@ public class MagmaCrucibleBlock extends MachineBlock {
 	}
 	
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof MagmaCrucibleTileEntity && player instanceof ServerPlayerEntity) {

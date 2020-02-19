@@ -1,3 +1,9 @@
+### 1.15.2-3.1.0
+- Updated to 1.15.2
+- Re-added compatibility for [The One Probe](https://www.curseforge.com/minecraft/mc-mods/the-one-probe)
+- Re-added compatibility for [Hwyla](https://www.curseforge.com/minecraft/mc-mods/hwyla)
+- Re-added compatibility for [Just Enough Items](https://www.curseforge.com/minecraft/mc-mods/jei)
+- Re-added ore generation in all dimensions
 
 ### 1.15.1-3.0.1
 - Fluids in guis render again

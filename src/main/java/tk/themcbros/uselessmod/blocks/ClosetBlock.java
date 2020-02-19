@@ -63,7 +63,7 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	}
 	
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
 			if(!worldIn.isRemote) {
 				TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -90,8 +90,8 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 		}
 	}
 
-	@Override // Tick?
-	public void func_225534_a_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	@Override
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof ClosetTileEntity) {
 			((ClosetTileEntity) tileEntity).onScheduledTick();
@@ -101,7 +101,7 @@ public class ClosetBlock extends Block implements IWaterLoggable {
 	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
 		Direction dir = state.get(BlockStateProperties.HORIZONTAL_FACING);
-		return func_220055_a(worldIn, pos.offset(dir.getOpposite()), dir);
+		return hasEnoughSolidSide(worldIn, pos.offset(dir.getOpposite()), dir);
 	}
 	
 	@Override

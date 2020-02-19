@@ -1,11 +1,5 @@
 package tk.themcbros.uselessmod.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraftforge.common.util.Constants;
-import org.lwjgl.glfw.GLFW;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -24,10 +18,14 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.ModList;
+import org.lwjgl.glfw.GLFW;
 import tk.themcbros.uselessmod.blocks.LightSwitchBlockBlock;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LightSwitchBlockItem extends BlockItem {
 
@@ -41,7 +39,7 @@ public class LightSwitchBlockItem extends BlockItem {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		assert worldIn != null;
 		if(stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND) && stack.getChildTag("BlockEntityTag").contains("Lights", Constants.NBT.TAG_LONG_ARRAY)) {
-			if(GLFW.glfwGetKey(Minecraft.getInstance().func_228018_at_().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
+			if(GLFW.glfwGetKey(Minecraft.getInstance().getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
 				for(long l : stack.getChildTag("BlockEntityTag").getLongArray("Lights")) {
 					BlockPos pos = BlockPos.fromLong(l);
 					BlockState state = worldIn.getBlockState(pos);

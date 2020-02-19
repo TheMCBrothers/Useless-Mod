@@ -1,12 +1,7 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -26,6 +21,10 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class LightSwitchBlockBlock extends Block {
 
@@ -100,7 +99,7 @@ public class LightSwitchBlockBlock extends Block {
 	}
 
 	@Override
-	public void func_225534_a_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) { // tick?
+	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if(!worldIn.isRemote) {
 			switchLights(state, worldIn, pos);
 		}

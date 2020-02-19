@@ -1,6 +1,27 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-public class GlowstoneGeneratorRecipeCategory /*implements IRecipeCategory<GlowstoneGeneratorRecipe> {
+import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
+import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.compat.jei.RecipeCategoryUid;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredient;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.recipes.GlowstoneGeneratorRecipe;
+
+import java.util.List;
+
+public class GlowstoneGeneratorRecipeCategory implements IRecipeCategory<GlowstoneGeneratorRecipe> {
 
 	private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID, "textures/gui/container/glowstone_generator.png");
 
@@ -13,10 +34,10 @@ public class GlowstoneGeneratorRecipeCategory /*implements IRecipeCategory<Glows
 		this.background = helper.createDrawable(TEXTURES, 79, 15, 83, 47);
 
 		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 176, 0, 24, 17);
-		this.animatedArrow = helper.createAnimatedDrawable(staticArrow, 100, StartDirection.LEFT, false);
+		this.animatedArrow = helper.createAnimatedDrawable(staticArrow, 100, IDrawableAnimated.StartDirection.LEFT, false);
 
 		IDrawableStatic staticEnergyBar = helper.createDrawable(TEXTURES, 177, 18, 16, 45);
-		this.animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 100, StartDirection.BOTTOM, false);
+		this.animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 100, IDrawableAnimated.StartDirection.BOTTOM, false);
 
 		this.title = new TranslationTextComponent("container.uselessmod.glowstone_generator").getFormattedText();
 	}
@@ -69,4 +90,4 @@ public class GlowstoneGeneratorRecipeCategory /*implements IRecipeCategory<Glows
 		energyGroup.set(0, energyInputs.get(0));
 	}
 
-}*/{}
+}

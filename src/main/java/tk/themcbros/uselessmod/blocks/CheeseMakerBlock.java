@@ -1,14 +1,6 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.block.ILiquidContainer;
+import net.minecraft.block.*;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
@@ -27,6 +19,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContainer, IBucketPickupHandler {
 
@@ -113,7 +108,7 @@ public class CheeseMakerBlock extends HorizontalBlock implements ILiquidContaine
 	
 	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		return func_220055_a(worldIn, pos.down(), Direction.UP);
+		return hasEnoughSolidSide(worldIn, pos.down(), Direction.UP);
 	}
 
 	public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {

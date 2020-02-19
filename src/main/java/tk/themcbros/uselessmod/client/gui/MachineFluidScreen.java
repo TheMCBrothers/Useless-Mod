@@ -1,9 +1,5 @@
 package tk.themcbros.uselessmod.client.gui;
 
-import javax.annotation.Nullable;
-
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -15,11 +11,12 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+
+import javax.annotation.Nullable;
 
 public abstract class MachineFluidScreen<T extends Container> extends ContainerScreen<T> {
 
@@ -102,7 +99,7 @@ public abstract class MachineFluidScreen<T extends Container> extends ContainerS
 		Fluid fluid = fluidStack.getFluid();
 		FluidAttributes attributes = fluid.getAttributes();
 		ResourceLocation fluidStill = attributes.getStillTexture(fluidStack);
-		return minecraft.func_228015_a_(PlayerContainer.field_226615_c_).apply(fluidStill);
+		return minecraft.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(fluidStill);
 	}
 
 	private static void setGLColorFromInt(int color) {
@@ -125,10 +122,10 @@ public abstract class MachineFluidScreen<T extends Container> extends ContainerS
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 		bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferBuilder.func_225582_a_(xCoord, yCoord + 16, zLevel).func_225583_a_((float) uMin, (float) vMax).endVertex();
-		bufferBuilder.func_225582_a_(xCoord + 16 - maskRight, yCoord + 16, zLevel).func_225583_a_((float) uMax, (float) vMax).endVertex();
-		bufferBuilder.func_225582_a_(xCoord + 16 - maskRight, yCoord + maskTop, zLevel).func_225583_a_((float) uMax, (float) vMin).endVertex();
-		bufferBuilder.func_225582_a_(xCoord, yCoord + maskTop, zLevel).func_225583_a_((float) uMin, (float) vMin).endVertex();
+		bufferBuilder.pos(xCoord, yCoord + 16, zLevel).tex((float) uMin, (float) vMax).endVertex();
+		bufferBuilder.pos(xCoord + 16 - maskRight, yCoord + 16, zLevel).tex((float) uMax, (float) vMax).endVertex();
+		bufferBuilder.pos(xCoord + 16 - maskRight, yCoord + maskTop, zLevel).tex((float) uMax, (float) vMin).endVertex();
+		bufferBuilder.pos(xCoord, yCoord + maskTop, zLevel).tex((float) uMin, (float) vMin).endVertex();
 
 		tessellator.draw();
 	}

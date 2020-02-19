@@ -6,7 +6,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
@@ -24,9 +23,6 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 
 	private static final int RF_PER_TICK = MachineConfig.furnace_rf_per_tick.get();
 
-	private int cookTime;
-	private int cookTimeTotal;
-
 	private IIntArray fields = new IIntArray() {
 		@Override
 		public int size() {
@@ -43,10 +39,10 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 				ElectricFurnaceTileEntity.this.energyStorage.setCapacity(value);
 				break;
 			case 2:
-				ElectricFurnaceTileEntity.this.cookTime = value;
+				ElectricFurnaceTileEntity.this.processTime = value;
 				break;
 			case 3:
-				ElectricFurnaceTileEntity.this.cookTimeTotal = value;
+				ElectricFurnaceTileEntity.this.processTimeTotal = value;
 				break;
 			}
 		}
@@ -59,9 +55,9 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 			case 1:
 				return ElectricFurnaceTileEntity.this.getMaxEnergyStored();
 			case 2:
-				return ElectricFurnaceTileEntity.this.cookTime;
+				return ElectricFurnaceTileEntity.this.processTime;
 			case 3:
-				return ElectricFurnaceTileEntity.this.cookTimeTotal;
+				return ElectricFurnaceTileEntity.this.processTimeTotal;
 			default:
 				return 0;
 			}
@@ -83,7 +79,7 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 	}
 
 	private boolean isActive() {
-		return this.cookTime > 0 && this.energyStorage.getEnergyStored() >= RF_PER_TICK;
+		return this.processTime > 0 && this.energyStorage.getEnergyStored() >= RF_PER_TICK;
 	}
 
 	@Override
@@ -98,20 +94,20 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 				FurnaceRecipe furnaceRecipe = this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, this, this.world).orElse(null);
 				if (!this.isActive() && this.canSmelt(furnaceRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					cookTime++;
+					processTime++;
 				}
 
 				if (this.isActive() && this.canSmelt(furnaceRecipe)) {
-					this.cookTime++;
+					this.processTime++;
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					if (this.cookTime == this.cookTimeTotal) {
-						this.cookTime = 0;
-						this.cookTimeTotal = this.getCookTime();
+					if (this.processTime == this.processTimeTotal) {
+						this.processTime = 0;
+						this.processTimeTotal = this.getCookTime();
 						this.smeltItem(furnaceRecipe);
 						flag1 = true;
 					}
 				} else {
-					this.cookTime = 0;
+					this.processTime = 0;
 				}
 			}
 
@@ -208,25 +204,11 @@ public class ElectricFurnaceTileEntity extends MachineTileEntity {
 		}
 
 		if (index == 0 && !flag) {
-			this.cookTimeTotal = this.getCookTime();
-			this.cookTime = 0;
+			this.processTimeTotal = this.getCookTime();
+			this.processTime = 0;
 			this.markDirty();
 		}
 
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		compound.putInt("CookTime", this.cookTime);
-		compound.putInt("CookTimeTotal", this.cookTimeTotal);
-		return super.write(compound);
-	}
-
-	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
-		this.cookTime = compound.getInt("CookTime");
-		this.cookTimeTotal = compound.getInt("CookTimeTotal");
 	}
 
 	@Override

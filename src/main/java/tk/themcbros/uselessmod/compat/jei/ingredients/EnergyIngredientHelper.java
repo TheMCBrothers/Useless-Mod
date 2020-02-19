@@ -1,6 +1,10 @@
 package tk.themcbros.uselessmod.compat.jei.ingredients;
 
-public class EnergyIngredientHelper /*implements IIngredientHelper<EnergyIngredient> {
+import mezz.jei.api.ingredients.IIngredientHelper;
+
+import javax.annotation.Nullable;
+
+public class EnergyIngredientHelper implements IIngredientHelper<EnergyIngredient> {
 
 	@Override
 	public EnergyIngredient getMatch(Iterable<EnergyIngredient> ingredients, EnergyIngredient ingredientToMatch) {
@@ -32,7 +36,7 @@ public class EnergyIngredientHelper /*implements IIngredientHelper<EnergyIngredi
 		return "forge";
 	}
 
-	@Override
+    @Override
 	public String getResourceId(EnergyIngredient ingredient) {
 		return "forgeEnergy";
 	}
@@ -43,7 +47,7 @@ public class EnergyIngredientHelper /*implements IIngredientHelper<EnergyIngredi
 	}
 
 	@Override
-	public String getErrorInfo(EnergyIngredient ingredient) {
+	public String getErrorInfo(@Nullable EnergyIngredient ingredient) {
 		if (ingredient == null) {
 			return "energy ingredient: null";
 		}
@@ -51,4 +55,3 @@ public class EnergyIngredientHelper /*implements IIngredientHelper<EnergyIngredi
 	}
 
 }
-*/{}

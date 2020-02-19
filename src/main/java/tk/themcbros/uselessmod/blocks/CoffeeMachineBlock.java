@@ -1,13 +1,6 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IWaterLoggable;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
@@ -31,6 +24,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 	
@@ -92,14 +88,14 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof CoffeeMachineTileEntity && player instanceof ServerPlayerEntity) {
 				if(FluidUtil.interactWithFluidHandler(player, handIn, ((CoffeeMachineTileEntity) tileEntity).getWaterTank()))
 					player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1f, 1f);
 				else
-					((ServerPlayerEntity) player).openContainer((INamedContainerProvider) tileEntity);
+					player.openContainer((INamedContainerProvider) tileEntity);
 			}
 		}
 		return ActionResultType.SUCCESS;

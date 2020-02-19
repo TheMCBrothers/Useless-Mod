@@ -13,7 +13,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -33,7 +32,8 @@ import javax.annotation.Nonnull;
 public abstract class MachineTileEntity extends LockableTileEntity implements ITickableTileEntity, ISidedInventory {
 	
 	protected static final int DEFAULT_RF_PER_TICK = 15;
-	
+
+	public int processTime, processTimeTotal;
 	protected CustomEnergyStorage energyStorage;
 	protected MachineUpgradeInventory upgradeInventory;
 	protected MachineTier machineTier;
@@ -58,6 +58,8 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
+		compound.putInt("ProcessTime", this.processTime);
+		compound.putInt("ProcessTimeTotal", this.processTimeTotal);
 		compound.putString("Tier", this.machineTier != null ? this.machineTier.getName() : "error");
 		compound.putString("RedstoneMode", this.redstoneMode != null ? this.redstoneMode.getName() : "ignored");
 		compound.put("Energy", this.energyStorage.serializeNBT());
@@ -65,10 +67,12 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		ItemStackHelper.saveAllItems(compound, items, false);
 		return compound;
 	}
-	
+
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
+		this.processTime = compound.getInt("ProcessTime");
+		this.processTimeTotal = compound.getInt("ProcessTimeTotal");
 		this.machineTier = MachineTier.byName(compound.getString("Tier"));
 		this.redstoneMode = RedstoneMode.byName(compound.getString("RedstoneMode"));
 		this.energyStorage = CustomEnergyStorage.fromMachine(this, compound.getCompound("Energy"));

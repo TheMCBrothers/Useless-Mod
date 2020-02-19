@@ -1,29 +1,6 @@
 package tk.themcbros.uselessmod.client.models.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.BakedQuad;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.model.data.IDynamicBakedModel;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
-import tk.themcbros.uselessmod.UselessMod;
-import tk.themcbros.uselessmod.energy.ConnectionType;
-import tk.themcbros.uselessmod.tileentity.PowerControlTileEntity;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-public class PowerControlBlockModel/* implements IDynamicBakedModel {
+public class PowerControlBlockModel /*implements IDynamicBakedModel {
 
 	private VertexFormat format;
 
@@ -32,20 +9,20 @@ public class PowerControlBlockModel/* implements IDynamicBakedModel {
 
 	private static TextureAtlasSprite getInputMask() {
 		if (inputMask == null) {
-			inputMask = Minecraft.getInstance().getTextureMap().getAtlasSprite(UselessMod.MOD_ID + ":block/power_control_input");
+			inputMask = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(UselessMod.getId("block/power_control_input"));
 		}
 		return inputMask;
 	}
 
 	private static TextureAtlasSprite getOutputMask() {
 		if (outputMask == null) {
-			outputMask = Minecraft.getInstance().getTextureMap().getAtlasSprite(UselessMod.MOD_ID + ":block/power_control_output");
+			outputMask = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(UselessMod.getId("block/power_control_output"));
 		}
 		return outputMask;
 	}
 
 	private static TextureAtlasSprite getDefaultTexture() {
-		return Minecraft.getInstance().getTextureMap().getAtlasSprite(UselessMod.MOD_ID + ":block/power_control_none");
+		return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(UselessMod.getId("block/power_control_none"));
 	}
 
 	public PowerControlBlockModel(VertexFormat format) {
@@ -170,7 +147,12 @@ public class PowerControlBlockModel/* implements IDynamicBakedModel {
 		return false;
 	}
 
-	@Override
+    @Override
+    public boolean func_230044_c_() {
+        return false;
+    }
+
+    @Override
 	public boolean isBuiltInRenderer() {
 		return false;
 	}
@@ -192,5 +174,4 @@ public class PowerControlBlockModel/* implements IDynamicBakedModel {
 	public ItemOverrideList getOverrides() {
 		return ItemOverrideList.EMPTY;
 	}
-}
-*/{}
+}*/{}

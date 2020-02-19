@@ -1,6 +1,21 @@
 package tk.themcbros.uselessmod.compat.waila;
 
-public class HUDHandlerCrusher /*implements IComponentProvider, IServerDataProvider<TileEntity> {
+import mcp.mobius.waila.api.*;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import tk.themcbros.uselessmod.blocks.CrusherBlock;
+import tk.themcbros.uselessmod.tileentity.CrusherTileEntity;
+
+import java.util.List;
+
+public class HUDHandlerCrusher implements IComponentProvider, IServerDataProvider<TileEntity> {
 
 	static final HUDHandlerCrusher INSTANCE = new HUDHandlerCrusher();
 
@@ -57,4 +72,3 @@ public class HUDHandlerCrusher /*implements IComponentProvider, IServerDataProvi
 		}
 	}
 }
-*/{}

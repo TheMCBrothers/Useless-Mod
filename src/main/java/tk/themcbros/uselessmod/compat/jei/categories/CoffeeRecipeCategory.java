@@ -1,27 +1,52 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-public class CoffeeRecipeCategory /*implements IRecipeCategory<CoffeeRecipe> {
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
+import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fluids.FluidStack;
+import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.compat.jei.RecipeCategoryUid;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredient;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.recipes.CoffeeRecipe;
+import tk.themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
-	private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/jei_machines.png");
+import java.util.List;
+
+public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
+
+	private final ResourceLocation TEXTURES = UselessMod.getId("textures/gui/container/jei_machines.png");
 
 	private static final int beans_input = 1;
 	private static final int cup_input = 2;
 	private static final int ingredient_input = 3;
 	private static final int output = 1;
-	
-	private final IDrawableStatic staticEnergyBar;
-	private final IDrawableAnimated animatedEnergyBar;
+
+    private final IDrawableAnimated animatedEnergyBar;
 	private final IDrawableAnimated animatedArrow;
 	
 	private final IDrawable background, icon, tankOverlay;
 	private final String name;
 	
 	public CoffeeRecipeCategory(IGuiHelper helper) {
-		staticEnergyBar = helper.createDrawable(TEXTURES, 239, 1, 16, 45);
-		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 300, StartDirection.TOP, true);
+        IDrawableStatic staticEnergyBar = helper.createDrawable(TEXTURES, 239, 1, 16, 45);
+		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 300, IDrawableAnimated.StartDirection.TOP, true);
 		
 		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 215, 47, 41, 18);
-		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, StartDirection.LEFT, false);
+		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, IDrawableAnimated.StartDirection.LEFT, false);
 		
 		background = helper.createDrawable(TEXTURES, 0, 0, 127, 67);
 		icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.COFFEE_MACHINE));
@@ -110,4 +135,3 @@ public class CoffeeRecipeCategory /*implements IRecipeCategory<CoffeeRecipe> {
 	}
 	
 }
-*/{}

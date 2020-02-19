@@ -44,7 +44,7 @@ public class ModFluids {
 		UselessMod.LOGGER.debug("Registered fluids");
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
-			RenderType translucentRenderType = RenderType.func_228645_f_();
+			RenderType translucentRenderType = RenderType.getTranslucent();
 
 			RenderTypeLookup.setRenderLayer(USELESS_WATER, translucentRenderType);
 			RenderTypeLookup.setRenderLayer(FLOWING_USELESS_WATER, translucentRenderType);

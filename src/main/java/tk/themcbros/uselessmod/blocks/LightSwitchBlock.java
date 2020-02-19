@@ -1,11 +1,6 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
@@ -31,6 +26,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import tk.themcbros.uselessmod.helper.ShapeUtils;
 import tk.themcbros.uselessmod.tileentity.LightSwitchTileEntity;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class LightSwitchBlock extends HorizontalFaceBlock {
 
@@ -115,7 +113,7 @@ public class LightSwitchBlock extends HorizontalFaceBlock {
 	}
 
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 										   BlockRayTraceResult hit) {
 		
 		boolean trigger = state.get(POWERED);

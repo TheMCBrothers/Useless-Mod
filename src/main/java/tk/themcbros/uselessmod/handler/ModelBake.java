@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.model.ModelRotation;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -40,10 +39,10 @@ public class ModelBake {
             BlockModel openModel = (BlockModel) event.getModelLoader().getUnbakedModel(openUnbakedModelLoc);
 
             IBakedModel customModel = new NewClosetModel(event.getModelLoader(), model,
-                    Objects.requireNonNull(model.func_225613_a_(event.getModelLoader(), ModelLoader.defaultTextureGetter(),
+                    Objects.requireNonNull(model.bakeModel(event.getModelLoader(), ModelLoader.defaultTextureGetter(),
                             ClientUtils.getRotation(Direction.NORTH), unbakedModelLoc)));
             IBakedModel customOpenModel = new NewClosetModel(event.getModelLoader(), openModel,
-                    Objects.requireNonNull(openModel.func_225613_a_(event.getModelLoader(), ModelLoader.defaultTextureGetter(),
+                    Objects.requireNonNull(openModel.bakeModel(event.getModelLoader(), ModelLoader.defaultTextureGetter(),
                             ClientUtils.getRotation(Direction.NORTH), openUnbakedModelLoc)));
 
             // Replace all valid block states

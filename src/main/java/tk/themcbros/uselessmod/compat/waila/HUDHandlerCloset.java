@@ -1,6 +1,23 @@
 package tk.themcbros.uselessmod.compat.waila;
 
-public class HUDHandlerCloset /*implements IComponentProvider, IServerDataProvider<TileEntity> {
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
+import mcp.mobius.waila.api.IServerDataProvider;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import tk.themcbros.uselessmod.closet.ClosetRegistry;
+import tk.themcbros.uselessmod.closet.IClosetMaterial;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.tileentity.ClosetTileEntity;
+
+import java.util.List;
+
+public class HUDHandlerCloset implements IComponentProvider, IServerDataProvider<TileEntity> {
 
 	static final HUDHandlerCloset INSTANCE = new HUDHandlerCloset();
 	
@@ -26,4 +43,3 @@ public class HUDHandlerCloset /*implements IComponentProvider, IServerDataProvid
 	}
 
 }
-*/{}

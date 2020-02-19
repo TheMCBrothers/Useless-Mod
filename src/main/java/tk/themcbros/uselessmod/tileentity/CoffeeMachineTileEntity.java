@@ -3,7 +3,6 @@ package tk.themcbros.uselessmod.tileentity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
@@ -50,9 +49,6 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 	
 	private FluidTank waterTank = new FluidTank(WATER_CAPACITY, (stack) -> stack.getFluid().isIn(FluidTags.WATER));
 	
-	private int cookTime;
-	private int cookTimeTotal;
-	
 	@SuppressWarnings("deprecation")
 	private IIntArray fields = new IIntArray() {
 		@Override
@@ -76,10 +72,10 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 				CoffeeMachineTileEntity.this.waterTank.setCapacity(value);
 				break;
 			case 4:
-				CoffeeMachineTileEntity.this.cookTime = value;
+				CoffeeMachineTileEntity.this.processTime = value;
 				break;
 			case 5:
-				CoffeeMachineTileEntity.this.cookTimeTotal = value;
+				CoffeeMachineTileEntity.this.processTimeTotal = value;
 				break;
 			case 6:
 				CoffeeMachineTileEntity.this.waterTank.setFluid(new FluidStack(Registry.FLUID.getByValue(value), CoffeeMachineTileEntity.this.waterTank.getFluidAmount()));
@@ -101,9 +97,9 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 			case 3:
 				return CoffeeMachineTileEntity.this.waterTank.getCapacity();
 			case 4:
-				return CoffeeMachineTileEntity.this.cookTime;
+				return CoffeeMachineTileEntity.this.processTime;
 			case 5:
-				return CoffeeMachineTileEntity.this.cookTimeTotal;
+				return CoffeeMachineTileEntity.this.processTimeTotal;
 			case 6:
 				return Registry.FLUID.getId(CoffeeMachineTileEntity.this.waterTank.getFluid().getFluid());
 			default:
@@ -117,7 +113,7 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 	}
 	
 	private boolean isActive() {
-		return this.getEnergyStored() >= RF_PER_TICK && cookTime > 0;
+		return this.getEnergyStored() >= RF_PER_TICK && processTime > 0;
 	}
 	
 	@Override
@@ -155,23 +151,23 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 				CoffeeRecipe coffeeRecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COFFEE, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCook(coffeeRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					this.cookTime++;
+					this.processTime++;
 					this.waterTank.drain((int) WATER_PER_TICK, FluidAction.EXECUTE);
 					flag2 = true;
 				}
 
 				if (this.isActive() && this.canCook(coffeeRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					this.cookTime++;
+					this.processTime++;
 					this.waterTank.drain((int) WATER_PER_TICK, FluidAction.EXECUTE);
-					if (this.cookTime == this.cookTimeTotal) {
-						this.cookTime = 0;
-						this.cookTimeTotal = this.getCookTime();
+					if (this.processTime == this.processTimeTotal) {
+						this.processTime = 0;
+						this.processTimeTotal = this.getCookTime();
 						this.cookItem(coffeeRecipe);
 						flag2 = true;
 					}
 				} else {
-					this.cookTime = 0;
+					this.processTime = 0;
 				}
 			}
 
@@ -194,7 +190,7 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 	}
 	
 	private boolean canCook(@Nullable CoffeeRecipe recipe) {
-		final int waterUse = (int) (WATER_PER_TICK * (this.getCookTime()-this.cookTime));
+		final int waterUse = (int) (WATER_PER_TICK * (this.getCookTime()-this.processTime));
 		if (!this.items.get(3).isEmpty() 
 				&& !this.items.get(2).isEmpty() 
 				&& this.items.get(1).getCount() >= COFFEE_BEANS_PER_COFFEE
@@ -246,8 +242,6 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 	public CompoundNBT write(CompoundNBT compound) {
 		compound.put("WaterTank", this.waterTank.writeToNBT(new CompoundNBT()));
 		CompoundNBT machineCompound = new CompoundNBT();
-		machineCompound.putInt("CookTime", this.cookTime);
-		machineCompound.putInt("CookTimeTotal",this.cookTimeTotal);
 		machineCompound.putInt("WaterAmount", this.waterTank.getFluidAmount());
 		compound.put("Machine", machineCompound);
 		return super.write(compound);
@@ -259,8 +253,6 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 		CompoundNBT machineCompound = compound.getCompound("Machine");
 		this.waterTank.readFromNBT(compound);
 		this.waterTank.setFluid(new FluidStack(this.waterTank.getFluid(), machineCompound.getInt("WaterAmount")));
-		this.cookTime = machineCompound.getInt("CookTime");
-		this.cookTimeTotal = machineCompound.getInt("CookTimeTotal");
 	}
 	
 	public FluidTank getWaterTank() {
@@ -296,8 +288,8 @@ public class CoffeeMachineTileEntity extends MachineTileEntity {
 		}
 
 		if (!flag) {
-			cookTime = 0;
-			cookTimeTotal = getCookTime();
+			processTime = 0;
+			processTimeTotal = getCookTime();
 			this.markDirty();
 		}
 

@@ -39,7 +39,7 @@ public class LavaGeneratorBlock extends MachineBlock {
 	}
 	
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+	public ActionResultType onBlockActivated(BlockState state, @Nonnull World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 										   BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);

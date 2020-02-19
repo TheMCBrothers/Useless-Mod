@@ -1,25 +1,49 @@
 package tk.themcbros.uselessmod.compat.jei.categories;
 
-public class CompressorRecipeCategory /*implements IRecipeCategory<CompressorRecipe> {
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
+import tk.themcbros.uselessmod.UselessMod;
+import tk.themcbros.uselessmod.compat.jei.RecipeCategoryUid;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredient;
+import tk.themcbros.uselessmod.compat.jei.ingredients.EnergyIngredientRenderer;
+import tk.themcbros.uselessmod.lists.ModBlocks;
+import tk.themcbros.uselessmod.recipes.CompressorRecipe;
+import tk.themcbros.uselessmod.tileentity.CompressorTileEntity;
 
-private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID + ":textures/gui/container/jei_machines.png");
+import java.util.List;
+
+public class CompressorRecipeCategory implements IRecipeCategory<CompressorRecipe> {
+
+    private final ResourceLocation TEXTURES = UselessMod.getId("textures/gui/container/jei_machines.png");
 	
 	private static final int input = 0;
 	private static final int output = 1;
-	
-	private final IDrawableStatic staticEnergyBar;
-	private final IDrawableAnimated animatedEnergyBar;
+
+    private final IDrawableAnimated animatedEnergyBar;
 	private final IDrawableAnimated animatedArrow;
 	
 	private final IDrawable background, icon;
 	private final String name;
 	
 	public CompressorRecipeCategory(IGuiHelper helper) {
-		staticEnergyBar = helper.createDrawable(TEXTURES, 239, 1, 16, 45);
-		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 300, StartDirection.TOP, true);
+        IDrawableStatic staticEnergyBar = helper.createDrawable(TEXTURES, 239, 1, 16, 45);
+		animatedEnergyBar = helper.createAnimatedDrawable(staticEnergyBar, 300, IDrawableAnimated.StartDirection.TOP, true);
 
 		IDrawableStatic staticArrow = helper.createDrawable(TEXTURES, 232, 82, 24, 17);
-		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, StartDirection.LEFT, false);
+		animatedArrow = helper.createAnimatedDrawable(staticArrow, 200, IDrawableAnimated.StartDirection.LEFT, false);
 		
 		background = helper.createDrawable(TEXTURES, 0, 114, 114, 47);
 		icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.COMPRESSOR));
@@ -80,4 +104,3 @@ private final ResourceLocation TEXTURES = new ResourceLocation(UselessMod.MOD_ID
 	}
 	
 }
-*/{}

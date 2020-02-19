@@ -1,6 +1,28 @@
 package tk.themcbros.uselessmod.compat.waila;
 
-public class HUDHandlerEnergy /*implements IComponentProvider, IServerDataProvider<TileEntity> {
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
+import mcp.mobius.waila.api.IServerDataProvider;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.registries.ForgeRegistries;
+import tk.themcbros.uselessmod.helper.TextUtils;
+import tk.themcbros.uselessmod.tileentity.MachineTileEntity;
+
+import java.util.List;
+import java.util.Locale;
+
+public class HUDHandlerEnergy implements IComponentProvider, IServerDataProvider<TileEntity> {
 
 	static final HUDHandlerEnergy INSTANCE = new HUDHandlerEnergy();
 
@@ -41,4 +63,3 @@ public class HUDHandlerEnergy /*implements IComponentProvider, IServerDataProvid
 		});
 	}
 }
-*/{}

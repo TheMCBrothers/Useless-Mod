@@ -1,14 +1,10 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
@@ -21,13 +17,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ILightReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import tk.themcbros.uselessmod.items.LampBlockItem;
 import tk.themcbros.uselessmod.lists.ModItems;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LampBlock extends Block {
 
@@ -125,7 +122,7 @@ public class LampBlock extends Block {
 
 	@Nonnull
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		ItemStack heldStack = player.getHeldItem(handIn);
 		DyeColor color = DyeColor.getColor(heldStack);
 		if(!heldStack.isEmpty() && color != null && state.get(COLOR) != color) {
@@ -150,11 +147,6 @@ public class LampBlock extends Block {
 			state = state.with(COLOR, lamp.getColor());
 		}
 		return state;
-	}
-
-	@Override
-	public int getLightValue(BlockState state, ILightReader world, BlockPos pos) {
-		return getLightValue(state);
 	}
 
 	@Override

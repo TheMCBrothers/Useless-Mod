@@ -1,8 +1,5 @@
 package tk.themcbros.uselessmod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,6 +18,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import tk.themcbros.uselessmod.tileentity.ColorableTileEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PaintBucketBlock extends ColorableBlock {
 	
 	public final VoxelShape SHAPE;
@@ -32,7 +32,7 @@ public class PaintBucketBlock extends ColorableBlock {
 	}
 
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		final ItemStack stack = player.getHeldItem(handIn);
 		DyeColor color = DyeColor.getColor(stack);
 		if(color != null) {

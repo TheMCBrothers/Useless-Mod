@@ -24,7 +24,7 @@ public class DescriptionItem extends Item {
         String toTranslate = this.getTranslationKey() + ".desc";
         if (I18n.hasKey(toTranslate)) {
             ITextComponent desc = new TranslationTextComponent("tooltip.uselessmod.press_shift");
-            int state = GLFW.glfwGetKey(Minecraft.getInstance().func_228018_at_().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT);
+            int state = GLFW.glfwGetKey(Minecraft.getInstance().getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT);
             if (state == GLFW.GLFW_PRESS)
                 desc = new TranslationTextComponent(toTranslate);
             tooltip.add(desc);

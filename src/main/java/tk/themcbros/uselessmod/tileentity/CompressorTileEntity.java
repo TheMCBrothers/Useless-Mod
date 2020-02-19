@@ -4,7 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
@@ -24,9 +23,6 @@ public class CompressorTileEntity extends MachineTileEntity {
 
 	public static final int RF_PER_TICK = MachineConfig.compressor_rf_per_tick.get();
 	
-	private int compressTime;
-	private int compressTimeTotal;
-	
 	private IIntArray fields = new IIntArray() {
 		@Override
 		public int size() {
@@ -43,10 +39,10 @@ public class CompressorTileEntity extends MachineTileEntity {
 				CompressorTileEntity.this.energyStorage.setCapacity(value);
 				break;
 			case 2:
-				CompressorTileEntity.this.compressTime = value;
+				CompressorTileEntity.this.processTime = value;
 				break;
 			case 3:
-				CompressorTileEntity.this.compressTimeTotal = value;
+				CompressorTileEntity.this.processTimeTotal = value;
 				break;
 			}
 		}
@@ -59,9 +55,9 @@ public class CompressorTileEntity extends MachineTileEntity {
 			case 1:
 				return CompressorTileEntity.this.getMaxEnergyStored();
 			case 2:
-				return CompressorTileEntity.this.compressTime;
+				return CompressorTileEntity.this.processTime;
 			case 3:
-				return CompressorTileEntity.this.compressTimeTotal;
+				return CompressorTileEntity.this.processTimeTotal;
 			default:
 				return 0;
 			}
@@ -83,7 +79,7 @@ public class CompressorTileEntity extends MachineTileEntity {
 	}
 
 	private boolean isActive() {
-		return this.getEnergyStored() > 0 && compressTime > 0;
+		return this.getEnergyStored() > 0 && processTime > 0;
 	}
 	
 	@Override
@@ -100,20 +96,20 @@ public class CompressorTileEntity extends MachineTileEntity {
 				CompressorRecipe irecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.COMPRESSING, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCompress(irecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					compressTime++;
+					processTime++;
 				}
 
 				if (this.isActive() && this.canCompress(irecipe)) {
-					this.compressTime++;
+					this.processTime++;
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					if (this.compressTime == this.compressTimeTotal) {
-						this.compressTime = 0;
-						this.compressTimeTotal = this.getCompressTime();
+					if (this.processTime == this.processTimeTotal) {
+						this.processTime = 0;
+						this.processTimeTotal = this.getCompressTime();
 						this.compressItem(irecipe);
 						flag1 = true;
 					}
 				} else {
-					this.compressTime = 0;
+					this.processTime = 0;
 				}
 			}
 
@@ -211,25 +207,11 @@ public class CompressorTileEntity extends MachineTileEntity {
 		}
 
 		if (index == 0 && !flag) {
-			this.compressTimeTotal = this.getCompressTime();
-			this.compressTime = 0;
+			this.processTimeTotal = this.getCompressTime();
+			this.processTime = 0;
 			this.markDirty();
 		}
 
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		compound.putInt("CompressTime", this.compressTime);
-		compound.putInt("CompressTimeTotal", this.compressTimeTotal);
-		return super.write(compound);
-	}
-
-	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
-		this.compressTime = compound.getInt("CompressTime");
-		this.compressTimeTotal = compound.getInt("CompressTimeTotal");
 	}
 
 	@Override

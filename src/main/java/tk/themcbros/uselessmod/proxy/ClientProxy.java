@@ -76,7 +76,7 @@ public class ClientProxy extends CommonProxy {
 	private void registerBlockColours(@Nonnull ColorHandlerEvent.Block event) {
         BlockColors blockColors = event.getBlockColors();
         
-        blockColors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.func_228363_c_(world, pos) : -1, ModBlocks.CHEESE_MAKER);
+        blockColors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : -1, ModBlocks.CHEESE_MAKER);
         
         blockColors.register((state, world, pos, tintIndex) -> {
         	if(world != null && pos != null) {
@@ -97,13 +97,13 @@ public class ClientProxy extends CommonProxy {
             return colour;
         }, ModBlocks.LAMP);
         
-		blockColors.register((state, world, pos, tint_index) -> world != null && pos != null ? BiomeColors.func_228358_a_(world, pos) : GrassColors.get(0.5D, 1.0D), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_FERN, ModBlocks.USELESS_GRASS,
+		blockColors.register((state, world, pos, tint_index) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.get(0.5D, 1.0D), ModBlocks.USELESS_FERN, ModBlocks.USELESS_GRASS,
 				ModBlocks.POTTED_USELESS_FERN);
 
-		blockColors.register((p_210234_0_, p_210234_1_, p_210234_2_, p_210234_3_) -> p_210234_1_ != null && p_210234_2_ != null ? BiomeColors.func_228358_a_(p_210234_1_,
-				p_210234_0_.get(ShearableDoublePlantBlock.HALF) == DoubleBlockHalf.UPPER
-						? p_210234_2_.down()
-						: p_210234_2_)
+		blockColors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world,
+				state.get(ShearableDoublePlantBlock.HALF) == DoubleBlockHalf.UPPER
+						? pos.down()
+						: pos)
 				: -1, ModBlocks.LARGE_USELESS_FERN, ModBlocks.TALL_USELESS_GRASS);
         
     }
@@ -128,7 +128,7 @@ public class ClientProxy extends CommonProxy {
 		}, ModItems.COFFEE_CUP);
 
 		// Useless Plants
-		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.func_225528_a_(0, 0), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
+		itemColors.register((stack, tintIndex) -> ModBiomes.USELESS_BIOME.getGrassColor(0, 0), ModBlocks.USELESS_GRASS_BLOCK, ModBlocks.USELESS_GRASS, ModBlocks.USELESS_FERN, ModBlocks.TALL_USELESS_GRASS, ModBlocks.LARGE_USELESS_FERN);
 
 		// Fluid Canister
 		itemColors.register((stack, layer) -> layer == 1 ? ModItems.CANISTER.getFluid(stack).getFluid().getAttributes().getColor() : -1, ModItems.CANISTER);

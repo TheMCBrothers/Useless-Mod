@@ -23,7 +23,7 @@ public class FluidTankBlock extends Block {
 	}
 	
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, @Nonnull BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, @Nonnull BlockRayTraceResult hit) {
 		if (!worldIn.isRemote) {
 			if (FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, hit.getFace())) {
 				worldIn.notifyBlockUpdate(pos, state, state, 3);

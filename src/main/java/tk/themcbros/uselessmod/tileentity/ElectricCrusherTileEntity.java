@@ -23,8 +23,6 @@ import javax.annotation.Nullable;
 public class ElectricCrusherTileEntity extends MachineTileEntity {
 
 	public static final int RF_PER_TICK = MachineConfig.crusher_rf_per_tick.get();
-	private int crushTime;
-	private int crushTimeTotal;
 	private ITextComponent crusherCustomName;
 	
 	protected final IIntArray fields = new IIntArray() {
@@ -35,9 +33,9 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 			case 1:
 				return ElectricCrusherTileEntity.this.getMaxEnergyStored();
 			case 2:
-				return ElectricCrusherTileEntity.this.crushTime;
+				return ElectricCrusherTileEntity.this.processTime;
 			case 3:
-				return ElectricCrusherTileEntity.this.crushTimeTotal;
+				return ElectricCrusherTileEntity.this.processTimeTotal;
 			default:
 				return 0;
 			}
@@ -52,10 +50,10 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 				ElectricCrusherTileEntity.this.energyStorage.setCapacity(value);
 				break;
 			case 2:
-				ElectricCrusherTileEntity.this.crushTime = value;
+				ElectricCrusherTileEntity.this.processTime = value;
 				break;
 			case 3:
-				ElectricCrusherTileEntity.this.crushTimeTotal = value;
+				ElectricCrusherTileEntity.this.processTimeTotal = value;
 			}
 
 		}
@@ -83,8 +81,8 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 		}
 
 		if (index == 0 && !flag) {
-			this.crushTimeTotal = this.getCrushTime();
-			this.crushTime = 0;
+			this.processTimeTotal = this.getCrushTime();
+			this.processTime = 0;
 			this.markDirty();
 		}
 
@@ -92,28 +90,20 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		this.crushTime = compound.getInt("CrushTime");
-		this.crushTimeTotal = compound.getInt("CrushTimeTotal");
-
 		if (compound.contains("CustomName", 8)) {
 			this.crusherCustomName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
 		}
-
 	}
 
 	public CompoundNBT write(CompoundNBT compound) {
-		compound.putInt("CrushTime", this.crushTime);
-		compound.putInt("CrushTimeTotal", this.crushTimeTotal);
-
 		if (this.items != null) {
 			compound.putString("CustomName", ITextComponent.Serializer.toJson(this.crusherCustomName));
 		}
-
 		return super.write(compound);
 	}
 	
 	private boolean isActive() {
-		return this.energyStorage.getEnergyStored() > 0 && this.crushTime > 0;
+		return this.energyStorage.getEnergyStored() > 0 && this.processTime > 0;
 	}
 	
 	@Override
@@ -128,20 +118,20 @@ public class ElectricCrusherTileEntity extends MachineTileEntity {
 				CrusherRecipe crusherRecipe = this.world.getRecipeManager().getRecipe(RecipeTypes.CRUSHING, this, this.world).orElse(null);
 				if (!this.isActive() && this.canCrush(crusherRecipe)) {
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					crushTime++;
+					processTime++;
 				}
 
 				if (this.isActive() && this.canCrush(crusherRecipe)) {
-					this.crushTime++;
+					this.processTime++;
 					this.energyStorage.modifyEnergyStored(-RF_PER_TICK);
-					if (this.crushTime == this.crushTimeTotal) {
-						this.crushTime = 0;
-						this.crushTimeTotal = this.getCrushTime();
+					if (this.processTime == this.processTimeTotal) {
+						this.processTime = 0;
+						this.processTimeTotal = this.getCrushTime();
 						this.crushItem(crusherRecipe);
 						flag1 = true;
 					}
 				} else {
-					this.crushTime = 0;
+					this.processTime = 0;
 				}
 			}
 
