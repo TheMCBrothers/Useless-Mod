@@ -113,17 +113,14 @@ dependencies {
     // Hwyla
     compile fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
 
-    // Filters
-    //compile "filters:Filters-${filters_version}:deobf"
-
     // Farming for Blockheads
     compile fg.deobf("farming-for-blockheads:FarmingForBlockheads_${farmingforblockheads_version}")
 
     // cucumber
-    //compile fg.deobf("curse.maven:cucumber:2871235")
+    compile fg.deobf("curse.maven:cucumber:2871235")
 
     // mystical-agriculture
-    //compile fg.deobf("curse.maven:mystical-agriculture:2871238")
+    compile fg.deobf("curse.maven:mystical-agriculture:2871238")
 
     // blue-power
     compile fg.deobf("curse.maven:blue-power:2873759")
