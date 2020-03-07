@@ -1,3 +1,6 @@
+### coming next
+- Re-added compatibility for [Blue Power](https://www.curseforge.com/minecraft/mc-mods/blue-power)
+
 ### 1.15.2-3.1.0
 - Updated to 1.15.2
 - Re-added compatibility for [The One Probe](https://www.curseforge.com/minecraft/mc-mods/the-one-probe)
