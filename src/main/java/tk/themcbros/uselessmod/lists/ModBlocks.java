@@ -48,7 +48,7 @@ public class ModBlocks {
 	// Natural
 	public static final SaplingBlock USELESS_SAPLING = register("useless_sapling", new UselessSaplingBlock(new UselessTree(), Block.Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly().doesNotBlockMovement()));
 	public static final Block POTTED_USELESS_SAPLING = register("potted_useless_sapling", new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, USELESS_SAPLING.delegate, Block.Properties.create(Material.MISCELLANEOUS)));
-	public static final Block USELESS_LEAVES = register("useless_leaves", new LeavesBlock(Block.Properties.create(Material.LEAVES).tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.PLANT)));
+	public static final Block USELESS_LEAVES = register("useless_leaves", new LeavesBlock(Block.Properties.create(Material.LEAVES).tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.PLANT).notSolid()));
 	public static final Block USELESS_GRASS_BLOCK = register("useless_grass_block", new UselessGrassBlock(Block.Properties.create(Material.ORGANIC).tickRandomly().hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
 	public static final Block USELESS_DIRT = register("useless_dirt", new Block(Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND)));
 	public static final Block USELESS_GRASS = register("useless_grass", new UselessTallGrassBlock(Block.Properties.create(Material.TALL_PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()));

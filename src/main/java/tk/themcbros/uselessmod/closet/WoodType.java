@@ -1,14 +1,10 @@
 package tk.themcbros.uselessmod.closet;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import net.minecraft.block.Blocks;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.*;
 
 public enum WoodType implements IStringSerializable {
     OAK("oak", Blocks.OAK_PLANKS.getRegistryName()),
@@ -19,7 +15,7 @@ public enum WoodType implements IStringSerializable {
     JUNGLE("jungle", Blocks.JUNGLE_PLANKS.getRegistryName()),
     CHERRY("cherry", new ResourceLocation("biomesoplenty", "cherry_planks"), new ResourceLocation("biomesoplenty", "block/cherry_planks")),
     DEAD("dead", new ResourceLocation("biomesoplenty", "dead_planks"), new ResourceLocation("biomesoplenty", "block/dead_planks")),
-    ETHEREAL("ethereal", new ResourceLocation("biomesoplenty", "ethereal_planks"), new ResourceLocation("biomesoplenty", "block/ethereal_planks")),
+//    ETHEREAL("ethereal", new ResourceLocation("biomesoplenty", "ethereal_planks"), new ResourceLocation("biomesoplenty", "block/ethereal_planks")),
     FIR("fir", new ResourceLocation("biomesoplenty", "fir_planks"), new ResourceLocation("biomesoplenty", "block/fir_planks")),
     HELLBARK("hellbark", new ResourceLocation("biomesoplenty", "hellbark_planks"), new ResourceLocation("biomesoplenty", "block/hellbark_planks")),
     JACARANDA("jacaranda", new ResourceLocation("biomesoplenty", "jacaranda_planks"), new ResourceLocation("biomesoplenty", "block/jacaranda_planks")),
@@ -76,7 +72,7 @@ public enum WoodType implements IStringSerializable {
 
         BY_SUBTYPE.get(SubType.BOP).add(CHERRY);
         BY_SUBTYPE.get(SubType.BOP).add(DEAD);
-        BY_SUBTYPE.get(SubType.BOP).add(ETHEREAL);
+//        BY_SUBTYPE.get(SubType.BOP).add(ETHEREAL);
         BY_SUBTYPE.get(SubType.BOP).add(FIR);
         BY_SUBTYPE.get(SubType.BOP).add(HELLBARK);
         BY_SUBTYPE.get(SubType.BOP).add(JACARANDA);

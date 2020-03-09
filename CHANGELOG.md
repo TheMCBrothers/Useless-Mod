@@ -1,5 +1,8 @@
 ### coming next
+- Fixed rendering issues
 - Re-added compatibility for [Blue Power](https://www.curseforge.com/minecraft/mc-mods/blue-power)
+- Removed filters compat
+- Removed ethereal from BOP closets
 
 ### 1.15.2-3.1.0
 - Updated to 1.15.2
