@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -25,6 +26,7 @@ import tk.themcbros.uselessmod.client.renders.entity.UselessRenderRegistry;
 import tk.themcbros.uselessmod.config.Config;
 import tk.themcbros.uselessmod.lists.*;
 import tk.themcbros.uselessmod.tileentity.ColorableTileEntity;
+import tk.themcbros.uselessmod.tileentity.renderer.UselessSignTileEntityRenderer;
 
 import javax.annotation.Nonnull;
 
@@ -56,21 +58,10 @@ public class ClientProxy extends CommonProxy {
 		ScreenManager.registerFactory(ModContainerTypes.LAVA_GENERATOR, LavaGeneratorScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.COFFEE_MACHINE, CoffeeMachineScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.CLOSET, ClosetScreen::new);
+
+		ClientRegistry.bindTileEntityRenderer(ModTileEntities.USELESS_SIGN, UselessSignTileEntityRenderer::new);
 		
 		UselessRenderRegistry.registerEntityRenders();
-		
-//		if (ModList.get().isLoaded("filters")) {
-//			com.mrcrayfish.filters.Filters filters = com.mrcrayfish.filters.Filters.get();
-//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/natural"), new ItemStack(ModBlocks.USELESS_FERN));
-//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/wood"), new ItemStack(ModBlocks.USELESS_LOG));
-//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/colored"), new ItemStack(ModBlocks.PAINT_BUCKET));
-//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/materials"), new ItemStack(ModItems.SUPER_USELESS_INGOT));
-//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/energy"), new ItemStack(ModBlocks.ENERGY_CABLE));
-//			filters.register(ModItemGroups.USELESS_ITEM_GROUP, UselessMod.getId("filters/tools_armor"), new ItemStack(ModItems.USELESS_PICKAXE));
-//
-//			filters.register(ModItemGroups.CLOSET_GROUP, UselessMod.getId("filters/closets"), new ItemStack(ModBlocks.CLOSET));
-//		}
-
 	}
 	
 	private void registerBlockColours(@Nonnull ColorHandlerEvent.Block event) {

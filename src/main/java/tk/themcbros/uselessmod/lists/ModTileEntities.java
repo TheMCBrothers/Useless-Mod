@@ -1,10 +1,6 @@
 package tk.themcbros.uselessmod.lists;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -15,6 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 import tk.themcbros.uselessmod.UselessMod;
 import tk.themcbros.uselessmod.tileentity.*;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 @ObjectHolder(UselessMod.MOD_ID)
 public class ModTileEntities {
@@ -41,7 +40,8 @@ public class ModTileEntities {
 	public static final TileEntityType<ClosetTileEntity> CLOSET = register("closet", ClosetTileEntity::new, ModBlocks.CLOSET);
 	public static final TileEntityType<ColorableTileEntity> COLORABLE = register("colorable", ColorableTileEntity::new, ModBlocks.CANVAS, ModBlocks.PAINT_BUCKET);
 	public static final TileEntityType<LightSwitchTileEntity> LIGHT_SWITCH = register("light_switch", LightSwitchTileEntity::new, ModBlocks.LIGHT_SWITCH, ModBlocks.LIGHT_SWITCH_BLOCK);
-	
+	public static final TileEntityType<UselessSignTileEntity> USELESS_SIGN = register("useless_sign", UselessSignTileEntity::new, ModBlocks.USELESS_WALL_SIGN, ModBlocks.USELESS_SIGN);
+
 	private static <T extends TileEntity> TileEntityType<T> register(String regName, Supplier<T> supplier, Block... blocks) {
 		TileEntityType<T> type = TileEntityType.Builder.create(supplier, blocks).build(null);
 		type.setRegistryName(new ResourceLocation(UselessMod.MOD_ID, regName));
