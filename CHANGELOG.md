@@ -1,4 +1,5 @@
 ### coming next
+- Fixed Useless Sign
 - Fixed rendering issues
 - Re-added compatibility for [Blue Power](https://www.curseforge.com/minecraft/mc-mods/blue-power)
 - Removed filters compat

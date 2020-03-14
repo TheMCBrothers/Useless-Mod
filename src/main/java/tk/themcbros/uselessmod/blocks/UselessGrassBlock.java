@@ -1,12 +1,14 @@
 package tk.themcbros.uselessmod.blocks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.*;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
 import net.minecraft.world.gen.feature.FlowersFeature;
+import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import tk.themcbros.uselessmod.lists.ModBlocks;
 
@@ -19,46 +21,90 @@ public class UselessGrassBlock extends GrassBlock {
 		super(properties);
 	}
 
+	@Override
 	public void grow(ServerWorld p_225535_1_, Random p_225535_2_, BlockPos p_225535_3_, BlockState p_225535_4_) {
-		BlockPos lvt_5_1_ = p_225535_3_.up();
-		BlockState lvt_6_1_ = ModBlocks.USELESS_GRASS.getDefaultState();
+		BlockPos blockpos = p_225535_3_.up();
+		BlockState blockstate = ModBlocks.USELESS_GRASS.getDefaultState();
 
-		label48:
-		for(int lvt_7_1_ = 0; lvt_7_1_ < 128; ++lvt_7_1_) {
-			BlockPos lvt_8_1_ = lvt_5_1_;
+		for(int i = 0; i < 128; ++i) {
+			BlockPos blockpos1 = blockpos;
+			int j = 0;
 
-			for(int lvt_9_1_ = 0; lvt_9_1_ < lvt_7_1_ / 16; ++lvt_9_1_) {
-				lvt_8_1_ = lvt_8_1_.add(p_225535_2_.nextInt(3) - 1, (p_225535_2_.nextInt(3) - 1) * p_225535_2_.nextInt(3) / 2, p_225535_2_.nextInt(3) - 1);
-				if (p_225535_1_.getBlockState(lvt_8_1_.down()).getBlock() != this || p_225535_1_.getBlockState(lvt_8_1_).isCollisionShapeOpaque(p_225535_1_, lvt_8_1_)) {
-					continue label48;
-				}
-			}
-
-			BlockState lvt_9_2_ = p_225535_1_.getBlockState(lvt_8_1_);
-			if (lvt_9_2_.getBlock() == lvt_6_1_.getBlock() && p_225535_2_.nextInt(10) == 0) {
-				((IGrowable)lvt_6_1_.getBlock()).grow(p_225535_1_, p_225535_2_, lvt_8_1_, lvt_9_2_);
-			}
-
-			if (lvt_9_2_.isAir()) {
-				BlockState lvt_10_2_;
-				if (p_225535_2_.nextInt(8) == 0) {
-					List<ConfiguredFeature<?, ?>> lvt_11_1_ = p_225535_1_.getBiome(lvt_8_1_).getFlowers();
-					if (lvt_11_1_.isEmpty()) {
-						continue;
+			while(true) {
+				if (j >= i / 16) {
+					BlockState blockstate2 = p_225535_1_.getBlockState(blockpos1);
+					if (blockstate2.getBlock() == blockstate.getBlock() && p_225535_2_.nextInt(10) == 0) {
+						((IGrowable)blockstate.getBlock()).grow(p_225535_1_, p_225535_2_, blockpos1, blockstate2);
 					}
 
-					ConfiguredFeature<?, ?> lvt_12_1_ = ((DecoratedFeatureConfig) lvt_11_1_.get(0).config).feature;
-					lvt_10_2_ = ((FlowersFeature)lvt_12_1_.feature).getFlowerToPlace(p_225535_2_, lvt_8_1_, lvt_12_1_.config);
-				} else {
-					lvt_10_2_ = lvt_6_1_;
+					if (!blockstate2.isAir()) {
+						break;
+					}
+
+					BlockState blockstate1;
+					if (p_225535_2_.nextInt(8) == 0) {
+						List<ConfiguredFeature<?, ?>> list = p_225535_1_.getBiome(blockpos1).getFlowers();
+						if (list.isEmpty()) {
+							break;
+						}
+
+						ConfiguredFeature<?, ?> configuredfeature = ((DecoratedFeatureConfig)(list.get(0)).config).feature;
+						blockstate1 = ((FlowersFeature)configuredfeature.feature).getFlowerToPlace(p_225535_2_, blockpos1, configuredfeature.config);
+					} else {
+						blockstate1 = blockstate;
+					}
+
+					if (blockstate1.isValidPosition(p_225535_1_, blockpos1)) {
+						p_225535_1_.setBlockState(blockpos1, blockstate1, 3);
+					}
+					break;
 				}
 
-				if (lvt_10_2_.isValidPosition(p_225535_1_, lvt_8_1_)) {
-					p_225535_1_.setBlockState(lvt_8_1_, lvt_10_2_, 3);
+				blockpos1 = blockpos1.add(p_225535_2_.nextInt(3) - 1, (p_225535_2_.nextInt(3) - 1) * p_225535_2_.nextInt(3) / 2, p_225535_2_.nextInt(3) - 1);
+				if (p_225535_1_.getBlockState(blockpos1.down()).getBlock() != this || p_225535_1_.getBlockState(blockpos1).isCollisionShapeOpaque(p_225535_1_, blockpos1)) {
+					break;
 				}
+
+				++j;
 			}
 		}
 
+	}
+
+	@Override
+	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+		if (!func_220257_b(state, worldIn, pos)) {
+			if (!worldIn.isAreaLoaded(pos, 3)) return;
+			worldIn.setBlockState(pos, ModBlocks.USELESS_DIRT.getDefaultState());
+		} else {
+			if (worldIn.getLight(pos.up()) >= 9) {
+				BlockState blockstate = this.getDefaultState();
+
+				for(int i = 0; i < 4; ++i) {
+					BlockPos blockpos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+					if (worldIn.getBlockState(blockpos).getBlock() == ModBlocks.USELESS_DIRT && func_220256_c(blockstate, worldIn, blockpos)) {
+						worldIn.setBlockState(blockpos, blockstate.with(SNOWY, worldIn.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW));
+					}
+				}
+			}
+
+		}
+	}
+
+	private static boolean func_220257_b(BlockState state, IWorldReader world, BlockPos pos) {
+		BlockPos blockpos = pos.up();
+		BlockState blockstate = world.getBlockState(blockpos);
+		if (blockstate.getBlock() == Blocks.SNOW && blockstate.get(SnowBlock.LAYERS) == 1) {
+			return true;
+		} else {
+			int i = LightEngine.func_215613_a(world, state, pos, blockstate, blockpos, Direction.UP, blockstate.getOpacity(world, blockpos));
+			return i < world.getMaxLightLevel();
+		}
+	}
+
+	private static boolean func_220256_c(BlockState state, IWorldReader world, BlockPos pos) {
+		BlockPos blockpos = pos.up();
+		return func_220257_b(state, world, pos) && !world.getFluidState(blockpos).isTagged(FluidTags.WATER);
 	}
 
 }
