@@ -3,7 +3,6 @@ package tk.themcbros.uselessmod.energy;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.EnergyStorage;
-import tk.themcbros.uselessmod.machine.MachineTier;
 import tk.themcbros.uselessmod.tileentity.MachineTileEntity;
 
 public class CustomEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
@@ -75,7 +74,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 
 	public static CustomEnergyStorage fromMachine(MachineTileEntity machine, CompoundNBT nbt) {
 		int energy = nbt.getInt("Energy");
-		int capacity = machine.getMachineTier().getMachineCapacity();
+		int capacity = machine.getMachineTier() != null ? machine.getMachineTier().getMachineCapacity() : 16000;
 		int maxReceive = machine.isGenerator() ? 0 : machine.getMachineTier().getMaxEnergyTransfer();
 		int maxExtract = machine.isGenerator() ? machine.getMachineTier().getMaxEnergyTransfer() : 0;
 		return new CustomEnergyStorage(capacity, maxReceive, maxExtract, energy);

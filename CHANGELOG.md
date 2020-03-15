@@ -1,6 +1,9 @@
-### coming next
+### 1.15.2-3.1.1
 - Fixed Useless Sign
 - Fixed rendering issues
+- Bug fixes
+- Super-/Useless Block can be used as beacon base
+- Updated tags
 - Re-added compatibility for [Blue Power](https://www.curseforge.com/minecraft/mc-mods/blue-power)
 - Removed filters compat
 - Removed ethereal from BOP closets

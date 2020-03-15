@@ -66,8 +66,8 @@ public class ModBlocks {
 	public static final UselessCropsBlock WILD_COFFEE_SEEDS = register("wild_coffee_seeds", new CoffeeSeedsBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).tickRandomly().doesNotBlockMovement(), true));
 
 	// Metal
-	public static final Block USELESS_BLOCK = register("useless_block", new Block(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
-	public static final Block SUPER_USELESS_BLOCK = register("super_useless_block", new Block(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
+	public static final Block USELESS_BLOCK = register("useless_block", new MetalBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
+	public static final Block SUPER_USELESS_BLOCK = register("super_useless_block", new MetalBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)));
 	public static final Block USELESS_BARS = register("useless_bars", new ModPaneBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F).notSolid()));
 	public static final Block SUPER_USELESS_BARS = register("super_useless_bars", new ModPaneBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F).notSolid()));
 	public static final Block USELESS_DOOR = register("useless_door", new ModDoorBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F).notSolid()));
@@ -117,14 +117,14 @@ public class ModBlocks {
 		UselessMod.LOGGER.debug("Registered useless blocks");
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
-			RenderType transparentRenderType = RenderType.getTranslucentNoCrumbling();
+			RenderType cutoutMipped = RenderType.getCutoutMipped();
 			RenderType cutoutRenderType = RenderType.getCutout();
 			RenderType translucentRenderType = RenderType.getTranslucent();
 
-			RenderTypeLookup.setRenderLayer(USELESS_GRASS_BLOCK, transparentRenderType);
-			RenderTypeLookup.setRenderLayer(USELESS_LEAVES, transparentRenderType);
-			RenderTypeLookup.setRenderLayer(USELESS_BARS, transparentRenderType);
-			RenderTypeLookup.setRenderLayer(SUPER_USELESS_BARS, transparentRenderType);
+			RenderTypeLookup.setRenderLayer(USELESS_GRASS_BLOCK, cutoutMipped);
+			RenderTypeLookup.setRenderLayer(USELESS_LEAVES, cutoutMipped);
+			RenderTypeLookup.setRenderLayer(USELESS_BARS, cutoutMipped);
+			RenderTypeLookup.setRenderLayer(SUPER_USELESS_BARS, cutoutMipped);
 
 			RenderTypeLookup.setRenderLayer(USELESS_SAPLING, cutoutRenderType);
 			RenderTypeLookup.setRenderLayer(USELESS_GRASS, cutoutRenderType);

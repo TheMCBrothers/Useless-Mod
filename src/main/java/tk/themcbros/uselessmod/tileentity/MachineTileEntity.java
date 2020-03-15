@@ -28,6 +28,7 @@ import tk.themcbros.uselessmod.machine.RedstoneMode;
 import tk.themcbros.uselessmod.machine.Upgrade;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class MachineTileEntity extends LockableTileEntity implements ITickableTileEntity, ISidedInventory {
 	
@@ -205,6 +206,7 @@ public abstract class MachineTileEntity extends LockableTileEntity implements IT
 		return this.getDisplayName();
 	}
 
+	@Nullable
 	public MachineTier getMachineTier() {
 		return this.machineTier;
 	}
