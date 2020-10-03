@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+	  "type": "forge:mod_loaded",
+	  "modid": "immersiveengineering"
+	}
+  ],
+  "type": "immersiveengineering:metal_press",
+  "mold": {
+    "item": "immersiveengineering:mold_plate"
+  },
+  "result": {
+    "tag": "forge:plates/super_useless"
+  },
+  "input": {
+    "tag": "forge:ingots/super_useless"
+  },
+  "energy": 2400
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "uselessmod:useless_cobblestone"
+  },
+  "result": "uselessmod:useless_stone",
+  "experience": 0.1,
+  "cookingtime": 200
+}

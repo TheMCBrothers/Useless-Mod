@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "boat",
+  "pattern": [
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "uselessmod:useless_planks"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_boat"
+  }
+}

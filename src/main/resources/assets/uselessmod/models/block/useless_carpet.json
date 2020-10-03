@@ -1,0 +1,7 @@
+{
+  "parent": "block/carpet",
+  "textures": {
+    "particle": "uselessmod:block/useless_wool",
+    "wool": "uselessmod:block/useless_wool"
+  }
+}

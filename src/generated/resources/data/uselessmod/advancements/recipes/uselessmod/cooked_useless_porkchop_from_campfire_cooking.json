@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:cooked_useless_porkchop_from_campfire_cooking"
+    ]
+  },
+  "criteria": {
+    "has_useless_porkchop": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uselessmod:useless_porkchop"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:cooked_useless_porkchop_from_campfire_cooking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_useless_porkchop",
+      "has_the_recipe"
+    ]
+  ]
+}

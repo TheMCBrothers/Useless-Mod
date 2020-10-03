@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "uselessmod:useless_wheat"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:wheat_flour",
+      "count": 1
+    },
+    {
+      "item": "create:wheat_flour",
+      "count": 2,
+      "chance": 0.25
+    },
+    {
+      "item": "uselessmod:useless_wheat_seeds",
+      "count": 1,
+      "chance": 0.25
+    }
+  ],
+  "processingTime": 150
+}

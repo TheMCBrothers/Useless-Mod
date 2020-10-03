@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[34,)"
+issueTrackerURL="https://github.com/TheMCBrothers/Useless-Mod/issues" #optional
+license="MIT License"
+
+[[mods]]
+    modId="uselessmod"
+    version="${file.jarVersion}"
+    displayName="Useless Mod"
+    updateJSONURL="https://raw.githubusercontent.com/TheMCBrothers/Version/master/uselessmod_update.json" #optional
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/themcbros-useless-mod" #optional
+    logoFile="uselessmod.png" #optional
+    credits="TheMCCrazyMan for textures and ideas" #optional
+    authors="TheMCBrothers" #optional
+    description='''
+    A useless mod made by TheMCBrothers.
+    It adds a new materials and a new biome. Check it out!
+    '''
+
+[[dependencies.uselessmod]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[34.1,)" #mandatory
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="NONE"
+    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+    side="BOTH"
+# Here's another dependency
+[[dependencies.uselessmod]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.3,)"
+    ordering="NONE"
+    side="BOTH"

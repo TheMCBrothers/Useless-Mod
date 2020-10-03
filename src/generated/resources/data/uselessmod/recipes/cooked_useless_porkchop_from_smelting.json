@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "uselessmod:useless_porkchop"
+  },
+  "result": "uselessmod:cooked_useless_porkchop",
+  "experience": 0.35,
+  "cookingtime": 200
+}

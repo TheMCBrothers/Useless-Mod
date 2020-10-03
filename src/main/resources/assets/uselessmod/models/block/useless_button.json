@@ -1,0 +1,6 @@
+{
+  "parent": "block/button",
+  "textures": {
+    "texture": "uselessmod:block/useless_planks"
+  }
+}

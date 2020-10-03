@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:useless_ingot_from_useless_block"
+    ]
+  },
+  "criteria": {
+    "has_useless_nugget": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:storage_blocks/useless"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:useless_ingot_from_useless_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_useless_nugget",
+      "has_the_recipe"
+    ]
+  ]
+}

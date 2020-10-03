@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:orange_lamp"
+    ]
+  },
+  "criteria": {
+    "has_redstone_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:redstone_lamp"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:orange_lamp"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_redstone_lamp",
+      "has_the_recipe"
+    ]
+  ]
+}

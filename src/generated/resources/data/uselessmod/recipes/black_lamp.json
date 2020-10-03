@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X#X",
+    "#L#",
+    "X#X"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "#": {
+      "tag": "forge:glass/black"
+    },
+    "X": {
+      "tag": "forge:dyes/black"
+    }
+  },
+  "result": {
+    "item": "uselessmod:black_lamp"
+  }
+}

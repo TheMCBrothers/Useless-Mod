@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "tag": "forge:ores/super_useless"
+    }
+  ],
+  "results": [
+    {
+      "item": "uselessmod:super_useless_dust",
+      "count": 1
+    }
+  ],
+  "processingTime": 400
+}

@@ -1,0 +1,20 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/useless"
+    }
+  ],
+  "results": [
+    {
+      "item": "uselessmod:useless_plate",
+      "count": 1
+    }
+  ]
+}

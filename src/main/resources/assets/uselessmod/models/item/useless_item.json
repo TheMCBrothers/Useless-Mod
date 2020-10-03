@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "uselessmod:item/useless_item"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "uselessmod:mode": 1
+      },
+      "model": "uselessmod:item/useless_item_mana"
+    },
+    {
+      "predicate": {
+        "uselessmod:mode": 2
+      },
+      "model": "uselessmod:item/useless_item_fluid"
+    },
+    {
+      "predicate": {
+        "uselessmod:mode": 3
+      },
+      "model": "uselessmod:item/useless_item_energy"
+    },
+    {
+      "predicate": {
+        "uselessmod:mode": 4
+      },
+      "model": "uselessmod:item/useless_item_entity"
+    }
+  ]
+}

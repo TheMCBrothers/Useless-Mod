@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "chest",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "uselessmod:useless_logs"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_chest",
+    "count": 4
+  }
+}

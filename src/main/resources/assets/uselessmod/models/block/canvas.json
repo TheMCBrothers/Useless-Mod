@@ -1,0 +1,7 @@
+{
+  "parent": "uselessmod:block/cube_all_tint",
+  "textures": {
+    "particle": "uselessmod:block/canvas",
+    "texture": "uselessmod:block/canvas"
+  }
+}

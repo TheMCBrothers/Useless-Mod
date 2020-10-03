@@ -1,0 +1,41 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "uselessmod:super_useless_horse_armor"
+    }
+  ],
+  "results": [
+    {
+      "item": "uselessmod:super_useless_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:leather",
+      "count": 2,
+      "chance": 0.5
+    },
+    {
+      "item": "uselessmod:super_useless_ingot",
+      "count": 2,
+      "chance": 0.5
+    },
+    {
+      "item": "minecraft:string",
+      "count": 2,
+      "chance": 0.25
+    },
+    {
+      "item": "uselessmod:super_useless_nugget",
+      "count": 8,
+      "chance": 0.25
+    }
+  ],
+  "processingTime": 200
+}

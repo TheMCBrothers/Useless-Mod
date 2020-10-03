@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "uselessmod:block/stripped_useless_log_top",
+    "side": "uselessmod:block/stripped_useless_log"
+  }
+}

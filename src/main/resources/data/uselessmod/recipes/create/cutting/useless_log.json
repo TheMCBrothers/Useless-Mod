@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "uselessmod:useless_log"
+    }
+  ],
+  "results": [
+    {
+      "item": "uselessmod:stripped_useless_log",
+      "count": 1
+    }
+  ],
+  "processingTime": 50
+}

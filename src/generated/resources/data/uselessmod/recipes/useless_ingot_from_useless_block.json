@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "useless_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/useless"
+    }
+  ],
+  "result": {
+    "item": "uselessmod:useless_ingot",
+    "count": 9
+  }
+}

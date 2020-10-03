@@ -1,0 +1,20 @@
+{
+  "type": "immersiveengineering:hammer_crushing",
+  "conditions": [
+    {
+	  "type": "forge:mod_loaded",
+	  "modid": "immersiveengineering"
+	},
+    {
+      "key": "tools.disable_hammer_crushing",
+      "value": false,
+      "type": "immersiveengineering:config"
+    }
+  ],
+  "result": {
+    "tag": "forge:dusts/super_useless"
+  },
+  "input": {
+    "tag": "forge:ores/super_useless"
+  }
+}

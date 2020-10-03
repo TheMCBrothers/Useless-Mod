@@ -1,0 +1,35 @@
+{
+  "parent": "uselessmod:uselessmod/root",
+  "display": {
+    "icon": {
+      "item": "uselessmod:useless_ingot"
+    },
+    "title": {
+      "translate": "advancements.uselessmod.useless_ingot.title"
+    },
+    "description": {
+      "translate": "advancements.uselessmod.useless_ingot.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "useless_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/useless"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "useless_ingot"
+    ]
+  ]
+}

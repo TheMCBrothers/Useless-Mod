@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ores/super_useless"
+    }
+  ],
+  "results": [
+    {
+      "item": "uselessmod:super_useless_dust",
+      "count": 1
+    },
+    {
+      "item": "uselessmod:super_useless_dust",
+      "count": 2,
+      "chance": 0.3
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 1,
+      "chance": 0.125
+    }
+  ],
+  "processingTime": 400
+}

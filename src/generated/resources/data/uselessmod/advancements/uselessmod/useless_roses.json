@@ -1,0 +1,61 @@
+{
+  "parent": "uselessmod:uselessmod/useless_biome",
+  "display": {
+    "icon": {
+      "item": "uselessmod:useless_rose"
+    },
+    "title": {
+      "translate": "advancements.uselessmod.useless_roses.title"
+    },
+    "description": {
+      "translate": "advancements.uselessmod.useless_roses.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "red_rose": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uselessmod:red_rose"
+          }
+        ]
+      }
+    },
+    "blue_rose": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uselessmod:blue_rose"
+          }
+        ]
+      }
+    },
+    "useless_rose": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uselessmod:useless_rose"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "red_rose"
+    ],
+    [
+      "blue_rose"
+    ],
+    [
+      "useless_rose"
+    ]
+  ]
+}

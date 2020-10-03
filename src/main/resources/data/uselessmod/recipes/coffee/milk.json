@@ -1,0 +1,19 @@
+{
+  "type": "uselessmod:coffee_machine",
+  "water_amount": 250,
+  "cup": {
+    "item": "uselessmod:cup"
+  },
+  "bean": {
+    "tag": "forge:crops/coffeebean"
+  },
+  "extra": {
+    "item": "minecraft:milk_bucket"
+  },
+  "result": {
+    "item": "uselessmod:coffee_cup",
+    "nbt": {
+      "CoffeeType": "uselessmod:milk"
+    }
+  }
+}

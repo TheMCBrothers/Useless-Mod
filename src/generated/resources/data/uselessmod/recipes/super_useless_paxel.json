@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "APS",
+    " X ",
+    " X "
+  ],
+  "key": {
+    "A": {
+      "item": "uselessmod:super_useless_axe"
+    },
+    "P": {
+      "item": "uselessmod:super_useless_pickaxe"
+    },
+    "S": {
+      "item": "uselessmod:super_useless_shovel"
+    },
+    "X": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "uselessmod:super_useless_paxel"
+  }
+}

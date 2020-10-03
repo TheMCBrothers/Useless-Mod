@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "uselessmod:useless_mutton"
+  },
+  "result": "uselessmod:cooked_useless_mutton",
+  "experience": 0.35,
+  "cookingtime": 100
+}

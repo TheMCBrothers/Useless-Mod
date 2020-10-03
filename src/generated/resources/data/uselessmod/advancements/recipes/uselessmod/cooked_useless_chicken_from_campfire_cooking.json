@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:cooked_useless_chicken_from_campfire_cooking"
+    ]
+  },
+  "criteria": {
+    "has_useless_chicken": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uselessmod:useless_chicken"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:cooked_useless_chicken_from_campfire_cooking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_useless_chicken",
+      "has_the_recipe"
+    ]
+  ]
+}

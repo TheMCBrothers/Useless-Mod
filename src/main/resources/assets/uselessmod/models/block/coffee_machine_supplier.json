@@ -1,0 +1,6 @@
+{
+  "loader": "uselessmod:machine_supplier",
+  "textures": {
+    "particle": "block/cobblestone"
+  }
+}

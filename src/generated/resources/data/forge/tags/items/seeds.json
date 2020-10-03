@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:seeds/useless_wheat",
+    "#forge:seeds/coffeebean",
+    "#forge:seeds/ender"
+  ]
+}

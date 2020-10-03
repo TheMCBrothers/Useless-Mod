@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:ores/useless",
+    "#forge:ores/super_useless"
+  ]
+}

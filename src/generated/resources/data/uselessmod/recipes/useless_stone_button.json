@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "uselessmod:useless_stone"
+    }
+  ],
+  "result": {
+    "item": "uselessmod:useless_stone_button"
+  }
+}

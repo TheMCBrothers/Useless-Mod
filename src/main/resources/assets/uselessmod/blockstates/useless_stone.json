@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "uselessmod:block/useless_stone"
+      },
+      {
+        "model": "uselessmod:block/useless_stone_mirrored"
+      },
+      {
+        "model": "uselessmod:block/useless_stone",
+        "y": 180
+      },
+      {
+        "model": "uselessmod:block/useless_stone_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

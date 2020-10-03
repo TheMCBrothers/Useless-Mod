@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "#X#",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/super_useless"
+    },
+    "X": {
+      "item": "uselessmod:useless_elytra"
+    }
+  },
+  "result": {
+    "item": "uselessmod:super_useless_elytra"
+  }
+}

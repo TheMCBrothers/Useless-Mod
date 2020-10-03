@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:useless_crossover_rail"
+    ]
+  },
+  "criteria": {
+    "has_useless_rail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uselessmod:useless_rail"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:useless_crossover_rail"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_useless_rail",
+      "has_the_recipe"
+    ]
+  ]
+}

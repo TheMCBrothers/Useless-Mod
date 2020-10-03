@@ -1,0 +1,6 @@
+{
+  "parent": "block/rail_flat",
+  "textures": {
+    "rail": "uselessmod:block/powered_useless_rail"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "conditions": [
+    {
+	  "type": "forge:mod_loaded",
+	  "modid": "immersiveengineering"
+	}
+  ],
+  "type": "immersiveengineering:arc_furnace",
+  "results": [
+    {
+      "tag": "forge:ingots/useless"
+    }
+  ],
+  "additives": [],
+  "input": {
+    "tag": "forge:dusts/useless"
+  },
+  "time": 100,
+  "energy": 51200
+}

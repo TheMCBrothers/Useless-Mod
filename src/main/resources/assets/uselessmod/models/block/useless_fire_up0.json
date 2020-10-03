@@ -1,0 +1,7 @@
+{
+    "parent": "uselessmod:block/useless_fire_up",
+    "textures": {
+        "particle": "uselessmod:block/useless_fire_0",
+        "fire": "uselessmod:block/useless_fire_0"
+    }
+}

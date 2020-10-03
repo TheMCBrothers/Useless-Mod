@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "uselessmod:useless_logs"
+    }
+  ],
+  "result": {
+    "item": "uselessmod:useless_planks",
+    "count": 4
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "chest",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "uselessmod:useless_planks"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_chest"
+  }
+}

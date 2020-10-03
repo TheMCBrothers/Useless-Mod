@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "uselessmod:item/super_useless_elytra"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "broken": 1
+      },
+      "model": "uselessmod:item/broken_super_useless_elytra"
+    }
+  ]
+}

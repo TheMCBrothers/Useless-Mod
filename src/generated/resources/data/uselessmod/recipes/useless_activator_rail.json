@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#X#",
+    "#X#",
+    "#X#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:activator_rail"
+    },
+    "X": {
+      "tag": "forge:ingots/useless"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_activator_rail",
+    "count": 6
+  }
+}

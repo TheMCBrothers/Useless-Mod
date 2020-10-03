@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "uselessmod:useless_stone"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_stone_pressure_plate"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "uselessmod:useless_beef"
+  },
+  "result": "uselessmod:cooked_useless_beef",
+  "experience": 0.35,
+  "cookingtime": 100
+}

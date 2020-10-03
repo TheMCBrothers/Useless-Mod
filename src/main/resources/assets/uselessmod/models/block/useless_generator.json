@@ -1,0 +1,9 @@
+{
+  "parent": "forge:block/default",
+  "loader": "forge:obj",
+  "model": "uselessmod:models/block/useless_generator.obj",
+  "flip-v": true,
+  "textures": {
+    "particle": "uselessmod:block/useless_generator"
+  }
+}

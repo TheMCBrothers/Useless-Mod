@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "###",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "uselessmod:cup"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "#": {
+      "tag": "forge:ingots/useless"
+    }
+  },
+  "result": {
+    "item": "uselessmod:coffee_machine",
+    "count": 1
+  }
+}
