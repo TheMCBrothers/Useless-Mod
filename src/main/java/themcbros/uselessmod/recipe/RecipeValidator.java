@@ -1,11 +1,12 @@
 package themcbros.uselessmod.recipe;
 
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import themcbros.uselessmod.helpers.ClientUtils;
 import themcbros.uselessmod.init.RecipeTypeInit;
 
 import java.util.List;
@@ -15,10 +16,9 @@ import java.util.List;
  */
 public class RecipeValidator {
 
+    @OnlyIn(Dist.CLIENT)
     public static List<CoffeeRecipe> getCoffeeRecipes() {
-        ClientWorld world = Minecraft.getInstance().world;
-        assert world != null;
-        return getCoffeeRecipes(world);
+        return getCoffeeRecipes(ClientUtils.getWorld());
     }
 
     public static List<CoffeeRecipe> getCoffeeRecipes(World world) {

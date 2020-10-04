@@ -2,14 +2,12 @@ package themcbros.uselessmod.init;
 
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.util.IntArray;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.network.IContainerFactory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.container.CoffeeMachineContainer;
-import themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 
 public class ContainerInit {
 

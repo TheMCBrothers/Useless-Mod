@@ -1,7 +1,6 @@
 package themcbros.uselessmod.api;
 
 import net.minecraftforge.fml.ModList;
-import themcbros.uselessmod.api.init.IUselessItemList;
 
 /**
  * @author TheMCBrothers
@@ -15,7 +14,6 @@ public class UselessAPI {
      * Marker interface for Useless API
      */
     public interface IUselessAPI {
-        IUselessItemList getItems();
     }
 
     /**

@@ -1,7 +1,10 @@
 package themcbros.uselessmod.helpers;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelRotation;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Direction;
+import net.minecraft.world.World;
 
 public class ClientUtils {
 
@@ -17,4 +20,7 @@ public class ClientUtils {
         throw new IllegalArgumentException(String.valueOf(facing));
     }
 
+    public static ClientWorld getWorld() {
+        return Minecraft.getInstance().world;
+    }
 }

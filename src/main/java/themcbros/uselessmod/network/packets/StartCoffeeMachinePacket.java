@@ -31,9 +31,7 @@ public class StartCoffeeMachinePacket implements IMessage {
             if (serverPlayerEntity != null) {
                 if (serverPlayerEntity.openContainer instanceof CoffeeMachineContainer) {
                     CoffeeMachineTileEntity coffeeMachine = ((CoffeeMachineContainer) serverPlayerEntity.openContainer).tileEntity;
-                    if (coffeeMachine != null) {
-                        coffeeMachine.startMachine(this.start);
-                    }
+                    coffeeMachine.startMachine(this.start);
                 }
             }
         });

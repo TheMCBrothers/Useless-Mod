@@ -26,13 +26,6 @@ public class UselessItemItem extends Item {
 
     public UselessItemItem() {
         super(new Properties().group(UselessMod.GROUP).maxStackSize(1));
-
-        ItemModelsProperties.registerProperty(this, UselessMod.rl("mode"), ((itemStack, world, livingEntity) -> {
-            if (itemStack.getOrCreateTag().contains("Mode", Constants.NBT.TAG_INT)) {
-                return 1F + itemStack.getOrCreateTag().getInt("Mode");
-            }
-            return 0.0F;
-        }));
     }
 
     @Override

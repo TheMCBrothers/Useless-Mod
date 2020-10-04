@@ -8,8 +8,12 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.ElytraItem;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -55,6 +59,25 @@ public class ClientProxy extends CommonProxy {
         // Elytra Layer
         Minecraft.getInstance().getRenderManager().getSkinMap().values()
                 .forEach(player -> player.addLayer(new UselessElytraLayer<>(player)));
+
+        // Item Properties
+        ItemModelsProperties.registerProperty(ItemInit.USELESS_ITEM.get(), UselessMod.rl("mode"), ((itemStack, world, livingEntity) -> {
+            if (itemStack.getOrCreateTag().contains("Mode", Constants.NBT.TAG_INT)) {
+                return 1F + itemStack.getOrCreateTag().getInt("Mode");
+            }
+            return 0.0F;
+        }));
+
+        ItemModelsProperties.registerProperty(ItemInit.USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+                (itemStack, clientWorld, livingEntity) -> ElytraItem.isUsable(itemStack) ? 0.0F : 1.0F);
+        ItemModelsProperties.registerProperty(ItemInit.SUPER_USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+                (itemStack, clientWorld, livingEntity) -> ElytraItem.isUsable(itemStack) ? 0.0F : 1.0F);
+        ItemModelsProperties.registerProperty(ItemInit.USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+                (itemStack, clientWorld, livingEntity) -> livingEntity != null && livingEntity.isHandActive()
+                        && livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(ItemInit.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+                (itemStack, clientWorld, livingEntity) -> livingEntity != null && livingEntity.isHandActive()
+                        && livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
 
         // Render Types
         RenderTypeLookup.setRenderLayer(BlockInit.USELESS_ORE.get(), RenderType.getCutout());

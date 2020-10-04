@@ -3,16 +3,10 @@ package themcbros.uselessmod.block;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +39,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
@@ -59,11 +52,11 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import themcbros.uselessmod.api.energy.CapabilityUselessEnergy;
+import themcbros.uselessmod.client.renderer.tilentity.ISTERProvider;
 import themcbros.uselessmod.config.Config;
 import themcbros.uselessmod.energy.ItemEnergyStorage;
 import themcbros.uselessmod.helpers.ShapeHelper;
 import themcbros.uselessmod.helpers.TextUtils;
-import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.init.StatsInit;
 import themcbros.uselessmod.init.TileEntityInit;
 import themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
@@ -250,22 +243,7 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable, IBlockI
 
     @Override
     public BlockItem provideBlockItem(Block block, Item.Properties properties) {
-        properties.setISTER(() -> () -> new ItemStackTileEntityRenderer() {
-            @Override
-            public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-                BlockState state = BlockInit.COFFEE_MACHINE.get().getDefaultState();
-                Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(state, matrixStack, buffer, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
-                if (stack.hasTag()) {
-                    CoffeeMachineTileEntity coffeeMachine = new CoffeeMachineTileEntity();
-                    CompoundNBT fluidTag = stack.getOrCreateChildTag("Fluid");
-                    coffeeMachine.waterTank.setFluid(FluidStack.loadFluidStackFromNBT(fluidTag));
-                    CompoundNBT tag = stack.getOrCreateTag();
-                    coffeeMachine.energyStorage.setEnergyStored(tag.getInt("EnergyStored"));
-                    ItemStackHelper.loadAllItems(tag, coffeeMachine.coffeeStacks);
-                    TileEntityRendererDispatcher.instance.renderItem(coffeeMachine, matrixStack, buffer, combinedLight, combinedOverlay);
-                }
-            }
-        });
+        properties.setISTER(ISTERProvider::useless);
         return new CoffeeMachineItem(block, properties);
     }
 

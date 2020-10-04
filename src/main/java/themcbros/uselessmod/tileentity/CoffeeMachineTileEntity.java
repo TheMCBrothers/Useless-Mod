@@ -33,10 +33,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import themcbros.uselessmod.UselessMod;
+import themcbros.uselessmod.api.energy.CapabilityUselessEnergy;
 import themcbros.uselessmod.config.Config;
 import themcbros.uselessmod.container.CoffeeMachineContainer;
-import themcbros.uselessmod.api.energy.CapabilityUselessEnergy;
 import themcbros.uselessmod.energy.UselessEnergyStorage;
 import themcbros.uselessmod.helpers.TextUtils;
 import themcbros.uselessmod.init.TileEntityInit;
@@ -130,21 +129,17 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
         CompoundNBT nbt = new CompoundNBT();
         if (type == 0) {
             nbt.put("Fluid", this.waterTank.writeToNBT(new CompoundNBT()));
-            UselessMod.LOGGER.debug("Syncing tank info -> " + this.pos.getCoordinatesAsString());
         }
 
         Messages.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> world.getChunkAt(this.pos)),
                 new SyncTileEntityPacket(this, nbt));
-        UselessMod.LOGGER.debug("Sent sync packet -> " + this.pos.getCoordinatesAsString());
     }
 
     @Override
     public void receiveMessageFromServer(CompoundNBT nbt) {
         if (nbt.contains("Fluid", Constants.NBT.TAG_COMPOUND)) {
             this.waterTank.readFromNBT(nbt.getCompound("Fluid"));
-            UselessMod.LOGGER.debug("Updated tank info on client -> " + this.pos.getCoordinatesAsString());
         }
-        UselessMod.LOGGER.debug("Receive sync packet -> " + this.pos.getCoordinatesAsString());
     }
 
     private int burnTime;

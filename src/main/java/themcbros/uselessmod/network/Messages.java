@@ -1,7 +1,6 @@
 package themcbros.uselessmod.network;
 
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import themcbros.uselessmod.UselessMod;

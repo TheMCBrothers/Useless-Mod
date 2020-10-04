@@ -30,8 +30,6 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.init.EntityInit;
@@ -108,7 +106,7 @@ public class UselessBoatEntity extends Entity {
         this.dataManager.register(ROCKING_TICKS, 0);
     }
 
-    public boolean func_241849_j(Entity p_241849_1_) {
+    public boolean canCollide(Entity p_241849_1_) {
         return func_242378_a(this, p_241849_1_);
     }
 
@@ -207,7 +205,6 @@ public class UselessBoatEntity extends Entity {
     /**
      * Setups the entity to do the hurt animation. Only used by packets in multiplayer.
      */
-    @OnlyIn(Dist.CLIENT)
     public void performHurtAnimation() {
         this.setForwardDirection(-this.getForwardDirection());
         this.setTimeSinceHit(10);
@@ -224,7 +221,6 @@ public class UselessBoatEntity extends Entity {
     /**
      * Sets a target for the client to interpolate towards over the next few ticks
      */
-    @OnlyIn(Dist.CLIENT)
     public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
         this.lerpX = x;
         this.lerpY = y;
@@ -399,7 +395,6 @@ public class UselessBoatEntity extends Entity {
         this.dataManager.set(RIGHT_PADDLE, right);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getRowingTime(int side, float limbSwing) {
         return this.getPaddleState(side) ? (float) MathHelper.clampedLerp((double) this.paddlePositions[side] - (double) ((float) Math.PI / 8F), this.paddlePositions[side], limbSwing) : 0.0F;
     }
@@ -709,7 +704,6 @@ public class UselessBoatEntity extends Entity {
     /**
      * Applies this entity's orientation (pitch/yaw) to another entity. Used to update passenger orientation.
      */
-    @OnlyIn(Dist.CLIENT)
     public void applyOrientationToEntity(Entity entityToUpdate) {
         this.applyYawToEntity(entityToUpdate);
     }
@@ -815,7 +809,6 @@ public class UselessBoatEntity extends Entity {
         return this.dataManager.get(ROCKING_TICKS);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getRockingAngle(float partialTicks) {
         return MathHelper.lerp(partialTicks, this.prevRockingAngle, this.rockingAngle);
     }
@@ -856,7 +849,6 @@ public class UselessBoatEntity extends Entity {
         return list.isEmpty() ? null : list.get(0);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void updateInputs(boolean leftInputDown, boolean rightInputDown, boolean forwardInputDown, boolean backInputDown) {
         this.leftInputDown = leftInputDown;
         this.rightInputDown = rightInputDown;

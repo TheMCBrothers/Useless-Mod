@@ -1,12 +1,11 @@
 package themcbros.uselessmod.network.packets;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.SignTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
-import themcbros.uselessmod.client.screen.EditUselessSignScreen;
+import themcbros.uselessmod.network.MessageProxy;
 
 import java.util.function.Supplier;
 
@@ -29,16 +28,7 @@ public class OpenUselessSignEditor implements IMessage {
     @Override
     public void process(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            Minecraft client = Minecraft.getInstance();
-            assert client.world != null;
-            TileEntity tileentity = client.world.getTileEntity(this.signPos);
-            if (!(tileentity instanceof SignTileEntity)) {
-                tileentity = new SignTileEntity();
-                tileentity.setWorldAndPos(client.world, this.signPos);
-            }
-
-            assert client.player != null;
-            client.displayGuiScreen(new EditUselessSignScreen((SignTileEntity) tileentity));
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> MessageProxy.openSignGui(this.signPos));
         });
     }
 }

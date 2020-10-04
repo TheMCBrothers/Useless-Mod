@@ -1,28 +1,22 @@
 package themcbros.uselessmod.init;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.AbstractSkullBlock;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import themcbros.uselessmod.UselessMod;
-import themcbros.uselessmod.api.init.IUselessItemList;
-import themcbros.uselessmod.client.renderer.tilentity.UselessSkullTileEntityRenderer;
+import themcbros.uselessmod.client.renderer.tilentity.ISTERProvider;
 import themcbros.uselessmod.entity.UselessBoatEntity;
 import themcbros.uselessmod.item.*;
 
 @Mod.EventBusSubscriber(modid = UselessMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ItemInit implements IUselessItemList {
+public class ItemInit {
 
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, UselessMod.MOD_ID);
 
@@ -121,7 +115,7 @@ public class ItemInit implements IUselessItemList {
     public static final RegistryObject<Item> CUP = REGISTER.register("cup", CupBlockItem::new);
     public static final RegistryObject<CoffeeCupItem> COFFEE_CUP = REGISTER.register("coffee_cup", CoffeeCupItem::new);
     public static final RegistryObject<UselessBucketItem> USELESS_BUCKET = REGISTER.register("useless_bucket",
-            () -> new UselessBucketItem(8000, new Item.Properties().group(UselessMod.GROUP).maxStackSize(1)));
+            () -> new UselessBucketItem(FluidAttributes.BUCKET_VOLUME * 8, new Item.Properties().group(UselessMod.GROUP).maxStackSize(1)));
 
     // Crops
     public static final RegistryObject<Item> USELESS_WHEAT_SEEDS = REGISTER.register("useless_wheat_seeds",
@@ -138,19 +132,7 @@ public class ItemInit implements IUselessItemList {
             () -> new UselessSignItem(new Item.Properties().maxStackSize(16).group(UselessMod.GROUP), BlockInit.USELESS_SIGN.get(), BlockInit.USELESS_WALL_SIGN.get()));
     public static final RegistryObject<WallOrFloorItem> USELESS_SKELETON_SKULL = REGISTER.register("useless_skeleton_skull",
             () -> new WallOrFloorItem(BlockInit.USELESS_SKELETON_SKULL.get(), BlockInit.USELESS_SKELETON_WALL_SKULL.get(),
-                    new Item.Properties().group(UselessMod.GROUP).setISTER(() -> () -> new ItemStackTileEntityRenderer() {
-                        @Override
-                        public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-                            Item item = stack.getItem();
-                            if (item instanceof BlockItem) {
-                                Block block = ((BlockItem) item).getBlock();
-                                if (block instanceof AbstractSkullBlock) {
-                                    UselessSkullTileEntityRenderer.render(null, 180.0F,
-                                            ((AbstractSkullBlock)block).getSkullType(), 0.0F, matrixStack, buffer, combinedLight);
-                                }
-                            }
-                        }
-                    }).rarity(Rarity.UNCOMMON)));
+                    new Item.Properties().group(UselessMod.GROUP).setISTER(ISTERProvider::useless).rarity(Rarity.UNCOMMON)));
 
     // Mob loot
     public static final RegistryObject<Item> USELESS_BONE = REGISTER.register("useless_bone", SimpleItem::new);
@@ -176,27 +158,5 @@ public class ItemInit implements IUselessItemList {
     @SubscribeEvent
     public static void onEntityRegister(final RegistryEvent.Register<EntityType<?>> event) {
         ModSpawnEggItem.initUnaddedEggs();
-    }
-
-    // START API ACCESS
-
-    public static final IUselessItemList INSTANCE = new ItemInit();
-
-    private ItemInit() {
-    }
-
-    @Override
-    public RegistryObject<Item> sugaredMilk() {
-        return SUGARED_MILK;
-    }
-
-    @Override
-    public RegistryObject<Item> cup() {
-        return CUP;
-    }
-
-    @Override
-    public RegistryObject<CoffeeCupItem> coffeeCup() {
-        return COFFEE_CUP;
     }
 }

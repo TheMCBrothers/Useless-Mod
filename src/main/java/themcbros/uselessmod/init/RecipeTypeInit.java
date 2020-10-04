@@ -1,7 +1,6 @@
 package themcbros.uselessmod.init;
 
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.ShapelessRecipe;
 import themcbros.uselessmod.recipe.CoffeeRecipe;
 
 public class RecipeTypeInit {

@@ -32,6 +32,14 @@ import java.util.function.Predicate;
 public class WallClosetRecipeManager implements ISelectiveResourceReloadListener {
 
     @Override
+    public void onResourceManagerReload(IResourceManager resourceManager) {
+        for (ClosetMaterial material : UselessRegistries.CLOSET_MATERIALS) {
+            ShapedRecipe recipe = createWallClosetRecipe(material);
+            RecipeHelper.addRecipe(recipe);
+        }
+    }
+
+    @Override
     public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
         for (ClosetMaterial material : UselessRegistries.CLOSET_MATERIALS) {
             ShapedRecipe recipe = createWallClosetRecipe(material);

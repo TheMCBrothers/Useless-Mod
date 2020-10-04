@@ -10,7 +10,6 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeRegistry;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -23,8 +22,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
-import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.api.UselessRegistries;
 import themcbros.uselessmod.api.coffee.CoffeeTypeInit;
 import themcbros.uselessmod.api.color.CapabilityColor;
@@ -38,7 +35,6 @@ import themcbros.uselessmod.datagen.DataEvents;
 import themcbros.uselessmod.helpers.RecipeHelper;
 import themcbros.uselessmod.init.*;
 import themcbros.uselessmod.network.Messages;
-import themcbros.uselessmod.recipe.CoffeeRecipeManager;
 import themcbros.uselessmod.recipe.WallClosetRecipeManager;
 import themcbros.uselessmod.useless_mana.player.PlayerMana;
 import themcbros.uselessmod.world.structure.Structures;
@@ -109,7 +105,6 @@ public class CommonProxy {
 
         MinecraftForge.EVENT_BUS.register(new RecipeHelper());
         MinecraftForge.EVENT_BUS.register(new WallClosetRecipeManager());
-        MinecraftForge.EVENT_BUS.register(new CoffeeRecipeManager());
 
         // Biomes
         RegistryKey<Biome> key = RegistryKey.getOrCreateKey(ForgeRegistries.Keys.BIOMES, BiomeInit.USELESS_FOREST.getId());

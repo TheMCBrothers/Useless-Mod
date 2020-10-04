@@ -7,8 +7,7 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import themcbros.uselessmod.client.renderer.tilentity.ItemStackTileEntityRenderer;
-import themcbros.uselessmod.init.TileEntityInit;
+import themcbros.uselessmod.client.renderer.tilentity.ISTERProvider;
 import themcbros.uselessmod.tileentity.UselessBedTileEntity;
 
 public class UselessBedBlock extends BedBlock implements IBlockItemProvider {
@@ -27,7 +26,7 @@ public class UselessBedBlock extends BedBlock implements IBlockItemProvider {
 
     @Override
     public BlockItem provideBlockItem(Block block, Item.Properties properties) {
-        properties.setISTER(() -> () -> new ItemStackTileEntityRenderer(() -> TileEntityInit.USELESS_BED.get().create()));
+        properties.setISTER(ISTERProvider::useless);
         return new BlockItem(block, properties.maxStackSize(1));
     }
 
