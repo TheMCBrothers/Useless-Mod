@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.Explosion;
@@ -19,6 +20,8 @@ import themcbros.uselessmod.tileentity.UselessGeneratorTileEntity;
 import javax.annotation.Nullable;
 
 public class UselessGeneratorBlock extends Block {
+
+    private static final VoxelShape SHAPE = makeCuboidShape(0, 0, 0, 16, 15, 16);
 
     public UselessGeneratorBlock(Properties properties) {
         super(properties);
@@ -47,6 +50,11 @@ public class UselessGeneratorBlock extends Block {
                 }
             }
         }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return SHAPE;
     }
 
     @Override
