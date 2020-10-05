@@ -1,7 +1,10 @@
 {
   "parent": "forge:item/bucket",
-  "loader": "forge:bucket",
+  "loader": "uselessmod:bucket",
   "fluid": "minecraft:empty",
+  "flipGas": true,
+  "applyTint": true,
+  "applyFluidLuminosity": true,
   "textures": {
     "base": "uselessmod:item/useless_bucket"
   }

@@ -49,12 +49,9 @@ public class UselessBucketItem extends Item {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        // this is wrong
         if (this.hasFluid(stack)) {
             FluidStack fluidStack = this.getFluid(stack);
-            double stored = fluidStack.getAmount() - this.capacity + 1;
-            double max = this.capacity + 1;
-            return stored / max;
+            return 1.0 - (double) fluidStack.getAmount() / (double) this.capacity;
         }
         return 0.0;
     }
