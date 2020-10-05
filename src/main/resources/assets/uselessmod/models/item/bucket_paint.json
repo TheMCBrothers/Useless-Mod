@@ -1,0 +1,6 @@
+{
+  "parent": "forge:item/bucket",
+  "loader": "uselessmod:bucket",
+  "fluid": "uselessmod:paint",
+  "applyTint": true
+}

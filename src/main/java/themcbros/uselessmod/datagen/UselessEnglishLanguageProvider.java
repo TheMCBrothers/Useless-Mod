@@ -184,6 +184,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addItem(ItemInit.COOKED_USELESS_BEEF, "Useless Steak");
         // Color Module
         this.addItem(ColorModule.PAINT_BRUSH, "Paint Brush");
+        this.addItem(ColorModule.BUCKET_PAINT, "Bucket of Paint");
 
         // --- ENTITIES --- //
 

@@ -5,32 +5,28 @@ import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.util.function.Supplier;
+import themcbros.uselessmod.helpers.ColorUtils;
 
 /**
  * @author TheMCBrothers
  */
 public class ColorFluid extends Fluid {
 
-    private final Supplier<? extends IItemProvider> bucket;
     private final FluidAttributes.Builder builder;
 
-    public ColorFluid(Supplier<? extends IItemProvider> bucket, FluidAttributes.Builder builder) {
-        this.bucket = bucket;
+    public ColorFluid(FluidAttributes.Builder builder) {
         this.builder = builder;
     }
 
@@ -41,7 +37,7 @@ public class ColorFluid extends Fluid {
 
     @Override
     public Item getFilledBucket() {
-        return this.bucket.get().asItem();
+        return ColorModule.BUCKET_PAINT.get();
     }
 
     @Override
@@ -100,19 +96,17 @@ public class ColorFluid extends Fluid {
         }
 
         @Override
-        public ITextComponent getDisplayName(FluidStack stack) {
+        public int getColor(FluidStack stack) {
             if (stack.hasTag() && stack.getOrCreateTag().contains("Color", Constants.NBT.TAG_ANY_NUMERIC)) {
-                return new TranslationTextComponent("color.minecraft.blue").appendString(" ").append(super.getDisplayName(stack));
+                int color = stack.getOrCreateTag().getInt("Color");
+                return ColorUtils.fullAlpha(color);
             }
-            return super.getDisplayName(stack);
+            return super.getColor(stack);
         }
 
         @Override
-        public int getColor(FluidStack stack) {
-            if (stack.hasTag() && stack.getOrCreateTag().contains("Color", Constants.NBT.TAG_ANY_NUMERIC)) {
-                return stack.getOrCreateTag().getInt("Color");
-            }
-            return super.getColor(stack);
+        public ItemStack getBucket(FluidStack stack) {
+            return ColorModule.BUCKET_PAINT.get().fillBucket(stack);
         }
     }
 

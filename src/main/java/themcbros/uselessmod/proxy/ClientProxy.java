@@ -29,6 +29,7 @@ import themcbros.uselessmod.api.coffee.CoffeeType;
 import themcbros.uselessmod.api.color.CapabilityColor;
 import themcbros.uselessmod.api.color.IColorHandler;
 import themcbros.uselessmod.block.LampBlock;
+import themcbros.uselessmod.client.models.DynamicBucketModel;
 import themcbros.uselessmod.client.models.block.supplier.MachineSupplierModelLoader;
 import themcbros.uselessmod.client.renderer.entity.*;
 import themcbros.uselessmod.client.renderer.entity.layer.UselessElytraLayer;
@@ -38,6 +39,7 @@ import themcbros.uselessmod.color.ColorModule;
 import themcbros.uselessmod.config.Config;
 import themcbros.uselessmod.init.*;
 import themcbros.uselessmod.item.CoffeeCupItem;
+import themcbros.uselessmod.registration.FluidRegistryObject;
 import themcbros.uselessmod.tileentity.CoffeeCupTileEntity;
 import themcbros.uselessmod.tileentity.MachineSupplierTileEntity;
 
@@ -110,6 +112,11 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlockInit.USELESS_CROSSOVER_RAIL.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.COFFEE_MACHINE_SUPPLIER.get(), renderType -> true);
 
+        for (FluidRegistryObject<?, ?, ?, ?> fluidRegistryObject : FluidInit.REGISTER.getAllFluids()) {
+            RenderTypeLookup.setRenderLayer(fluidRegistryObject.getStillFluid(), RenderType.getTranslucent());
+            RenderTypeLookup.setRenderLayer(fluidRegistryObject.getFlowingFluid(), RenderType.getTranslucent());
+        }
+
         // Screens
         ScreenManager.registerFactory(ContainerInit.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
 
@@ -137,6 +144,7 @@ public class ClientProxy extends CommonProxy {
     private void modelRegister(final ModelRegistryEvent event) {
         // Model Loaders
         ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), new MachineSupplierModelLoader());
+        ModelLoaderRegistry.registerLoader(UselessMod.rl("bucket"), DynamicBucketModel.Loader.INSTANCE);
     }
 
     private void itemColors(final ColorHandlerEvent.Item event) {

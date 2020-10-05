@@ -15,8 +15,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.api.color.CapabilityColor;
 import themcbros.uselessmod.api.color.IColorHandler;
-import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.item.PaintBrushItem;
+import themcbros.uselessmod.item.PaintBucketItem;
 
 /**
  * @author TheMCBrothers
@@ -30,10 +30,12 @@ public class ColorModule {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, UselessMod.MOD_ID);
 
     public static final RegistryObject<ColorFluid> PAINT = FLUIDS.register("paint",
-            () -> new ColorFluid(BlockInit.PAINT_BUCKET, FluidAttributes.builder(PAINT_STILL, PAINT_FLOW)));
+            () -> new ColorFluid(FluidAttributes.builder(PAINT_STILL, PAINT_FLOW)));
 
     public static final RegistryObject<PaintBrushItem> PAINT_BRUSH = ITEMS.register("paint_brush",
             () -> new PaintBrushItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP)));
+    public static final RegistryObject<PaintBucketItem> BUCKET_PAINT = ITEMS.register("bucket_paint",
+            () -> new PaintBucketItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP)));
 
     public static void init() { /* init does nothing */ }
 
