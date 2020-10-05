@@ -52,12 +52,12 @@ public class UselessItemStackTileEntityRenderer extends ItemStackTileEntityRende
                     BlockState state = BlockInit.COFFEE_MACHINE.get().getDefaultState();
                     Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(state, matrixStack, buffer, combinedLight, combinedOverlay, net.minecraftforge.client.model.data.EmptyModelData.INSTANCE);
                     CoffeeMachineTileEntity coffeeMachine = new CoffeeMachineTileEntity();
-                    if (stack.hasTag()) {
-                        CompoundNBT fluidTag = stack.getOrCreateChildTag("Fluid");
+                    CompoundNBT blockEntityTag = stack.getChildTag("BlockEntityTag");
+                    if (blockEntityTag != null) {
+                        CompoundNBT fluidTag = blockEntityTag.getCompound("Fluid");
                         coffeeMachine.waterTank.setFluid(FluidStack.loadFluidStackFromNBT(fluidTag));
-                        CompoundNBT tag = stack.getOrCreateTag();
-                        coffeeMachine.energyStorage.setEnergyStored(tag.getInt("EnergyStored"));
-                        ItemStackHelper.loadAllItems(tag, coffeeMachine.coffeeStacks);
+                        coffeeMachine.energyStorage.setEnergyStored(blockEntityTag.getInt("EnergyStored"));
+                        ItemStackHelper.loadAllItems(blockEntityTag, coffeeMachine.coffeeStacks);
                     }
                     tileentity = coffeeMachine;
                 } else if (block == BlockInit.USELESS_CHEST.get()) {

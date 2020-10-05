@@ -12,17 +12,17 @@
               "ops": [
                 {
                   "source": "EnergyStored",
-                  "target": "EnergyStored",
+                  "target": "BlockEntityTag.EnergyStored",
                   "op": "replace"
                 },
                 {
                   "source": "Fluid",
-                  "target": "Fluid",
+                  "target": "BlockEntityTag.Fluid",
                   "op": "replace"
                 },
                 {
                   "source": "Items",
-                  "target": "Items",
+                  "target": "BlockEntityTag.Items",
                   "op": "replace"
                 }
               ]

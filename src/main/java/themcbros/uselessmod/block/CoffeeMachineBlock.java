@@ -8,12 +8,10 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
@@ -59,7 +57,6 @@ import themcbros.uselessmod.helpers.ShapeHelper;
 import themcbros.uselessmod.helpers.TextUtils;
 import themcbros.uselessmod.init.StatsInit;
 import themcbros.uselessmod.init.TileEntityInit;
-import themcbros.uselessmod.tileentity.CoffeeMachineTileEntity;
 import themcbros.uselessmod.tileentity.IWrenchableTileEntity;
 import themcbros.uselessmod.util.Styles;
 
@@ -196,31 +193,16 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable, IBlockI
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity livingEntity, ItemStack stack) {
-        CompoundNBT tag = stack.getTag();
-        if (tag != null) {
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof CoffeeMachineTileEntity) {
-                CoffeeMachineTileEntity coffeeMachine = (CoffeeMachineTileEntity) te;
-                CompoundNBT fluidTag = stack.getChildTag("Fluid");
-                coffeeMachine.waterTank.setFluid(FluidStack.loadFluidStackFromNBT(fluidTag));
-                coffeeMachine.energyStorage.setEnergyStored(tag.getInt("EnergyStored"));
-                ItemStackHelper.loadAllItems(tag, coffeeMachine.coffeeStacks);
-            }
-        }
-    }
-
-    @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag tooltipFlag) {
-        CompoundNBT tag = stack.getTag();
+        CompoundNBT tag = stack.getChildTag("BlockEntityTag");
         if (tag != null) {
             if (tag.contains("Fluid", Constants.NBT.TAG_COMPOUND)) {
-                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(stack.getChildTag("Fluid"));
+                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
                 tooltip.add((((IFormattableTextComponent) TextUtils.fluidName(fluidStack)).appendString(": ").append(TextUtils.fluidAmount(fluidStack.getAmount())))
                         .setStyle(Styles.MODE_FLUID));
             }
-            if (tag.contains("Energy", Constants.NBT.TAG_ANY_NUMERIC)) {
-                int forgeEnergy = stack.getOrCreateTag().getInt("EnergyStored");
+            if (tag.contains("EnergyStored", Constants.NBT.TAG_ANY_NUMERIC)) {
+                int forgeEnergy = tag.getInt("EnergyStored");
                 tooltip.add(TextUtils.energy(forgeEnergy).setStyle(Styles.USELESS_ENERGY));
             }
         }
