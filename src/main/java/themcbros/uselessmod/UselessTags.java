@@ -1,5 +1,6 @@
 package themcbros.uselessmod;
 
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import themcbros.uselessmod.helpers.TagUtils;
@@ -21,6 +22,10 @@ public class UselessTags {
         public static final ITag.INamedTag<Item> TOOLS_WRENCH = TagUtils.forgeItemTag("tools/wrench");
         public static final ITag.INamedTag<Item> WRENCHES = TagUtils.forgeItemTag("wrenches");
         public static final ITag.INamedTag<Item> WRENCH = TagUtils.forgeItemTag("wrench");
+    }
+
+    public static class Fluids {
+        public static final ITag.INamedTag<Fluid> GAS = TagUtils.uselessFluidTag("gas");
     }
 
 }

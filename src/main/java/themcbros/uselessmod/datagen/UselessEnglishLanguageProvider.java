@@ -12,6 +12,7 @@ import themcbros.uselessmod.api.coffee.CoffeeTypeInit;
 import themcbros.uselessmod.block.LampBlock;
 import themcbros.uselessmod.color.ColorModule;
 import themcbros.uselessmod.init.*;
+import themcbros.uselessmod.registration.FluidRegistryObject;
 
 import java.util.function.Supplier;
 
@@ -196,6 +197,8 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         // --- FLUIDS --- //
 
         this.addFluid(ColorModule.PAINT, "Paint");
+        this.addFluid(FluidInit.USELESS_GAS, "Useless Gas");
+        this.addFluid(FluidInit.USELESS_WATER, "Useless Water");
 
         // --- ENCHANTMENTS --- //
 
@@ -270,6 +273,11 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
 
     private void addFluid(Supplier<? extends Fluid> key, String name) {
         this.add(key.get().getAttributes().getTranslationKey(), name);
+    }
+
+    private void addFluid(FluidRegistryObject<?, ?, ?, ?> key, String name) {
+        this.add(key.getStillFluid().getAttributes().getTranslationKey(), name);
+        this.add(key.getBucket(), name + " Bucket");
     }
 
     private void addAdvancement(String name, String title, String description) {

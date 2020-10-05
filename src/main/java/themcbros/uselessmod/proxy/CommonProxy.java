@@ -54,7 +54,7 @@ public class CommonProxy {
         ParticleInit.REGISTER.register(bus);
         PaintingInit.REGISTER.register(bus);
         EnchantmentInit.REGISTER.register(bus);
-//        FluidInit.REGISTER.register(bus);
+        FluidInit.REGISTER.register(bus);
         BlockInit.REGISTER.register(bus);
         ItemInit.REGISTER.register(bus);
         ContainerInit.REGISTER.register(bus);

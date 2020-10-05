@@ -1,8 +1,10 @@
 package themcbros.uselessmod.helpers;
 
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -32,4 +34,7 @@ public class TagUtils {
         return BlockTags.makeWrapperTag(new ResourceLocation(ForgeVersion.MOD_ID, path).toString());
     }
 
+    public static ITag.INamedTag<Fluid> uselessFluidTag(String path) {
+        return FluidTags.makeWrapperTag(UselessMod.rl(path).toString());
+    }
 }

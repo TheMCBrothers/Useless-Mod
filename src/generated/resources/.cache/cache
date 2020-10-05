@@ -1,4 +1,4 @@
-48bfcd918863be42fefce0079e7b8935cde76364 assets/uselessmod/lang/en_us.json
+c350136936e77231d5319e0ccd5db6d55059924d assets/uselessmod/lang/en_us.json
 bc49e2ce8a1f10b07217bcbe00733dfbffbc2bac data/forge/tags/blocks/chests/wooden.json
 da31b41b00b60df296a81e0899493e6874fcc1a6 data/forge/tags/blocks/cobblestone.json
 92e17b02a28e8a2a598b77aa7c3ef46b602f9ce9 data/forge/tags/blocks/fence_gates/wooden.json
@@ -83,6 +83,7 @@ e49c562d2c05e92997ea0bd2075e3f7158006dc5 data/minecraft/tags/blocks/wooden_stair
 354ce4fb6585db2959618207c4287c87ed66778b data/minecraft/tags/blocks/wooden_trapdoors.json
 67c4bcf04bb64e312c06c93425e9041ca55c6065 data/minecraft/tags/blocks/wool.json
 552b3c7299ee83208a2a0ce2f3fcaa10e0e4cf2a data/minecraft/tags/entity_types/skeletons.json
+d4cd84513a33b2a7a51ceec4b4d317a3759eca91 data/minecraft/tags/fluids/water.json
 04dadacdb518231e0276b5416224cb6008ae92ce data/minecraft/tags/items/beacon_payment_items.json
 9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/items/beds.json
 d5e4338a09d6ba83f202bcaf707384dcd8c993f6 data/minecraft/tags/items/boats.json
@@ -336,5 +337,6 @@ dd135906937fbe4aaf697b320e4107b731cbbb01 data/uselessmod/recipes/wooden_useless_
 6da858efb6fa0066b6b0e02f297844b1026ad6de data/uselessmod/recipes/yellow_lamp.json
 fe656b112590c5c595420f801cf883398b29bc7a data/uselessmod/tags/blocks/lamps.json
 ccf7706f93644877fa920c8043d26a0f05952840 data/uselessmod/tags/blocks/useless_logs.json
+3ed572de6d5725aa6a766013cbce25b8fd27e047 data/uselessmod/tags/fluids/gas.json
 fe656b112590c5c595420f801cf883398b29bc7a data/uselessmod/tags/items/lamps.json
 ccf7706f93644877fa920c8043d26a0f05952840 data/uselessmod/tags/items/useless_logs.json

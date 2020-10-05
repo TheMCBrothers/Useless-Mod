@@ -1,0 +1,8 @@
+{
+  "parent": "forge:item/bucket",
+  "loader": "forge:bucket",
+  "fluid": "uselessmod:useless_gas",
+  "applyTint": true,
+  "flipGas": true,
+  "applyFluidLuminosity": true
+}

@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "uselessmod:item/useless_water_bucket"
-  }
+  "parent": "forge:item/bucket",
+  "loader": "forge:bucket",
+  "fluid": "uselessmod:useless_water",
+  "applyTint": true
 }

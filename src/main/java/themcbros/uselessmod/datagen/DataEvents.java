@@ -21,7 +21,7 @@ public class DataEvents {
             BlockTagsProvider blockTagsProvider = new UselessBlockTagsProvider(generator);
             generator.addProvider(blockTagsProvider);
             generator.addProvider(new UselessItemTagsProvider(generator, blockTagsProvider));
-            generator.addProvider(new UselessFluidTagsProvider(generator));
+            generator.addProvider(new UselessFluidTagsProvider(generator, event.getExistingFileHelper()));
             generator.addProvider(new UselessEntityTypeTagsProvider(generator));
 //            generator.addProvider(new UselessLootTableProvider(generator));
         }
