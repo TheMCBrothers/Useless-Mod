@@ -177,6 +177,8 @@
   "item.uselessmod.useless_wheat_seeds": "Useless Wheat Seeds",
   "item.uselessmod.useless_wrench": "Useless Wrench",
   "itemGroup.uselessmod": "Useless Mod",
+  "material.silentgear.super_useless": "Super-Useless",
+  "material.silentgear.useless": "Useless",
   "misc.uselessmod.empty": "Empty",
   "misc.uselessmod.energy": "%s FE",
   "misc.uselessmod.energyWithMax": "%s / %s FE",
@@ -184,7 +186,5 @@
   "misc.uselessmod.fluidWithMax": "%s / %s mB",
   "misc.uselessmod.fluidWithMaxName": "%s: %s / %s mB",
   "misc.uselessmod.holdShift": "\u00A77Hold \u00A7e\u00A7oShift \u00A77for Details",
-  "part.uselessmod.main.super_useless": "Super-Useless",
-  "part.uselessmod.main.useless": "Useless",
   "stat.uselessmod.interact_with_coffee_machine": "Interactions with Coffee Machine"
 }

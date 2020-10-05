@@ -246,8 +246,8 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.add("misc.uselessmod.holdShift", "\u00A77Hold \u00A7e\u00A7oShift \u00A77for Details");
 
         // Silent Gear
-        this.add("part.uselessmod.main.useless", "Useless");
-        this.add("part.uselessmod.main.super_useless", "Super-Useless");
+        this.add("material.silentgear.useless", "Useless");
+        this.add("material.silentgear.super_useless", "Super-Useless");
 
         // Mystical Agriculture
         this.add("crop.uselessmod.useless", "Useless");
