@@ -149,12 +149,15 @@ public class OverlayRenderer {
                             if (tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).isPresent()) {
                                 IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElseThrow(IllegalStateException::new);
                                 List<ITextComponent> tooltip = new ArrayList<>();
-                                tooltip.add(new StringTextComponent("--- Fluid Handler ---"));
+                                tooltip.add(new StringTextComponent("--- Fluid Handler ---").setStyle(Styles.MODE_FLUID));
                                 for (int i = 0; i < fluidHandler.getTanks(); i++) {
                                     FluidStack fluidStack = fluidHandler.getFluidInTank(i);
-                                    tooltip.add(new StringTextComponent((i + 1) + ") Fluid: ").append(fluidStack.getDisplayName()));
-                                    tooltip.add(new StringTextComponent("Amount: " + fluidStack.getAmount()));
-                                    tooltip.add(new StringTextComponent("Capacity: " + fluidHandler.getTankCapacity(i)));
+                                    tooltip.add(new StringTextComponent((i + 1) + ") Fluid: ").setStyle(Styles.TOOLTIP)
+                                            .append(fluidStack.getDisplayName()));
+                                    tooltip.add(new StringTextComponent("Amount: ").setStyle(Styles.TOOLTIP)
+                                            .append(TextUtils.fluidAmount(fluidStack.getAmount()).setStyle(Styles.MODE_FLUID)));
+                                    tooltip.add(new StringTextComponent("Capacity: ").setStyle(Styles.TOOLTIP)
+                                            .append(TextUtils.fluidAmount(fluidHandler.getTankCapacity(i)).setStyle(Styles.MODE_FLUID)));
                                 }
                                 tooltipScreen.renderTooltip(matrixStack, convert(tooltip), tooltipScreen.width / 2 + 10, tooltipScreen.height / 2 - 16);
                             }
@@ -165,7 +168,7 @@ public class OverlayRenderer {
                     Entity entity = hit.getEntity();
                     if (ItemInit.USELESS_ITEM.get().getMode(stack) == UselessItemItem.Mode.ENTITY) {
                         List<ITextComponent> tooltip = new ArrayList<>();
-                        tooltip.add(new StringTextComponent("--- Looking at entity ---"));
+                        tooltip.add(new StringTextComponent("--- Looking at entity ---").setStyle(Styles.MODE_ENTITY));
                         tooltip.add(entity.getDisplayName());
                         if (entity instanceof LivingEntity) {
                             LivingEntity livingEntity = (LivingEntity) entity;
