@@ -3,6 +3,9 @@ package themcbros.uselessmod.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.IDyeableArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +21,7 @@ import javax.annotation.Nullable;
 /**
  * @author TheMCBrothers
  */
-public class CanvasBlock extends Block {
+public class CanvasBlock extends Block implements IBlockItemProvider {
 
     public CanvasBlock(Properties properties) {
         super(properties);
@@ -43,6 +46,39 @@ public class CanvasBlock extends Block {
             if (tileEntity instanceof CanvasTileEntity) {
                 ((CanvasTileEntity) tileEntity).setColor(tag.getInt("Color"));
             }
+        }
+    }
+
+    @Override
+    public BlockItem provideBlockItem(Block block, Item.Properties properties) {
+        return new CanvasBlockItem(block, properties);
+    }
+
+    // TODO: replace net.minecraft.item.IDyeableArmorItem with something else
+    private static class CanvasBlockItem extends BlockItem implements IDyeableArmorItem {
+        public CanvasBlockItem(Block blockIn, Properties builder) {
+            super(blockIn, builder);
+        }
+
+        @Override
+        public boolean hasColor(ItemStack stack) {
+            return stack.getChildTag("BlockEntityTag") != null &&
+                    stack.getOrCreateChildTag("BlockEntityTag").contains("Color", Constants.NBT.TAG_ANY_NUMERIC);
+        }
+
+        @Override
+        public void removeColor(ItemStack stack) {
+            stack.setTag(null);
+        }
+
+        @Override
+        public void setColor(ItemStack stack, int color) {
+            stack.getOrCreateChildTag("BlockEntityTag").putInt("Color", color);
+        }
+
+        @Override
+        public int getColor(ItemStack stack) {
+            return stack.getChildTag("BlockEntityTag") != null ? stack.getOrCreateChildTag("BlockEntityTag").getInt("Color") : -1;
         }
     }
 }

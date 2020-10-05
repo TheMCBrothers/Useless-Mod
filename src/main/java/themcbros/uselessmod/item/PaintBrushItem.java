@@ -1,5 +1,7 @@
 package themcbros.uselessmod.item;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -17,8 +19,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
 import themcbros.uselessmod.api.color.CapabilityColor;
 import themcbros.uselessmod.api.color.IColorHandler;
-import themcbros.uselessmod.color.DummyColorHandler;
 import themcbros.uselessmod.color.ItemColorHandler;
+import themcbros.uselessmod.helpers.ColorUtils;
 import themcbros.uselessmod.util.Styles;
 
 import javax.annotation.Nullable;
@@ -40,6 +42,17 @@ public class PaintBrushItem extends Item {
         World world = context.getWorld();
         BlockPos pos = context.getPos();
         ItemStack stack = context.getItem();
+        BlockState state = world.getBlockState(pos);
+
+        if (state.getBlock() instanceof CauldronBlock && state.hasProperty(CauldronBlock.LEVEL)) {
+            int i = state.get(CauldronBlock.LEVEL);
+            if (i > 0 && this.hasColor(stack)) {
+                ((CauldronBlock) state.getBlock()).setWaterLevel(world, pos, state, i - 1);
+                stack.setTag(null);
+                return ActionResultType.SUCCESS;
+            }
+        }
+
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity != null) {
             return tileEntity.getCapability(CapabilityColor.COLOR, context.getFace()).map(colorHandler -> colorHandler.onClick(stack))
@@ -51,13 +64,15 @@ public class PaintBrushItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         CompoundNBT tag = stack.getTag();
-        if (tag != null && tag.contains("Uses", Constants.NBT.TAG_ANY_NUMERIC)) {
+        if (tag != null && tag.contains("Color", Constants.NBT.TAG_ANY_NUMERIC) && tag.contains("Uses", Constants.NBT.TAG_ANY_NUMERIC)) {
+            tooltip.add(ColorUtils.getHexAsText(tag.getInt("Color")));
             tooltip.add(new StringTextComponent("Uses: " + tag.getInt("Uses")).setStyle(Styles.TOOLTIP));
         }
     }
 
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+        super.fillItemGroup(group, items);
         if (this.isInGroup(group)) {
             ItemStack stack = new ItemStack(this);
             stack.getOrCreateTag().putInt("Color", 0x00FFFF);
@@ -77,9 +92,13 @@ public class PaintBrushItem extends Item {
         stack.getOrCreateTag().putInt("Uses", uses);
     }
 
+    public boolean hasColor(ItemStack stack) {
+        return stack.getCapability(CapabilityColor.COLOR).map(IColorHandler::hasColor).orElse(false);
+    }
+
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
-        return stack.getCapability(CapabilityColor.COLOR).map(IColorHandler::hasColor).orElse(false);
+        return this.hasColor(stack);
     }
 
     @Override

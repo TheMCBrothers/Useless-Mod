@@ -123,7 +123,8 @@ public class PaintBucketTileEntity extends TileEntity implements IWrenchableTile
             if (!this.hasColor()) {
                 CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("Color", color);
-                FluidStack newStack = new FluidStack(ColorModule.PAINT.get(), FluidAttributes.BUCKET_VOLUME, nbt);
+                FluidStack newStack = new FluidStack(ColorModule.PAINT.get(), FluidAttributes.BUCKET_VOLUME);
+                newStack.setTag(nbt);
                 this.setFluid(newStack);
             } else {
                 this.getFluid().getOrCreateTag().putInt("Color", color);

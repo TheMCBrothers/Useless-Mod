@@ -52,14 +52,19 @@ public class CanvasTileEntity extends TileEntity implements IColorHandler {
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.putInt("Color", this.color);
+        if (this.hasColor())
+            compound.putInt("Color", this.getColor());
         return super.write(compound);
     }
 
     @Override
     public void read(BlockState state, CompoundNBT compound) {
         super.read(state, compound);
-        this.color = compound.getInt("Color");
+        if (compound.contains("Color", Constants.NBT.TAG_ANY_NUMERIC)) {
+            int col = compound.getInt("Color");
+            if (this.getColor() != col)
+                this.setColor(col);
+        }
     }
 
     @Override

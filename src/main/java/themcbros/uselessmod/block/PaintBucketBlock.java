@@ -25,10 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -37,6 +34,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import themcbros.uselessmod.helpers.ColorUtils;
 import themcbros.uselessmod.helpers.ItemHelper;
 import themcbros.uselessmod.helpers.ShapeHelper;
 import themcbros.uselessmod.init.TileEntityInit;
@@ -186,8 +184,7 @@ public class PaintBucketBlock extends Block implements IWaterLoggable {
             if (fluidTag.contains("Tag", Constants.NBT.TAG_COMPOUND)
                     && fluidTag.getCompound("Tag").contains("Color", Constants.NBT.TAG_ANY_NUMERIC)) {
                 int col = fluidTag.getCompound("Tag").getInt("Color");
-                tooltip.add(new StringTextComponent("\u25A0\u25A0\u25A0\u25A0")
-                        .setStyle(Style.EMPTY.setColor(Color.fromInt(col))));
+                tooltip.add(ColorUtils.getHexAsText(col));
             }
         }
     }
