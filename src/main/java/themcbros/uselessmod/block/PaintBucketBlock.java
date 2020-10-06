@@ -34,6 +34,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.items.ItemHandlerHelper;
 import themcbros.uselessmod.helpers.ColorUtils;
 import themcbros.uselessmod.helpers.ItemHelper;
 import themcbros.uselessmod.helpers.ShapeHelper;
@@ -121,7 +122,7 @@ public class PaintBucketBlock extends Block implements IWaterLoggable {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
 
-        final ItemStack stack = player.getHeldItem(handIn);
+        ItemStack stack = player.getHeldItem(handIn);
         final DyeColor color = DyeColor.getColor(stack);
         final LazyOptional<IFluidHandlerItem> fluidHandlerItem = FluidUtil.getFluidHandler(stack);
         if ((color != null || fluidHandlerItem.isPresent() || stack.getItem() == Items.STICK) && tileEntity instanceof PaintBucketTileEntity) {
@@ -148,12 +149,9 @@ public class PaintBucketBlock extends Block implements IWaterLoggable {
             }
             if (color != null) {
                 if (!((PaintBucketTileEntity) tileEntity).color.hasColor()) {
-                    ItemStack stack1 = ((PaintBucketTileEntity) tileEntity).stackHandler.insertItem(0, stack, false);
-                    if (!ItemStack.areItemStacksEqual(stack, stack1)) {
-                        stack.shrink(1);
-                        return ActionResultType.func_233537_a_(worldIn.isRemote);
-                    }
-                    return ActionResultType.FAIL;
+                    stack = ItemHandlerHelper.insertItem(((PaintBucketTileEntity) tileEntity).stackHandler, stack, false);
+                    player.setHeldItem(handIn, stack);
+                    return ActionResultType.SUCCESS;
                 }
             }
         }
