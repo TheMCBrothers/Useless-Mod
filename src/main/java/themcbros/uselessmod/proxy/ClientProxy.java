@@ -31,6 +31,7 @@ import themcbros.uselessmod.api.color.IColorHandler;
 import themcbros.uselessmod.block.LampBlock;
 import themcbros.uselessmod.client.models.DynamicBucketModel;
 import themcbros.uselessmod.client.models.block.supplier.MachineSupplierModelLoader;
+import themcbros.uselessmod.client.models.block.wall_closet.WallClosetModel;
 import themcbros.uselessmod.client.renderer.entity.*;
 import themcbros.uselessmod.client.renderer.entity.layer.UselessElytraLayer;
 import themcbros.uselessmod.client.renderer.tilentity.*;
@@ -145,6 +146,7 @@ public class ClientProxy extends CommonProxy {
         // Model Loaders
         ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), new MachineSupplierModelLoader());
         ModelLoaderRegistry.registerLoader(UselessMod.rl("bucket"), DynamicBucketModel.Loader.INSTANCE);
+        ModelLoaderRegistry.registerLoader(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
     }
 
     private void itemColors(final ColorHandlerEvent.Item event) {

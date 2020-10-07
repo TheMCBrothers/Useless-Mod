@@ -1,0 +1,5 @@
+{
+  "loader": "uselessmod:wall_closet",
+  "parent": "uselessmod:block/wall_closet_open",
+  "model": "uselessmod:block/wall_closet_open"
+}

@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "uselessmod:block/wall_closet" }
+    "open=false": { "model": "uselessmod:block/wall_closet_override" },
+    "open=true": { "model": "uselessmod:block/wall_closet_open_override" }
   }
 }

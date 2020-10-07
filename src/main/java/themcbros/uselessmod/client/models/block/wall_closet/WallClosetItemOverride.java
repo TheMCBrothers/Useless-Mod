@@ -1,4 +1,4 @@
-package themcbros.uselessmod.client.models.block;
+package themcbros.uselessmod.client.models.block.wall_closet;
 
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemOverrideList;
