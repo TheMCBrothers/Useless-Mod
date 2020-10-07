@@ -1,2 +1,16 @@
+4.0.2:
+- Added bucket of paint
+- Added useless water and useless gas
+- Added missing recipes for sugared milk and paint brush
+- Fixed silent gear materials
+- Fixed useless generator model and shape
+- Fixed useless bucket damage bar
+- Fixed paint bucket dye insertion
+- Re-textured useless wrench
+- Changed ore generation in nether and end
+
+4.0.1:
+- Fixed sidedness issue on dedicated server. #23
+
 4.0.0:
 - Initial 1.16 release
