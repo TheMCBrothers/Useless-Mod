@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -30,7 +29,7 @@ import themcbros.uselessmod.api.color.CapabilityColor;
 import themcbros.uselessmod.api.color.IColorHandler;
 import themcbros.uselessmod.block.LampBlock;
 import themcbros.uselessmod.client.models.DynamicBucketModel;
-import themcbros.uselessmod.client.models.block.supplier.MachineSupplierModelLoader;
+import themcbros.uselessmod.client.models.block.supplier.MachineSupplierModel;
 import themcbros.uselessmod.client.models.block.wall_closet.WallClosetModel;
 import themcbros.uselessmod.client.renderer.entity.*;
 import themcbros.uselessmod.client.renderer.entity.layer.UselessElytraLayer;
@@ -144,7 +143,7 @@ public class ClientProxy extends CommonProxy {
 
     private void modelRegister(final ModelRegistryEvent event) {
         // Model Loaders
-        ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), new MachineSupplierModelLoader());
+        ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), MachineSupplierModel.Loader.INSTANCE);
         ModelLoaderRegistry.registerLoader(UselessMod.rl("bucket"), DynamicBucketModel.Loader.INSTANCE);
         ModelLoaderRegistry.registerLoader(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
     }

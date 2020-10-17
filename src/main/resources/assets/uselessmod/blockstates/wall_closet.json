@@ -1,6 +1,12 @@
 {
   "variants": {
-    "open=false": { "model": "uselessmod:block/wall_closet_override" },
-    "open=true": { "model": "uselessmod:block/wall_closet_open_override" }
+    "facing=north,open=false": { "model": "uselessmod:block/wall_closet_override" },
+    "facing=north,open=true": { "model": "uselessmod:block/wall_closet_open_override" },
+    "facing=east,open=false": { "model": "uselessmod:block/wall_closet_override", "y": 90 },
+    "facing=east,open=true": { "model": "uselessmod:block/wall_closet_open_override", "y": 90 },
+    "facing=south,open=false": { "model": "uselessmod:block/wall_closet_override", "y": 180 },
+    "facing=south,open=true": { "model": "uselessmod:block/wall_closet_open_override", "y": 180 },
+    "facing=west,open=false": { "model": "uselessmod:block/wall_closet_override", "y": 270 },
+    "facing=west,open=true": { "model": "uselessmod:block/wall_closet_open_override", "y": 270 }
   }
 }

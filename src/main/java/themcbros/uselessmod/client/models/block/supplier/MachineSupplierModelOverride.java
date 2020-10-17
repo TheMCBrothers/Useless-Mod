@@ -18,17 +18,12 @@ import javax.annotation.Nullable;
  * @author TheMCBrothers
  */
 public class MachineSupplierModelOverride extends ItemOverrideList {
-    static final MachineSupplierModelOverride INSTANCE = new MachineSupplierModelOverride();
-
-    private MachineSupplierModelOverride() {
-    }
-
     @Nullable
     @Override
     public IBakedModel getOverrideModel(IBakedModel modelOriginal, ItemStack stack, @Nullable ClientWorld worldIn, @Nullable LivingEntity entityIn) {
         CompoundNBT tag = stack.getChildTag("BlockEntityTag");
-        if (tag != null && tag.contains("BlockState", Constants.NBT.TAG_COMPOUND)) {
-            BlockState mimic = NBTUtil.readBlockState(tag.getCompound("BlockState"));
+        if (tag != null && tag.contains("Mimic", Constants.NBT.TAG_COMPOUND)) {
+            BlockState mimic = NBTUtil.readBlockState(tag.getCompound("Mimic"));
             return Minecraft.getInstance().getBlockRendererDispatcher().getModelForState(mimic);
         }
         return modelOriginal;

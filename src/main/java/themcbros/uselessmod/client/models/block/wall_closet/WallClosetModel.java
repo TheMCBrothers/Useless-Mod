@@ -27,13 +27,13 @@ import net.minecraftforge.client.model.geometry.IModelGeometry;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.api.wall_closet.ClosetMaterial;
 import themcbros.uselessmod.api.wall_closet.ClosetMaterialInit;
-import themcbros.uselessmod.helpers.ClientUtils;
 import themcbros.uselessmod.tileentity.WallClosetTileEntity;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
+@SuppressWarnings("deprecation")
 public class WallClosetModel implements IDynamicBakedModel {
 
     private static final ItemOverrideList OVERRIDE = new WallClosetItemOverride();
@@ -41,14 +41,15 @@ public class WallClosetModel implements IDynamicBakedModel {
     private final ModelBakery modelBakery;
     private final BlockModel model;
     private final IBakedModel bakedModel;
+    private final IModelTransform modelTransform;
 
     private final Map<String, IBakedModel> cache = Maps.newHashMap();
 
-    public WallClosetModel(ModelBakery modelBakery, BlockModel model, Function<RenderMaterial, TextureAtlasSprite> spriteGetter) {
+    public WallClosetModel(ModelBakery modelBakery, BlockModel model, IModelTransform modelTransform, Function<RenderMaterial, TextureAtlasSprite> spriteGetter) {
         this.modelBakery = modelBakery;
         this.model = model;
-        this.bakedModel = model.bakeModel(modelBakery, model, spriteGetter,
-                ClientUtils.getRotation(Direction.NORTH), UselessMod.rl("closet"), true);
+        this.bakedModel = model.bakeModel(modelBakery, model, spriteGetter, modelTransform, UselessMod.rl("closet"), true);
+        this.modelTransform = modelTransform;
     }
 
     public IBakedModel getCustomModel(ClosetMaterial closetMaterial, Direction facing) {
@@ -78,13 +79,11 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.textures.put("particle", Either.left(material));
 
             ResourceLocation loc = UselessMod.rl("closet_overriding");
-            customModel = newModel.bakeModel(this.modelBakery, ModelLoader.defaultTextureGetter(),
-                    ClientUtils.getRotation(facing), loc);
+            customModel = newModel.bakeModel(this.modelBakery, newModel, ModelLoader.defaultTextureGetter(), this.modelTransform, loc, true);
 
             this.cache.put(key, customModel);
         }
 
-        assert customModel != null;
         return customModel;
     }
 
@@ -175,16 +174,15 @@ public class WallClosetModel implements IDynamicBakedModel {
     }
 
     public static class Geometry implements IModelGeometry<Geometry> {
-        private final ResourceLocation modelLocation;
-
-        public Geometry(ResourceLocation modelLocation) {
-            this.modelLocation = modelLocation;
-        }
-
         @Override
         public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation) {
-            BlockModel blockModel = (BlockModel) bakery.getUnbakedModel(this.modelLocation);
-            return new WallClosetModel(bakery, blockModel, spriteGetter);
+            BlockModel ownerModel = (BlockModel) owner.getOwnerModel();
+            if (ownerModel == null)
+                throw new RuntimeException("Wall Closet owner model is null");
+            BlockModel blockModel = ownerModel.parent;
+            if (blockModel == null)
+                throw new RuntimeException("Wall Closet parent model is null");
+            return new WallClosetModel(bakery, blockModel, modelTransform, spriteGetter);
         }
 
         @Override
@@ -205,10 +203,9 @@ public class WallClosetModel implements IDynamicBakedModel {
 
         @Override
         public Geometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
-            if (!modelContents.has("model"))
-                throw new RuntimeException("Wall Closet model requires 'model' value.");
-            ResourceLocation modelLocation = new ResourceLocation(modelContents.get("model").getAsString());
-            return new Geometry(modelLocation);
+            if (!modelContents.has("parent"))
+                throw new RuntimeException("Wall Closet model requires 'parent' value.");
+            return new Geometry();
         }
     }
 
