@@ -53,7 +53,6 @@ public class CommonProxy {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ParticleInit.REGISTER.register(bus);
         PaintingInit.REGISTER.register(bus);
-        EnchantmentInit.REGISTER.register(bus);
         FluidInit.REGISTER.register(bus);
         BlockInit.REGISTER.register(bus);
         ItemInit.REGISTER.register(bus);
