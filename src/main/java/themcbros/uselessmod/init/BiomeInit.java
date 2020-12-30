@@ -29,7 +29,7 @@ public class BiomeInit {
 
         // Structures
         DefaultBiomeFeatures.withStrongholdAndMineshaft(biomeGenerationSettings);
-        biomeGenerationSettings.withStructure(StructureFeatures.field_244159_y);
+        biomeGenerationSettings.withStructure(StructureFeatures.RUINED_PORTAL);
         biomeGenerationSettings.withStructure(UselessHouseStructure.CONFIGURED_INSTANCE);
 
         DefaultBiomeFeatures.withCavesAndCanyons(biomeGenerationSettings);

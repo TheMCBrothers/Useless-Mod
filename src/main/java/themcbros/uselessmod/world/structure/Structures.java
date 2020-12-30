@@ -29,7 +29,7 @@ public class Structures {
     @SubscribeEvent
     public void commonSetup(final FMLCommonSetupEvent event) {
         WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, rl("useless_house"), UselessHouseStructure.CONFIGURED_INSTANCE);
-        Structure.field_236365_a_.put("uselessmod:useless_house", UselessHouseStructure.INSTANCE);
+        Structure.NAME_STRUCTURE_BIMAP.put("uselessmod:useless_house", UselessHouseStructure.INSTANCE);
 //        DimensionSettings.func_242746_i().getStructures().func_236195_a_().put(UselessHouseStructure.INSTANCE, new StructureSeparationSettings(20, 11, 14357800));
     }
 

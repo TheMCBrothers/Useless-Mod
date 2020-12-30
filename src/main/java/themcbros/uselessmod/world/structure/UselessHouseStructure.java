@@ -23,7 +23,7 @@ public class UselessHouseStructure extends Structure<NoFeatureConfig> {
     public static final Structure<NoFeatureConfig> INSTANCE = new UselessHouseStructure(NoFeatureConfig.field_236558_a_);
 
     public static final StructureFeature<NoFeatureConfig, ? extends Structure<NoFeatureConfig>> CONFIGURED_INSTANCE =
-            INSTANCE.func_236391_a_(NoFeatureConfig.field_236559_b_);
+            INSTANCE.withConfiguration(NoFeatureConfig.field_236559_b_);
 
     public UselessHouseStructure(Codec<NoFeatureConfig> configCodec) {
         super(configCodec);
@@ -35,7 +35,7 @@ public class UselessHouseStructure extends Structure<NoFeatureConfig> {
     }
 
     @Override
-    public GenerationStage.Decoration func_236396_f_() {
+    public GenerationStage.Decoration getDecorationStage() {
         return GenerationStage.Decoration.SURFACE_STRUCTURES;
     }
 
