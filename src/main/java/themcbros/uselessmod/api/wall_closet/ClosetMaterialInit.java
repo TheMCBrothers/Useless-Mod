@@ -34,6 +34,10 @@ public class ClosetMaterialInit {
             () -> new ClosetMaterial(() -> Blocks.ACACIA_PLANKS));
     public static final RegistryObject<ClosetMaterial> DARK_OAK_PLANKS = REGISTER.register("dark_oak_planks",
             () -> new ClosetMaterial(() -> Blocks.DARK_OAK_PLANKS));
+    public static final RegistryObject<ClosetMaterial> CRIMSON_PLANKS = REGISTER.register("crimson_planks",
+            () -> new ClosetMaterial(() -> Blocks.CRIMSON_PLANKS));
+    public static final RegistryObject<ClosetMaterial> WARPED_PLANKS = REGISTER.register("warped_planks",
+            () -> new ClosetMaterial(() -> Blocks.WARPED_PLANKS));
 
     @SubscribeEvent
     public static void registerModPlanks(final RegistryEvent.Register<ClosetMaterial> event) {
