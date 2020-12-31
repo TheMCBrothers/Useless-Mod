@@ -185,6 +185,10 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         // Color Module
         this.addItem(ColorModule.PAINT_BRUSH, "Paint Brush");
         this.addItem(ColorModule.BUCKET_PAINT, "Bucket of Paint");
+        // Immersive Compat
+        this.add("item.uselessmod.wirecoil_uselessmod_useless_wire", "Useless Wire Coil");
+        this.add("item.uselessmod.useless_wire", "Useless Wire");
+        this.add("item.uselessmod.super_useless_wire", "Super-Useless Wire");
 
         // --- ENTITIES --- //
 
@@ -200,10 +204,6 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addFluid(ColorModule.PAINT, "Paint");
         this.addFluid(FluidInit.USELESS_GAS, "Useless Gas");
         this.addFluid(FluidInit.USELESS_WATER, "Useless Water");
-
-        // --- ENCHANTMENTS --- //
-
-        this.addEnchantment(EnchantmentInit.FLYER, "Flyer");
 
         // --- BIOMES --- //
 
@@ -253,7 +253,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.add("material.silentgear.useless", "Useless");
         this.add("material.silentgear.super_useless", "Super-Useless");
 
-        // Mystical Agriculture
+        // Mystical Agriculture Crops
         this.add("crop.uselessmod.useless", "Useless");
         this.add("crop.uselessmod.super_useless", "Super-Useless");
         this.add("crop.uselessmod.useless_sheep", "Useless Sheep");

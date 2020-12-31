@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "forge:item_exists",
+      "item": "uselessmod:wirecoil_uselessmod_useless_wire"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "SXS",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:wires/useless"
+    },
+    "S": {
+      "tag": "forge:wires/super_useless"
+    },
+    "X": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "uselessmod:wirecoil_uselessmod_useless_wire",
+    "count": 4
+  }
+}

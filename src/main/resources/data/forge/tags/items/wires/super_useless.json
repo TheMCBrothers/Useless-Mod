@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "uselessmod:super_useless_wire",
+      "required": true
+    }
+  ]
+}

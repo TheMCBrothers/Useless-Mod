@@ -1,0 +1,34 @@
+{
+  "type": "immersiveengineering:mineral_mix",
+  "ores": [
+    {
+      "chance": 0.45,
+      "output": {
+        "tag": "forge:ores/iron"
+      }
+    },
+    {
+      "chance": 0.3,
+      "output": {
+        "tag": "forge:ores/useless"
+      }
+    },
+    {
+      "chance": 0.25,
+      "output": {
+        "tag": "forge:ores/super_useless"
+      }
+    }
+  ],
+  "dimensions": [
+    "minecraft:overworld"
+  ],
+  "conditions": [
+    {
+      "modid": "immersiveengineering",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "weight": 3,
+  "fail_chance": 0.2
+}
