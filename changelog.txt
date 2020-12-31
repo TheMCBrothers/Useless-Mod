@@ -1,3 +1,11 @@
+4.1.0
+- Updated to 1.16.4 (Forge 35.1.28)
+- Added immersive engineering compat
+- Added new planks to wall closet
+- Fixed machine supplier model and wall closet model
+- Removed flyer enchantment
+- Removed old recipes
+
 4.0.2:
 - Added bucket of paint
 - Added useless water and useless gas
