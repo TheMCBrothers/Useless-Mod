@@ -68,15 +68,6 @@ public class CommonProxy {
         ColorModule.init();
         ColorModule.register(bus);
 
-//        if (ModCompatibility.isMekanismLoaded) {
-//            try {
-//                Class.forName("themcbros.uselessmod.compat.mekanism.MekanismCompat")
-//                        .getDeclaredMethod("register", IEventBus.class).invoke(null, bus);
-//            } catch (IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException exception) {
-//                exception.printStackTrace();
-//            }
-//        }
-
         if (ModCompatibility.isImmersiveLoaded) {
             try {
                 Class.forName("themcbros.uselessmod.compat.immersiveengineering.ImmersiveCompat")
