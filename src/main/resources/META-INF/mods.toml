@@ -32,3 +32,9 @@ license="CC BY-NC-ND 4.0"
     versionRange="[1.16.4,)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.uselessmod]]
+    modId="mantle"
+    mandatory=true
+    versionRange="[1.6.74,)"
+    ordering="NONE"
+    side="BOTH"

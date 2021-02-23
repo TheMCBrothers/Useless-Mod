@@ -6,13 +6,13 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.util.Util;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.data.LanguageProvider;
+import slimeknights.mantle.registration.object.FluidObject;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.api.coffee.CoffeeType;
 import themcbros.uselessmod.api.coffee.CoffeeTypeInit;
 import themcbros.uselessmod.block.LampBlock;
 import themcbros.uselessmod.color.ColorModule;
 import themcbros.uselessmod.init.*;
-import themcbros.uselessmod.registration.FluidRegistryObject;
 
 import java.util.function.Supplier;
 
@@ -155,6 +155,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addItem(ItemInit.USELESS_PIG_SPAWN_EGG, "Useless Pig Spawn Egg");
         this.addItem(ItemInit.USELESS_CHICKEN_SPAWN_EGG, "Useless Chicken Spawn Egg");
         this.addItem(ItemInit.USELESS_COW_SPAWN_EGG, "Useless Cow Spawn Egg");
+        this.addItem(ItemInit.USELESS_SKELETON_SPAWN_EGG, "Useless Skeleton Spawn Egg");
         this.addItem(ItemInit.USELESS_FLINT_AND_STEEL, "Useless Flint and Steel");
         this.addItem(ItemInit.SUGARED_MILK, "Sugared Milk");
         this.addItem(ItemInit.CUP, "Cup");
@@ -276,9 +277,9 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.add(key.get().getAttributes().getTranslationKey(), name);
     }
 
-    private void addFluid(FluidRegistryObject<?, ?, ?, ?> key, String name) {
-        this.add(key.getStillFluid().getAttributes().getTranslationKey(), name);
-        this.add(key.getBucket(), name + " Bucket");
+    private void addFluid(FluidObject<?> key, String name) {
+        this.add(key.getStill().getAttributes().getTranslationKey(), name);
+        this.add(key.asItem(), name + " Bucket");
     }
 
     private void addAdvancement(String name, String title, String description) {

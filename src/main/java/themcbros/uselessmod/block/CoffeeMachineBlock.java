@@ -15,7 +15,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
@@ -50,7 +49,6 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import themcbros.uselessmod.api.energy.CapabilityUselessEnergy;
-import themcbros.uselessmod.client.renderer.tilentity.ISTERProvider;
 import themcbros.uselessmod.config.Config;
 import themcbros.uselessmod.energy.ItemEnergyStorage;
 import themcbros.uselessmod.helpers.ShapeHelper;
@@ -65,7 +63,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class CoffeeMachineBlock extends Block implements IWaterLoggable, IBlockItemProvider {
+public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -223,13 +221,7 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable, IBlockI
         return BlockRenderType.MODEL;
     }
 
-    @Override
-    public BlockItem provideBlockItem(Block block, Item.Properties properties) {
-        properties.setISTER(ISTERProvider::useless);
-        return new CoffeeMachineItem(block, properties);
-    }
-
-    private static class CoffeeMachineItem extends BlockItem {
+    public static class CoffeeMachineItem extends BlockItem {
 
         public CoffeeMachineItem(Block blockIn, Properties builder) {
             super(blockIn, builder);

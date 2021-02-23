@@ -1,16 +1,12 @@
 package themcbros.uselessmod.block;
 
 import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import themcbros.uselessmod.client.renderer.tilentity.ISTERProvider;
 import themcbros.uselessmod.tileentity.UselessBedTileEntity;
 
-public class UselessBedBlock extends BedBlock implements IBlockItemProvider {
+public class UselessBedBlock extends BedBlock {
 
     private final DyeColor color;
 
@@ -22,12 +18,6 @@ public class UselessBedBlock extends BedBlock implements IBlockItemProvider {
     @Override
     public TileEntity createNewTileEntity(IBlockReader world) {
         return new UselessBedTileEntity(this.color);
-    }
-
-    @Override
-    public BlockItem provideBlockItem(Block block, Item.Properties properties) {
-        properties.setISTER(ISTERProvider::useless);
-        return new BlockItem(block, properties.maxStackSize(1));
     }
 
 }

@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.IDyeableArmorItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +20,7 @@ import javax.annotation.Nullable;
 /**
  * @author TheMCBrothers
  */
-public class CanvasBlock extends Block implements IBlockItemProvider {
+public class CanvasBlock extends Block {
 
     public CanvasBlock(Properties properties) {
         super(properties);
@@ -49,13 +48,8 @@ public class CanvasBlock extends Block implements IBlockItemProvider {
         }
     }
 
-    @Override
-    public BlockItem provideBlockItem(Block block, Item.Properties properties) {
-        return new CanvasBlockItem(block, properties);
-    }
-
     // TODO: replace net.minecraft.item.IDyeableArmorItem with something else
-    private static class CanvasBlockItem extends BlockItem implements IDyeableArmorItem {
+    public static class CanvasBlockItem extends BlockItem implements IDyeableArmorItem {
         public CanvasBlockItem(Block blockIn, Properties builder) {
             super(blockIn, builder);
         }

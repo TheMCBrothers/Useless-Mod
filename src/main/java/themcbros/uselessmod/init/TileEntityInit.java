@@ -7,7 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.tileentity.*;
 
-public class TileEntityInit {
+public class TileEntityInit { // TODO use slimeknights.mantle.registration.deferred.TileEntityTypeDeferredRegister
 
     public static final DeferredRegister<TileEntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, UselessMod.MOD_ID);
 
@@ -26,7 +26,7 @@ public class TileEntityInit {
             () -> TileEntityType.Builder.create(CoffeeCupTileEntity::new, BlockInit.CUP.get(), BlockInit.COFFEE_CUP.get()).build(null));
 
     public static final RegistryObject<TileEntityType<WallClosetTileEntity>> WALL_CLOSET = REGISTER.register("wall_closet",
-            () -> TileEntityType.Builder.create(WallClosetTileEntity::new, BlockInit.USELESS_GENERATOR.get()).build(null));
+            () -> TileEntityType.Builder.create(WallClosetTileEntity::new, BlockInit.WALL_CLOSET.get()).build(null));
     public static final RegistryObject<TileEntityType<UselessChestTileEntity>> USELESS_CHEST = REGISTER.register("useless_chest",
             () -> TileEntityType.Builder.create(UselessChestTileEntity::new, BlockInit.USELESS_CHEST.get()).build(null));
 
@@ -36,6 +36,7 @@ public class TileEntityInit {
             () -> TileEntityType.Builder.create(CanvasTileEntity::new, BlockInit.CANVAS.get()).build(null));
 
     public static final RegistryObject<TileEntityType<UselessSkullTileEntity>> USELESS_SKULL = REGISTER.register("useless_skull",
-            () -> TileEntityType.Builder.create(UselessSkullTileEntity::new).build(null));
+            () -> TileEntityType.Builder.create(UselessSkullTileEntity::new,
+                    BlockInit.USELESS_SKELETON_SKULL.get(), BlockInit.USELESS_SKELETON_WALL_SKULL.get()).build(null));
 
 }

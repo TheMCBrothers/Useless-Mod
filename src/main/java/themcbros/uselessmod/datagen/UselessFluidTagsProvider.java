@@ -21,8 +21,8 @@ public class UselessFluidTagsProvider extends FluidTagsProvider {
 
     @Override
     protected void registerTags() {
-        this.getOrCreateBuilder(FluidTags.WATER).add(FluidInit.USELESS_WATER.getStillFluid(), FluidInit.USELESS_WATER.getFlowingFluid());
-        this.getOrCreateBuilder(UselessTags.Fluids.GAS).add(FluidInit.USELESS_GAS.getStillFluid(), FluidInit.USELESS_GAS.getFlowingFluid());
+        this.getOrCreateBuilder(FluidTags.WATER).add(FluidInit.USELESS_WATER.getStill(), FluidInit.USELESS_WATER.getFlowing());
+        this.getOrCreateBuilder(UselessTags.Fluids.GAS).add(FluidInit.USELESS_GAS.getStill(), FluidInit.USELESS_GAS.getFlowing());
     }
 
     @Override

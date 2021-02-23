@@ -3,6 +3,7 @@ package themcbros.uselessmod;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +35,9 @@ public class UselessMod {
 
     public UselessMod() {
         instance = this;
+
+        // Enable Milk Fluid
+        ForgeMod.enableMilkFluid();
 
         UselessAPI.init(new UselessModAPI());
 

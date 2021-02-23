@@ -39,7 +39,6 @@ import themcbros.uselessmod.color.ColorModule;
 import themcbros.uselessmod.config.Config;
 import themcbros.uselessmod.init.*;
 import themcbros.uselessmod.item.CoffeeCupItem;
-import themcbros.uselessmod.registration.FluidRegistryObject;
 import themcbros.uselessmod.tileentity.CoffeeCupTileEntity;
 import themcbros.uselessmod.tileentity.MachineSupplierTileEntity;
 
@@ -112,10 +111,10 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlockInit.USELESS_CROSSOVER_RAIL.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.COFFEE_MACHINE_SUPPLIER.get(), renderType -> true);
 
-        for (FluidRegistryObject<?, ?, ?, ?> fluidRegistryObject : FluidInit.REGISTER.getAllFluids()) {
-            RenderTypeLookup.setRenderLayer(fluidRegistryObject.getStillFluid(), RenderType.getTranslucent());
-            RenderTypeLookup.setRenderLayer(fluidRegistryObject.getFlowingFluid(), RenderType.getTranslucent());
-        }
+        RenderTypeLookup.setRenderLayer(FluidInit.USELESS_GAS.getStill(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(FluidInit.USELESS_GAS.getFlowing(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(FluidInit.USELESS_WATER.getStill(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(FluidInit.USELESS_WATER.getFlowing(), RenderType.getTranslucent());
 
         // Screens
         ScreenManager.registerFactory(ContainerInit.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);

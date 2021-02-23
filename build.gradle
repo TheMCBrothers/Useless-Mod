@@ -113,6 +113,9 @@ dependencies {
     // at runtime, use the full JEI jar
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
+    // Mantle - required dependency
+    compile fg.deobf("curse.maven:mantle-74924:3180804")
+
     // Immersive Engineering
     compileOnly fg.deobf("curse.maven:immersive-engineering-231951:3189063")
 

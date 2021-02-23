@@ -115,7 +115,7 @@ public class CommonProxy {
             }
         }, () -> null);
 
-        // Set Entity Attributes
+        // Set Entity Attributes // TODO new method
         GlobalEntityTypeAttributes.put(EntityInit.USELESS_SHEEP.get(), SheepEntity.func_234225_eI_().create());
         GlobalEntityTypeAttributes.put(EntityInit.USELESS_PIG.get(), PigEntity.func_234215_eI_().create());
         GlobalEntityTypeAttributes.put(EntityInit.USELESS_CHICKEN.get(), ChickenEntity.func_234187_eI_().create());
