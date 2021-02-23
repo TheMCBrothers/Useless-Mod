@@ -26,8 +26,9 @@ public class EntityInit {
             0x183017, 0x478D44);
 
     // MONSTERS
-    public static final RegistryObject<EntityType<UselessSkeletonEntity>> USELESS_SKELETON = REGISTER.register("useless_skeleton",
-            () -> EntityType.Builder.create(UselessSkeletonEntity::new, EntityClassification.MONSTER).size(0.6F, 1.99F));
+    public static final RegistryObject<EntityType<UselessSkeletonEntity>> USELESS_SKELETON = REGISTER.registerWithEgg("useless_skeleton",
+            () -> EntityType.Builder.create(UselessSkeletonEntity::new, EntityClassification.MONSTER).size(0.6F, 1.99F),
+            0x66B363, 0x285027);
 
     // MISC
     public static final RegistryObject<EntityType<UselessBoatEntity>> USELESS_BOAT = REGISTER.register("useless_boat",
