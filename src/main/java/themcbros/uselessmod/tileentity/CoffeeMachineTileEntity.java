@@ -3,6 +3,7 @@ package themcbros.uselessmod.tileentity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
@@ -370,7 +371,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
 
     public void startMachine(boolean start) {
         assert this.world != null;
-        SoundEvent sound = SoundEvents.ITEM_TOTEM_USE;
+        SoundEvent sound = SoundEvents.ITEM_AXE_STRIP;
         if (start) {
             if (getCurrentRecipe() == null) return;
             this.cookTimeTotal = 20 * 3;
@@ -393,7 +394,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
             boolean flag = recipe.getCupIngredient().test(getStackInSlot(0))
                     && recipe.getBeanIngredient().test(getStackInSlot(1))
                     && (emptyIngredient || recipe.getExtraIngredient().test(getStackInSlot(2)))
-                    && this.waterTank.getFluidAmount() >= recipe.getWaterAmount();
+                    && recipe.getWaterIngredient().test(this.waterTank.getFluid());
             if (this.canProcess(recipe) && flag) return recipe;
         }
         return null;
@@ -442,7 +443,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
             } else {
                 inputExtra.shrink(1);
             }
-            this.waterTank.drain(recipe.getWaterAmount(), IFluidHandler.FluidAction.EXECUTE);
+            this.waterTank.drain(recipe.getWaterIngredient().getAmount(Fluids.EMPTY), IFluidHandler.FluidAction.EXECUTE);
         }
     }
 

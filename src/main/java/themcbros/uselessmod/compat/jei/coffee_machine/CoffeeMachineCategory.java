@@ -12,10 +12,8 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.compat.jei.UselessRecipeCategoryUid;
 import themcbros.uselessmod.helpers.TextUtils;
@@ -72,7 +70,7 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeRecipe> {
 
     @Override
     public void setIngredients(CoffeeRecipe coffeeRecipe, IIngredients ingredients) {
-        ingredients.setInput(VanillaTypes.FLUID, new FluidStack(Fluids.WATER, coffeeRecipe.getWaterAmount()));
+        ingredients.setInputs(VanillaTypes.FLUID, coffeeRecipe.getWaterIngredient().getFluids());
         ingredients.setInputIngredients(coffeeRecipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, coffeeRecipe.getRecipeOutput());
     }

@@ -14,6 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import slimeknights.mantle.recipe.FluidIngredient;
+import slimeknights.mantle.recipe.ICommonRecipe;
 import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.init.RecipeSerializerInit;
 import themcbros.uselessmod.init.RecipeTypeInit;
@@ -23,18 +25,18 @@ import javax.annotation.Nullable;
 /**
  * @author TheMCBrothers
  */
-public class CoffeeRecipe implements IRecipe<IInventory> {
+public class CoffeeRecipe implements ICommonRecipe<IInventory> {
 
     private final ResourceLocation id;
-    private final int waterAmount;
+    private final FluidIngredient waterIngredient;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
     private final Ingredient extraIngredient;
     private final ItemStack recipeOutput;
 
-    public CoffeeRecipe(ResourceLocation id, int waterAmount, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient, ItemStack recipeOutput) {
+    public CoffeeRecipe(ResourceLocation id, FluidIngredient waterIngredient, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient, ItemStack recipeOutput) {
         this.id = id;
-        this.waterAmount = waterAmount;
+        this.waterIngredient = waterIngredient;
         this.cupIngredient = cupIngredient;
         this.beanIngredient = beanIngredient;
         this.extraIngredient = extraIngredient;
@@ -51,8 +53,8 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
         return NonNullList.from(Ingredient.EMPTY, this.cupIngredient, this.beanIngredient, this.extraIngredient);
     }
 
-    public int getWaterAmount() {
-        return this.waterAmount;
+    public FluidIngredient getWaterIngredient() {
+        return this.waterIngredient;
     }
 
     public Ingredient getCupIngredient() {
@@ -70,16 +72,6 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         return false;
-    }
-
-    @Override
-    public ItemStack getCraftingResult(IInventory inv) {
-        return this.recipeOutput.copy();
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return true;
     }
 
     @Override
@@ -105,7 +97,7 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CoffeeRecipe> {
         @Override
         public CoffeeRecipe read(ResourceLocation recipeId, JsonObject json) {
-            int waterAmount = JSONUtils.getInt(json, "water", 250);
+            FluidIngredient waterIngredient = FluidIngredient.deserialize(json, "water");
             JsonElement cupElement = JSONUtils.isJsonArray(json, "cup") ? JSONUtils.getJsonArray(json, "cup") : JSONUtils.getJsonObject(json, "cup");
             Ingredient cupIngredient = Ingredient.deserialize(cupElement);
             JsonElement beanElement = JSONUtils.isJsonArray(json, "bean") ? JSONUtils.getJsonArray(json, "bean") : JSONUtils.getJsonObject(json, "bean");
@@ -124,13 +116,13 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
                 if (item == null) throw new IllegalStateException("Item: " + s1 + " does not exist");
                 itemstack = new ItemStack(item);
             }
-            return new CoffeeRecipe(recipeId, waterAmount, cupIngredient, beanIngredient, extraIngredient, itemstack);
+            return new CoffeeRecipe(recipeId, waterIngredient, cupIngredient, beanIngredient, extraIngredient, itemstack);
         }
 
         @Nullable
         @Override
         public CoffeeRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            int waterIngredient = buffer.readVarInt();
+            FluidIngredient waterIngredient = FluidIngredient.read(buffer);
             Ingredient cupIngredient = Ingredient.read(buffer);
             Ingredient beanIngredient = Ingredient.read(buffer);
             Ingredient extraIngredient = Ingredient.read(buffer);
@@ -140,7 +132,7 @@ public class CoffeeRecipe implements IRecipe<IInventory> {
 
         @Override
         public void write(PacketBuffer buffer, CoffeeRecipe recipe) {
-            buffer.writeVarInt(recipe.waterAmount);
+            recipe.waterIngredient.write(buffer);
             recipe.cupIngredient.write(buffer);
             recipe.beanIngredient.write(buffer);
             recipe.extraIngredient.write(buffer);
