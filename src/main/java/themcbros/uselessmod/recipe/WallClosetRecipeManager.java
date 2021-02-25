@@ -1,29 +1,23 @@
 package themcbros.uselessmod.recipe;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
-import net.minecraft.resources.IReloadableResourceManager;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.resources.IResourceManager;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.resource.IResourceType;
 import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 import themcbros.uselessmod.UselessMod;
-import themcbros.uselessmod.config.Config;
+import themcbros.uselessmod.api.UselessRegistries;
+import themcbros.uselessmod.api.wall_closet.ClosetMaterial;
 import themcbros.uselessmod.helpers.BlockHelper;
 import themcbros.uselessmod.helpers.RecipeHelper;
 import themcbros.uselessmod.init.BlockInit;
-import themcbros.uselessmod.api.UselessRegistries;
-import themcbros.uselessmod.api.wall_closet.ClosetMaterial;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
 /**
