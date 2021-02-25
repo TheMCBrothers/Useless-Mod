@@ -10,7 +10,9 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -41,6 +43,8 @@ import themcbros.uselessmod.init.*;
 import themcbros.uselessmod.item.CoffeeCupItem;
 import themcbros.uselessmod.tileentity.CoffeeCupTileEntity;
 import themcbros.uselessmod.tileentity.MachineSupplierTileEntity;
+
+import java.util.Objects;
 
 public class ClientProxy extends CommonProxy {
 
@@ -157,7 +161,7 @@ public class ClientProxy extends CommonProxy {
                 return type != null ? type.getColor() : -1;
             }
             return -1;
-        }, ItemInit.COFFEE_CUP.get());
+        }, ItemInit.COFFEE_CUP);
 
         ColorModule.itemColors(event);
 
@@ -167,12 +171,22 @@ public class ClientProxy extends CommonProxy {
             if (tag != null && tag.contains("Color", Constants.NBT.TAG_ANY_NUMERIC))
                 return tag.getInt("Color");
             return -1;
-        }, BlockInit.CANVAS.get());
+        }, BlockInit.CANVAS);
 
         // Lamp
         for (DyeColor color : DyeColor.values()) {
             itemColors.register((itemStack, tintIndex) -> color.getColorValue(), LampBlock.LAMP_MAP.get(color));
         }
+
+        // Machine Supplier
+        itemColors.register(((itemStack, tintIndex) -> {
+            if (itemStack.getTag() != null && itemStack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
+                final BlockState mimic = NBTUtil.readBlockState(Objects.requireNonNull(itemStack.getChildTag("BlockEntityTag")).getCompound("Mimic"));
+                final ItemStack stack = new ItemStack(mimic.getBlock().asItem());
+                return itemColors.getColor(stack, tintIndex);
+            }
+            return -1;
+        }), BlockInit.COFFEE_MACHINE_SUPPLIER);
     }
 
     private void blockColors(final ColorHandlerEvent.Block event) {
