@@ -157,7 +157,6 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addItem(ItemInit.USELESS_COW_SPAWN_EGG, "Useless Cow Spawn Egg");
         this.addItem(ItemInit.USELESS_SKELETON_SPAWN_EGG, "Useless Skeleton Spawn Egg");
         this.addItem(ItemInit.USELESS_FLINT_AND_STEEL, "Useless Flint and Steel");
-        this.addItem(ItemInit.SUGARED_MILK, "Sugared Milk");
         this.addItem(ItemInit.CUP, "Cup");
         this.addItem(ItemInit.COFFEE_CUP, "Coffee in a Cup");
         this.addItem(ItemInit.USELESS_BUCKET, "Useless Bucket");

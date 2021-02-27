@@ -150,7 +150,6 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(ItemInit.CUP.get(), 2).patternLine("# #").patternLine(" # ").key('#', Items.QUARTZ_SLAB).addCriterion("has_quartz_slab", hasItem(Items.QUARTZ_SLAB)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockInit.CANVAS.get(), 4).key('X', Items.WHITE_WOOL).patternLine("XX").patternLine("XX").addCriterion("has_wool", hasItem(Items.WHITE_WOOL)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ColorModule.PAINT_BRUSH.get()).key('X', Items.WHITE_WOOL).key('#', Tags.Items.RODS_WOODEN).patternLine("#X#").patternLine("###").patternLine(" # ").addCriterion("has_wool", hasItem(Items.WHITE_WOOL)).build(consumer);
-        ShapelessRecipeBuilder.shapelessRecipe(ItemInit.SUGARED_MILK.get()).addIngredient(Items.MILK_BUCKET).addIngredient(Items.BUCKET).addIngredient(Items.SUGAR).addCriterion("has_milk", hasItem(Items.MILK_BUCKET)).build(consumer);
         // Rail Recipes
         ShapedRecipeBuilder.shapedRecipe(BlockInit.USELESS_RAIL.get(), 16).patternLine("# #").patternLine("#X#").patternLine("# #").key('#', ingotsUseless).key('X', Tags.Items.RODS_WOODEN).addCriterion("has_useless_ingot", hasItem(ingotsUseless)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockInit.POWERED_USELESS_RAIL.get(), 6).patternLine("#X#").patternLine("#X#").patternLine("#X#").key('#', Blocks.POWERED_RAIL).key('X', ingotsUseless).addCriterion("has_powered_rail", hasItem(Blocks.POWERED_RAIL)).build(consumer);

@@ -102,8 +102,6 @@ public class ItemInit {
             () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), UselessBoatEntity.Type.SUPER_USELESS));
     public static final ItemObject<Item> USELESS_FLINT_AND_STEEL = REGISTER.register("useless_flint_and_steel",
             () -> new UselessFlintAndSteelItem(new Item.Properties().maxDamage(64).group(UselessMod.GROUP)));
-    public static final ItemObject<Item> SUGARED_MILK = REGISTER.register("sugared_milk",
-            () -> new Item(new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(UselessMod.GROUP)));
     public static final ItemObject<Item> CUP = REGISTER.register("cup", CupBlockItem::new);
     public static final ItemObject<CoffeeCupItem> COFFEE_CUP = REGISTER.register("coffee_cup", CoffeeCupItem::new);
     public static final ItemObject<UselessBucketItem> USELESS_BUCKET = REGISTER.register("useless_bucket",
