@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.client.screen.CoffeeMachineScreen;
 import themcbros.uselessmod.compat.jei.coffee_machine.CoffeeMachineCategory;
+import themcbros.uselessmod.container.CoffeeMachineContainer;
 import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.init.ItemInit;
 import themcbros.uselessmod.recipe.RecipeValidator;
@@ -52,6 +53,12 @@ public class UselessJEICompat implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addGuiContainerHandler(CoffeeMachineScreen.class, new CoffeeMachineHandler());
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(CoffeeMachineContainer.class, UselessRecipeCategoryUid.COFFEE_MACHINE,
+                0, 3, 7, 36);
     }
 
     private static class CoffeeMachineHandler implements IGuiContainerHandler<CoffeeMachineScreen> {
