@@ -9,14 +9,17 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.client.screen.widget.EnergyBar;
 import themcbros.uselessmod.client.screen.widget.FluidTank;
+import themcbros.uselessmod.client.screen.widget.MilkCheckboxButton;
 import themcbros.uselessmod.container.CoffeeMachineContainer;
 import themcbros.uselessmod.network.Messages;
 import themcbros.uselessmod.network.packets.StartCoffeeMachinePacket;
+import themcbros.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
 
 import javax.annotation.Nullable;
 
@@ -35,11 +38,16 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
     protected void init() {
         super.init();
         this.buttons.add(new EnergyBar(this.guiLeft + 156, this.guiTop + 18, 8, 48, this.container, this::renderTooltip));
-        this.buttons.add(new FluidTank(this.guiLeft + 12, this.guiTop + 18, 8, 48, this.container.getFluidHandler(), this::renderTooltip));
+        this.buttons.add(new FluidTank(this.guiLeft + 12, this.guiTop + 18, 8, 48, this.container.getWaterHandler(), this::renderTooltip));
+        this.buttons.add(new FluidTank(this.guiLeft + 30, this.guiTop + 18, 8, 48, this.container.getMilkHandler(), this::renderTooltip));
         this.addButton(new StartStopButton(this.guiLeft + 61, this.guiTop + 50, 32, 20, StringTextComponent.EMPTY, button -> {
             boolean start = ((StartStopButton) button).start;
             Messages.INSTANCE.sendToServer(new StartCoffeeMachinePacket(start));
         }));
+        this.addButton(new MilkCheckboxButton(this.guiLeft + 29, this.guiTop + 5,
+                new TranslationTextComponent("container.uselessmod.coffee_machine.use_milk"),
+                this.container.tileEntity.useMilk(), this::renderTooltip,
+                button -> Messages.INSTANCE.sendToServer(new UpdateMilkCoffeeMachinePacket(button.isChecked()))));
     }
 
     @Override
@@ -57,6 +65,7 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
         int i = this.guiLeft;
         int j = this.guiTop;
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, i - 16, j + 10, 0, 166, 23, 64);
 
         double d = this.container.getScaledCookTime(42);
         this.blit(matrixStack, i + 67, j + 39, 176, 0, (int) d, 6);

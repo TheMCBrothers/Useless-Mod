@@ -29,14 +29,16 @@ public class CoffeeRecipe implements ICommonRecipe<IInventory> {
 
     private final ResourceLocation id;
     private final FluidIngredient waterIngredient;
+    private final FluidIngredient milkIngredient;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
     private final Ingredient extraIngredient;
     private final ItemStack recipeOutput;
 
-    public CoffeeRecipe(ResourceLocation id, FluidIngredient waterIngredient, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient, ItemStack recipeOutput) {
+    public CoffeeRecipe(ResourceLocation id, FluidIngredient waterIngredient, FluidIngredient milkIngredient, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient, ItemStack recipeOutput) {
         this.id = id;
         this.waterIngredient = waterIngredient;
+        this.milkIngredient = milkIngredient;
         this.cupIngredient = cupIngredient;
         this.beanIngredient = beanIngredient;
         this.extraIngredient = extraIngredient;
@@ -55,6 +57,10 @@ public class CoffeeRecipe implements ICommonRecipe<IInventory> {
 
     public FluidIngredient getWaterIngredient() {
         return this.waterIngredient;
+    }
+
+    public FluidIngredient getMilkIngredient() {
+        return milkIngredient;
     }
 
     public Ingredient getCupIngredient() {
@@ -98,12 +104,14 @@ public class CoffeeRecipe implements ICommonRecipe<IInventory> {
         @Override
         public CoffeeRecipe read(ResourceLocation recipeId, JsonObject json) {
             FluidIngredient waterIngredient = FluidIngredient.deserialize(json, "water");
+            FluidIngredient milkIngredient = json.has("milk") ? FluidIngredient.deserialize(json, "milk") : FluidIngredient.EMPTY;
             JsonElement cupElement = JSONUtils.isJsonArray(json, "cup") ? JSONUtils.getJsonArray(json, "cup") : JSONUtils.getJsonObject(json, "cup");
             Ingredient cupIngredient = Ingredient.deserialize(cupElement);
             JsonElement beanElement = JSONUtils.isJsonArray(json, "bean") ? JSONUtils.getJsonArray(json, "bean") : JSONUtils.getJsonObject(json, "bean");
             Ingredient beanIngredient = Ingredient.deserialize(beanElement);
-            JsonElement extraElement = JSONUtils.isJsonArray(json, "extra") ? JSONUtils.getJsonArray(json, "extra") : JSONUtils.getJsonObject(json, "extra");
-            Ingredient extraIngredient = Ingredient.deserialize(extraElement);
+            JsonElement extraElement = JSONUtils.isJsonArray(json, "extra") ? JSONUtils.getJsonArray(json, "extra")
+                   : json.has("extra") ? JSONUtils.getJsonObject(json, "extra") : null;
+            Ingredient extraIngredient = extraElement != null ? Ingredient.deserialize(extraElement) : Ingredient.EMPTY;
             if (!json.has("result"))
                 throw new JsonSyntaxException("Missing result, expected to find a string or object");
             ItemStack itemstack;
@@ -116,23 +124,25 @@ public class CoffeeRecipe implements ICommonRecipe<IInventory> {
                 if (item == null) throw new IllegalStateException("Item: " + s1 + " does not exist");
                 itemstack = new ItemStack(item);
             }
-            return new CoffeeRecipe(recipeId, waterIngredient, cupIngredient, beanIngredient, extraIngredient, itemstack);
+            return new CoffeeRecipe(recipeId, waterIngredient, milkIngredient, cupIngredient, beanIngredient, extraIngredient, itemstack);
         }
 
         @Nullable
         @Override
         public CoffeeRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             FluidIngredient waterIngredient = FluidIngredient.read(buffer);
+            FluidIngredient milkIngredient = FluidIngredient.read(buffer);
             Ingredient cupIngredient = Ingredient.read(buffer);
             Ingredient beanIngredient = Ingredient.read(buffer);
             Ingredient extraIngredient = Ingredient.read(buffer);
             ItemStack recipeOutput = buffer.readItemStack();
-            return new CoffeeRecipe(recipeId, waterIngredient, cupIngredient, beanIngredient, extraIngredient, recipeOutput);
+            return new CoffeeRecipe(recipeId, waterIngredient, milkIngredient, cupIngredient, beanIngredient, extraIngredient, recipeOutput);
         }
 
         @Override
         public void write(PacketBuffer buffer, CoffeeRecipe recipe) {
             recipe.waterIngredient.write(buffer);
+            recipe.milkIngredient.write(buffer);
             recipe.cupIngredient.write(buffer);
             recipe.beanIngredient.write(buffer);
             recipe.extraIngredient.write(buffer);

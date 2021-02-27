@@ -219,6 +219,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         // --- CONTAINERS --- //
 
         this.add("container.uselessmod.coffee_machine", "Coffee Machine");
+        this.add("container.uselessmod.coffee_machine.use_milk", "Use Milk");
         this.add("container.uselessmod.wall_closet", "Wall Closet");
 
         // --- ADVANCEMENTS --- //

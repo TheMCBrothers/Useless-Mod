@@ -6,6 +6,7 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.handlers.IGuiClickableArea;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.registration.*;
+import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import themcbros.uselessmod.UselessMod;
@@ -18,6 +19,7 @@ import themcbros.uselessmod.recipe.RecipeValidator;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @JeiPlugin
 public class UselessJEICompat implements IModPlugin {
@@ -63,6 +65,12 @@ public class UselessJEICompat implements IModPlugin {
         public Collection<IGuiClickableArea> getGuiClickableAreas(CoffeeMachineScreen containerScreen, double mouseX, double mouseY) {
             IGuiClickableArea clickableArea = IGuiClickableArea.createBasic(62, 33, 52, 18, UselessRecipeCategoryUid.COFFEE_MACHINE);
             return Collections.singleton(clickableArea);
+        }
+
+        @Override
+        public List<Rectangle2d> getGuiExtraAreas(CoffeeMachineScreen containerScreen) {
+            return Collections.singletonList(new Rectangle2d(containerScreen.getGuiLeft() - 16, containerScreen.getGuiTop() + 10,
+                    16, 64));
         }
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
@@ -74,8 +75,8 @@ public class CoffeeMachineContainer extends Container implements IEnergyProvider
         this.addSlot(new CoffeeBeanSlot(tileEntity, 1, 80, 16));
         this.addSlot(new Slot(tileEntity, 2, 98, 16));
         this.addSlot(new OutputSlot(tileEntity, 3, 98, 52));
-        this.addSlot(new FluidItemSlot(tileEntity, 4, 26, 16));
-        this.addSlot(new OutputSlot(tileEntity, 5, 26, 52));
+        this.addSlot(new FluidItemSlot(tileEntity, 4, -10, 16));
+        this.addSlot(new OutputSlot(tileEntity, 5, -10, 52));
         this.addSlot(new EnergyItemSlot(tileEntity, 6, 134, 34));
 
         for(int i = 0; i < 3; ++i) {
@@ -182,7 +183,7 @@ public class CoffeeMachineContainer extends Container implements IEnergyProvider
                 .map(fluidHandlerItem -> {
                     for (int i = 0; i < fluidHandlerItem.getTanks(); i++) {
                         FluidStack fluidStack = fluidHandlerItem.getFluidInTank(i);
-                        if (fluidStack.getFluid().isIn(FluidTags.WATER))
+                        if (fluidStack.getFluid().isIn(FluidTags.WATER) || fluidStack.getFluid().isIn(Tags.Fluids.MILK))
                             return true;
                     }
                     return false;
@@ -224,8 +225,12 @@ public class CoffeeMachineContainer extends Container implements IEnergyProvider
         return d0 != 0 && d1 != 0 ? d0 / d1 * width : 0;
     }
 
-    public IFluidHandler getFluidHandler() {
-        return this.tileEntity.waterTank;
+    public IFluidHandler getWaterHandler() {
+        return this.tileEntity.tankHandler.getWaterTank();
+    }
+
+    public IFluidHandler getMilkHandler() {
+        return this.tileEntity.tankHandler.getMilkTank();
     }
 
     public boolean isRunning() {

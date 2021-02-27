@@ -1,5 +1,6 @@
 package themcbros.uselessmod.compat.jei.coffee_machine;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mcp.MethodsReturnNonnullByDefault;
 import mezz.jei.api.constants.VanillaTypes;
@@ -70,7 +71,10 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeRecipe> {
 
     @Override
     public void setIngredients(CoffeeRecipe coffeeRecipe, IIngredients ingredients) {
-        ingredients.setInputs(VanillaTypes.FLUID, coffeeRecipe.getWaterIngredient().getFluids());
+        ingredients.setInputLists(VanillaTypes.FLUID, Lists.newArrayList(
+                coffeeRecipe.getWaterIngredient().getFluids(),
+                coffeeRecipe.getMilkIngredient().getFluids()
+        ));
         ingredients.setInputIngredients(coffeeRecipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, coffeeRecipe.getRecipeOutput());
     }
@@ -79,6 +83,7 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeRecipe> {
     public void setRecipe(IRecipeLayout recipeLayout, CoffeeRecipe coffeeRecipe, IIngredients ingredients) {
         IGuiFluidStackGroup fluidStackGroup = recipeLayout.getFluidStacks();
         fluidStackGroup.init(0, true, 1, 3, 8, 48, 2000, true, null);
+        fluidStackGroup.init(1, true, 19, 3, 8, 48, 1000, true, null);
         fluidStackGroup.set(ingredients);
         IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
         itemStackGroup.init(0, true, 50, 0);

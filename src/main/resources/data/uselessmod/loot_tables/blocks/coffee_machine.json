@@ -21,6 +21,11 @@
                   "op": "replace"
                 },
                 {
+                  "source": "Milk",
+                  "target": "BlockEntityTag.Milk",
+                  "op": "replace"
+                },
+                {
                   "source": "Items",
                   "target": "BlockEntityTag.Items",
                   "op": "replace"
