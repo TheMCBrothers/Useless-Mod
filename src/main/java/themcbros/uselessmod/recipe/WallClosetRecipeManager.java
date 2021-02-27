@@ -14,6 +14,7 @@ import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.api.UselessRegistries;
 import themcbros.uselessmod.api.wall_closet.ClosetMaterial;
+import themcbros.uselessmod.config.Config;
 import themcbros.uselessmod.helpers.BlockHelper;
 import themcbros.uselessmod.helpers.RecipeHelper;
 import themcbros.uselessmod.init.BlockInit;
@@ -27,17 +28,20 @@ public class WallClosetRecipeManager implements ISelectiveResourceReloadListener
 
     @Override
     public void onResourceManagerReload(IResourceManager resourceManager) {
-        for (ClosetMaterial material : UselessRegistries.CLOSET_MATERIALS) {
-            ShapedRecipe recipe = createWallClosetRecipe(material);
-            RecipeHelper.addRecipe(recipe);
-        }
+        this.addRecipes();
     }
 
     @Override
     public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
-        for (ClosetMaterial material : UselessRegistries.CLOSET_MATERIALS) {
-            ShapedRecipe recipe = createWallClosetRecipe(material);
-            RecipeHelper.addRecipe(recipe);
+        this.addRecipes();
+    }
+
+    private void addRecipes() {
+        if (!Config.SERVER_CONFIG.disableWallClosetRecipes.get()) {
+            for (ClosetMaterial material : UselessRegistries.CLOSET_MATERIALS) {
+                ShapedRecipe recipe = createWallClosetRecipe(material);
+                RecipeHelper.addRecipe(recipe);
+            }
         }
     }
 
