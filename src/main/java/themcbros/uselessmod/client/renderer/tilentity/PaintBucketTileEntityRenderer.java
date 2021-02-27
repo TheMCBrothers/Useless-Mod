@@ -13,6 +13,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import themcbros.uselessmod.helpers.ColorUtils;
 import themcbros.uselessmod.tileentity.PaintBucketTileEntity;
 
 /**
@@ -30,7 +31,7 @@ public class PaintBucketTileEntityRenderer extends TileEntityRenderer<PaintBucke
     }
 
     private void add(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float u, float v, int color) {
-        float[] colors = getRGBA(color);
+        float[] colors = ColorUtils.getRGBA(color);
         renderer.pos(stack.getLast().getMatrix(), x, y, z)
                 .color(colors[0], colors[1], colors[2], 1.0f)
                 .tex(u, v)
@@ -65,15 +66,6 @@ public class PaintBucketTileEntityRenderer extends TileEntityRenderer<PaintBucke
         FluidAttributes attributes = fluid.getAttributes();
         ResourceLocation fluidStill = attributes.getStillTexture(fluidStack);
         return minecraft.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(fluidStill);
-    }
-
-    private static float[] getRGBA(int color) {
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
-        float alpha = ((color >> 24) & 0xFF) / 255F;
-
-        return new float[] {red, green, blue, alpha};
     }
 
 }
