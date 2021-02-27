@@ -125,7 +125,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
         } else if (type == 1) {
             nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(new CompoundNBT()));
         } else if (type == 2) {
-            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(new CompoundNBT()));
+            nbt.putBoolean("UseMilk", this.useMilk);
         }
 
         Messages.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> world.getChunkAt(this.pos)),
@@ -388,6 +388,7 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
             this.cookTime = 0;
             this.cookTimeTotal = 0;
         }
+        this.markDirty();
         this.world.playSound(null, this.pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 

@@ -1,10 +1,14 @@
 package themcbros.uselessmod.client.screen;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -15,13 +19,15 @@ import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.client.screen.widget.EnergyBar;
 import themcbros.uselessmod.client.screen.widget.FluidTank;
-import themcbros.uselessmod.client.screen.widget.MilkCheckboxButton;
+import themcbros.uselessmod.client.screen.widget.ITooltipRenderer;
 import themcbros.uselessmod.container.CoffeeMachineContainer;
 import themcbros.uselessmod.network.Messages;
 import themcbros.uselessmod.network.packets.StartCoffeeMachinePacket;
 import themcbros.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author TheMCBrothers
@@ -46,8 +52,7 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
         }));
         this.addButton(new MilkCheckboxButton(this.guiLeft + 29, this.guiTop + 5,
                 new TranslationTextComponent("container.uselessmod.coffee_machine.use_milk"),
-                this.container.tileEntity.useMilk(), this::renderTooltip,
-                button -> Messages.INSTANCE.sendToServer(new UpdateMilkCoffeeMachinePacket(button.isChecked()))));
+                this.container.tileEntity.useMilk(), this::renderTooltip));
     }
 
     @Override
@@ -121,6 +126,52 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
         @Override
         public ITextComponent getMessage() {
             return start ? new StringTextComponent("Start") : new StringTextComponent("Stop");
+        }
+    }
+
+    public class MilkCheckboxButton extends AbstractButton {
+
+        private final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/checkbox.png");
+        private boolean checked;
+        private final ITooltipRenderer tooltipRenderer;
+
+        public MilkCheckboxButton(int x, int y, ITextComponent title, boolean checked, ITooltipRenderer tooltipRenderer) {
+            super(x, y, 10, 10, title);
+            this.checked = checked;
+            this.tooltipRenderer = tooltipRenderer;
+        }
+
+        public void onPress() {
+            this.checked = !this.checked;
+            Messages.INSTANCE.sendToServer(new UpdateMilkCoffeeMachinePacket(this.isChecked()));
+        }
+
+        public boolean isChecked() {
+            return checked;
+        }
+
+        @Override
+        public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+            this.checked = CoffeeMachineScreen.this.container.tileEntity.useMilk();
+            super.render(matrixStack, mouseX, mouseY, partialTicks);
+        }
+
+        public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+            Minecraft minecraft = Minecraft.getInstance();
+            minecraft.getTextureManager().bindTexture(TEXTURE);
+            RenderSystem.enableDepthTest();
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            blit(matrixStack, this.x, this.y, this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
+            this.renderBg(matrixStack, minecraft, mouseX, mouseY);
+        }
+
+        @Override
+        public void renderToolTip(MatrixStack matrixStack, int mouseX, int mouseY) {
+            List<ITextComponent> tooltip = Collections.singletonList(this.getMessage());
+            this.tooltipRenderer.renderTooltip(matrixStack, Lists.transform(tooltip, ITextComponent::func_241878_f), mouseX, mouseY);
         }
     }
 
