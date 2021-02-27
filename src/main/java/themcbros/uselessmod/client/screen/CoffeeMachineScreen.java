@@ -28,6 +28,7 @@ import themcbros.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author TheMCBrothers
@@ -78,6 +79,16 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
 
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        for (Widget widget : this.buttons.stream().filter(widget -> widget instanceof FluidTank && widget.isHovered()).collect(Collectors.toList())) {
+            RenderSystem.disableDepthTest();
+            int tankX = widget.x - this.guiLeft;
+            int tankY = widget.y - this.guiTop;
+            RenderSystem.colorMask(true, true, true, false);
+            int slotColor = this.slotColor;
+            this.fillGradient(matrixStack, tankX, tankY, tankX + widget.getWidth(), tankY + widget.getHeightRealms(), slotColor, slotColor);
+            RenderSystem.colorMask(true, true, true, true);
+            RenderSystem.enableDepthTest();
+        }
         String s = this.title.getString();
         this.font.drawString(matrixStack, s, (float)(this.xSize / 2 - this.font.getStringWidth(s) / 2), 6.0F, 4210752);
         this.font.drawString(matrixStack, this.playerInventory.getDisplayName().getString(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
@@ -86,19 +97,16 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
     @Override
     protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
         super.renderHoveredTooltip(matrixStack, mouseX, mouseY);
-        for (Widget widget : this.buttons) {
-            if (widget.isHovered()) {
-                widget.renderToolTip(matrixStack, mouseX, mouseY);
-            }
+        for (Widget widget : this.buttons.stream().filter(Widget::isHovered).collect(Collectors.toList())) {
+            widget.renderToolTip(matrixStack, mouseX, mouseY);
         }
     }
 
     @Nullable
     public FluidStack getHoveredFluid() {
-        for (Widget widget : this.buttons) {
-            if (widget instanceof FluidTank && widget.isHovered()) {
-                return ((FluidTank) widget).getFluid();
-            }
+        for (Widget widget : this.buttons.stream().filter(widget -> widget instanceof FluidTank && widget.isHovered()).collect(Collectors.toList())) {
+            assert widget instanceof FluidTank;
+            return ((FluidTank) widget).getFluid();
         }
         return null;
     }
