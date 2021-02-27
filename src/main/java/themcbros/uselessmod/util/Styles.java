@@ -15,4 +15,5 @@ public class Styles {
     public static final Style MODE_ENTITY = Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.YELLOW));
     public static final Style USELESS_ENERGY = Style.EMPTY.setColor(Color.fromInt(0x62B15F));
     public static final Style FLUID_MILK = Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.WHITE));
+    public static final Style MOD_NAME = Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.BLUE)).setItalic(true);
 }

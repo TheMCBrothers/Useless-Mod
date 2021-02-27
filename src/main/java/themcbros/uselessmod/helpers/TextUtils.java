@@ -2,13 +2,18 @@ package themcbros.uselessmod.helpers;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.ForgeI18n;
+import net.minecraftforge.fml.ModList;
+import org.apache.commons.lang3.StringUtils;
 import themcbros.uselessmod.UselessMod;
+import themcbros.uselessmod.util.Styles;
 
 public class TextUtils {
 
@@ -68,6 +73,16 @@ public class TextUtils {
     public static ITextComponent fluidName(Fluid fluid) {
         if (fluid == Fluids.EMPTY) return translate("misc", "empty");
         return fluid.getAttributes().getDisplayName(FluidStack.EMPTY);
+    }
+
+    public static ITextComponent getModName(ResourceLocation registryName) {
+        return new StringTextComponent(getModNameForModId(registryName.getNamespace())).setStyle(Styles.MOD_NAME);
+    }
+
+    public static String getModNameForModId(String modId) {
+        return ModList.get().getModContainerById(modId)
+                .map(modContainer -> modContainer.getModInfo().getDisplayName())
+                .orElse(StringUtils.capitalize(modId));
     }
 
     /**

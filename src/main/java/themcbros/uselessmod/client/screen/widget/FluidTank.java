@@ -18,10 +18,11 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import themcbros.uselessmod.helpers.TextUtils;
+import themcbros.uselessmod.util.Styles;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author TheMCBrothers
@@ -56,8 +57,9 @@ public class FluidTank extends Widget {
     @Override
     public void renderToolTip(MatrixStack matrixStack, int mouseX, int mouseY) {
         ITextComponent fluidName = TextUtils.fluidName(this.getFluid());
-        ITextComponent energy = TextUtils.fluidWithMax(this.handler);
-        final List<ITextComponent> tooltip = Lists.newArrayList(fluidName, energy);
+        ITextComponent energy = TextUtils.fluidWithMax(this.handler).setStyle(Styles.TOOLTIP);
+        ITextComponent modName = TextUtils.getModName(Objects.requireNonNull(this.getFluid().getFluid().getRegistryName()));
+        final List<ITextComponent> tooltip = Lists.newArrayList(fluidName, energy, modName);
         this.tooltipRenderer.renderTooltip(matrixStack, Lists.transform(tooltip, ITextComponent::func_241878_f), mouseX, mouseY);
     }
 
