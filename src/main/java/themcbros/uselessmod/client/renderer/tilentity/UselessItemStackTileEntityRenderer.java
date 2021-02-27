@@ -55,7 +55,9 @@ public class UselessItemStackTileEntityRenderer extends ItemStackTileEntityRende
                     CompoundNBT blockEntityTag = stack.getChildTag("BlockEntityTag");
                     if (blockEntityTag != null) {
                         CompoundNBT fluidTag = blockEntityTag.getCompound("Fluid");
-                        coffeeMachine.waterTank.setFluid(FluidStack.loadFluidStackFromNBT(fluidTag));
+                        CompoundNBT milkTag = blockEntityTag.getCompound("Milk");
+                        coffeeMachine.tankHandler.getWaterTank().setFluid(FluidStack.loadFluidStackFromNBT(fluidTag));
+                        coffeeMachine.tankHandler.getMilkTank().setFluid(FluidStack.loadFluidStackFromNBT(milkTag));
                         coffeeMachine.energyStorage.setEnergyStored(blockEntityTag.getInt("EnergyStored"));
                         ItemStackHelper.loadAllItems(blockEntityTag, coffeeMachine.coffeeStacks);
                     }
