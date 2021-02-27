@@ -1,0 +1,21 @@
+{
+  "type": "uselessmod:coffee_machine",
+  "water": {
+    "name": "minecraft:water",
+    "amount": 1000
+  },
+  "milk": {
+    "name": "minecraft:lava",
+    "amount": 1000
+  },
+  "cup": {
+    "tag": "forge:cobblestone"
+  },
+  "bean": {
+    "tag": "forge:sand"
+  },
+  "result": {
+    "item": "minecraft:obsidian",
+    "count": 2
+  }
+}

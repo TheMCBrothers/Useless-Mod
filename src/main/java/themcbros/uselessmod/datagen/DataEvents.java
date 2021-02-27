@@ -18,11 +18,11 @@ public class DataEvents {
         if (event.includeServer()) {
             generator.addProvider(new UselessRecipeProvider(generator));
             generator.addProvider(new UselessAdvancementProvider(generator));
-            BlockTagsProvider blockTagsProvider = new UselessBlockTagsProvider(generator);
+            BlockTagsProvider blockTagsProvider = new UselessBlockTagsProvider(generator, event.getExistingFileHelper());
             generator.addProvider(blockTagsProvider);
-            generator.addProvider(new UselessItemTagsProvider(generator, blockTagsProvider));
+            generator.addProvider(new UselessItemTagsProvider(generator, blockTagsProvider, event.getExistingFileHelper()));
             generator.addProvider(new UselessFluidTagsProvider(generator, event.getExistingFileHelper()));
-            generator.addProvider(new UselessEntityTypeTagsProvider(generator));
+            generator.addProvider(new UselessEntityTypeTagsProvider(generator, event.getExistingFileHelper()));
 //            generator.addProvider(new UselessLootTableProvider(generator));
         }
     }

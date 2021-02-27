@@ -63,6 +63,10 @@ public class UselessBlockLootTables extends BlockLootTables {
         this.registerDropSelfLootTable(BlockInit.USELESS_PLANKS.get());
         this.registerDropSelfLootTable(BlockInit.USELESS_PRESSURE_PLATE.get());
         this.registerDropSelfLootTable(BlockInit.USELESS_RAIL.get());
+        this.registerDropSelfLootTable(BlockInit.USELESS_ACTIVATOR_RAIL.get());
+        this.registerDropSelfLootTable(BlockInit.USELESS_DETECTOR_RAIL.get());
+        this.registerDropSelfLootTable(BlockInit.USELESS_CROSSOVER_RAIL.get());
+        this.registerDropSelfLootTable(BlockInit.POWERED_USELESS_RAIL.get());
         this.registerDropSelfLootTable(BlockInit.USELESS_ROSE.get());
         this.registerDropSelfLootTable(BlockInit.USELESS_SAPLING.get());
         this.registerDropSelfLootTable(BlockInit.USELESS_SIGN.get());
@@ -85,7 +89,7 @@ public class UselessBlockLootTables extends BlockLootTables {
     }
 
     private static LootTable.Builder droppingCoffeeMachine(Block coffeeMachine) {
-        return LootTable.builder().addLootPool(withSurvivesExplosion(coffeeMachine, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(coffeeMachine).acceptFunction(CopyName.builder(CopyName.Source.BLOCK_ENTITY)).acceptFunction(CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY).replaceOperation("EnergyStored", "BlockEntityTag.EnergyStored").replaceOperation("Fluid", "BlockEntityTag.Fluid").replaceOperation("Items", "BlockEntityTag.Items")).acceptFunction(SetContents.builderIn().addLootEntry(DynamicLootEntry.func_216162_a(ShulkerBoxBlock.CONTENTS))))));
+        return LootTable.builder().addLootPool(withSurvivesExplosion(coffeeMachine, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(coffeeMachine).acceptFunction(CopyName.builder(CopyName.Source.BLOCK_ENTITY)).acceptFunction(CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY).replaceOperation("EnergyStored", "BlockEntityTag.EnergyStored").replaceOperation("Fluid", "BlockEntityTag.Fluid").replaceOperation("Milk", "BlockEntityTag.Milk").replaceOperation("Items", "BlockEntityTag.Items")).acceptFunction(SetContents.builderIn().addLootEntry(DynamicLootEntry.func_216162_a(ShulkerBoxBlock.CONTENTS))))));
     }
 
     private static LootTable.Builder droppingPaintBucket(Block paintBucket) {

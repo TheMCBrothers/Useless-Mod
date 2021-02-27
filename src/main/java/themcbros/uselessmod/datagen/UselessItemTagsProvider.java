@@ -9,6 +9,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.UselessTags;
 import themcbros.uselessmod.init.ItemInit;
 
@@ -19,8 +21,8 @@ import static themcbros.uselessmod.helpers.TagUtils.*;
  */
 public class UselessItemTagsProvider extends ItemTagsProvider {
 
-    public UselessItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider) {
-        super(dataGenerator, blockTagsProvider);
+    public UselessItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {
+        super(dataGenerator, blockTagsProvider, UselessMod.MOD_ID, existingFileHelper);
     }
 
     @Override
