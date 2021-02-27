@@ -44,42 +44,33 @@ public class CoffeeMachineTileEntityRenderer extends TileEntityRenderer<CoffeeMa
         final FluidTank waterTank = tileEntityIn.tankHandler.getWaterTank();
         final FluidTank milkTank = tileEntityIn.tankHandler.getMilkTank();
 
-        if (!waterTank.isEmpty() && !milkTank.isEmpty()) {
-            final FluidCuboid waterCuboid;
-            final FluidCuboid milkCuboid;
-            switch (facing) {
-                case SOUTH:
-                    waterCuboid = new FluidCuboid(new Vector3f(8.01F, 0.01F, 1.01F),
-                            new Vector3f(10.99F, 9.99F, 2.99F), DEFAULT_FACES);
-                    milkCuboid = new FluidCuboid(new Vector3f(5.01F, 0.01F, 1.01F),
-                            new Vector3f(7.99F, 9.99F, 2.99F), DEFAULT_FACES);
-                    break;
-                case EAST:
-                    waterCuboid = new FluidCuboid(new Vector3f(1.01F, 0.01F, 5.01F),
-                            new Vector3f(2.99F, 9.99F, 7.99F), DEFAULT_FACES);
-                    milkCuboid = new FluidCuboid(new Vector3f(1.01F, 0.01F, 8.01F),
-                            new Vector3f(2.99F, 9.99F, 10.99F), DEFAULT_FACES);
-                    break;
-                case WEST:
-                    waterCuboid = new FluidCuboid(new Vector3f(13.01F, 0.01F, 8.01F),
-                            new Vector3f(14.99F, 9.99F, 10.99F), DEFAULT_FACES);
-                    milkCuboid = new FluidCuboid(new Vector3f(13.01F, 0.01F, 5.01F),
-                            new Vector3f(14.99F, 9.99F, 7.99F), DEFAULT_FACES);
-                    break;
-                case NORTH:
-                default:
-                    waterCuboid = new FluidCuboid(new Vector3f(5.01F, 0.01F, 13.01F),
+        if (!waterTank.isEmpty()) {
+            final FluidCuboid waterCuboid =
+                    facing == Direction.SOUTH ? new FluidCuboid(new Vector3f(8.01F, 0.01F, 1.01F),
+                            new Vector3f(10.99F, 9.99F, 2.99F), DEFAULT_FACES) :
+                    facing == Direction.EAST ? new FluidCuboid(new Vector3f(1.01F, 0.01F, 5.01F),
+                            new Vector3f(2.99F, 9.99F, 7.99F), DEFAULT_FACES) :
+                    facing == Direction.WEST ? new FluidCuboid(new Vector3f(13.01F, 0.01F, 8.01F),
+                            new Vector3f(14.99F, 9.99F, 10.99F), DEFAULT_FACES) :
+                    new FluidCuboid(new Vector3f(5.01F, 0.01F, 13.01F),
                             new Vector3f(7.99F, 9.99F, 14.99F), DEFAULT_FACES);
-                    milkCuboid = new FluidCuboid(new Vector3f(8.01F, 0.01F, 13.01F),
-                            new Vector3f(10.99F, 9.99F, 14.99F), DEFAULT_FACES);
-                    break;
-            }
-            // render the fluid
             RenderUtils.renderFluidTank(matrixStackIn, bufferIn, waterCuboid, waterTank, combinedLightIn);
+        }
+        if (!milkTank.isEmpty()) {
+            final FluidCuboid milkCuboid =
+                    facing == Direction.SOUTH ? new FluidCuboid(new Vector3f(5.01F, 0.01F, 1.01F),
+                            new Vector3f(7.99F, 9.99F, 2.99F), DEFAULT_FACES) :
+                    facing == Direction.EAST ? new FluidCuboid(new Vector3f(1.01F, 0.01F, 8.01F),
+                            new Vector3f(2.99F, 9.99F, 10.99F), DEFAULT_FACES) :
+                    facing == Direction.WEST ? new FluidCuboid(new Vector3f(13.01F, 0.01F, 5.01F),
+                            new Vector3f(14.99F, 9.99F, 7.99F), DEFAULT_FACES) :
+                    new FluidCuboid(new Vector3f(8.01F, 0.01F, 13.01F),
+                                    new Vector3f(10.99F, 9.99F, 14.99F), DEFAULT_FACES);
             RenderUtils.renderFluidTank(matrixStackIn, bufferIn, milkCuboid, milkTank, combinedLightIn);
         }
 
-        ItemStack cupStack = tileEntityIn.coffeeStacks.get(0);
+        final ItemStack cupStack = tileEntityIn.getStackInSlot(3).isEmpty() ? tileEntityIn.getStackInSlot(0)
+                : tileEntityIn.getStackInSlot(3);
         if (!cupStack.isEmpty()) {
             matrixStackIn.push();
             Vector3f translation = facing == Direction.SOUTH ? new Vector3f(.5F, .34F, .65F) :
