@@ -2,6 +2,10 @@
   "type": "uselessmod:coffee_machine",
   "water": {
     "tag": "minecraft:water",
+    "amount": 500
+  },
+  "milk": {
+    "tag": "forge:milk",
     "amount": 250
   },
   "cup": {
@@ -11,7 +15,7 @@
     "tag": "forge:crops/coffeebean"
   },
   "extra": {
-    "item": "uselessmod:sugared_milk"
+    "item": "minecraft:sugar"
   },
   "result": {
     "item": "uselessmod:coffee_cup",

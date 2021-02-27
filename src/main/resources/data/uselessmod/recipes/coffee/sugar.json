@@ -2,7 +2,7 @@
   "type": "uselessmod:coffee_machine",
   "water": {
     "tag": "minecraft:water",
-    "amount": 250
+    "amount": 500
   },
   "cup": {
     "item": "uselessmod:cup"
