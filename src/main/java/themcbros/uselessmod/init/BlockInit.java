@@ -92,6 +92,8 @@ public class BlockInit {
     public static final RegistryObject<Block> USELESS_WALL_SIGN = REGISTER.registerNoItem("useless_wall_sign",
             () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodType.OAK));
 
+    public static final ItemObject<Block> CREATIVE_ENERGY_CELL = REGISTER.register("creative_energy_cell",
+            () -> new CreativeEnergyCellBlock(Block.Properties.from(Blocks.IRON_BLOCK).noDrops()), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_GENERATOR = REGISTER.register("useless_generator",
             () -> new UselessGeneratorBlock(Block.Properties.from(Blocks.IRON_BLOCK).notSolid()), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> COFFEE_MACHINE = REGISTER.register("coffee_machine",
