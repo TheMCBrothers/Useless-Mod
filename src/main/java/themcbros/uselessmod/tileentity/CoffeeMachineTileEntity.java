@@ -206,22 +206,26 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
         assert world != null;
         if (!world.isRemote) {
 
-            if (!this.coffeeStacks.get(4).isEmpty()) {
-                ItemStack slotFluidIn = this.coffeeStacks.get(4);
-                ItemStack slotFluidOut = this.coffeeStacks.get(5);
-                FluidActionResult result = FluidUtil.tryEmptyContainer(slotFluidIn, this.tankHandler, FluidAttributes.BUCKET_VOLUME, null, false);
+            final ItemStack slotFluidIn = this.getStackInSlot(4);
+            if (!slotFluidIn.isEmpty()) {
+                FluidActionResult result = FluidUtil.tryEmptyContainer(slotFluidIn, this.tankHandler, Integer.MAX_VALUE, null, false);
                 if (result.isSuccess()) {
-                    slotFluidIn.shrink(1);
-
-                    ItemStack resultStack = result.getResult();
-                    if (slotFluidOut.isEmpty()) {
-                        this.coffeeStacks.set(5, resultStack);
-                    } else if (ItemHandlerHelper.canItemStacksStack(resultStack, slotFluidOut)
-                            && slotFluidOut.getCount() <= slotFluidOut.getMaxStackSize() - resultStack.getCount()) {
-                        this.coffeeStacks.get(5).grow(resultStack.getCount());
+                    final ItemStack slotFluidOut = this.coffeeStacks.get(5);
+                    final ItemStack resultStack = result.getResult();
+                    boolean isEmpty = FluidUtil.getFluidHandler(resultStack)
+                            .map(iFluidHandlerItem -> iFluidHandlerItem.getFluidInTank(0).isEmpty()).orElse(true);
+                    if (isEmpty) {
+                        slotFluidIn.shrink(1);
+                        if (slotFluidOut.isEmpty())
+                            this.coffeeStacks.set(5, resultStack);
+                        else if (ItemHandlerHelper.canItemStacksStackRelaxed(resultStack, slotFluidOut))
+                            this.getStackInSlot(5).grow(resultStack.getCount());
+                        else
+                            this.coffeeStacks.set(4, resultStack);
+                    } else {
+                        this.coffeeStacks.set(4, resultStack);
                     }
                     this.markDirty();
-                    this.requestModelDataUpdate();
                 }
             }
 
