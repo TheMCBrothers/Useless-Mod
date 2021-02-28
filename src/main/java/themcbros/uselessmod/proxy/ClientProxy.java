@@ -114,6 +114,7 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlockInit.POWERED_USELESS_RAIL.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.USELESS_CROSSOVER_RAIL.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.COFFEE_MACHINE_SUPPLIER.get(), renderType -> true);
+        RenderTypeLookup.setRenderLayer(BlockInit.MACHINE_FRAME.get(), RenderType.getCutout());
 
         RenderTypeLookup.setRenderLayer(FluidInit.USELESS_GAS.getStill(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(FluidInit.USELESS_GAS.getFlowing(), RenderType.getTranslucent());

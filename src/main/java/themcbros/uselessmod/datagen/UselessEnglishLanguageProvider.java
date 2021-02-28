@@ -57,6 +57,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addBlock(BlockInit.USELESS_PRESSURE_PLATE, "Useless Pressure Plate");
         this.addBlock(BlockInit.USELESS_BUTTON, "Useless Button");
         // other
+        this.addBlock(BlockInit.MACHINE_FRAME, "Machine Frame");
         this.addBlock(BlockInit.CREATIVE_ENERGY_CELL, "Creative Energy Cell");
         this.addBlock(BlockInit.USELESS_GENERATOR, "Useless Generator");
         this.addBlock(BlockInit.COFFEE_MACHINE, "Coffee Machine");
