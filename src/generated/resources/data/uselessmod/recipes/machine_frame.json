@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "GXG",
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/super_useless"
+    },
+    "X": {
+      "tag": "forge:gears/useless"
+    },
+    "G": {
+      "tag": "forge:glass"
+    }
+  },
+  "result": {
+    "item": "uselessmod:machine_frame"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#X#",
+    "GRG"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/useless"
+    },
+    "X": {
+      "tag": "uselessmod:machine_frames"
+    },
+    "G": {
+      "tag": "forge:gears/super_useless"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_generator"
+  }
+}

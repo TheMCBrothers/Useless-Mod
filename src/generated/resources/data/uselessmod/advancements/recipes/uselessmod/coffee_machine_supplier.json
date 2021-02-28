@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:coffee_machine_supplier"
+    ]
+  },
+  "criteria": {
+    "has_machine_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "uselessmod:machine_frames"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:coffee_machine_supplier"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_machine_frame",
+      "has_the_recipe"
+    ]
+  ]
+}

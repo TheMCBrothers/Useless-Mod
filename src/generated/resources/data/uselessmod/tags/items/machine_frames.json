@@ -1,0 +1,38 @@
+{
+  "replace": false,
+  "values": [
+    "uselessmod:machine_frame",
+    {
+      "id": "silents_mechanisms:stone_machine_frame",
+      "required": false
+    },
+    {
+      "id": "silents_mechanisms:alloy_machine_frame",
+      "required": false
+    },
+    {
+      "id": "mekanism:steel_casing",
+      "required": false
+    },
+    {
+      "id": "industrialforegoing:machine_frame_pity",
+      "required": false
+    },
+    {
+      "id": "industrialforegoing:machine_frame_simple",
+      "required": false
+    },
+    {
+      "id": "industrialforegoing:machine_frame_advanced",
+      "required": false
+    },
+    {
+      "id": "industrialforegoing:machine_frame_supreme",
+      "required": false
+    },
+    {
+      "id": "thermal:machine_frame",
+      "required": false
+    }
+  ]
+}

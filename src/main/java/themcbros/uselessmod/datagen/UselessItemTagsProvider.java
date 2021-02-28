@@ -8,10 +8,12 @@ import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.UselessTags;
+import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.init.ItemInit;
 
 import static themcbros.uselessmod.helpers.TagUtils.*;
@@ -132,6 +134,17 @@ public class UselessItemTagsProvider extends ItemTagsProvider {
         this.copy(BlockTags.BEDS, ItemTags.BEDS);
         this.copy(BlockTags.SMALL_FLOWERS, ItemTags.SMALL_FLOWERS);
         this.copy(BlockTags.WALLS, ItemTags.WALLS);
+
+        this.getOrCreateBuilder(UselessTags.Items.MACHINE_FRAMES)
+                .add(BlockInit.MACHINE_FRAME.asItem())
+                .addOptional(new ResourceLocation("silents_mechanisms", "stone_machine_frame"))
+                .addOptional(new ResourceLocation("silents_mechanisms", "alloy_machine_frame"))
+                .addOptional(new ResourceLocation("mekanism", "steel_casing"))
+                .addOptional(new ResourceLocation("industrialforegoing", "machine_frame_pity"))
+                .addOptional(new ResourceLocation("industrialforegoing", "machine_frame_simple"))
+                .addOptional(new ResourceLocation("industrialforegoing", "machine_frame_advanced"))
+                .addOptional(new ResourceLocation("industrialforegoing", "machine_frame_supreme"))
+                .addOptional(new ResourceLocation("thermal", "machine_frame"));
     }
 
     @Override

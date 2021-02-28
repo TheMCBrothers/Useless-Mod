@@ -10,9 +10,11 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.Tags;
+import themcbros.uselessmod.UselessTags;
 import themcbros.uselessmod.block.LampBlock;
 import themcbros.uselessmod.color.ColorModule;
 import themcbros.uselessmod.init.BlockInit;
+import themcbros.uselessmod.init.FluidInit;
 import themcbros.uselessmod.init.ItemInit;
 
 import java.util.function.Consumer;
@@ -43,6 +45,8 @@ public class UselessRecipeProvider extends RecipeProvider {
         final ITag.INamedTag<Item> nuggetsSuperUseless = forgeItemTag("nuggets/super_useless");
         final ITag.INamedTag<Item> storageBlocksUseless = forgeItemTag("storage_blocks/useless");
         final ITag.INamedTag<Item> storageBlocksSuperUseless = forgeItemTag("storage_blocks/super_useless");
+        final ITag.INamedTag<Item> gearsUseless = forgeItemTag("gears/useless");
+        final ITag.INamedTag<Item> gearsSuperUseless = forgeItemTag("gears/super_useless");
 
         // Nugget recipes
         ShapelessRecipeBuilder.shapelessRecipe(ItemInit.USELESS_NUGGET.get(), 9).addIngredient(ingotsUseless).addCriterion("has_useless_ingot", hasItem(ingotsUseless)).setGroup("useless_nugget").build(consumer);
@@ -143,6 +147,10 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapelessRecipe(BlockInit.USELESS_STONE_BUTTON.get()).addIngredient(BlockInit.USELESS_STONE.get()).addCriterion("has_stone", hasItem(BlockInit.USELESS_STONE.get())).build(consumer);
 
         // Other recipes
+        ShapedRecipeBuilder.shapedRecipe(BlockInit.MACHINE_FRAME.get()).patternLine("#G#").patternLine("GXG").patternLine("#G#").key('#', ingotsSuperUseless).key('X', gearsUseless).key('G', Tags.Items.GLASS).addCriterion("has_useless_gear", hasItem(gearsUseless)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockInit.COFFEE_MACHINE_SUPPLIER.get()).patternLine(" # ").patternLine("#X#").patternLine(" # ").key('#', ingotsUseless).key('X', UselessTags.Items.MACHINE_FRAMES).addCriterion("has_machine_frame", hasItem(UselessTags.Items.MACHINE_FRAMES)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockInit.USELESS_GENERATOR.get()).patternLine(" # ").patternLine("#X#").patternLine("GRG").key('#', ingotsUseless).key('X', UselessTags.Items.MACHINE_FRAMES).key('G', gearsSuperUseless).key('R', Tags.Items.DUSTS_REDSTONE).addCriterion("has_machine_frame", hasItem(UselessTags.Items.MACHINE_FRAMES)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockInit.COFFEE_MACHINE.get()).patternLine(" G ").patternLine("#X#").patternLine("WRM").key('#', ingotsUseless).key('X', UselessTags.Items.MACHINE_FRAMES).key('G', gearsUseless).key('R', Tags.Items.DUSTS_REDSTONE).key('W', Ingredient.fromItems(Items.WATER_BUCKET, FluidInit.USELESS_WATER)).key('M', Items.MILK_BUCKET).addCriterion("has_machine_frame", hasItem(UselessTags.Items.MACHINE_FRAMES)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockInit.PAINT_BUCKET.get()).patternLine("# #").patternLine("XXX").patternLine("###").key('#', ingotsUseless).key('X', Tags.Items.DYES).addCriterion("has_useless_ingot", hasItem(ingotsUseless)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockInit.USELESS_BED.get()).patternLine("WWW").patternLine("PPP").key('W', BlockInit.USELESS_WOOL.get()).key('P', ItemTags.PLANKS).addCriterion("has_useless_wool", hasItem(BlockInit.USELESS_WOOL.get())).setGroup("bed").build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockInit.USELESS_CARPET.get(), 3).patternLine("XX").key('X', BlockInit.USELESS_WOOL.get()).addCriterion("has_useless_wool", hasItem(BlockInit.USELESS_WOOL.get())).setGroup("carpet").build(consumer);

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:useless_generator"
+    ]
+  },
+  "criteria": {
+    "has_machine_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "uselessmod:machine_frames"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:useless_generator"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_machine_frame",
+      "has_the_recipe"
+    ]
+  ]
+}

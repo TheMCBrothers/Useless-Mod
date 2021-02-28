@@ -22,6 +22,8 @@ public class UselessTags {
         public static final ITag.INamedTag<Item> TOOLS_WRENCH = TagUtils.forgeItemTag("tools/wrench");
         public static final ITag.INamedTag<Item> WRENCHES = TagUtils.forgeItemTag("wrenches");
         public static final ITag.INamedTag<Item> WRENCH = TagUtils.forgeItemTag("wrench");
+
+        public static final ITag.INamedTag<Item> MACHINE_FRAMES = TagUtils.uselessItemTag("machine_frames");
     }
 
     public static class Fluids {

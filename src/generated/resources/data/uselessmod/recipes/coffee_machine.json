@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "#X#",
+    "WRM"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/useless"
+    },
+    "X": {
+      "tag": "uselessmod:machine_frames"
+    },
+    "G": {
+      "tag": "forge:gears/useless"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "W": [
+      {
+        "item": "minecraft:water_bucket"
+      },
+      {
+        "item": "uselessmod:useless_water_bucket"
+      }
+    ],
+    "M": {
+      "item": "minecraft:milk_bucket"
+    }
+  },
+  "result": {
+    "item": "uselessmod:coffee_machine"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:machine_frame"
+    ]
+  },
+  "criteria": {
+    "has_useless_gear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:gears/useless"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:machine_frame"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_useless_gear",
+      "has_the_recipe"
+    ]
+  ]
+}
