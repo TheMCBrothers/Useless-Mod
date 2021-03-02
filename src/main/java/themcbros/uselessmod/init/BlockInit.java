@@ -93,7 +93,7 @@ public class BlockInit {
             () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodType.OAK));
 
     public static final ItemObject<Block> MACHINE_FRAME = REGISTER.register("machine_frame",
-            () -> new Block(AbstractBlock.Properties.from(Blocks.GLASS).sound(SoundType.METAL)), GENERAL_BLOCK_ITEM);
+            () -> new MachineFrameBlock(AbstractBlock.Properties.from(Blocks.GLASS).sound(SoundType.METAL)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> CREATIVE_ENERGY_CELL = REGISTER.register("creative_energy_cell",
             () -> new CreativeEnergyCellBlock(Block.Properties.from(Blocks.IRON_BLOCK).noDrops()), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_GENERATOR = REGISTER.register("useless_generator",
