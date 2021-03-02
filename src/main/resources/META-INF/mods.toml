@@ -1,7 +1,7 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[36,)"
 issueTrackerURL="https://github.com/TheMCBrothers/Useless-Mod/issues" #optional
-license="CC BY-NC-ND 4.0"
+license="MIT License"
 
 [[mods]]
     modId="uselessmod"
@@ -20,7 +20,7 @@ license="CC BY-NC-ND 4.0"
 [[dependencies.uselessmod]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[35.1,)" #mandatory
+    versionRange="[36.0,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -29,7 +29,7 @@ license="CC BY-NC-ND 4.0"
 [[dependencies.uselessmod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.4,)"
+    versionRange="[1.16.5,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.uselessmod]]
