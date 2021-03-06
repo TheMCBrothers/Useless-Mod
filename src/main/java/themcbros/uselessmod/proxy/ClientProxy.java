@@ -127,7 +127,6 @@ public class ClientProxy extends CommonProxy {
         // Tile Entity Renderer
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.USELESS_BED.get(), UselessBedTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.USELESS_SIGN.get(), UselessSignTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntityInit.WALL_CLOSET.get(), WallClosetTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.USELESS_CHEST.get(), UselessChestTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.COFFEE_MACHINE.get(), CoffeeMachineTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.PAINT_BUCKET.get(), PaintBucketTileEntityRenderer::new);

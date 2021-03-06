@@ -34,7 +34,7 @@ public class UselessBlockLootTables extends BlockLootTables {
         this.registerLootTable(BlockInit.COFFEE_CUP.get(), UselessBlockLootTables::droppingCoffeeCup);
         this.registerLootTable(BlockInit.COFFEE_MACHINE.get(), UselessBlockLootTables::droppingCoffeeMachine);
         this.registerDropSelfLootTable(BlockInit.CUP.get());
-        // todo ender seeds
+        // ender seeds placeholder
         this.registerLootTable(BlockInit.PAINT_BUCKET.get(), UselessBlockLootTables::droppingPaintBucket);
         this.registerFlowerPot(BlockInit.POTTED_BLUE_ROSE.get());
         this.registerFlowerPot(BlockInit.POTTED_RED_ROSE.get());

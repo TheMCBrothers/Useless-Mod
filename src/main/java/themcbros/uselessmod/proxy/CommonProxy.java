@@ -1,6 +1,5 @@
 package themcbros.uselessmod.proxy;
 
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
@@ -14,6 +13,7 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -82,6 +82,7 @@ public class CommonProxy {
         Messages.init();
 
         bus.addListener(this::setup);
+        bus.addListener(this::createEntityAttributes);
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::processIMC);
 
@@ -115,18 +116,19 @@ public class CommonProxy {
             }
         }, () -> null);
 
-        // Set Entity Attributes // TODO new method
-        GlobalEntityTypeAttributes.put(EntityInit.USELESS_SHEEP.get(), SheepEntity.func_234225_eI_().create());
-        GlobalEntityTypeAttributes.put(EntityInit.USELESS_PIG.get(), PigEntity.func_234215_eI_().create());
-        GlobalEntityTypeAttributes.put(EntityInit.USELESS_CHICKEN.get(), ChickenEntity.func_234187_eI_().create());
-        GlobalEntityTypeAttributes.put(EntityInit.USELESS_COW.get(), CowEntity.func_234188_eI_().create());
-        GlobalEntityTypeAttributes.put(EntityInit.USELESS_SKELETON.get(), SkeletonEntity.registerAttributes().create());
-
         // Vanilla Compatibility
         VanillaCompat.register();
 
         // World Generation
         UselessFeatures.init();
+    }
+
+    private void createEntityAttributes(final EntityAttributeCreationEvent event) {
+        event.put(EntityInit.USELESS_SHEEP.get(), SheepEntity.func_234225_eI_().create());
+        event.put(EntityInit.USELESS_PIG.get(), PigEntity.func_234215_eI_().create());
+        event.put(EntityInit.USELESS_CHICKEN.get(), ChickenEntity.func_234187_eI_().create());
+        event.put(EntityInit.USELESS_COW.get(), CowEntity.func_234188_eI_().create());
+        event.put(EntityInit.USELESS_SKELETON.get(), SkeletonEntity.registerAttributes().create());
     }
 
     protected void enqueueIMC(final InterModEnqueueEvent event) {
