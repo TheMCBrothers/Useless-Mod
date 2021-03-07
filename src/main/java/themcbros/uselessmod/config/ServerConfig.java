@@ -11,6 +11,7 @@ public class ServerConfig {
 
     // Coffee Machine
     public final ForgeConfigSpec.IntValue coffeeMachineEnergyCapacity;
+    public final ForgeConfigSpec.IntValue coffeeMachineEnergyTransfer;
     public final ForgeConfigSpec.IntValue coffeeMachineEnergyPerTick;
     public final ForgeConfigSpec.IntValue coffeeMachineWaterCapacity;
     public final ForgeConfigSpec.IntValue coffeeMachineMilkCapacity;
@@ -29,6 +30,7 @@ public class ServerConfig {
 
         builder.push("coffee_machine");
         this.coffeeMachineEnergyCapacity = builder.comment("Energy capacity of the Coffee Machine").defineInRange("energyCapacity", 10_000, 150, 200_000);
+        this.coffeeMachineEnergyTransfer = builder.comment("Max Energy transfer rate").defineInRange("energyTransfer", 1000, 50, 200_000);
         this.coffeeMachineEnergyPerTick = builder.comment("Energy consumed by the Coffee Machine while running").defineInRange("energyPerTick", 15, 1, 200_000);
         this.coffeeMachineWaterCapacity = builder.comment("Water tank capacity of the Coffee Machine").defineInRange("waterTankCapacity", 2000, 500, 16000);
         this.coffeeMachineMilkCapacity = builder.comment("Milk tank capacity of the Coffee Machine").defineInRange("milkTankCapacity", 2000, 250, 16000);

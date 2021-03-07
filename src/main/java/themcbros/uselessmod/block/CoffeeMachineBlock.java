@@ -21,6 +21,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -36,21 +37,21 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import themcbros.uselessmod.api.energy.CapabilityUselessEnergy;
+import themcbros.uselessmod.api.energy.IUselessEnergyStorage;
 import themcbros.uselessmod.config.Config;
-import themcbros.uselessmod.energy.ItemEnergyStorage;
 import themcbros.uselessmod.helpers.ShapeHelper;
 import themcbros.uselessmod.helpers.TextUtils;
 import themcbros.uselessmod.init.StatsInit;
@@ -240,25 +241,156 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
 
     }
 
-    private static class CoffeeMachineWrapper implements ICapabilityProvider {
+    private static class CoffeeMachineWrapper implements IFluidHandlerItem, IUselessEnergyStorage, ICapabilityProvider {
 
-        private final FluidHandlerItemStack fluidHandler;
-        private final ItemEnergyStorage energyStorage;
+        private final ItemStack container;
+        private final FluidTank waterTank = new FluidTank(Config.SERVER_CONFIG.coffeeMachineWaterCapacity.get()) {
+            @Override
+            protected void onContentsChanged() {
+                CoffeeMachineWrapper.this.updateNBT(0);
+            }
 
-        private CoffeeMachineWrapper(ItemStack container) {
-            this.fluidHandler = new FluidHandlerItemStack(container, Config.SERVER_CONFIG.coffeeMachineWaterCapacity.get());
-            this.energyStorage = new ItemEnergyStorage(container, Config.SERVER_CONFIG.coffeeMachineEnergyCapacity.get(), 0, 1000);
+            @Override
+            public boolean isFluidValid(FluidStack stack) {
+                return stack.getFluid().isIn(FluidTags.WATER);
+            }
+        };
+        private final FluidTank milkTank = new FluidTank(Config.SERVER_CONFIG.coffeeMachineMilkCapacity.get()) {
+            @Override
+            protected void onContentsChanged() {
+                CoffeeMachineWrapper.this.updateNBT(1);
+            }
+
+            @Override
+            public boolean isFluidValid(FluidStack stack) {
+                return stack.getFluid().isIn(Tags.Fluids.MILK);
+            }
+        };
+
+        public CoffeeMachineWrapper(ItemStack container) {
+            this.container = container;
+            this.receiveNBT();
+        }
+
+        private void updateNBT(int type) {
+            if (type == 0)
+                this.container.getOrCreateChildTag("BlockEntityTag").put("Fluid", this.waterTank.writeToNBT(new CompoundNBT()));
+            if (type == 1)
+                this.container.getOrCreateChildTag("BlockEntityTag").put("Milk", this.milkTank.writeToNBT(new CompoundNBT()));
+        }
+
+        private void receiveNBT() {
+            CompoundNBT tag = this.container.getChildTag("BlockEntityTag");
+            if (tag != null) {
+                this.waterTank.readFromNBT(tag.getCompound("Fluid"));
+                this.milkTank.readFromNBT(tag.getCompound("Milk"));
+            }
         }
 
         @Nonnull
         @Override
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-            if (cap == CapabilityUselessEnergy.USELESS_ENERGY || cap == CapabilityEnergy.ENERGY)
-                return LazyOptional.of(() -> this.energyStorage).cast();
             if (cap == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-                return LazyOptional.of(() -> this.fluidHandler).cast();
+                return LazyOptional.of(() -> this).cast();
             return LazyOptional.empty();
         }
+
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            int energy = getEnergyStored();
+            int energyReceived = Math.min(getMaxEnergyStored() - energy,
+                    Math.min(getMaxTransfer(false), maxReceive));
+            if (!simulate) {
+                energy += energyReceived;
+                setEnergyStored(energy);
+            }
+
+            return energyReceived;
+        }
+
+        @Override
+        public int extractEnergy(int maxExtract, boolean simulate) {
+            return 0;
+        }
+
+        @Override
+        public int getEnergyStored() {
+            CompoundNBT tag = this.container.getChildTag("BlockEntityTag");
+            if (tag != null) {
+                return tag.getInt("EnergyStored");
+            }
+            return 0;
+        }
+
+        private void setEnergyStored(int energy) {
+            this.container.getOrCreateChildTag("BlockEntityTag").putInt("EnergyStored", energy);
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return Config.SERVER_CONFIG.coffeeMachineEnergyCapacity.get();
+        }
+
+        @Override
+        public boolean canExtract() {
+            return true;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return true;
+        }
+
+        @Override
+        public int getMaxTransfer(boolean extract) {
+            return extract ? 0 : Config.SERVER_CONFIG.coffeeMachineEnergyTransfer.get();
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getContainer() {
+            return this.container;
+        }
+
+        @Override
+        public int getTanks() {
+            return 2;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            this.receiveNBT();
+            return tank == 0 ? waterTank.getFluid() : tank == 1 ? milkTank.getFluid() : FluidStack.EMPTY;
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return tank == 0 ? waterTank.getCapacity() : tank == 1 ? milkTank.getCapacity() : 0;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
+            return tank == 0 ? waterTank.isFluidValid(stack) : tank == 1 && milkTank.isFluidValid(stack);
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            return resource.getFluid().isIn(Tags.Fluids.MILK) ? milkTank.fill(resource, action) : waterTank.fill(resource, action);
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            return resource.getFluid().isIn(Tags.Fluids.MILK) ? milkTank.drain(resource, action) : waterTank.drain(resource, action);
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
     }
 
 }

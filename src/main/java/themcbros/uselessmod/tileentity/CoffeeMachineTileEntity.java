@@ -113,7 +113,9 @@ public class CoffeeMachineTileEntity extends TileEntity implements ITickableTile
     };
 
     public final NonNullList<ItemStack> coffeeStacks = NonNullList.withSize(7, ItemStack.EMPTY);
-    public final UselessEnergyStorage energyStorage = new UselessEnergyStorage(Config.SERVER_CONFIG.coffeeMachineEnergyCapacity.get(), 1000, 1000);
+    public final UselessEnergyStorage energyStorage = new UselessEnergyStorage(
+            Config.SERVER_CONFIG.coffeeMachineEnergyCapacity.get(),
+            Config.SERVER_CONFIG.coffeeMachineEnergyTransfer.get(), 0);
     public final CoffeeMachineTank tankHandler = new CoffeeMachineTank();
 
     public void sendSyncPacket(int type) {
