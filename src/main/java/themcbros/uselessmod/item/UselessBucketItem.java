@@ -7,9 +7,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -89,8 +91,10 @@ public class UselessBucketItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (this.hasFluid(stack)) {
-            FluidStack fluidStack = this.getFluid(stack);
-            tooltip.add(TextUtils.fluidWithMax(fluidStack.getAmount(), this.capacity).setStyle(Styles.MODE_FLUID));
+            final FluidStack fluidStack = this.getFluid(stack);
+            final double vol = (double)fluidStack.getAmount() / FluidAttributes.BUCKET_VOLUME;
+            final double cap = (double)this.capacity / FluidAttributes.BUCKET_VOLUME;
+            tooltip.add(new StringTextComponent(vol + " / " + cap + " b").setStyle(Styles.TOOLTIP));
         }
     }
 
