@@ -1,3 +1,17 @@
+4.2.0
+- Updated to 1.16.5 (Forge 36.0.42)
+- Requires Mantle's shared code
+- Added creative energy cell
+- Added machine frame
+- Added milk tank to coffee machine
+- Added correct tank rendering in world
+- Added correct cup rendering in world
+- Added missing block loot tables
+- Added spawn egg for useless skeleton
+- Added machine recipes
+- Fix dynamic bucket model
+- Removed sugared milk
+
 4.1.0
 - Updated to 1.16.4 (Forge 35.1.28)
 - Added immersive engineering compat
