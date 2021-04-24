@@ -194,7 +194,6 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
 
         // --- ENTITIES --- //
 
-        this.addEntityType(EntityInit.USELESS_BOAT, "Useless Boat");
         this.addEntityType(EntityInit.USELESS_SHEEP, "Useless Sheep");
         this.addEntityType(EntityInit.USELESS_PIG, "Useless Pig");
         this.addEntityType(EntityInit.USELESS_CHICKEN, "Useless Chicken");

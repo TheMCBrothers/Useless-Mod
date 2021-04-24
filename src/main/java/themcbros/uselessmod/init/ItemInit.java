@@ -1,5 +1,6 @@
 package themcbros.uselessmod.init;
 
+import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -10,7 +11,6 @@ import slimeknights.mantle.registration.deferred.ItemDeferredRegister;
 import slimeknights.mantle.registration.object.ItemObject;
 import themcbros.uselessmod.UselessMod;
 import themcbros.uselessmod.client.renderer.tilentity.ISTERProvider;
-import themcbros.uselessmod.entity.UselessBoatEntity;
 import themcbros.uselessmod.item.*;
 
 @Mod.EventBusSubscriber(modid = UselessMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -97,9 +97,9 @@ public class ItemInit {
 
     // Misc
     public static final ItemObject<Item> USELESS_BOAT = REGISTER.register("useless_boat",
-            () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), UselessBoatEntity.Type.USELESS));
+            () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), BoatEntity.Type.OAK));
     public static final ItemObject<Item> SUPER_USELESS_BOAT = REGISTER.register("super_useless_boat",
-            () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), UselessBoatEntity.Type.SUPER_USELESS));
+            () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), BoatEntity.Type.DARK_OAK));
     public static final ItemObject<Item> USELESS_FLINT_AND_STEEL = REGISTER.register("useless_flint_and_steel",
             () -> new UselessFlintAndSteelItem(new Item.Properties().maxDamage(64).group(UselessMod.GROUP)));
     public static final ItemObject<Item> CUP = REGISTER.register("cup", CupBlockItem::new);

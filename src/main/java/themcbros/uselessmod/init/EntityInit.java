@@ -29,9 +29,4 @@ public class EntityInit {
     public static final RegistryObject<EntityType<UselessSkeletonEntity>> USELESS_SKELETON = REGISTER.registerWithEgg("useless_skeleton",
             () -> EntityType.Builder.create(UselessSkeletonEntity::new, EntityClassification.MONSTER).size(0.6F, 1.99F),
             0x66B363, 0x285027);
-
-    // MISC
-    public static final RegistryObject<EntityType<UselessBoatEntity>> USELESS_BOAT = REGISTER.register("useless_boat",
-            () -> EntityType.Builder.<UselessBoatEntity>create(UselessBoatEntity::new, EntityClassification.MISC).setTrackingRange(80).setUpdateInterval(3)
-                    .setShouldReceiveVelocityUpdates(true).size(1.375F, 0.5625F).setCustomClientFactory(UselessBoatEntity::new));
 }

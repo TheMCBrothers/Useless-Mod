@@ -139,7 +139,6 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.USELESS_CHICKEN.get(), UselessChickenRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.USELESS_COW.get(), UselessCowRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.USELESS_SKELETON.get(), UselessSkeletonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.USELESS_BOAT.get(), UselessBoatRenderer::new);
 
         // Color Module Setup
         ColorModule.clientSetup();
