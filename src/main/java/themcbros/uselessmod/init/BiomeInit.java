@@ -25,7 +25,7 @@ public class BiomeInit {
                 .isValidSpawnBiomeForPlayer();
 
         BiomeGenerationSettings.Builder biomeGenerationSettings = new BiomeGenerationSettings.Builder()
-                .withSurfaceBuilder(ConfiguredSurfaceBuilders.field_244178_j);
+                .withSurfaceBuilder(ConfiguredSurfaceBuilders.GRASS);
 
         // Structures
         DefaultBiomeFeatures.withStrongholdAndMineshaft(biomeGenerationSettings);
@@ -56,7 +56,7 @@ public class BiomeInit {
                 .scale(0.2F).temperature(0.7F).downfall(0.8F).setEffects((new BiomeAmbience.Builder()).setWaterColor(0x468b44)
                         .setWaterFogColor(0x468b44).setFogColor(12638463).withSkyColor(0x40B45F)
                         .setMoodSound(MoodSoundAmbience.DEFAULT_CAVE).withGrassColor(0x40B45F).build())
-                .withMobSpawnSettings(mobSpawnInfo.copy())
+                .withMobSpawnSettings(mobSpawnInfo.build())
                 .withGenerationSettings(biomeGenerationSettings.build()).build();
     }
 
