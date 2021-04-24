@@ -19,9 +19,9 @@ import java.util.function.Function;
 public class BlockInit {
 
     public static final BlockDeferredRegister REGISTER = new BlockDeferredRegister(UselessMod.MOD_ID);
-    
+
     private static final Item.Properties GENERAL_PROPS = new Item.Properties().group(UselessMod.GROUP);
-    private static final Function<Block,? extends BlockItem> GENERAL_BLOCK_ITEM = (b) -> new BlockItem(b, GENERAL_PROPS);
+    private static final Function<Block, ? extends BlockItem> GENERAL_BLOCK_ITEM = (b) -> new BlockItem(b, GENERAL_PROPS);
 
     // METAL
     public static final ItemObject<Block> USELESS_BLOCK = REGISTER.register("useless_block",
@@ -88,9 +88,9 @@ public class BlockInit {
     public static final ItemObject<Block> USELESS_BUTTON = REGISTER.register("useless_button",
             () -> new WoodButtonBlock(Block.Properties.from(Blocks.OAK_BUTTON)), GENERAL_BLOCK_ITEM);
     public static final RegistryObject<Block> USELESS_SIGN = REGISTER.registerNoItem("useless_sign",
-            () -> new UselessStandingSignBlock(Block.Properties.from(Blocks.OAK_SIGN), WoodType.OAK));
+            () -> new UselessStandingSignBlock(Block.Properties.from(Blocks.OAK_SIGN), WoodTypeInit.USELESS));
     public static final RegistryObject<Block> USELESS_WALL_SIGN = REGISTER.registerNoItem("useless_wall_sign",
-            () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodType.OAK));
+            () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodTypeInit.USELESS));
 
     public static final ItemObject<Block> MACHINE_FRAME = REGISTER.register("machine_frame",
             () -> new MachineFrameBlock(AbstractBlock.Properties.from(Blocks.GLASS).sound(SoundType.METAL)), GENERAL_BLOCK_ITEM);

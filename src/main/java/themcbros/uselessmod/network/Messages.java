@@ -4,7 +4,10 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import themcbros.uselessmod.UselessMod;
-import themcbros.uselessmod.network.packets.*;
+import themcbros.uselessmod.network.packets.IMessage;
+import themcbros.uselessmod.network.packets.StartCoffeeMachinePacket;
+import themcbros.uselessmod.network.packets.SyncTileEntityPacket;
+import themcbros.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
 import themcbros.uselessmod.useless_mana.SendManaPacket;
 
 import java.util.function.Function;
@@ -26,10 +29,10 @@ public class Messages {
         registerMessage(StartCoffeeMachinePacket.class, StartCoffeeMachinePacket::new);
         registerMessage(UpdateMilkCoffeeMachinePacket.class, UpdateMilkCoffeeMachinePacket::new);
         registerMessage(SyncTileEntityPacket.class, SyncTileEntityPacket::new);
-        registerMessage(OpenUselessSignEditor.class, OpenUselessSignEditor::new);
     }
 
     private static int ID = 0;
+
     private static int nextID() {
         return ID++;
     }
@@ -41,6 +44,7 @@ public class Messages {
         }));
     }
 
-    public static void init() {}
+    public static void init() {
+    }
 
 }

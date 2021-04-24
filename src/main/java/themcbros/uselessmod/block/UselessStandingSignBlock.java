@@ -7,8 +7,8 @@ import net.minecraft.world.IBlockReader;
 import themcbros.uselessmod.tileentity.UselessSignTileEntity;
 
 public class UselessStandingSignBlock extends StandingSignBlock {
-    public UselessStandingSignBlock(Properties p_i225764_1_, WoodType p_i225764_2_) {
-        super(p_i225764_1_, p_i225764_2_);
+    public UselessStandingSignBlock(Properties properties, WoodType woodType) {
+        super(properties, woodType);
     }
 
     @Override
