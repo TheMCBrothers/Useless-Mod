@@ -34,13 +34,13 @@ public class UselessCowEntity extends CowEntity {
     }
 
     @Override
-    public void func_241841_a(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_) {
-        super.func_241841_a(p_241841_1_, p_241841_2_);
+    public void causeLightningStrike(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_) {
+        super.causeLightningStrike(p_241841_1_, p_241841_2_);
         this.setGlowing(true);
     }
 
     @Override
-    public CowEntity func_241840_a(ServerWorld serverWorld, AgeableEntity entity) {
+    public CowEntity createChild(ServerWorld serverWorld, AgeableEntity entity) {
         return EntityInit.USELESS_COW.get().create(this.world);
     }
 

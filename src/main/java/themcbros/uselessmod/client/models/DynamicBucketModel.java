@@ -99,7 +99,7 @@ public final class DynamicBucketModel implements IModelGeometry<DynamicBucketMod
         // if the fluid is lighter than air, will manipulate the initial state to be rotated 180deg to turn it upside down
         if (flipGas && fluid != Fluids.EMPTY && fluid.getAttributes().isLighterThanAir()) {
             modelTransform = new SimpleModelTransform(
-                    modelTransform.getRotation().blockCornerToCenter().composeVanilla(
+                    modelTransform.getRotation().blockCornerToCenter().compose(
                             new TransformationMatrix(null, new Quaternion(0, 0, 1, 0), null, null)).blockCenterToCorner());
         }
 
@@ -172,6 +172,7 @@ public final class DynamicBucketModel implements IModelGeometry<DynamicBucketMod
             // no need to clear cache since we create a new model instance
         }
 
+        @Nonnull
         @Override
         public DynamicBucketModel read(@Nonnull JsonDeserializationContext deserializationContext, JsonObject modelContents) {
             if (!modelContents.has("fluid"))

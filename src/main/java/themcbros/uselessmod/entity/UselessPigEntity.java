@@ -40,7 +40,7 @@ public class UselessPigEntity extends PigEntity {
     }
 
     @Override
-    public PigEntity func_241840_a(ServerWorld serverWorld, AgeableEntity p_90011_1_) {
+    public PigEntity createChild(ServerWorld serverWorld, AgeableEntity p_90011_1_) {
         return EntityInit.USELESS_PIG.get().create(this.world);
     }
 }

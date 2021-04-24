@@ -127,22 +127,22 @@ public class OverlayRenderer {
                                 List<ITextComponent> tooltip = new ArrayList<>();
                                 tooltip.add(new StringTextComponent("--- Useless Energy Storage ---").setStyle(Styles.USELESS_ENERGY));
                                 tooltip.add(new StringTextComponent("Energy Stored: ").setStyle(Styles.TOOLTIP)
-                                        .append(TextUtils.energy(energyStorage.getEnergyStored()).setStyle(Styles.USELESS_ENERGY)));
+                                        .appendSibling(TextUtils.energy(energyStorage.getEnergyStored()).setStyle(Styles.USELESS_ENERGY)));
                                 tooltip.add(new StringTextComponent("Capacity: ").setStyle(Styles.TOOLTIP)
-                                        .append(TextUtils.energy(energyStorage.getMaxEnergyStored()).setStyle(Styles.USELESS_ENERGY)));
+                                        .appendSibling(TextUtils.energy(energyStorage.getMaxEnergyStored()).setStyle(Styles.USELESS_ENERGY)));
                                 tooltip.add(new StringTextComponent("Max Extract: ").setStyle(Styles.TOOLTIP)
-                                        .append(TextUtils.energy(energyStorage.getMaxTransfer(true)).setStyle(Styles.USELESS_ENERGY)));
+                                        .appendSibling(TextUtils.energy(energyStorage.getMaxTransfer(true)).setStyle(Styles.USELESS_ENERGY)));
                                 tooltip.add(new StringTextComponent("Max Receive: ").setStyle(Styles.TOOLTIP)
-                                        .append(TextUtils.energy(energyStorage.getMaxTransfer(false)).setStyle(Styles.USELESS_ENERGY)));
+                                        .appendSibling(TextUtils.energy(energyStorage.getMaxTransfer(false)).setStyle(Styles.USELESS_ENERGY)));
                                 tooltipScreen.renderTooltip(matrixStack, convert(tooltip), tooltipScreen.width / 2 + 10, tooltipScreen.height / 2 - 16);
                             } else if (tileEntity.getCapability(CapabilityEnergy.ENERGY, null).isPresent()) {
                                 IEnergyStorage energyStorage = tileEntity.getCapability(CapabilityEnergy.ENERGY, null).orElseThrow(IllegalStateException::new);
                                 List<ITextComponent> tooltip = new ArrayList<>();
                                 tooltip.add(new StringTextComponent("--- Energy Storage ---").setStyle(Styles.FORGE_ENERGY));
                                 tooltip.add(new StringTextComponent("Energy Stored: ").setStyle(Styles.TOOLTIP)
-                                        .append(TextUtils.energy(energyStorage.getEnergyStored()).setStyle(Styles.FORGE_ENERGY)));
+                                        .appendSibling(TextUtils.energy(energyStorage.getEnergyStored()).setStyle(Styles.FORGE_ENERGY)));
                                 tooltip.add(new StringTextComponent("Capacity: ").setStyle(Styles.TOOLTIP)
-                                        .append(TextUtils.energy(energyStorage.getMaxEnergyStored()).setStyle(Styles.FORGE_ENERGY)));
+                                        .appendSibling(TextUtils.energy(energyStorage.getMaxEnergyStored()).setStyle(Styles.FORGE_ENERGY)));
                                 tooltipScreen.renderTooltip(matrixStack, convert(tooltip), tooltipScreen.width / 2 + 10, tooltipScreen.height / 2 - 16);
                             }
                         } else if (ItemInit.USELESS_ITEM.get().getMode(stack) == UselessItemItem.Mode.FLUID) {
@@ -153,11 +153,11 @@ public class OverlayRenderer {
                                 for (int i = 0; i < fluidHandler.getTanks(); i++) {
                                     FluidStack fluidStack = fluidHandler.getFluidInTank(i);
                                     tooltip.add(new StringTextComponent((i + 1) + ") Fluid: ").setStyle(Styles.TOOLTIP)
-                                            .append(fluidStack.getDisplayName()));
+                                            .appendSibling(fluidStack.getDisplayName()));
                                     tooltip.add(new StringTextComponent("Amount: ").setStyle(Styles.TOOLTIP)
-                                            .append(TextUtils.fluidAmount(fluidStack.getAmount()).setStyle(Styles.MODE_FLUID)));
+                                            .appendSibling(TextUtils.fluidAmount(fluidStack.getAmount()).setStyle(Styles.MODE_FLUID)));
                                     tooltip.add(new StringTextComponent("Capacity: ").setStyle(Styles.TOOLTIP)
-                                            .append(TextUtils.fluidAmount(fluidHandler.getTankCapacity(i)).setStyle(Styles.MODE_FLUID)));
+                                            .appendSibling(TextUtils.fluidAmount(fluidHandler.getTankCapacity(i)).setStyle(Styles.MODE_FLUID)));
                                 }
                                 tooltipScreen.renderTooltip(matrixStack, convert(tooltip), tooltipScreen.width / 2 + 10, tooltipScreen.height / 2 - 16);
                             }
@@ -174,9 +174,9 @@ public class OverlayRenderer {
                             LivingEntity livingEntity = (LivingEntity) entity;
                             tooltip.add((
                                     new StringTextComponent("Health: ").setStyle(Styles.TOOLTIP)
-                                    .append(new StringTextComponent(Float.toString(livingEntity.getHealth())).setStyle(Styles.MODE_ENTITY))
-                                    .append(new StringTextComponent(" / ").setStyle(Styles.TOOLTIP))
-                                    .append(new StringTextComponent(Float.toString(livingEntity.getMaxHealth())).setStyle(Styles.MODE_ENTITY))
+                                    .appendSibling(new StringTextComponent(Float.toString(livingEntity.getHealth())).setStyle(Styles.MODE_ENTITY))
+                                    .appendSibling(new StringTextComponent(" / ").setStyle(Styles.TOOLTIP))
+                                    .appendSibling(new StringTextComponent(Float.toString(livingEntity.getMaxHealth())).setStyle(Styles.MODE_ENTITY))
                             ));
                         }
                         tooltipScreen.renderTooltip(matrixStack, convert(tooltip), tooltipScreen.width / 2 + 10, tooltipScreen.height / 2 - 16);

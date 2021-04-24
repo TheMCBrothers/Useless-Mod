@@ -124,10 +124,10 @@ public class CommonProxy {
     }
 
     private void createEntityAttributes(final EntityAttributeCreationEvent event) {
-        event.put(EntityInit.USELESS_SHEEP.get(), SheepEntity.func_234225_eI_().create());
+        event.put(EntityInit.USELESS_SHEEP.get(), SheepEntity.registerAttributes().create());
         event.put(EntityInit.USELESS_PIG.get(), PigEntity.func_234215_eI_().create());
         event.put(EntityInit.USELESS_CHICKEN.get(), ChickenEntity.func_234187_eI_().create());
-        event.put(EntityInit.USELESS_COW.get(), CowEntity.func_234188_eI_().create());
+        event.put(EntityInit.USELESS_COW.get(), CowEntity.registerAttributes().create());
         event.put(EntityInit.USELESS_SKELETON.get(), SkeletonEntity.registerAttributes().create());
     }
 

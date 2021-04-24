@@ -167,7 +167,7 @@ public class PaintBucketBlock extends Block implements IWaterLoggable {
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (!state.isIn(newState.getBlock()) && tileEntity instanceof PaintBucketTileEntity) {
+        if (!state.matchesBlock(newState.getBlock()) && tileEntity instanceof PaintBucketTileEntity) {
             PaintBucketTileEntity paintBucket = (PaintBucketTileEntity) tileEntity;
             ItemHelper.dropItemHandlerItems(worldIn, pos, paintBucket.stackHandler);
         }

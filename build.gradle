@@ -117,14 +117,14 @@ dependencies {
     compile fg.deobf("curse.maven:mantle-74924:3180804")
 
     // Immersive Engineering
-    compileOnly fg.deobf("curse.maven:immersive-engineering-231951:3189063")
+    compileOnly fg.deobf("curse.maven:immersive-engineering-231951:3233018")
 
     // Cucumber
-    compile fg.deobf("curse.maven:cucumber-272335:3212526")
+    compile fg.deobf("curse.maven:cucumber-272335:3249370")
 
     // Mystical Agriculture
     // compileOnly fg.deobf("curse.maven:mystical-agriculture-246640:3152065")
-    compile fg.deobf("curse.maven:mystical-agriculture-246640:3203385")
+    compile fg.deobf("curse.maven:mystical-agriculture-246640:3251398")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

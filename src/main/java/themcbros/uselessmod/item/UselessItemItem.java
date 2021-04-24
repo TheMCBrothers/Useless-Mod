@@ -88,9 +88,9 @@ public class UselessItemItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         Mode mode = this.getMode(stack);
-        tooltip.add((new TranslationTextComponent("item.uselessmod.useless_item.mode").append(new StringTextComponent(": ")))
+        tooltip.add((new TranslationTextComponent("item.uselessmod.useless_item.mode").appendString(": "))
                 .setStyle(Styles.TOOLTIP)
-                .append(new StringTextComponent(mode.name()).setStyle(mode.style)));
+                .appendSibling(new StringTextComponent(mode.name()).setStyle(mode.style)));
     }
 
     @Override

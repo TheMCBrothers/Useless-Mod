@@ -197,12 +197,12 @@ public class CoffeeMachineBlock extends Block implements IWaterLoggable {
         if (tag != null) {
             if (tag.contains("Fluid", Constants.NBT.TAG_COMPOUND)) {
                 FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
-                tooltip.add((((IFormattableTextComponent) TextUtils.fluidName(fluidStack)).appendString(": ").append(TextUtils.fluidAmount(fluidStack.getAmount())))
+                tooltip.add((((IFormattableTextComponent) TextUtils.fluidName(fluidStack)).appendString(": ").appendSibling(TextUtils.fluidAmount(fluidStack.getAmount())))
                         .setStyle(Styles.MODE_FLUID));
             }
             if (tag.contains("Milk", Constants.NBT.TAG_COMPOUND)) {
                 FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Milk"));
-                tooltip.add((((IFormattableTextComponent) TextUtils.fluidName(fluidStack)).appendString(": ").append(TextUtils.fluidAmount(fluidStack.getAmount())))
+                tooltip.add((((IFormattableTextComponent) TextUtils.fluidName(fluidStack)).appendString(": ").appendSibling(TextUtils.fluidAmount(fluidStack.getAmount())))
                         .setStyle(Styles.FLUID_MILK));
             }
             if (tag.contains("EnergyStored", Constants.NBT.TAG_ANY_NUMERIC)) {

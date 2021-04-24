@@ -85,7 +85,7 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
             int tankY = widget.y - this.guiTop;
             RenderSystem.colorMask(true, true, true, false);
             int slotColor = this.slotColor;
-            this.fillGradient(matrixStack, tankX, tankY, tankX + widget.getWidth(), tankY + widget.getHeightRealms(), slotColor, slotColor);
+            this.fillGradient(matrixStack, tankX, tankY, tankX + widget.getWidth(), tankY + widget.getHeight(), slotColor, slotColor);
             RenderSystem.colorMask(true, true, true, true);
             RenderSystem.enableDepthTest();
         }

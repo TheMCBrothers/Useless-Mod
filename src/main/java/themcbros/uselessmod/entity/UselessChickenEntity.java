@@ -33,7 +33,7 @@ public class UselessChickenEntity extends ChickenEntity {
     }
 
     @Override
-    public ChickenEntity func_241840_a(ServerWorld world, AgeableEntity p_90011_1_) {
+    public ChickenEntity createChild(ServerWorld world, AgeableEntity p_90011_1_) {
         return EntityInit.USELESS_CHICKEN.get().create(this.world);
     }
 

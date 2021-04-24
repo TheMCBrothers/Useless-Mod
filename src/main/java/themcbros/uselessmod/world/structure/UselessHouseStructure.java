@@ -20,10 +20,10 @@ public class UselessHouseStructure extends Structure<NoFeatureConfig> {
 
     public static final ResourceLocation ID = UselessMod.rl("useless_house");
 
-    public static final Structure<NoFeatureConfig> INSTANCE = new UselessHouseStructure(NoFeatureConfig.field_236558_a_);
+    public static final Structure<NoFeatureConfig> INSTANCE = new UselessHouseStructure(NoFeatureConfig.CODEC);
 
     public static final StructureFeature<NoFeatureConfig, ? extends Structure<NoFeatureConfig>> CONFIGURED_INSTANCE =
-            INSTANCE.withConfiguration(NoFeatureConfig.field_236559_b_);
+            INSTANCE.withConfiguration(NoFeatureConfig.INSTANCE);
 
     public UselessHouseStructure(Codec<NoFeatureConfig> configCodec) {
         super(configCodec);

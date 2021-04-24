@@ -110,7 +110,7 @@ public class UselessHousePieces {
             if (this.field_207615_d.equals(UselessHousePieces.LOCATION_TOP)) {
                 BlockPos blockpos3 = this.templatePosition.add(Template.transformedBlockPos(placementsettings, new BlockPos(3, 0, 5)));
                 BlockState blockstate = p_230383_1_.getBlockState(blockpos3.down());
-                if (!blockstate.isAir() && !blockstate.isIn(Blocks.LADDER)) {
+                if (!blockstate.isAir() && !blockstate.matchesBlock(Blocks.LADDER)) {
                     p_230383_1_.setBlockState(blockpos3, Blocks.SNOW_BLOCK.getDefaultState(), 3);
                 }
             }

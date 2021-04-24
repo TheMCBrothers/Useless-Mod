@@ -36,9 +36,9 @@ public class UselessSheepEntity extends SheepEntity {
     }
 
     @Override
-    public ActionResultType func_230254_b_(PlayerEntity playerEntity, Hand hand) {
+    public ActionResultType getEntityInteractionResult(PlayerEntity playerEntity, Hand hand) {
         if (DyeColor.getColor(playerEntity.getHeldItem(hand)) != null) return ActionResultType.FAIL;
-        return super.func_230254_b_(playerEntity, hand);
+        return super.getEntityInteractionResult(playerEntity, hand);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UselessSheepEntity extends SheepEntity {
     }
 
     @Override
-    public SheepEntity func_241840_a(ServerWorld serverWorld, AgeableEntity p_90011_1_) {
+    public SheepEntity createChild(ServerWorld serverWorld, AgeableEntity p_90011_1_) {
         return EntityInit.USELESS_SHEEP.get().create(this.world);
     }
 
