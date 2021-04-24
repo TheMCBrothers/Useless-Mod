@@ -12,14 +12,11 @@ import themcbros.uselessmod.UselessTags;
 
 import javax.annotation.Nullable;
 
-import static themcbros.uselessmod.helpers.TagUtils.forgeItemTag;
-
 public class WrenchUtils {
 
     public static boolean isWrench(ItemStack stack) {
         Item item = stack.getItem();
         return item.isIn(UselessTags.Items.TOOLS_WRENCH)
-                || item.isIn(UselessTags.Items.WRENCHES)
                 || item.isIn(UselessTags.Items.WRENCH);
     }
 

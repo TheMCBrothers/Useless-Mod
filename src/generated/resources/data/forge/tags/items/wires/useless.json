@@ -3,7 +3,7 @@
   "values": [
     {
       "id": "uselessmod:useless_wire",
-      "required": true
+      "required": false
     }
   ]
 }

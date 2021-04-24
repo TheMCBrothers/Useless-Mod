@@ -1,4 +1,4 @@
-97b7c9905b9332cc37e99133ad9988ffcae2f082 assets/uselessmod/lang/en_us.json
+d9661424806a258509aeee3f22cd740c3ba924ab assets/uselessmod/lang/en_us.json
 bc49e2ce8a1f10b07217bcbe00733dfbffbc2bac data/forge/tags/blocks/chests/wooden.json
 da31b41b00b60df296a81e0899493e6874fcc1a6 data/forge/tags/blocks/cobblestone.json
 92e17b02a28e8a2a598b77aa7c3ef46b602f9ce9 data/forge/tags/blocks/fence_gates/wooden.json
@@ -53,8 +53,10 @@ ee076bc77d2d99408ae42fd5290994d6c7f54411 data/forge/tags/items/storage_blocks.js
 ce885074e2013a373675f1f7302c53c4c2204677 data/forge/tags/items/storage_blocks/super_useless.json
 8d182f2b3874f921202d1b083fba4add2e358c90 data/forge/tags/items/storage_blocks/useless.json
 114a92b3cd88d42af80de27aa3901af54701e888 data/forge/tags/items/tools/wrench.json
+0d07f1611585e7683015505e5b426dff28c6e4ff data/forge/tags/items/wires/super_useless.json
+63c184c0bebb3b671f830f46899b556a5ead5ee8 data/forge/tags/items/wires/useless.json
 114a92b3cd88d42af80de27aa3901af54701e888 data/forge/tags/items/wrench.json
-114a92b3cd88d42af80de27aa3901af54701e888 data/forge/tags/items/wrenches.json
+2e56709e5daaa1304176b21cf65b5d6278457a4e data/minecraft/tags/blocks/base_stone_overworld.json
 9994f6a22aca88b9b03b678968f0ee14ac0aa927 data/minecraft/tags/blocks/beacon_base_blocks.json
 9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/blocks/beds.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/blocks/carpets.json
@@ -62,8 +64,9 @@ df5da8e8cf13eb632face35177db13db4c71cdde data/minecraft/tags/blocks/crops.json
 92e17b02a28e8a2a598b77aa7c3ef46b602f9ce9 data/minecraft/tags/blocks/fence_gates.json
 b15f8a57761f99ae6cf47b94f54d174ba4a008b9 data/minecraft/tags/blocks/fire.json
 79d5a48b784c7b3b1da9e15e8240290dc5cfe230 data/minecraft/tags/blocks/flower_pots.json
+f303c38ec21371d8aaadb5a45bf587214ff7597a data/minecraft/tags/blocks/impermeable.json
 3a6efeb2f154b27627cb1874cbdc1b5a88a3fb76 data/minecraft/tags/blocks/leaves.json
-1d6d787289a77da9d73e7fb2aed085e33f1cf574 data/minecraft/tags/blocks/logs.json
+1d6d787289a77da9d73e7fb2aed085e33f1cf574 data/minecraft/tags/blocks/logs_that_burn.json
 dc4754a6673dfe1fd9ce9f8b30ad77c43a2e576b data/minecraft/tags/blocks/planks.json
 75fb2d353a7ede7854b6931a0b4d5e1050b906d8 data/minecraft/tags/blocks/rails.json
 71e87a1c873cc2c309e0a8da3b2495d4f2c53545 data/minecraft/tags/blocks/saplings.json
@@ -89,14 +92,16 @@ d4cd84513a33b2a7a51ceec4b4d317a3759eca91 data/minecraft/tags/fluids/water.json
 d5e4338a09d6ba83f202bcaf707384dcd8c993f6 data/minecraft/tags/items/boats.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/items/carpets.json
 3a6efeb2f154b27627cb1874cbdc1b5a88a3fb76 data/minecraft/tags/items/leaves.json
-1d6d787289a77da9d73e7fb2aed085e33f1cf574 data/minecraft/tags/items/logs.json
+1d6d787289a77da9d73e7fb2aed085e33f1cf574 data/minecraft/tags/items/logs_that_burn.json
 dc4754a6673dfe1fd9ce9f8b30ad77c43a2e576b data/minecraft/tags/items/planks.json
 75fb2d353a7ede7854b6931a0b4d5e1050b906d8 data/minecraft/tags/items/rails.json
 71e87a1c873cc2c309e0a8da3b2495d4f2c53545 data/minecraft/tags/items/saplings.json
-f7aa3b7693dc86d368942966d1dde5d6eee98d2f data/minecraft/tags/items/signs.json
+24e9f197e14b40f8866e2ed2e730b5bc4e60dcce data/minecraft/tags/items/signs.json
 593aeb2fd6f4d3b7999ead100b5ecaca11352c23 data/minecraft/tags/items/slabs.json
 1c15ddca4a01612cb43cc52326c9e87942d78855 data/minecraft/tags/items/small_flowers.json
 90156e43c9de240a649e7d5c09fc6503091c7f67 data/minecraft/tags/items/stairs.json
+da31b41b00b60df296a81e0899493e6874fcc1a6 data/minecraft/tags/items/stone_crafting_materials.json
+da31b41b00b60df296a81e0899493e6874fcc1a6 data/minecraft/tags/items/stone_tool_materials.json
 cd23913b6873f55e0663bfb83e4986f4ffa4d4fe data/minecraft/tags/items/walls.json
 2c311d9e2ce2da5d233db2357efa4a46c8f07fc8 data/minecraft/tags/items/wooden_buttons.json
 abdb69ea290b2296a0def941dd4be2762d376685 data/minecraft/tags/items/wooden_doors.json
