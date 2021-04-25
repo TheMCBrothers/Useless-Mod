@@ -14,7 +14,7 @@ public class TileEntityInit {
             REGISTER.register("useless_bed", UselessBedTileEntity::new, BlockInit.USELESS_BED);
     public static final RegistryObject<TileEntityType<UselessSignTileEntity>> USELESS_SIGN =
             REGISTER.register("useless_sign", UselessSignTileEntity::new,
-                    blockBuilder -> blockBuilder.add(BlockInit.USELESS_SIGN.get(), BlockInit.USELESS_WALL_SIGN.get()));
+                    blockBuilder -> blockBuilder.add(BlockInit.USELESS_OAK_SIGN.get(), BlockInit.USELESS_OAK_WALL_SIGN.get()));
 
     public static final RegistryObject<TileEntityType<CreativeEnergyCellTileEntity>> CREATIVE_ENERGY_CELL =
             REGISTER.register("creative_energy_cell", CreativeEnergyCellTileEntity::new, BlockInit.CREATIVE_ENERGY_CELL);
@@ -31,7 +31,7 @@ public class TileEntityInit {
     public static final RegistryObject<TileEntityType<WallClosetTileEntity>> WALL_CLOSET =
             REGISTER.register("wall_closet", WallClosetTileEntity::new, BlockInit.WALL_CLOSET);
     public static final RegistryObject<TileEntityType<UselessChestTileEntity>> USELESS_CHEST =
-            REGISTER.register("useless_chest", UselessChestTileEntity::new, BlockInit.USELESS_CHEST);
+            REGISTER.register("useless_chest", UselessChestTileEntity::new, BlockInit.USELESS_OAK_CHEST);
 
     public static final RegistryObject<TileEntityType<PaintBucketTileEntity>> PAINT_BUCKET =
             REGISTER.register("paint_bucket", PaintBucketTileEntity::new, BlockInit.PAINT_BUCKET);

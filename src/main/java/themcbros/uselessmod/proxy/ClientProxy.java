@@ -92,10 +92,10 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlockInit.SUPER_USELESS_ORE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.SUPER_USELESS_ORE_NETHER.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.SUPER_USELESS_ORE_END.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockInit.USELESS_SAPLING.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockInit.POTTED_USELESS_SAPLING.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockInit.WOODEN_USELESS_DOOR.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockInit.WOODEN_USELESS_TRAPDOOR.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockInit.USELESS_OAK_SAPLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockInit.POTTED_USELESS_OAK_SAPLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockInit.USELESS_OAK_DOOR.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockInit.USELESS_OAK_TRAPDOOR.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.USELESS_FIRE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.USELESS_WHEAT.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockInit.COFFEE_CROP.get(), RenderType.getCutout());

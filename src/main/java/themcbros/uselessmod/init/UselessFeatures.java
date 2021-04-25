@@ -76,8 +76,8 @@ public class UselessFeatures {
     }
 
     static final class States {
-        protected static final BlockState USELESS_LOG = BlockInit.USELESS_LOG.get().getDefaultState();
-        protected static final BlockState USELESS_LEAVES = BlockInit.USELESS_LEAVES.get().getDefaultState();
+        protected static final BlockState USELESS_LOG = BlockInit.USELESS_OAK_LOG.get().getDefaultState();
+        protected static final BlockState USELESS_LEAVES = BlockInit.USELESS_OAK_LEAVES.get().getDefaultState();
         protected static final BlockState USELESS_ORE = BlockInit.USELESS_ORE.get().getDefaultState();
         protected static final BlockState USELESS_ORE_NETHER = BlockInit.USELESS_ORE_NETHER.get().getDefaultState();
         protected static final BlockState USELESS_ORE_END = BlockInit.USELESS_ORE_END.get().getDefaultState();

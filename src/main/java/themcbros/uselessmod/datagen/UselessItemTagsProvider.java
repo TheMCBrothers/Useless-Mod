@@ -85,8 +85,8 @@ public class UselessItemTagsProvider extends ItemTagsProvider {
 
         this.getOrCreateBuilder(ItemTags.STONE_TOOL_MATERIALS).addItemEntry(BlockInit.USELESS_COBBLESTONE.asItem());
         this.getOrCreateBuilder(ItemTags.STONE_CRAFTING_MATERIALS).addItemEntry(BlockInit.USELESS_COBBLESTONE.asItem());
-        this.getOrCreateBuilder(ItemTags.BOATS).add(ItemInit.USELESS_BOAT.get(), ItemInit.SUPER_USELESS_BOAT.get());
-        this.getOrCreateBuilder(ItemTags.SIGNS).add(ItemInit.USELESS_SIGN.get());
+        this.getOrCreateBuilder(ItemTags.BOATS).add(ItemInit.USELESS_OAK_BOAT.get(), ItemInit.SUPER_USELESS_BOAT.get());
+        this.getOrCreateBuilder(ItemTags.SIGNS).add(ItemInit.USELESS_OAK_SIGN.get());
         this.getOrCreateBuilder(ItemTags.BEACON_PAYMENT_ITEMS)
                 .addTag(UselessTags.Items.INGOTS_USELESS)
                 .addTag(UselessTags.Items.INGOTS_SUPER_USELESS);

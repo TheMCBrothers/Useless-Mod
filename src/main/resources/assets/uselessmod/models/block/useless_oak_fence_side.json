@@ -1,0 +1,6 @@
+{
+  "parent": "block/fence_side",
+  "textures": {
+    "texture": "uselessmod:block/useless_oak_planks"
+  }
+}

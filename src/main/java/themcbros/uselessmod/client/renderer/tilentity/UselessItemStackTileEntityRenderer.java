@@ -62,7 +62,7 @@ public class UselessItemStackTileEntityRenderer extends ItemStackTileEntityRende
                         ItemStackHelper.loadAllItems(blockEntityTag, coffeeMachine.coffeeStacks);
                     }
                     tileentity = coffeeMachine;
-                } else if (block == BlockInit.USELESS_CHEST.get()) {
+                } else if (block == BlockInit.USELESS_OAK_CHEST.get()) {
                     tileentity = new UselessChestTileEntity();
                 } else {
                     tileentity = new UselessChestTileEntity();

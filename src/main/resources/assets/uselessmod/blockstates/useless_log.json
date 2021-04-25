@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "uselessmod:block/useless_log" },
-    "axis=z": { "model": "uselessmod:block/useless_log", "x": 90 },
-    "axis=x": { "model": "uselessmod:block/useless_log", "x": 90, "y": 90 }
-  }
-}

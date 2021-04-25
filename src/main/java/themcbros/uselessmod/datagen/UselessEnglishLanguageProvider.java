@@ -41,21 +41,21 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addBlock(BlockInit.RED_ROSE, "Red Rose");
         this.addBlock(BlockInit.BLUE_ROSE, "Blue Rose");
         this.addBlock(BlockInit.USELESS_ROSE, "Useless Rose");
-        this.addBlock(BlockInit.USELESS_SAPLING, "Useless Sapling");
-        this.addBlock(BlockInit.USELESS_LEAVES, "Useless Leaves");
-        this.addBlock(BlockInit.USELESS_LOG, "Useless Log");
-        this.addBlock(BlockInit.USELESS_WOOD, "Useless Wood");
-        this.addBlock(BlockInit.STRIPPED_USELESS_LOG, "Stripped Useless Log");
-        this.addBlock(BlockInit.STRIPPED_USELESS_WOOD, "Stripped Useless Wood");
-        this.addBlock(BlockInit.USELESS_PLANKS, "Useless Planks");
-        this.addBlock(BlockInit.USELESS_STAIRS, "Useless Stairs");
-        this.addBlock(BlockInit.USELESS_SLAB, "Useless Slab");
-        this.addBlock(BlockInit.USELESS_FENCE, "Useless Fence");
-        this.addBlock(BlockInit.USELESS_FENCE_GATE, "Useless Fence Gate");
-        this.addBlock(BlockInit.WOODEN_USELESS_DOOR, "Wooden Useless Door");
-        this.addBlock(BlockInit.WOODEN_USELESS_TRAPDOOR, "Wooden Useless Trapdoor");
-        this.addBlock(BlockInit.USELESS_PRESSURE_PLATE, "Useless Pressure Plate");
-        this.addBlock(BlockInit.USELESS_BUTTON, "Useless Button");
+        this.addBlock(BlockInit.USELESS_OAK_SAPLING, "Useless Oak Sapling");
+        this.addBlock(BlockInit.USELESS_OAK_LEAVES, "Useless Oak Leaves");
+        this.addBlock(BlockInit.USELESS_OAK_LOG, "Useless Oak Log");
+        this.addBlock(BlockInit.USELESS_OAK_WOOD, "Useless Oak Wood");
+        this.addBlock(BlockInit.STRIPPED_USELESS_OAK_LOG, "Stripped Useless Oak Log");
+        this.addBlock(BlockInit.STRIPPED_USELESS_OAK_WOOD, "Stripped Useless Oak Wood");
+        this.addBlock(BlockInit.USELESS_OAK_PLANKS, "Useless Oak Planks");
+        this.addBlock(BlockInit.USELESS_OAK_STAIRS, "Useless Oak Stairs");
+        this.addBlock(BlockInit.USELESS_OAK_SLAB, "Useless Oak Slab");
+        this.addBlock(BlockInit.USELESS_OAK_FENCE, "Useless Oak Fence");
+        this.addBlock(BlockInit.USELESS_OAK_FENCE_GATE, "Useless Oak Fence Gate");
+        this.addBlock(BlockInit.USELESS_OAK_DOOR, "Useless Oak Door");
+        this.addBlock(BlockInit.USELESS_OAK_TRAPDOOR, "Useless Oak Trapdoor");
+        this.addBlock(BlockInit.USELESS_OAK_PRESSURE_PLATE, "Useless Oak Pressure Plate");
+        this.addBlock(BlockInit.USELESS_OAK_BUTTON, "Useless Oak Button");
         // other
         this.addBlock(BlockInit.MACHINE_FRAME, "Machine Frame");
         this.addBlock(BlockInit.CREATIVE_ENERGY_CELL, "Creative Energy Cell");
@@ -82,7 +82,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addBlock(BlockInit.USELESS_DETECTOR_RAIL, "Useless Detector Rail");
         this.addBlock(BlockInit.USELESS_CROSSOVER_RAIL, "Useless Crossover Rail");
         this.addBlock(BlockInit.WALL_CLOSET, "Wall Closet");
-        this.addBlock(BlockInit.USELESS_CHEST, "Useless Chest");
+        this.addBlock(BlockInit.USELESS_OAK_CHEST, "Useless Oak Chest");
         this.add(LampBlock.LAMP_MAP.get(DyeColor.WHITE), "White Lamp");
         this.add(LampBlock.LAMP_MAP.get(DyeColor.ORANGE), "Orange Lamp");
         this.add(LampBlock.LAMP_MAP.get(DyeColor.MAGENTA), "Magenta Lamp");
@@ -151,7 +151,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addItem(ItemInit.USELESS_ELYTRA, "Useless Elytra");
         this.addItem(ItemInit.SUPER_USELESS_ELYTRA, "Super-Useless Elytra");
         // Misc
-        this.addItem(ItemInit.USELESS_BOAT, "Useless Boat");
+        this.addItem(ItemInit.USELESS_OAK_BOAT, "Useless Oak Boat");
         this.addItem(ItemInit.SUPER_USELESS_BOAT, "Super-Useless Boat");
         this.addItem(ItemInit.USELESS_SHEEP_SPAWN_EGG, "Useless Sheep Spawn Egg");
         this.addItem(ItemInit.USELESS_PIG_SPAWN_EGG, "Useless Pig Spawn Egg");
@@ -170,7 +170,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
         this.addItem(ItemInit.COFFEE_BEANS, "Coffee Beans");
         this.addItem(ItemInit.ENDER_SEEDS, "Ender Seeds");
         // Special Block Items
-        this.addItem(ItemInit.USELESS_SIGN, "Useless Sign");
+        this.addItem(ItemInit.USELESS_OAK_SIGN, "Useless Oak Sign");
         this.addItem(ItemInit.USELESS_SKELETON_SKULL, "Useless Skeleton Skull");
         // Mob Loot
         this.addItem(ItemInit.USELESS_BONE, "Useless Bone");
@@ -235,7 +235,7 @@ public class UselessEnglishLanguageProvider extends LanguageProvider {
 
         // --- ITEM GROUPS --- //
 
-        this.add("itemGroup.uselessmod", "Useless Mod");
+        this.add("itemGroup.uselessmod.uselessmod", "Useless Mod");
 
         // --- MISC -- //
 

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "uselessmod:block/useless_oak_sapling"
+  }
+}

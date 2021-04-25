@@ -1,8 +1,0 @@
-{
-  "parent": "block/stairs",
-  "textures": {
-    "bottom": "uselessmod:block/useless_planks",
-    "top": "uselessmod:block/useless_planks",
-    "side": "uselessmod:block/useless_planks"
-  }
-}

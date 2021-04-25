@@ -3,7 +3,6 @@ package themcbros.uselessmod.compat;
 import com.google.common.collect.Maps;
 import net.minecraft.block.*;
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
 import themcbros.uselessmod.init.BlockInit;
 import themcbros.uselessmod.init.ItemInit;
@@ -12,26 +11,26 @@ public class VanillaCompat {
 
     public static void register() {
         // Flammable Blocks
-        registerFlammable(BlockInit.USELESS_LEAVES.get(), 30, 60);
-        registerFlammable(BlockInit.USELESS_LOG.get(), 5, 5);
-        registerFlammable(BlockInit.USELESS_WOOD.get(), 5, 5);
-        registerFlammable(BlockInit.STRIPPED_USELESS_LOG.get(), 5, 5);
-        registerFlammable(BlockInit.STRIPPED_USELESS_WOOD.get(), 5, 5);
-        registerFlammable(BlockInit.USELESS_PLANKS.get(), 5, 20);
-        registerFlammable(BlockInit.USELESS_STAIRS.get(), 5, 20);
-        registerFlammable(BlockInit.USELESS_SLAB.get(), 5, 20);
-        registerFlammable(BlockInit.USELESS_FENCE.get(), 5, 20);
-        registerFlammable(BlockInit.USELESS_FENCE_GATE.get(), 5, 20);
+        registerFlammable(BlockInit.USELESS_OAK_LEAVES.get(), 30, 60);
+        registerFlammable(BlockInit.USELESS_OAK_LOG.get(), 5, 5);
+        registerFlammable(BlockInit.USELESS_OAK_WOOD.get(), 5, 5);
+        registerFlammable(BlockInit.STRIPPED_USELESS_OAK_LOG.get(), 5, 5);
+        registerFlammable(BlockInit.STRIPPED_USELESS_OAK_WOOD.get(), 5, 5);
+        registerFlammable(BlockInit.USELESS_OAK_PLANKS.get(), 5, 20);
+        registerFlammable(BlockInit.USELESS_OAK_STAIRS.get(), 5, 20);
+        registerFlammable(BlockInit.USELESS_OAK_SLAB.get(), 5, 20);
+        registerFlammable(BlockInit.USELESS_OAK_FENCE.get(), 5, 20);
+        registerFlammable(BlockInit.USELESS_OAK_FENCE_GATE.get(), 5, 20);
         registerFlammable(BlockInit.USELESS_WOOL.get(), 30, 60);
         registerFlammable(BlockInit.USELESS_CARPET.get(), 60, 20);
 
         // Strippable logs
-        registerStrippable(BlockInit.USELESS_LOG.get(), BlockInit.STRIPPED_USELESS_LOG.get());
-        registerStrippable(BlockInit.USELESS_WOOD.get(), BlockInit.STRIPPED_USELESS_WOOD.get());
+        registerStrippable(BlockInit.USELESS_OAK_LOG.get(), BlockInit.STRIPPED_USELESS_OAK_LOG.get());
+        registerStrippable(BlockInit.USELESS_OAK_WOOD.get(), BlockInit.STRIPPED_USELESS_OAK_WOOD.get());
 
         // Compostable blocks
-        registerCompostable(0.3F, BlockInit.USELESS_SAPLING.get());
-        registerCompostable(0.3F, BlockInit.USELESS_LEAVES.get());
+        registerCompostable(0.3F, BlockInit.USELESS_OAK_SAPLING.get());
+        registerCompostable(0.3F, BlockInit.USELESS_OAK_LEAVES.get());
         registerCompostable(0.3F, ItemInit.USELESS_WHEAT_SEEDS.get());
         registerCompostable(0.3F, ItemInit.COFFEE_SEEDS.get());
         registerCompostable(0.65F, BlockInit.RED_ROSE.get());

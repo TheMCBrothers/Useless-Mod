@@ -20,16 +20,16 @@ public class ClientEventBusSubscriber {
             event.addSprite(UselessMod.rl("entity/bed/useless"));
         }
         if (event.getMap().getTextureLocation().getPath().contains("boats")) {
-            event.addSprite(UselessMod.rl("entity/boat/useless"));
+            event.addSprite(UselessMod.rl("entity/boat/useless_oak"));
             event.addSprite(UselessMod.rl("entity/boat/super_useless"));
         }
         if (event.getMap().getTextureLocation().getPath().contains("signs")) {
-            event.addSprite(UselessMod.rl("entity/signs/useless"));
+            event.addSprite(UselessMod.rl("entity/signs/useless_oak"));
         }
         if (event.getMap().getTextureLocation().getPath().contains("chest")) {
-            event.addSprite(UselessMod.rl("entity/chest/useless"));
-            event.addSprite(UselessMod.rl("entity/chest/useless_left"));
-            event.addSprite(UselessMod.rl("entity/chest/useless_right"));
+            event.addSprite(UselessMod.rl("entity/chest/useless_oak"));
+            event.addSprite(UselessMod.rl("entity/chest/useless_oak_left"));
+            event.addSprite(UselessMod.rl("entity/chest/useless_oak_right"));
         }
     }
 

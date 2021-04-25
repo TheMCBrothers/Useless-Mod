@@ -40,9 +40,9 @@ public class UselessChestTileEntityRenderer extends ChestTileEntityRenderer<Usel
     }
 
     static {
-        CHEST_USELESS_MATERIAL = getChestMaterial("useless");
-        CHEST_USELESS_LEFT_MATERIAL = getChestMaterial("useless_left");
-        CHEST_USELESS_RIGHT_MATERIAL = getChestMaterial("useless_right");
+        CHEST_USELESS_MATERIAL = getChestMaterial("useless_oak");
+        CHEST_USELESS_LEFT_MATERIAL = getChestMaterial("useless_oak_left");
+        CHEST_USELESS_RIGHT_MATERIAL = getChestMaterial("useless_oak_right");
     }
 
 }

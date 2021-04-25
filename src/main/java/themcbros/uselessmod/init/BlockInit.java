@@ -54,43 +54,43 @@ public class BlockInit {
             () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT.delegate.get(), BLUE_ROSE, Block.Properties.from(Blocks.POTTED_POPPY)));
     public static final RegistryObject<FlowerPotBlock> POTTED_USELESS_ROSE = REGISTER.registerNoItem("potted_useless_rose",
             () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT.delegate.get(), USELESS_ROSE, Block.Properties.from(Blocks.POTTED_POPPY)));
-    public static final ItemObject<Block> USELESS_SAPLING = REGISTER.register("useless_sapling",
+    public static final ItemObject<Block> USELESS_OAK_SAPLING = REGISTER.register("useless_oak_sapling",
             () -> new SaplingBlock(new UselessTree(), Block.Properties.from(Blocks.OAK_SAPLING)), GENERAL_BLOCK_ITEM);
-    public static final RegistryObject<Block> POTTED_USELESS_SAPLING = REGISTER.registerNoItem("potted_useless_sapling",
-            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT.delegate.get(), USELESS_SAPLING, Block.Properties.from(Blocks.POTTED_OAK_SAPLING)));
-    public static final ItemObject<Block> USELESS_LEAVES = REGISTER.register("useless_leaves",
+    public static final RegistryObject<Block> POTTED_USELESS_OAK_SAPLING = REGISTER.registerNoItem("potted_useless_oak_sapling",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT.delegate.get(), USELESS_OAK_SAPLING, Block.Properties.from(Blocks.POTTED_OAK_SAPLING)));
+    public static final ItemObject<Block> USELESS_OAK_LEAVES = REGISTER.register("useless_oak_leaves",
             () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_LOG = REGISTER.register("useless_log",
+    public static final ItemObject<Block> USELESS_OAK_LOG = REGISTER.register("useless_oak_log",
             () -> createLogBlock(MaterialColor.GREEN, MaterialColor.GREEN), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_WOOD = REGISTER.register("useless_wood",
+    public static final ItemObject<Block> USELESS_OAK_WOOD = REGISTER.register("useless_oak_wood",
             () -> new RotatedPillarBlock(Block.Properties.from(Blocks.OAK_WOOD)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> STRIPPED_USELESS_LOG = REGISTER.register("stripped_useless_log",
+    public static final ItemObject<Block> STRIPPED_USELESS_OAK_LOG = REGISTER.register("stripped_useless_oak_log",
             () -> createLogBlock(MaterialColor.LIME, MaterialColor.LIME), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> STRIPPED_USELESS_WOOD = REGISTER.register("stripped_useless_wood",
+    public static final ItemObject<Block> STRIPPED_USELESS_OAK_WOOD = REGISTER.register("stripped_useless_oak_wood",
             () -> new RotatedPillarBlock(Block.Properties.from(Blocks.STRIPPED_OAK_WOOD)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_PLANKS = REGISTER.register("useless_planks",
+    public static final ItemObject<Block> USELESS_OAK_PLANKS = REGISTER.register("useless_oak_planks",
             () -> new Block(Block.Properties.from(Blocks.OAK_PLANKS)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_STAIRS = REGISTER.register("useless_stairs",
-            () -> new StairsBlock(() -> USELESS_PLANKS.get().getDefaultState(), Block.Properties.from(Blocks.OAK_STAIRS)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_SLAB = REGISTER.register("useless_slab",
+    public static final ItemObject<Block> USELESS_OAK_STAIRS = REGISTER.register("useless_oak_stairs",
+            () -> new StairsBlock(() -> USELESS_OAK_PLANKS.get().getDefaultState(), Block.Properties.from(Blocks.OAK_STAIRS)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_OAK_SLAB = REGISTER.register("useless_oak_slab",
             () -> new SlabBlock(Block.Properties.from(Blocks.OAK_SLAB)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_FENCE = REGISTER.register("useless_fence",
+    public static final ItemObject<Block> USELESS_OAK_FENCE = REGISTER.register("useless_oak_fence",
             () -> new FenceBlock(Block.Properties.from(Blocks.OAK_FENCE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_FENCE_GATE = REGISTER.register("useless_fence_gate",
+    public static final ItemObject<Block> USELESS_OAK_FENCE_GATE = REGISTER.register("useless_oak_fence_gate",
             () -> new FenceGateBlock(Block.Properties.from(Blocks.OAK_FENCE_GATE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> WOODEN_USELESS_DOOR = REGISTER.register("wooden_useless_door",
+    public static final ItemObject<Block> USELESS_OAK_DOOR = REGISTER.register("useless_oak_door",
             () -> new DoorBlock(Block.Properties.from(Blocks.OAK_DOOR)),
             block -> new TallBlockItem(block, new Item.Properties().group(UselessMod.GROUP)));
-    public static final ItemObject<Block> WOODEN_USELESS_TRAPDOOR = REGISTER.register("wooden_useless_trapdoor",
+    public static final ItemObject<Block> USELESS_OAK_TRAPDOOR = REGISTER.register("useless_oak_trapdoor",
             () -> new TrapDoorBlock(Block.Properties.from(Blocks.OAK_TRAPDOOR)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_PRESSURE_PLATE = REGISTER.register("useless_pressure_plate",
+    public static final ItemObject<Block> USELESS_OAK_PRESSURE_PLATE = REGISTER.register("useless_oak_pressure_plate",
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.from(Blocks.OAK_TRAPDOOR)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_BUTTON = REGISTER.register("useless_button",
+    public static final ItemObject<Block> USELESS_OAK_BUTTON = REGISTER.register("useless_oak_button",
             () -> new WoodButtonBlock(Block.Properties.from(Blocks.OAK_BUTTON)), GENERAL_BLOCK_ITEM);
-    public static final RegistryObject<Block> USELESS_SIGN = REGISTER.registerNoItem("useless_sign",
-            () -> new UselessStandingSignBlock(Block.Properties.from(Blocks.OAK_SIGN), WoodTypeInit.USELESS));
-    public static final RegistryObject<Block> USELESS_WALL_SIGN = REGISTER.registerNoItem("useless_wall_sign",
-            () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodTypeInit.USELESS));
+    public static final RegistryObject<Block> USELESS_OAK_SIGN = REGISTER.registerNoItem("useless_oak_sign",
+            () -> new UselessStandingSignBlock(Block.Properties.from(Blocks.OAK_SIGN), WoodTypeInit.USELESS_OAK));
+    public static final RegistryObject<Block> USELESS_OAK_WALL_SIGN = REGISTER.registerNoItem("useless_oak_wall_sign",
+            () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodTypeInit.USELESS_OAK));
 
     public static final ItemObject<Block> MACHINE_FRAME = REGISTER.register("machine_frame",
             () -> new MachineFrameBlock(AbstractBlock.Properties.from(Blocks.GLASS).sound(SoundType.METAL)), GENERAL_BLOCK_ITEM);
@@ -141,7 +141,7 @@ public class BlockInit {
     // Storage
     public static final ItemObject<WallClosetBlock> WALL_CLOSET = REGISTER.register("wall_closet",
             () -> new WallClosetBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(.5f).sound(SoundType.WOOD)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<UselessChestBlock> USELESS_CHEST = REGISTER.register("useless_chest",
+    public static final ItemObject<UselessChestBlock> USELESS_OAK_CHEST = REGISTER.register("useless_oak_chest",
             () -> new UselessChestBlock(Block.Properties.from(Blocks.CHEST)),
             uselessChestBlock -> new BlockItem(uselessChestBlock, new Item.Properties().group(UselessMod.GROUP).setISTER(ISTERProvider::useless)));
 
@@ -200,10 +200,10 @@ public class BlockInit {
     static {
         if (Blocks.FLOWER_POT != null) {
             FlowerPotBlock flowerPot = (FlowerPotBlock) Blocks.FLOWER_POT;
-            flowerPot.addPlant(UselessMod.rl("useless_sapling"), POTTED_USELESS_SAPLING);
-            flowerPot.addPlant(UselessMod.rl("red_rose"), POTTED_RED_ROSE);
-            flowerPot.addPlant(UselessMod.rl("blue_rose"), POTTED_BLUE_ROSE);
-            flowerPot.addPlant(UselessMod.rl("useless_rose"), POTTED_USELESS_ROSE);
+            flowerPot.addPlant(USELESS_OAK_SAPLING.getRegistryName(), POTTED_USELESS_OAK_SAPLING);
+            flowerPot.addPlant(RED_ROSE.getRegistryName(), POTTED_RED_ROSE);
+            flowerPot.addPlant(BLUE_ROSE.getRegistryName(), POTTED_BLUE_ROSE);
+            flowerPot.addPlant(USELESS_ROSE.getRegistryName(), POTTED_USELESS_ROSE);
         }
     }
 

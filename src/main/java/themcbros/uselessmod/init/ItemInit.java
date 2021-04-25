@@ -96,7 +96,7 @@ public class ItemInit {
             () -> new UselessElytraItem(new Item.Properties().group(UselessMod.GROUP).maxDamage(1000).rarity(Rarity.UNCOMMON)));
 
     // Misc
-    public static final ItemObject<Item> USELESS_BOAT = REGISTER.register("useless_boat",
+    public static final ItemObject<Item> USELESS_OAK_BOAT = REGISTER.register("useless_oak_boat",
             () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), BoatEntity.Type.OAK));
     public static final ItemObject<Item> SUPER_USELESS_BOAT = REGISTER.register("super_useless_boat",
             () -> new UselessBoatItem(new Item.Properties().maxStackSize(1).group(UselessMod.GROUP), BoatEntity.Type.DARK_OAK));
@@ -118,8 +118,8 @@ public class ItemInit {
             () -> new BlockNamedItem(BlockInit.ENDER_SEEDS.get(), new Item.Properties().group(UselessMod.GROUP)));
 
     // Special Block Items
-    public static final ItemObject<SignItem> USELESS_SIGN = REGISTER.register("useless_sign",
-            () -> new SignItem(new Item.Properties().maxStackSize(16).group(UselessMod.GROUP), BlockInit.USELESS_SIGN.get(), BlockInit.USELESS_WALL_SIGN.get()));
+    public static final ItemObject<SignItem> USELESS_OAK_SIGN = REGISTER.register("useless_oak_sign",
+            () -> new SignItem(new Item.Properties().maxStackSize(16).group(UselessMod.GROUP), BlockInit.USELESS_OAK_SIGN.get(), BlockInit.USELESS_OAK_WALL_SIGN.get()));
     public static final ItemObject<WallOrFloorItem> USELESS_SKELETON_SKULL = REGISTER.register("useless_skeleton_skull",
             () -> new WallOrFloorItem(BlockInit.USELESS_SKELETON_SKULL.get(), BlockInit.USELESS_SKELETON_WALL_SKULL.get(),
                     new Item.Properties().group(UselessMod.GROUP).setISTER(ISTERProvider::useless).rarity(Rarity.UNCOMMON)));

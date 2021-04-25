@@ -8,6 +8,6 @@ import themcbros.uselessmod.UselessMod;
  */
 public class WoodTypeInit {
 
-    public static final WoodType USELESS = WoodType.register(WoodType.create(UselessMod.rl("useless").toString()));
+    public static final WoodType USELESS_OAK = WoodType.register(WoodType.create(UselessMod.rl("useless_oak").toString()));
 
 }
