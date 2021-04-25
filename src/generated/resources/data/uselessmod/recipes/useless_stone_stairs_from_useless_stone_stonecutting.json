@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "uselessmod:useless_stone"
+  },
+  "result": "uselessmod:useless_stone_stairs",
+  "count": 1
+}

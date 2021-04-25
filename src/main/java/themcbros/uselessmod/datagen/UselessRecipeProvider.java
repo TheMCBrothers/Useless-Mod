@@ -146,6 +146,13 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(BlockInit.USELESS_STONE_PRESSURE_PLATE.get()).key('#', BlockInit.USELESS_STONE.get()).patternLine("##").addCriterion("has_stone", hasItem(BlockInit.USELESS_STONE.get())).build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(BlockInit.USELESS_STONE_BUTTON.get()).addIngredient(BlockInit.USELESS_STONE.get()).addCriterion("has_stone", hasItem(BlockInit.USELESS_STONE.get())).build(consumer);
 
+        // Stonecutting
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlockInit.USELESS_STONE), BlockInit.USELESS_STONE_SLAB, 2).addCriterion("has_stone", hasItem(BlockInit.USELESS_STONE)).build(consumer, rl("useless_stone_slab_from_useless_stone_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlockInit.USELESS_STONE), BlockInit.USELESS_STONE_STAIRS).addCriterion("has_stone", hasItem(BlockInit.USELESS_STONE)).build(consumer, rl("useless_stone_stairs_from_useless_stone_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlockInit.USELESS_COBBLESTONE), BlockInit.USELESS_COBBLESTONE_SLAB, 2).addCriterion("has_cobblestone", hasItem(BlockInit.USELESS_COBBLESTONE)).build(consumer, rl("useless_cobblestone_slab_from_useless_cobblestone_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlockInit.USELESS_COBBLESTONE), BlockInit.USELESS_COBBLESTONE_STAIRS).addCriterion("has_cobblestone", hasItem(BlockInit.USELESS_COBBLESTONE)).build(consumer, rl("useless_cobblestone_stairs_from_useless_cobblestone_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlockInit.USELESS_COBBLESTONE), BlockInit.USELESS_COBBLESTONE_WALL).addCriterion("has_cobblestone", hasItem(BlockInit.USELESS_COBBLESTONE)).build(consumer, rl("useless_cobblestone_wall_from_useless_cobblestone_stonecutting"));
+
         // Other recipes
         ShapedRecipeBuilder.shapedRecipe(BlockInit.MACHINE_FRAME.get()).patternLine("#G#").patternLine("GXG").patternLine("#G#").key('#', ingotsSuperUseless).key('X', gearsUseless).key('G', Tags.Items.GLASS).addCriterion("has_useless_gear", hasItem(gearsUseless)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockInit.COFFEE_MACHINE_SUPPLIER.get()).patternLine(" # ").patternLine("#X#").patternLine(" # ").key('#', ingotsUseless).key('X', UselessTags.Items.MACHINE_FRAMES).addCriterion("has_machine_frame", hasItem(UselessTags.Items.MACHINE_FRAMES)).build(consumer);

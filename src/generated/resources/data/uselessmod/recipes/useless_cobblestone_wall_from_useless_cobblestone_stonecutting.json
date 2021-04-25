@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "uselessmod:useless_cobblestone"
+  },
+  "result": "uselessmod:useless_cobblestone_wall",
+  "count": 1
+}
