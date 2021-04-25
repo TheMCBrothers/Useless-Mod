@@ -26,12 +26,7 @@ public class UselessMod {
     private static UselessMod instance;
     public final CommonProxy proxy;
 
-    public static final ItemGroup GROUP = new ItemGroup(MOD_ID) {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(BlockInit.USELESS_ORE.get());
-        }
-    };
+    public static final ItemGroup GROUP = new SupplierItemGroup(MOD_ID, MOD_ID, () -> new ItemStack(ItemInit.USELESS_INGOT));
 
     public UselessMod() {
         instance = this;
