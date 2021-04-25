@@ -164,7 +164,8 @@ public class CoffeeMachineScreen extends ContainerScreen<CoffeeMachineContainer>
             super.render(matrixStack, mouseX, mouseY, partialTicks);
         }
 
-        public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        @Override
+        public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getTextureManager().bindTexture(TEXTURE);
             RenderSystem.enableDepthTest();
