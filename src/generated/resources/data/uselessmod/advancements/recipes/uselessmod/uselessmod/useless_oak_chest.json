@@ -2,26 +2,30 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "uselessmod:useless_boat"
+      "uselessmod:useless_oak_chest"
     ]
   },
   "criteria": {
-    "in_water": {
-      "trigger": "minecraft:enter_block",
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "block": "minecraft:water"
+        "items": [
+          {
+            "item": "uselessmod:useless_oak_planks"
+          }
+        ]
       }
     },
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "uselessmod:useless_boat"
+        "recipe": "uselessmod:useless_oak_chest"
       }
     }
   },
   "requirements": [
     [
-      "in_water",
+      "has_planks",
       "has_the_recipe"
     ]
   ]

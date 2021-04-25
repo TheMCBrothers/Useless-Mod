@@ -10,10 +10,10 @@
       "tag": "forge:rods/wooden"
     },
     "W": {
-      "item": "uselessmod:useless_planks"
+      "item": "uselessmod:useless_oak_planks"
     }
   },
   "result": {
-    "item": "uselessmod:useless_fence_gate"
+    "item": "uselessmod:useless_oak_fence_gate"
   }
 }

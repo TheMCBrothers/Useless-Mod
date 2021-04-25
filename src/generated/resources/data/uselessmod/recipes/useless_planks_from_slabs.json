@@ -7,10 +7,10 @@
   ],
   "key": {
     "#": {
-      "item": "uselessmod:useless_slab"
+      "item": "uselessmod:useless_oak_slab"
     }
   },
   "result": {
-    "item": "uselessmod:useless_planks"
+    "item": "uselessmod:useless_oak_planks"
   }
 }

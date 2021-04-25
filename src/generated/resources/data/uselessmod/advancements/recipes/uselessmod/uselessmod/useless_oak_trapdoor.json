@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "uselessmod:wooden_useless_trapdoor"
+      "uselessmod:useless_oak_trapdoor"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "uselessmod:useless_planks"
+            "item": "uselessmod:useless_oak_planks"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "uselessmod:wooden_useless_trapdoor"
+        "recipe": "uselessmod:useless_oak_trapdoor"
       }
     }
   },

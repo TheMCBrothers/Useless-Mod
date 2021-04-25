@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "uselessmod:useless_sign",
-    "uselessmod:useless_sign"
+    "uselessmod:useless_oak_sign",
+    "uselessmod:useless_oak_sign"
   ]
 }

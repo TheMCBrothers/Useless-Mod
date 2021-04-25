@@ -2,7 +2,7 @@
   "parent": "uselessmod:uselessmod/root",
   "display": {
     "icon": {
-      "item": "uselessmod:useless_sapling"
+      "item": "uselessmod:useless_oak_sapling"
     },
     "title": {
       "translate": "advancements.uselessmod.useless_biome.title"

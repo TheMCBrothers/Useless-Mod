@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "uselessmod:useless_planks_from_slabs"
+      "uselessmod:useless_oak_slab"
     ]
   },
   "criteria": {
-    "has_slab": {
+    "has_planks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "uselessmod:useless_slab"
+            "item": "uselessmod:useless_oak_planks"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "uselessmod:useless_planks_from_slabs"
+        "recipe": "uselessmod:useless_oak_slab"
       }
     }
   },
   "requirements": [
     [
-      "has_slab",
+      "has_planks",
       "has_the_recipe"
     ]
   ]

@@ -6,10 +6,10 @@
   ],
   "key": {
     "#": {
-      "item": "uselessmod:useless_planks"
+      "item": "uselessmod:useless_oak_planks"
     }
   },
   "result": {
-    "item": "uselessmod:useless_pressure_plate"
+    "item": "uselessmod:useless_oak_pressure_plate"
   }
 }

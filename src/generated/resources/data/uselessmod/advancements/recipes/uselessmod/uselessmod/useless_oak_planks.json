@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "uselessmod:useless_fence_gate"
+      "uselessmod:useless_oak_planks"
     ]
   },
   "criteria": {
-    "has_planks": {
+    "has_useless_log": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "uselessmod:useless_planks"
+            "tag": "uselessmod:useless_logs"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "uselessmod:useless_fence_gate"
+        "recipe": "uselessmod:useless_oak_planks"
       }
     }
   },
   "requirements": [
     [
-      "has_planks",
+      "has_useless_log",
       "has_the_recipe"
     ]
   ]

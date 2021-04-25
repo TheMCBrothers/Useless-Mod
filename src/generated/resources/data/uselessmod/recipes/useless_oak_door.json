@@ -1,17 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "bark",
+  "group": "wooden_door",
   "pattern": [
+    "##",
     "##",
     "##"
   ],
   "key": {
     "#": {
-      "item": "uselessmod:useless_log"
+      "item": "uselessmod:useless_oak_planks"
     }
   },
   "result": {
-    "item": "uselessmod:useless_wood",
+    "item": "uselessmod:useless_oak_door",
     "count": 3
   }
 }

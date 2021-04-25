@@ -8,14 +8,14 @@
   ],
   "key": {
     "#": {
-      "item": "uselessmod:useless_planks"
+      "item": "uselessmod:useless_oak_planks"
     },
     "X": {
       "tag": "forge:rods/wooden"
     }
   },
   "result": {
-    "item": "uselessmod:useless_sign",
+    "item": "uselessmod:useless_oak_sign",
     "count": 3
   }
 }
