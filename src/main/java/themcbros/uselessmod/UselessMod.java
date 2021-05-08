@@ -105,50 +105,50 @@ public class UselessMod {
         });
     }
 
-        @SubscribeEvent
-        public void missingItemMappings(final RegistryEvent.MissingMappings<Item> event) {
-            RegistrationHelper.handleMissingMappings(event, MOD_ID, item -> {
-                switch (item) {
-                    case "useless_sapling":
-                        return BlockInit.USELESS_OAK_SAPLING.asItem();
-                    case "useless_leaves":
-                        return BlockInit.USELESS_OAK_LEAVES.asItem();
-                    case "useless_log":
-                        return BlockInit.USELESS_OAK_LOG.asItem();
-                    case "useless_wood":
-                        return BlockInit.USELESS_OAK_WOOD.asItem();
-                    case "stripped_useless_log":
-                        return BlockInit.STRIPPED_USELESS_OAK_LOG.asItem();
-                    case "stripped_useless_wood":
-                        return BlockInit.STRIPPED_USELESS_OAK_WOOD.asItem();
-                    case "useless_planks":
-                        return BlockInit.USELESS_OAK_PLANKS.asItem();
-                    case "useless_stairs":
-                        return BlockInit.USELESS_OAK_STAIRS.asItem();
-                    case "useless_slab":
-                        return BlockInit.USELESS_OAK_SLAB.asItem();
-                    case "useless_fence":
-                        return BlockInit.USELESS_OAK_FENCE.asItem();
-                    case "useless_fence_gate":
-                        return BlockInit.USELESS_OAK_FENCE_GATE.asItem();
-                    case "wooden_useless_door":
-                        return BlockInit.USELESS_OAK_DOOR.asItem();
-                    case "wooden_useless_trapdoor":
-                        return BlockInit.USELESS_OAK_TRAPDOOR.asItem();
-                    case "useless_pressure_plate":
-                        return BlockInit.USELESS_OAK_PRESSURE_PLATE.asItem();
-                    case "useless_button":
-                        return BlockInit.USELESS_OAK_BUTTON.asItem();
-                    case "useless_sign":
-                        return ItemInit.USELESS_OAK_SIGN.asItem();
-                    case "useless_boat":
-                        return ItemInit.USELESS_OAK_BOAT.asItem();
-                    case "useless_chest":
-                        return BlockInit.USELESS_OAK_CHEST.asItem();
-                    default:
-                        return null;
-                }
-            });
-        }
+    @SubscribeEvent
+    public void missingItemMappings(final RegistryEvent.MissingMappings<Item> event) {
+        RegistrationHelper.handleMissingMappings(event, MOD_ID, item -> {
+            switch (item) {
+                case "useless_sapling":
+                    return BlockInit.USELESS_OAK_SAPLING.asItem();
+                case "useless_leaves":
+                    return BlockInit.USELESS_OAK_LEAVES.asItem();
+                case "useless_log":
+                    return BlockInit.USELESS_OAK_LOG.asItem();
+                case "useless_wood":
+                    return BlockInit.USELESS_OAK_WOOD.asItem();
+                case "stripped_useless_log":
+                    return BlockInit.STRIPPED_USELESS_OAK_LOG.asItem();
+                case "stripped_useless_wood":
+                    return BlockInit.STRIPPED_USELESS_OAK_WOOD.asItem();
+                case "useless_planks":
+                    return BlockInit.USELESS_OAK_PLANKS.asItem();
+                case "useless_stairs":
+                    return BlockInit.USELESS_OAK_STAIRS.asItem();
+                case "useless_slab":
+                    return BlockInit.USELESS_OAK_SLAB.asItem();
+                case "useless_fence":
+                    return BlockInit.USELESS_OAK_FENCE.asItem();
+                case "useless_fence_gate":
+                    return BlockInit.USELESS_OAK_FENCE_GATE.asItem();
+                case "wooden_useless_door":
+                    return BlockInit.USELESS_OAK_DOOR.asItem();
+                case "wooden_useless_trapdoor":
+                    return BlockInit.USELESS_OAK_TRAPDOOR.asItem();
+                case "useless_pressure_plate":
+                    return BlockInit.USELESS_OAK_PRESSURE_PLATE.asItem();
+                case "useless_button":
+                    return BlockInit.USELESS_OAK_BUTTON.asItem();
+                case "useless_sign":
+                    return ItemInit.USELESS_OAK_SIGN.asItem();
+                case "useless_boat":
+                    return ItemInit.USELESS_OAK_BOAT.asItem();
+                case "useless_chest":
+                    return BlockInit.USELESS_OAK_CHEST.asItem();
+                default:
+                    return null;
+            }
+        });
+    }
 
 }
