@@ -1,6 +1,7 @@
 package themcbros.uselessmod;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -149,6 +150,12 @@ public class UselessMod {
                     return null;
             }
         });
+    }
+
+    @SubscribeEvent
+    public void missingEntityTypeMappings(final RegistryEvent.MissingMappings<EntityType<?>> event) {
+        RegistrationHelper.handleMissingMappings(event, MOD_ID,
+                entityType -> entityType.equalsIgnoreCase("useless_boat") ? EntityType.BOAT : null);
     }
 
 }
