@@ -1,3 +1,10 @@
+4.2.1:
+- Reworked Useless Sign
+- Renamed wooden stuff to Useless Oak
+- Removed Useless Boat entity
+- Update tags to match vanilla and forge
+- Changed item group icon
+
 4.2.0
 - Updated to 1.16.5 (Forge 36.0.42)
 - Requires Mantle's shared code
