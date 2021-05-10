@@ -59,6 +59,7 @@ ce885074e2013a373675f1f7302c53c4c2204677 data/forge/tags/items/storage_blocks/su
 2e56709e5daaa1304176b21cf65b5d6278457a4e data/minecraft/tags/blocks/base_stone_overworld.json
 9994f6a22aca88b9b03b678968f0ee14ac0aa927 data/minecraft/tags/blocks/beacon_base_blocks.json
 9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/blocks/beds.json
+cd25295d48263d1b2636f3f44d649bc5594ac853 data/minecraft/tags/blocks/buttons.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/blocks/carpets.json
 df5da8e8cf13eb632face35177db13db4c71cdde data/minecraft/tags/blocks/crops.json
 d112d7d7f48ac9761d2d207fc792c06ed9a1c7d5 data/minecraft/tags/blocks/fence_gates.json
@@ -90,6 +91,7 @@ d4cd84513a33b2a7a51ceec4b4d317a3759eca91 data/minecraft/tags/fluids/water.json
 04dadacdb518231e0276b5416224cb6008ae92ce data/minecraft/tags/items/beacon_payment_items.json
 9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/items/beds.json
 47b5bc7970580721b52c066ac6f5c1c228ecfabe data/minecraft/tags/items/boats.json
+cd25295d48263d1b2636f3f44d649bc5594ac853 data/minecraft/tags/items/buttons.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/items/carpets.json
 3a32e055b3e9c5d1d39fb3018551fd167be30c74 data/minecraft/tags/items/leaves.json
 1d6d787289a77da9d73e7fb2aed085e33f1cf574 data/minecraft/tags/items/logs_that_burn.json

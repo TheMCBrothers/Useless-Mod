@@ -122,6 +122,7 @@ public class UselessItemTagsProvider extends ItemTagsProvider {
         this.copy(BlockTags.STAIRS, ItemTags.STAIRS);
         this.copy(BlockTags.SLABS, ItemTags.SLABS);
         this.copy(BlockTags.WALLS, ItemTags.WALLS);
+        this.copy(BlockTags.BUTTONS, ItemTags.BUTTONS);
         this.copy(BlockTags.RAILS, ItemTags.RAILS);
         this.copy(BlockTags.STANDING_SIGNS, ItemTags.SIGNS);
 

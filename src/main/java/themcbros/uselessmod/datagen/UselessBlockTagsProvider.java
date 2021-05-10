@@ -75,6 +75,7 @@ public class UselessBlockTagsProvider extends BlockTagsProvider {
         this.getOrCreateBuilder(BlockTags.STAIRS).add(BlockInit.USELESS_STONE_STAIRS.get(), BlockInit.USELESS_COBBLESTONE_STAIRS.get());
         this.getOrCreateBuilder(BlockTags.SLABS).add(BlockInit.USELESS_STONE_SLAB.get(), BlockInit.USELESS_COBBLESTONE_SLAB.get());
         this.getOrCreateBuilder(BlockTags.WALLS).add(BlockInit.USELESS_COBBLESTONE_WALL.get());
+        this.getOrCreateBuilder(BlockTags.BUTTONS).add(BlockInit.USELESS_STONE_BUTTON.get());
 
         this.getOrCreateBuilder(BlockTags.STONE_PRESSURE_PLATES).addItemEntry(BlockInit.USELESS_STONE_PRESSURE_PLATE.get());
         this.getOrCreateBuilder(BlockTags.BASE_STONE_OVERWORLD).addItemEntry(BlockInit.USELESS_STONE.get());
