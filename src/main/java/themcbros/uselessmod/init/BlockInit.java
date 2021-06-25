@@ -90,7 +90,7 @@ public class BlockInit {
     public static final RegistryObject<Block> USELESS_OAK_SIGN = REGISTER.registerNoItem("useless_oak_sign",
             () -> new UselessStandingSignBlock(Block.Properties.from(Blocks.OAK_SIGN), WoodTypeInit.USELESS_OAK));
     public static final RegistryObject<Block> USELESS_OAK_WALL_SIGN = REGISTER.registerNoItem("useless_oak_wall_sign",
-            () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN), WoodTypeInit.USELESS_OAK));
+            () -> new UselessWallSignBlock(Block.Properties.from(Blocks.OAK_WALL_SIGN).lootFrom(USELESS_OAK_SIGN), WoodTypeInit.USELESS_OAK));
 
     public static final ItemObject<Block> MACHINE_FRAME = REGISTER.register("machine_frame",
             () -> new MachineFrameBlock(AbstractBlock.Properties.from(Blocks.GLASS).sound(SoundType.METAL)), GENERAL_BLOCK_ITEM);

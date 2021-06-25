@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:useless_fence_gate"
+          "name": "uselessmod:useless_oak_sapling"
         }
       ],
       "conditions": [

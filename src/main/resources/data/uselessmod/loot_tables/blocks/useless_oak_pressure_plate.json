@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:useless_sign"
+          "name": "uselessmod:useless_oak_pressure_plate"
         }
       ],
       "conditions": [

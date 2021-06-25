@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:wooden_useless_trapdoor"
+          "name": "uselessmod:useless_oak_log"
         }
       ],
       "conditions": [

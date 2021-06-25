@@ -6,13 +6,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "conditions": [
             {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
+              "condition": "minecraft:block_state_property",
+              "block": "uselessmod:useless_oak_door",
+              "properties": {
+                "half": "lower"
+              }
             }
           ],
-          "name": "uselessmod:useless_chest"
+          "name": "uselessmod:useless_oak_door"
         }
       ],
       "conditions": [

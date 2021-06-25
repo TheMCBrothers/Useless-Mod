@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:useless_stairs"
+          "name": "uselessmod:useless_oak_trapdoor"
         }
       ],
       "conditions": [

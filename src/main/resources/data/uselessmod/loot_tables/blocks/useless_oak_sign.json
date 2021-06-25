@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:useless_log"
+          "name": "uselessmod:useless_oak_sign"
         }
       ],
       "conditions": [

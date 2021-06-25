@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:useless_wood"
+          "name": "uselessmod:stripped_useless_oak_wood"
         }
       ],
       "conditions": [
