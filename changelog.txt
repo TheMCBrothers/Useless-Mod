@@ -1,3 +1,7 @@
+4.2.2:
+- Fixed loot tables
+- All blocks should now drop properly
+
 4.2.1:
 - Reworked Useless Sign
 - Renamed wooden stuff to Useless Oak
