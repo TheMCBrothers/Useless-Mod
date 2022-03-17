@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "uselessmod:useless_rail",
+    "uselessmod:useless_powered_rail",
+    "uselessmod:useless_detector_rail",
+    "uselessmod:useless_activator_rail"
+  ]
+}

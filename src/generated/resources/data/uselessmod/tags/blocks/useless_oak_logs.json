@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "uselessmod:useless_oak_log",
+    "uselessmod:useless_oak_wood",
+    "uselessmod:stripped_useless_oak_log",
+    "uselessmod:stripped_useless_oak_wood"
+  ]
+}

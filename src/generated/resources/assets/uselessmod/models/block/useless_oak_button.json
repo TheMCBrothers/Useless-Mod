@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "uselessmod:block/useless_oak_planks"
+  }
+}

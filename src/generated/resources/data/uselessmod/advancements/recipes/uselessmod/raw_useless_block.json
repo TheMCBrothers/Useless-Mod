@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:raw_useless_block"
+    ]
+  },
+  "criteria": {
+    "has_raw_useless": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uselessmod:raw_useless"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:raw_useless_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_useless",
+      "has_the_recipe"
+    ]
+  ]
+}

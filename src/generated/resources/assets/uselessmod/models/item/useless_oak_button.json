@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_inventory",
+  "textures": {
+    "texture": "uselessmod:block/useless_oak_planks"
+  }
+}

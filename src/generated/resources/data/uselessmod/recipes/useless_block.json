@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "uselessmod:useless_ingot"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_block"
+  }
+}

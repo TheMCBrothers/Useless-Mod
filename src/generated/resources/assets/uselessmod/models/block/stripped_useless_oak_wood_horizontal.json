@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "uselessmod:block/stripped_useless_oak_log",
+    "end": "uselessmod:block/stripped_useless_oak_log"
+  }
+}

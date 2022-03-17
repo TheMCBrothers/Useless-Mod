@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "uselessmod:useless_ore",
+    "uselessmod:deepslate_useless_ore",
+    "uselessmod:nether_useless_ore",
+    "uselessmod:end_useless_ore"
+  ]
+}

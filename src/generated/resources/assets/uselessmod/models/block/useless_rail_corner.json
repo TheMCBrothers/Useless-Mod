@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/rail_curved",
+  "textures": {
+    "rail": "uselessmod:block/useless_rail_corner"
+  }
+}

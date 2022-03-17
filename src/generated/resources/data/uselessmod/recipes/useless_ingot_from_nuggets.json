@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "useless_ingot",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "uselessmod:useless_nugget"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_ingot"
+  }
+}
