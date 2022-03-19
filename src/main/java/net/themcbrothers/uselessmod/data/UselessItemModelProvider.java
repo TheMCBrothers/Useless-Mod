@@ -30,17 +30,16 @@ public class UselessItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.USELESS_CHESTPLATE);
         simpleItem(ModItems.USELESS_LEGGINGS);
         simpleItem(ModItems.USELESS_BOOTS);
-        this.generatedModels.put(modLoc("useless_skeleton_spawn_egg"),
-                this.withExistingParent("useless_skeleton_spawn_egg", mcLoc("item/template_spawn_egg")));
+        this.withExistingParent("useless_skeleton_spawn_egg", mcLoc("item/template_spawn_egg"));
     }
 
     private void simpleItem(ItemLike item) {
         final ResourceLocation id = item.asItem().getRegistryName();
-        this.generatedModels.put(id, this.singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath())));
+        this.singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath()));
     }
 
     private void simpleTool(ItemLike item) {
         final ResourceLocation id = item.asItem().getRegistryName();
-        this.generatedModels.put(id, this.singleTexture(id.getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/" + id.getPath())));
+        this.singleTexture(id.getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/" + id.getPath()));
     }
 }

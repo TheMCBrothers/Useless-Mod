@@ -43,6 +43,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         trapdoorBlock(USELESS_OAK_WOOD.getTrapdoor(), blockTexture(USELESS_OAK_WOOD.getTrapdoor()), true);
         buttonBlock(USELESS_OAK_WOOD.getButton(), blockTexture(USELESS_OAK_WOOD.get()));
         pressurePlateBlock(USELESS_OAK_WOOD.getPressurePlate(), blockTexture(USELESS_OAK_WOOD.get()));
+        signBlock(USELESS_OAK_WOOD.getSign(), USELESS_OAK_WOOD.getWallSign(), blockTexture(USELESS_OAK_WOOD.get()));
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
 
         // Block Item Models
@@ -55,9 +56,10 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder("useless_oak_trapdoor").parent(models().getExistingFile(modLoc("block/useless_oak_trapdoor_bottom")));
         itemModels().buttonInventory("useless_oak_button", blockTexture(USELESS_OAK_WOOD.get()));
         simpleBlockItem(USELESS_OAK_WOOD.getPressurePlate());
-        itemModels().generatedModels.put(USELESS_OAK_WOOD.getFence().getRegistryName(), itemModels().fenceInventory("useless_oak_fence", blockTexture(USELESS_OAK_WOOD.get())));
+        itemModels().fenceInventory("useless_oak_fence", blockTexture(USELESS_OAK_WOOD.get()));
         simpleBlockItem(USELESS_OAK_WOOD.getFenceGate());
         simpleItemItem(USELESS_OAK_WOOD.getDoor());
+        simpleItemItem(USELESS_OAK_WOOD.getSign());
         simpleBlockItem(PAINT_BUCKET.get());
 
         // rail pain
@@ -77,7 +79,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
 
     private void simpleItem(Block block) {
         final ResourceLocation id = block.getRegistryName();
-        this.itemModels().generatedModels.put(id, this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", blockTexture(block)));
+        this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", blockTexture(block));
     }
 
     private void crossPlant(Block block) {
@@ -88,7 +90,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
 
     private void simpleItemItem(Block block) {
         final ResourceLocation id = block.getRegistryName();
-        this.itemModels().generatedModels.put(id, this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath())));
+        this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath()));
     }
 
     private void simpleBlockWithItem(Block block) {
