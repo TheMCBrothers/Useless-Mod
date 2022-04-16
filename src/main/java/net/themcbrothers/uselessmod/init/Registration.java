@@ -12,7 +12,7 @@ public final class Registration {
     public static final BlockDeferredRegister BLOCKS = new BlockDeferredRegister(UselessMod.MOD_ID);
     public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(UselessMod.MOD_ID);
     public static final BlockEntityTypeDeferredRegister BLOCK_ENTITIES = new BlockEntityTypeDeferredRegister(UselessMod.MOD_ID);
-    public static final ContainerTypeDeferredRegister CONTAINERS = new ContainerTypeDeferredRegister(UselessMod.MOD_ID);
+    public static final MenuTypeDeferredRegister MENU_TYPES = new MenuTypeDeferredRegister(UselessMod.MOD_ID);
     public static final EntityTypeDeferredRegister ENTITIES = new EntityTypeDeferredRegister(UselessMod.MOD_ID);
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, UselessMod.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, UselessMod.MOD_ID);
@@ -28,7 +28,7 @@ public final class Registration {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
-        CONTAINERS.register(bus);
+        MENU_TYPES.register(bus);
         ENTITIES.register(bus);
         BIOMES.register(bus);
     }

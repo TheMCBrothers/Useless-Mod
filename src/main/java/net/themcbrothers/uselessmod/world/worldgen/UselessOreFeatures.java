@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
+import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -22,5 +23,5 @@ public final class UselessOreFeatures {
             OreConfiguration.target(NETHER_ORE_REPLACEABLES, ModBlocks.NETHER_USELESS_ORE.get().defaultBlockState()),
             OreConfiguration.target(END_ORE_REPLACEABLES, ModBlocks.END_USELESS_ORE.get().defaultBlockState()));
 
-    public static final ConfiguredFeature<?, ?> ORE_USELESS = FeatureUtils.register("ore_useless", Feature.ORE.configured(new OreConfiguration(ORE_USELESS_TARGET_LIST, 9)));
+    public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_USELESS = FeatureUtils.register("ore_useless", Feature.ORE, new OreConfiguration(ORE_USELESS_TARGET_LIST, 9));
 }
