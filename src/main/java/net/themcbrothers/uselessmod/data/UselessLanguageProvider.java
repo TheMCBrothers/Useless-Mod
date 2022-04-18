@@ -16,7 +16,7 @@ public class UselessLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         this.addAdvancement("root", "Useless Mod", "Is this useless?");
-        this.addAdvancement("mine", " Mod", "what Is this?");
+        this.addAdvancement("mine_ore", "Mine an ORE", "what Is this?");
 
         this.addBlock(ModBlocks.USELESS_ORE, "Useless Ore");
         this.addBlock(ModBlocks.DEEPSLATE_USELESS_ORE, "Deepslate Useless Ore");
@@ -29,6 +29,9 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add(ModBlocks.USELESS_OAK_WOOD.getStrippedLog(), "Stripped Useless Oak Log");
         this.add(ModBlocks.USELESS_OAK_WOOD.getStrippedWood(), "Stripped Useless Oak Wood");
         this.addBlock(ModBlocks.USELESS_OAK_SAPLING, "Useless Oak Sapling");
+        this.addBlock(ModBlocks.RED_ROSE, "Red Rose");
+        this.addBlock(ModBlocks.BLUE_ROSE, "Blue Rose");
+        this.addBlock(ModBlocks.USELESS_ROSE, "Useless Rose");
         this.addBlock(ModBlocks.USELESS_OAK_LEAVES, "Useless Oak Leaves");
         this.add(ModBlocks.USELESS_OAK_WOOD.get(), "Useless Oak Planks");
         this.add(ModBlocks.USELESS_OAK_WOOD.getSlab(), "Useless Oak Slab");

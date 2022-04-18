@@ -31,6 +31,12 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         axisBlock((RotatedPillarBlock) USELESS_OAK_WOOD.getWood(), modLoc("block/useless_oak_log"), modLoc("block/useless_oak_log"));
         axisBlock((RotatedPillarBlock) USELESS_OAK_WOOD.getStrippedLog(), modLoc("block/stripped_useless_oak_log"), modLoc("block/stripped_useless_oak_log_top"));
         axisBlock((RotatedPillarBlock) USELESS_OAK_WOOD.getStrippedWood(), modLoc("block/stripped_useless_oak_log"), modLoc("block/stripped_useless_oak_log"));
+        crossPlant(RED_ROSE.get());
+        crossPlant(BLUE_ROSE.get());
+        crossPlant(USELESS_ROSE.get());
+        pottedPlant(POTTED_RED_ROSE.get(), RED_ROSE.get());
+        pottedPlant(POTTED_BLUE_ROSE.get(), BLUE_ROSE.get());
+        pottedPlant(POTTED_USELESS_ROSE.get(), USELESS_ROSE.get());
         crossPlant(USELESS_OAK_SAPLING.get());
         simpleBlockWithItem(USELESS_OAK_LEAVES.get());
         simpleBlockWithItem(USELESS_OAK_WOOD.get());
@@ -85,7 +91,12 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     private void crossPlant(Block block) {
         ResourceLocation id = block.getRegistryName();
         simpleItem(block);
-        simpleBlock(block, this.models().cross(id.getPath(), new ResourceLocation(id.getNamespace(), "block/" + id.getPath())));
+        simpleBlock(block, this.models().cross(id.getPath(), blockTexture(block)));
+    }
+
+    private void pottedPlant(Block block, Block plant) {
+        ResourceLocation id = block.getRegistryName();
+        simpleBlock(block, this.models().withExistingParent(id.getPath(), mcLoc("block/flower_pot_cross")).texture("plant", blockTexture(plant)));
     }
 
     private void simpleItemItem(Block block) {
