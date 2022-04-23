@@ -30,6 +30,7 @@ public class UselessItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.USELESS_CHESTPLATE);
         simpleItem(ModItems.USELESS_LEGGINGS);
         simpleItem(ModItems.USELESS_BOOTS);
+        simpleItem(ModItems.USELESS_ELYTRA);
         this.withExistingParent("useless_skeleton_spawn_egg", mcLoc("item/template_spawn_egg"));
     }
 

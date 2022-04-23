@@ -4,6 +4,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.RawItem;
+import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 import slimeknights.mantle.registration.object.ItemObject;
 
 import static net.themcbrothers.uselessmod.init.Registration.ITEMS;
@@ -25,6 +26,7 @@ public final class ModItems {
     public static final ItemObject<Item> USELESS_CHESTPLATE = ITEMS.register("useless_chestplate", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.CHEST, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_LEGGINGS = ITEMS.register("useless_leggings", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.LEGS, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.FEET, new Item.Properties().tab(UselessMod.TAB)));
+    public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(500).rarity(Rarity.UNCOMMON)));
 
     public static final ItemObject<Item> RAW_TEST = ITEMS.register("raw_test", () -> new RawItem(new Item.Properties().tab(UselessMod.TAB)));
 
