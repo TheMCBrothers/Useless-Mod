@@ -1,0 +1,47 @@
+{
+  "parent": "uselessmod:visit_useless_forest",
+  "display": {
+    "icon": {
+      "item": "uselessmod:useless_rose"
+    },
+    "title": {
+      "translate": "advancement.uselessmod.collect_roses.title"
+    },
+    "description": {
+      "translate": "advancement.uselessmod.collect_roses.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_roses": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uselessmod:red_rose"
+            ]
+          },
+          {
+            "items": [
+              "uselessmod:blue_rose"
+            ]
+          },
+          {
+            "items": [
+              "uselessmod:useless_rose"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_roses"
+    ]
+  ]
+}

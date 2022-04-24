@@ -1,0 +1,33 @@
+{
+  "parent": "uselessmod:root",
+  "display": {
+    "icon": {
+      "item": "uselessmod:useless_oak_sapling"
+    },
+    "title": {
+      "translate": "advancement.uselessmod.visit_useless_forest.title"
+    },
+    "description": {
+      "translate": "advancement.uselessmod.visit_useless_forest.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "useless_forest": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "biome": "uselessmod:useless_forest"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "useless_forest"
+    ]
+  ]
+}

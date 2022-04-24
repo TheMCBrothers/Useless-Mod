@@ -1,7 +1,6 @@
 package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -16,7 +15,9 @@ public class UselessLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         this.addAdvancement("root", "Useless Mod", "Is this useless?");
-        this.addAdvancement("mine_ore", "Mine an ORE", "what Is this?");
+        this.addAdvancement("mine_ore", "Useless Material", "Mine some useless ore");
+        this.addAdvancement("collect_roses", "All the Roses", "Collect all useless rose types");
+        this.addAdvancement("visit_useless_forest", "Another Forest", "Visit the useless forest");
 
         this.addBlock(ModBlocks.USELESS_ORE, "Useless Ore");
         this.addBlock(ModBlocks.DEEPSLATE_USELESS_ORE, "Deepslate Useless Ore");
