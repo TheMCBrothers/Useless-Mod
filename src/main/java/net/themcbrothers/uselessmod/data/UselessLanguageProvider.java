@@ -65,8 +65,16 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addItem(ModItems.USELESS_LEGGINGS, "Useless Leggings");
         this.addItem(ModItems.USELESS_BOOTS, "Useless Boots");
         this.addItem(ModItems.USELESS_ELYTRA, "Useless Elytra");
+        this.add("item.uselessmod.useless_sheep_spawn_egg", "Useless Sheep Spawn Egg");
+        this.add("item.uselessmod.useless_pig_spawn_egg", "Useless Pig Spawn Egg");
+        this.add("item.uselessmod.useless_chicken_spawn_egg", "Useless Chicken Spawn Egg");
+        this.add("item.uselessmod.useless_cow_spawn_egg", "Useless Cow Spawn Egg");
         this.add("item.uselessmod.useless_skeleton_spawn_egg", "Useless Skeleton Spawn Egg");
 
+        this.addEntityType(ModEntityTypes.USELESS_SHEEP, "Useless Sheep");
+        this.addEntityType(ModEntityTypes.USELESS_PIG, "Useless Pig");
+        this.addEntityType(ModEntityTypes.USELESS_CHICKEN, "Useless Chicken");
+        this.addEntityType(ModEntityTypes.USELESS_COW, "Useless Cow");
         this.addEntityType(ModEntityTypes.USELESS_SKELETON, "Useless Skeleton");
 
         this.add("itemGroup.uselessmod", "Useless Mod");

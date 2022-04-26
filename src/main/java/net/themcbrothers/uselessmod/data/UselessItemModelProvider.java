@@ -31,6 +31,10 @@ public class UselessItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.USELESS_LEGGINGS);
         simpleItem(ModItems.USELESS_BOOTS);
         simpleItem(ModItems.USELESS_ELYTRA);
+        this.withExistingParent("useless_sheep_spawn_egg", mcLoc("item/template_spawn_egg"));
+        this.withExistingParent("useless_pig_spawn_egg", mcLoc("item/template_spawn_egg"));
+        this.withExistingParent("useless_chicken_spawn_egg", mcLoc("item/template_spawn_egg"));
+        this.withExistingParent("useless_cow_spawn_egg", mcLoc("item/template_spawn_egg"));
         this.withExistingParent("useless_skeleton_spawn_egg", mcLoc("item/template_spawn_egg"));
     }
 

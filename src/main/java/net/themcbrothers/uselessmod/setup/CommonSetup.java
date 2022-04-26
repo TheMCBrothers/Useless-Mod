@@ -1,6 +1,10 @@
 package net.themcbrothers.uselessmod.setup;
 
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -39,6 +43,10 @@ public class CommonSetup {
     }
 
     private void entityAttributes(final EntityAttributeCreationEvent event) {
+        event.put(ModEntityTypes.USELESS_SHEEP.get(), Sheep.createAttributes().build());
+        event.put(ModEntityTypes.USELESS_PIG.get(), Pig.createAttributes().build());
+        event.put(ModEntityTypes.USELESS_CHICKEN.get(), Chicken.createAttributes().build());
+        event.put(ModEntityTypes.USELESS_COW.get(), Cow.createAttributes().build());
         event.put(ModEntityTypes.USELESS_SKELETON.get(), AbstractSkeleton.createAttributes().build());
     }
 }
