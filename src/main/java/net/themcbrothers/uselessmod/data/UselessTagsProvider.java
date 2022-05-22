@@ -91,12 +91,18 @@ public class UselessTagsProvider {
             this.copy(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES);
             this.copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
 
+            // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());
             this.tag(Tags.Items.INGOTS).addTag(UselessTags.Items.INGOTS_USELESS);
             this.tag(UselessTags.Items.DUSTS_USELESS).add(ModItems.USELESS_DUST.get());
             this.tag(Tags.Items.DUSTS).addTag(UselessTags.Items.DUSTS_USELESS);
             this.tag(UselessTags.Items.RAW_MATERIALS_USELESS).add(ModItems.RAW_USELESS.get());
             this.tag(Tags.Items.RAW_MATERIALS).addTag(UselessTags.Items.RAW_MATERIALS_USELESS);
+
+            // other forge tags
+            this.tag(Tags.Items.BONES).add(ModItems.USELESS_BONE.get());
+            this.tag(Tags.Items.LEATHER).add(ModItems.USELESS_LEATHER.get());
+            this.tag(Tags.Items.FEATHERS).add(ModItems.USELESS_FEATHER.get());
         }
     }
 
