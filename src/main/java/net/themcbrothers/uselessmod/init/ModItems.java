@@ -28,7 +28,5 @@ public final class ModItems {
     public static final ItemObject<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.FEET, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(500).rarity(Rarity.UNCOMMON)));
 
-    public static final ItemObject<Item> RAW_TEST = ITEMS.register("raw_test", () -> new RawItem(new Item.Properties().tab(UselessMod.TAB)));
-
     // todo useless bone, leather, etc
 }
