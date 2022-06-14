@@ -10,8 +10,11 @@ import net.minecraft.world.level.block.Block;
 public class UselessTags {
     public static class Blocks {
         public static final TagKey<Block> ORES_USELESS = forgeTag("ores/useless");
+        public static final TagKey<Block> ORES_SUPER_USELESS = forgeTag("ores/super_useless");
         public static final TagKey<Block> STORAGE_BLOCKS_USELESS = forgeTag("storage_blocks/useless");
+        public static final TagKey<Block> STORAGE_BLOCKS_SUPER_USELESS = forgeTag("storage_blocks/super_useless");
         public static final TagKey<Block> STORAGE_BLOCKS_RAW_USELESS = forgeTag("storage_blocks/raw_useless");
+        public static final TagKey<Block> STORAGE_BLOCKS_RAW_SUPER_USELESS = forgeTag("storage_blocks/raw_super_useless");
 
         public static final TagKey<Block> USELESS_OAK_LOGS = modTag("useless_oak_logs");
 
@@ -26,12 +29,18 @@ public class UselessTags {
 
     public static class Items {
         public static final TagKey<Item> INGOTS_USELESS = forgeTag("ingots/useless");
+        public static final TagKey<Item> INGOTS_SUPER_USELESS = forgeTag("ingots/super_useless");
         public static final TagKey<Item> DUSTS_USELESS = forgeTag("dusts/useless");
+        public static final TagKey<Item> DUSTS_SUPER_USELESS = forgeTag("dusts/super_useless");
         public static final TagKey<Item> RAW_MATERIALS_USELESS = forgeTag("raw_materials/useless");
+        public static final TagKey<Item> RAW_MATERIALS_SUPER_USELESS = forgeTag("raw_materials/super_useless");
 
         public static final TagKey<Item> ORES_USELESS = forgeTag("ores/useless");
+        public static final TagKey<Item> ORES_SUPER_USELESS = forgeTag("ores/super_useless");
         public static final TagKey<Item> STORAGE_BLOCKS_USELESS = forgeTag("storage_blocks/useless");
+        public static final TagKey<Item> STORAGE_BLOCKS_SUPER_USELESS = forgeTag("storage_blocks/super_useless");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_USELESS = forgeTag("storage_blocks/raw_useless");
+        public static final TagKey<Item> STORAGE_BLOCKS_RAW_SUPER_USELESS = forgeTag("storage_blocks/raw_super_useless");
 
         public static final TagKey<Item> USELESS_OAK_LOGS = modTag("useless_oak_logs");
 
