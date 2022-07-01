@@ -20,11 +20,17 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addAdvancement("visit_useless_forest", "Another Forest", "Visit the useless forest");
 
         this.addBlock(ModBlocks.USELESS_ORE, "Useless Ore");
+        this.addBlock(ModBlocks.SUPER_USELESS_ORE, "Super-Useless Ore");
         this.addBlock(ModBlocks.DEEPSLATE_USELESS_ORE, "Deepslate Useless Ore");
+        this.addBlock(ModBlocks.DEEPSLATE_SUPER_USELESS_ORE, "Deepslate Super-Useless Ore");
         this.addBlock(ModBlocks.NETHER_USELESS_ORE, "Nether Useless Ore");
+        this.addBlock(ModBlocks.NETHER_SUPER_USELESS_ORE, "Nether Super-Useless Ore");
         this.addBlock(ModBlocks.END_USELESS_ORE, "End Useless Ore");
+        this.addBlock(ModBlocks.END_SUPER_USELESS_ORE, "End Super-Useless Ore");
         this.addBlock(ModBlocks.USELESS_BLOCK, "Block of Useless");
+        this.addBlock(ModBlocks.SUPER_USELESS_BLOCK, "Super-Block of Useless");
         this.addBlock(ModBlocks.RAW_USELESS_BLOCK, "Block of Raw Useless");
+        this.addBlock(ModBlocks.RAW_SUPER_USELESS_BLOCK, "Block of Raw Super-Useless");
         this.add(ModBlocks.USELESS_OAK_WOOD.getLog(), "Useless Oak Log");
         this.add(ModBlocks.USELESS_OAK_WOOD.getWood(), "Useless Oak Wood");
         this.add(ModBlocks.USELESS_OAK_WOOD.getStrippedLog(), "Stripped Useless Oak Log");
@@ -52,14 +58,23 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_BARS, "Useless Bars");
 
         this.addItem(ModItems.RAW_USELESS, "Raw Useless");
+        this.addItem(ModItems.RAW_SUPER_USELESS, "Raw Super-Useless");
         this.addItem(ModItems.USELESS_DUST, "Useless Dust");
+        this.addItem(ModItems.SUPER_USELESS_DUST, "Super-Useless Dust");
         this.addItem(ModItems.USELESS_INGOT, "Useless Ingot");
+        this.addItem(ModItems.SUPER_USELESS_INGOT, "Super-Useless Ingot");
         this.addItem(ModItems.USELESS_NUGGET, "Useless Nugget");
+        this.addItem(ModItems.SUPER_USELESS_NUGGET, "Super-Useless Nugget");
         this.addItem(ModItems.USELESS_SWORD, "Useless Sword");
+        this.addItem(ModItems.SUPER_USELESS_SWORD, "Super-Useless Sword");
         this.addItem(ModItems.USELESS_SHOVEL, "Useless Shovel");
+        this.addItem(ModItems.SUPER_USELESS_SHOVEL, "Super-Useless Shovel");
         this.addItem(ModItems.USELESS_PICKAXE, "Useless Pickaxe");
+        this.addItem(ModItems.SUPER_USELESS_PICKAXE, "Super-Useless Pickaxe");
         this.addItem(ModItems.USELESS_AXE, "Useless Axe");
+        this.addItem(ModItems.SUPER_USELESS_AXE, "Super-Useless Axe");
         this.addItem(ModItems.USELESS_HOE, "Useless Hoe");
+        this.addItem(ModItems.SUPER_USELESS_HOE, "Super-Useless Hoe");
         this.addItem(ModItems.USELESS_HELMET, "Useless Helmet");
         this.addItem(ModItems.USELESS_CHESTPLATE, "Useless Chestplate");
         this.addItem(ModItems.USELESS_LEGGINGS, "Useless Leggings");

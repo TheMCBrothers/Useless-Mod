@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "#forge:storage_blocks/useless",
-    "#forge:storage_blocks/raw_useless"
+    "#forge:storage_blocks/raw_useless",
+    "#forge:storage_blocks/super_useless",
+    "#forge:storage_blocks/raw_super_useless"
   ]
 }

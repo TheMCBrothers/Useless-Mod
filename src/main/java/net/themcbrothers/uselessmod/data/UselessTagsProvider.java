@@ -26,19 +26,23 @@ public class UselessTagsProvider {
         @Override
         protected void addTags() {
             this.tag(UselessTags.Blocks.ORES_USELESS).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get());
-            this.tag(Tags.Blocks.ORES).addTag(UselessTags.Blocks.ORES_USELESS);
-            this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(ModBlocks.USELESS_ORE.get());
-            this.tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(ModBlocks.DEEPSLATE_USELESS_ORE.get());
-            this.tag(Tags.Blocks.ORES_IN_GROUND_NETHERRACK).add(ModBlocks.NETHER_USELESS_ORE.get());
-            this.tag(Tags.Blocks.ORE_RATES_SINGULAR).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get());
+            this.tag(UselessTags.Blocks.ORES_SUPER_USELESS).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get());
+            this.tag(Tags.Blocks.ORES).addTag(UselessTags.Blocks.ORES_USELESS).addTag(UselessTags.Blocks.ORES_SUPER_USELESS);
+            this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get());
+            this.tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get());
+            this.tag(Tags.Blocks.ORES_IN_GROUND_NETHERRACK).add(ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get());
+            this.tag(Tags.Blocks.ORE_RATES_SINGULAR).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get());
             this.tag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).add(ModBlocks.USELESS_BLOCK.get());
+            this.tag(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS).add(ModBlocks.SUPER_USELESS_BLOCK.get());
             this.tag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS).add(ModBlocks.RAW_USELESS_BLOCK.get());
-            this.tag(Tags.Blocks.STORAGE_BLOCKS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS);
+            this.tag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS).add(ModBlocks.RAW_SUPER_USELESS_BLOCK.get());
+            this.tag(Tags.Blocks.STORAGE_BLOCKS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS);
 
-            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get(), ModBlocks.RAW_USELESS_BLOCK.get(), ModBlocks.USELESS_BARS.get(), ModBlocks.PAINT_BUCKET.get(), ModBlocks.USELESS_RAIL.get(), ModBlocks.USELESS_POWERED_RAIL.get(), ModBlocks.USELESS_DETECTOR_RAIL.get(), ModBlocks.USELESS_ACTIVATOR_RAIL.get());
+            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get(), ModBlocks.RAW_USELESS_BLOCK.get(), ModBlocks.USELESS_BARS.get(), ModBlocks.PAINT_BUCKET.get(), ModBlocks.USELESS_RAIL.get(), ModBlocks.USELESS_POWERED_RAIL.get(), ModBlocks.USELESS_DETECTOR_RAIL.get(), ModBlocks.USELESS_ACTIVATOR_RAIL.get());
             this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.USELESS_OAK_LEAVES.get());
-            this.tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get());
-            this.tag(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.USELESS_BLOCK.get());
+            this.tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get());
+            this.tag(BlockTags.NEEDS_IRON_TOOL).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_BLOCK.get());
+            this.tag(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.USELESS_BLOCK.get(), ModBlocks.SUPER_USELESS_BLOCK.get());
             this.tag(BlockTags.RAILS).add(ModBlocks.USELESS_RAIL.get(), ModBlocks.USELESS_POWERED_RAIL.get(), ModBlocks.USELESS_DETECTOR_RAIL.get(), ModBlocks.USELESS_ACTIVATOR_RAIL.get());
             this.tag(UselessTags.Blocks.USELESS_OAK_LOGS).add(ModBlocks.USELESS_OAK_WOOD.getLog(), ModBlocks.USELESS_OAK_WOOD.getWood(), ModBlocks.USELESS_OAK_WOOD.getStrippedLog(), ModBlocks.USELESS_OAK_WOOD.getStrippedWood());
             this.tag(BlockTags.LOGS_THAT_BURN).addTag(UselessTags.Blocks.USELESS_OAK_LOGS);
@@ -67,13 +71,16 @@ public class UselessTagsProvider {
         protected void addTags() {
             // ores
             this.copy(UselessTags.Blocks.ORES_USELESS, UselessTags.Items.ORES_USELESS);
+            this.copy(UselessTags.Blocks.ORES_SUPER_USELESS, UselessTags.Items.ORES_SUPER_USELESS);
             this.copy(Tags.Blocks.ORES, Tags.Items.ORES);
             this.copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE);
             this.copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE);
             this.copy(Tags.Blocks.ORE_RATES_SINGULAR, Tags.Items.ORE_RATES_SINGULAR);
             // storage blocks
             this.copy(UselessTags.Blocks.STORAGE_BLOCKS_USELESS, UselessTags.Items.STORAGE_BLOCKS_USELESS);
+            this.copy(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS, UselessTags.Items.STORAGE_BLOCKS_SUPER_USELESS);
             this.copy(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS, UselessTags.Items.STORAGE_BLOCKS_RAW_USELESS);
+            this.copy(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS, UselessTags.Items.STORAGE_BLOCKS_RAW_SUPER_USELESS);
             this.copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
             // other
             this.copy(BlockTags.RAILS, ItemTags.RAILS);
@@ -93,11 +100,14 @@ public class UselessTagsProvider {
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());
-            this.tag(Tags.Items.INGOTS).addTag(UselessTags.Items.INGOTS_USELESS);
+            this.tag(UselessTags.Items.INGOTS_SUPER_USELESS).add(ModItems.SUPER_USELESS_INGOT.get());
+            this.tag(Tags.Items.INGOTS).addTag(UselessTags.Items.INGOTS_USELESS).addTag(UselessTags.Items.INGOTS_SUPER_USELESS);
             this.tag(UselessTags.Items.DUSTS_USELESS).add(ModItems.USELESS_DUST.get());
-            this.tag(Tags.Items.DUSTS).addTag(UselessTags.Items.DUSTS_USELESS);
+            this.tag(UselessTags.Items.DUSTS_SUPER_USELESS).add(ModItems.SUPER_USELESS_DUST.get());
+            this.tag(Tags.Items.DUSTS).addTag(UselessTags.Items.DUSTS_USELESS).addTag(UselessTags.Items.DUSTS_SUPER_USELESS);
             this.tag(UselessTags.Items.RAW_MATERIALS_USELESS).add(ModItems.RAW_USELESS.get());
-            this.tag(Tags.Items.RAW_MATERIALS).addTag(UselessTags.Items.RAW_MATERIALS_USELESS);
+            this.tag(UselessTags.Items.RAW_MATERIALS_SUPER_USELESS).add(ModItems.RAW_SUPER_USELESS.get());
+            this.tag(Tags.Items.RAW_MATERIALS).addTag(UselessTags.Items.RAW_MATERIALS_USELESS).addTag(UselessTags.Items.RAW_MATERIALS_SUPER_USELESS);
 
             // other forge tags
             this.tag(Tags.Items.BONES).add(ModItems.USELESS_BONE.get());

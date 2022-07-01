@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "uselessmod:nether_useless_ore"
+    "uselessmod:nether_useless_ore",
+    "uselessmod:nether_super_useless_ore"
   ]
 }

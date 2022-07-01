@@ -17,11 +17,17 @@ public class UselessBlockLoot extends BlockLoot {
     @Override
     protected void addTables() {
         this.add(USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_USELESS.get()));
+        this.add(SUPER_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_SUPER_USELESS.get()));
         this.add(DEEPSLATE_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_USELESS.get()));
+        this.add(DEEPSLATE_SUPER_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_SUPER_USELESS.get()));
         this.add(NETHER_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_USELESS.get()));
+        this.add(NETHER_SUPER_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_SUPER_USELESS.get()));
         this.add(END_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_USELESS.get()));
+        this.add(END_SUPER_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_SUPER_USELESS.get()));
         this.dropSelf(USELESS_BLOCK.get());
+        this.dropSelf(SUPER_USELESS_BLOCK.get());
         this.dropSelf(RAW_USELESS_BLOCK.get());
+        this.dropSelf(RAW_SUPER_USELESS_BLOCK.get());
         this.dropSelf(USELESS_OAK_WOOD.getLog());
         this.dropSelf(USELESS_OAK_WOOD.getWood());
         this.dropSelf(USELESS_OAK_WOOD.getStrippedLog());
