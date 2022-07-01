@@ -68,11 +68,20 @@ public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock {
 
     private VoxelShape makeShape() {
         VoxelShape shape = Shapes.empty();
-        shape = Shapes.join(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.0625, 0.75), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.25, 0.0625, 0.3125, 0.3125, 0.5, 0.6875), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.25, 0.0625, 0.25, 0.75, 0.5, 0.3125), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.6875, 0.0625, 0.3125, 0.75, 0.5, 0.6875), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.25, 0.0625, 0.6875, 0.75, 0.5, 0.75), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.375, 0, 0.25, 0.625, 0.5, 0.3125), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.375, 0, 0.6875, 0.625, 0.5, 0.75), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.25, 0, 0.375, 0.3125, 0.5, 0.625), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.6875, 0, 0.375, 0.75, 0.5, 0.625), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.3125, 0.375, 0.5, 0.375), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.625, 0.375, 0.5, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.625, 0, 0.625, 0.6875, 0.5, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.625, 0, 0.3125, 0.6875, 0.5, 0.375), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.1875, 0.375, 0.46875, 0.25, 0.4375, 0.91625), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.25, 0.007443497627736495, 0.6175565023722636, 0.75, 0.0699434976277365, 0.6800565023722636), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.375, 0, 0.3125, 0.625, 0.0625, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.375, 0.375, 0.0625, 0.625), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.625, 0, 0.375, 0.6875, 0.0625, 0.625), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.75, 0.375, 0.46875, 0.8125, 0.4375, 0.91625), BooleanOp.OR);
         return shape;
     }
 }
