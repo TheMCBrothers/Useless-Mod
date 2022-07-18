@@ -77,10 +77,15 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addItem(ModItems.USELESS_HOE, "Useless Hoe");
         this.addItem(ModItems.SUPER_USELESS_HOE, "Super-Useless Hoe");
         this.addItem(ModItems.USELESS_HELMET, "Useless Helmet");
+        this.addItem(ModItems.SUPER_USELESS_HELMET, "Super-Useless Helmet");
         this.addItem(ModItems.USELESS_CHESTPLATE, "Useless Chestplate");
+        this.addItem(ModItems.SUPER_USELESS_CHESTPLATE, "Super-Useless Chestplate");
         this.addItem(ModItems.USELESS_LEGGINGS, "Useless Leggings");
+        this.addItem(ModItems.SUPER_USELESS_LEGGINGS, "Super-Useless Leggings");
         this.addItem(ModItems.USELESS_BOOTS, "Useless Boots");
+        this.addItem(ModItems.SUPER_USELESS_BOOTS, "Super-Useless Boots");
         this.addItem(ModItems.USELESS_ELYTRA, "Useless Elytra");
+        this.addItem(ModItems.SUPER_USELESS_ELYTRA, "Super-Useless Elytra");
         this.addItem(ModItems.USELESS_BONE, "Useless Bone");
         this.addItem(ModItems.USELESS_LEATHER, "Useless Leather");
         this.addItem(ModItems.USELESS_FEATHER, "Useless Feather");

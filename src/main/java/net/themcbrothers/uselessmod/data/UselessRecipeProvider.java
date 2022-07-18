@@ -73,9 +73,13 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(ModItems.USELESS_HOE.get()).define('#', Tags.Items.RODS_WOODEN).define('X', UselessTags.Items.INGOTS_USELESS).pattern("XX").pattern(" #").pattern(" #").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_HOE.get()).define('#', Tags.Items.RODS_WOODEN).define('X', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("XX").pattern(" #").pattern(" #").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.USELESS_HELMET.get()).define('#', UselessTags.Items.INGOTS_USELESS).pattern("###").pattern("# #").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_HELMET.get()).define('#', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("###").pattern("# #").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.USELESS_CHESTPLATE.get()).define('#', UselessTags.Items.INGOTS_USELESS).pattern("# #").pattern("###").pattern("###").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_CHESTPLATE.get()).define('#', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("# #").pattern("###").pattern("###").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.USELESS_LEGGINGS.get()).define('#', UselessTags.Items.INGOTS_USELESS).pattern("###").pattern("# #").pattern("# #").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_LEGGINGS.get()).define('#', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("###").pattern("# #").pattern("# #").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.USELESS_BOOTS.get()).define('#', UselessTags.Items.INGOTS_USELESS).pattern("# #").pattern("# #").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_BOOTS.get()).define('#', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("# #").pattern("# #").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
     }
 
     @Override
