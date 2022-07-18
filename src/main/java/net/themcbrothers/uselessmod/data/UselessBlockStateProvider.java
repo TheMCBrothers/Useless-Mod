@@ -57,6 +57,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         pressurePlateBlock(USELESS_OAK_WOOD.getPressurePlate(), blockTexture(USELESS_OAK_WOOD.get()));
         signBlock(USELESS_OAK_WOOD.getSign(), USELESS_OAK_WOOD.getWallSign(), blockTexture(USELESS_OAK_WOOD.get()));
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
+        ironBars((IronBarsBlock) SUPER_USELESS_BARS.get(), "super_useless_bars");
 
         // Block Item Models
         simpleBlockItem(USELESS_OAK_WOOD.getLog());

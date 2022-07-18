@@ -52,6 +52,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_OAK_WOOD.getSign());
         this.dropSelf(PAINT_BUCKET.get());
         this.dropSelf(USELESS_BARS.get());
+        this.dropSelf(SUPER_USELESS_BARS.get());
         // Rails
         this.dropSelf(USELESS_RAIL.get());
         this.dropSelf(USELESS_POWERED_RAIL.get());

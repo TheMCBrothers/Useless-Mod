@@ -56,6 +56,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_DETECTOR_RAIL, "Useless Detector Rail");
         this.addBlock(ModBlocks.USELESS_ACTIVATOR_RAIL, "Useless Activator Rail");
         this.addBlock(ModBlocks.USELESS_BARS, "Useless Bars");
+        this.addBlock(ModBlocks.SUPER_USELESS_BARS, "Super-Useless Bars");
 
         this.addItem(ModItems.RAW_USELESS, "Raw Useless");
         this.addItem(ModItems.RAW_SUPER_USELESS, "Raw Super-Useless");
