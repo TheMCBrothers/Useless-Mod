@@ -10,7 +10,8 @@ import net.themcbrothers.uselessmod.UselessTags;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
-    USELESS("uselessmod:useless", 20, new int[]{3, 6, 7, 3}, 11, SoundEvents.ARMOR_EQUIP_IRON, 0.25F, 0.01F, () -> Ingredient.of(UselessTags.Items.INGOTS_USELESS));
+    USELESS("uselessmod:useless", 20, new int[]{3, 6, 7, 3}, 11, SoundEvents.ARMOR_EQUIP_IRON, 0.25F, 0.01F, () -> Ingredient.of(UselessTags.Items.INGOTS_USELESS)),
+    SUPER_USELESS("uselessmod:super_useless", 20, new int[]{3, 6, 7, 3}, 11, SoundEvents.ARMOR_EQUIP_IRON, 0.25F, 0.025F, () -> Ingredient.of(UselessTags.Items.INGOTS_SUPER_USELESS));
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
     private final String name;

@@ -22,11 +22,17 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         // Block and Item Models
         simpleBlockWithItem(USELESS_ORE.get());
+        simpleBlockWithItem(SUPER_USELESS_ORE.get());
         simpleBlockWithItem(DEEPSLATE_USELESS_ORE.get());
+        simpleBlockWithItem(DEEPSLATE_SUPER_USELESS_ORE.get());
         simpleBlockWithItem(NETHER_USELESS_ORE.get());
+        simpleBlockWithItem(NETHER_SUPER_USELESS_ORE.get());
         simpleBlockWithItem(END_USELESS_ORE.get());
+        simpleBlockWithItem(END_SUPER_USELESS_ORE.get());
         simpleBlockWithItem(USELESS_BLOCK.get());
+        simpleBlockWithItem(SUPER_USELESS_BLOCK.get());
         simpleBlockWithItem(RAW_USELESS_BLOCK.get());
+        simpleBlockWithItem(RAW_SUPER_USELESS_BLOCK.get());
         axisBlock((RotatedPillarBlock) USELESS_OAK_WOOD.getLog(), modLoc("block/useless_oak_log"), modLoc("block/useless_oak_log_top"));
         axisBlock((RotatedPillarBlock) USELESS_OAK_WOOD.getWood(), modLoc("block/useless_oak_log"), modLoc("block/useless_oak_log"));
         axisBlock((RotatedPillarBlock) USELESS_OAK_WOOD.getStrippedLog(), modLoc("block/stripped_useless_oak_log"), modLoc("block/stripped_useless_oak_log_top"));
@@ -51,6 +57,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         pressurePlateBlock(USELESS_OAK_WOOD.getPressurePlate(), blockTexture(USELESS_OAK_WOOD.get()));
         signBlock(USELESS_OAK_WOOD.getSign(), USELESS_OAK_WOOD.getWallSign(), blockTexture(USELESS_OAK_WOOD.get()));
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
+        ironBars((IronBarsBlock) SUPER_USELESS_BARS.get(), "super_useless_bars");
 
         // Block Item Models
         simpleBlockItem(USELESS_OAK_WOOD.getLog());

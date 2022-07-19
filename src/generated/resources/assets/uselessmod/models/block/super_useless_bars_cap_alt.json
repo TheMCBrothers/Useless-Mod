@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/iron_bars_cap_alt",
+  "textures": {
+    "bars": "uselessmod:block/super_useless_bars",
+    "edge": "uselessmod:block/super_useless_bars",
+    "particle": "uselessmod:block/super_useless_bars"
+  }
+}

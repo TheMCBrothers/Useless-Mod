@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/iron_bars_post_ends",
+  "textures": {
+    "edge": "uselessmod:block/super_useless_bars",
+    "particle": "uselessmod:block/super_useless_bars"
+  }
+}

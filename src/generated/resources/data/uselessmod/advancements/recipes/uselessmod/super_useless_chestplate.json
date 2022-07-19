@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:super_useless_chestplate"
+    ]
+  },
+  "criteria": {
+    "has_super_useless_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/super_useless"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:super_useless_chestplate"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_super_useless_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

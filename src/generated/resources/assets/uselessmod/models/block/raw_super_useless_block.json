@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "uselessmod:block/raw_super_useless_block"
+  }
+}
