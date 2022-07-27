@@ -23,10 +23,10 @@ public final class ModBiomes {
         BiomeDefaultFeatures.addForestFlowers(biomeGenerationSettings);
         BiomeDefaultFeatures.addDefaultOres(biomeGenerationSettings);
         BiomeDefaultFeatures.addDefaultSoftDisks(biomeGenerationSettings);
-        BiomeDefaultFeatures.addDefaultFlowers(biomeGenerationSettings);
         BiomeDefaultFeatures.addForestGrass(biomeGenerationSettings);
         BiomeDefaultFeatures.addDefaultMushrooms(biomeGenerationSettings);
         BiomeDefaultFeatures.addDefaultExtraVegetation(biomeGenerationSettings);
+        biomeGenerationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, UselessVegetationPlacements.FLOWER_USELESS);
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, UselessVegetationPlacements.TREES_USELESS_OAK);
 
         MobSpawnSettings.Builder mobSpawnSettings = new MobSpawnSettings.Builder();
