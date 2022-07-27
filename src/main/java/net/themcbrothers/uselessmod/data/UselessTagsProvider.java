@@ -47,7 +47,7 @@ public class UselessTagsProvider {
             this.tag(UselessTags.Blocks.USELESS_OAK_LOGS).add(ModBlocks.USELESS_OAK_WOOD.getLog(), ModBlocks.USELESS_OAK_WOOD.getWood(), ModBlocks.USELESS_OAK_WOOD.getStrippedLog(), ModBlocks.USELESS_OAK_WOOD.getStrippedWood());
             this.tag(BlockTags.LOGS_THAT_BURN).addTag(UselessTags.Blocks.USELESS_OAK_LOGS);
             this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.RED_ROSE.get(), ModBlocks.BLUE_ROSE.get(), ModBlocks.USELESS_ROSE.get());
-            this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_RED_ROSE.get(), ModBlocks.POTTED_BLUE_ROSE.get(), ModBlocks.POTTED_USELESS_ROSE.get());
+            this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_RED_ROSE.get(), ModBlocks.POTTED_BLUE_ROSE.get(), ModBlocks.POTTED_USELESS_ROSE.get(), ModBlocks.POTTED_USELESS_OAK_SAPLING.get());
             this.tag(BlockTags.SAPLINGS).add(ModBlocks.USELESS_OAK_SAPLING.get());
             this.tag(BlockTags.LEAVES).add(ModBlocks.USELESS_OAK_LEAVES.get());
             this.tag(BlockTags.PLANKS).add(ModBlocks.USELESS_OAK_WOOD.get());

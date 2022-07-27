@@ -38,6 +38,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropPottedContents(POTTED_RED_ROSE.get());
         this.dropPottedContents(POTTED_BLUE_ROSE.get());
         this.dropPottedContents(POTTED_USELESS_ROSE.get());
+        this.dropPottedContents(POTTED_USELESS_OAK_SAPLING.get());
         this.dropSelf(USELESS_OAK_SAPLING.get());
         this.add(USELESS_OAK_LEAVES.get(), (block) -> createOakLeavesDrops(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.dropSelf(USELESS_OAK_WOOD.get());
