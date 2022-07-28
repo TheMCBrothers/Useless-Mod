@@ -42,6 +42,9 @@ public class UselessTags {
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_USELESS = forgeTag("storage_blocks/raw_useless");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_SUPER_USELESS = forgeTag("storage_blocks/raw_super_useless");
 
+        public static final TagKey<Item> CROPS_USELESS_WHEAT = forgeTag("crops/useless_wheat");
+        public static final TagKey<Item> SEEDS_USELESS_WHEAT = forgeTag("seeds/useless_wheat");
+
         public static final TagKey<Item> USELESS_OAK_LOGS = modTag("useless_oak_logs");
 
         private static TagKey<Item> forgeTag(String tag) {

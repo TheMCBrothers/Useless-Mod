@@ -1,7 +1,11 @@
 package net.themcbrothers.uselessmod.data.loot;
 
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -39,6 +43,10 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropPottedContents(POTTED_BLUE_ROSE.get());
         this.dropPottedContents(POTTED_USELESS_ROSE.get());
         this.dropPottedContents(POTTED_USELESS_OAK_SAPLING.get());
+        LootItemCondition.Builder condition1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(USELESS_WHEAT.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        this.add(USELESS_WHEAT.get(), createCropDrops(USELESS_WHEAT.get(), ModItems.USELESS_WHEAT.get(), ModItems.USELESS_WHEAT_SEEDS.get(), condition1));
+        LootItemCondition.Builder condition2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(WILD_USELESS_WHEAT.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        this.add(WILD_USELESS_WHEAT.get(), createCropDrops(USELESS_WHEAT.get(), ModItems.USELESS_WHEAT.get(), ModItems.USELESS_WHEAT_SEEDS.get(), condition2));
         this.dropSelf(USELESS_OAK_SAPLING.get());
         this.add(USELESS_OAK_LEAVES.get(), (block) -> createOakLeavesDrops(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.dropSelf(USELESS_OAK_WOOD.get());

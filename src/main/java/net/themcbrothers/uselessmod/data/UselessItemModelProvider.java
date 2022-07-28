@@ -45,6 +45,8 @@ public class UselessItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SUPER_USELESS_BOOTS);
         simpleItem(ModItems.USELESS_ELYTRA);
         simpleItem(ModItems.SUPER_USELESS_ELYTRA);
+        simpleItem(ModItems.USELESS_WHEAT_SEEDS);
+        simpleItem(ModItems.USELESS_WHEAT);
         simpleItem(ModItems.USELESS_BONE);
         simpleItem(ModItems.USELESS_LEATHER);
         simpleItem(ModItems.USELESS_FEATHER);

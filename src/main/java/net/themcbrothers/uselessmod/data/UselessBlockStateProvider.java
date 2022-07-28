@@ -2,7 +2,9 @@ package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -10,6 +12,7 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
 
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
@@ -44,6 +47,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         pottedPlant(POTTED_BLUE_ROSE.get(), BLUE_ROSE.get());
         pottedPlant(POTTED_USELESS_ROSE.get(), USELESS_ROSE.get());
         pottedPlant(POTTED_USELESS_OAK_SAPLING.get(), USELESS_OAK_SAPLING.get());
+        wildCropPlant((UselessCropBlock) USELESS_WHEAT.get(), (UselessCropBlock) WILD_USELESS_WHEAT.get(), "useless_wheat");
         crossPlant(USELESS_OAK_SAPLING.get());
         simpleBlockWithItem(USELESS_OAK_LEAVES.get());
         simpleBlockWithItem(USELESS_OAK_WOOD.get());
@@ -119,6 +123,48 @@ public class UselessBlockStateProvider extends BlockStateProvider {
 
     private void simpleBlockItem(Block block) {
         simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
+    }
+
+    private void wildCropPlant(UselessCropBlock crop, UselessCropBlock wildCrop, String name) {
+        final ModelFile stage0 = models().withExistingParent(id("block/" + name + "_stage0"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage0"));
+        final ModelFile stage1 = models().withExistingParent(id("block/" + name + "_stage1"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage1"));
+        final ModelFile stage2 = models().withExistingParent(id("block/" + name + "_stage2"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage2"));
+        final ModelFile stage3 = models().withExistingParent(id("block/" + name + "_stage3"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage3"));
+        final ModelFile stage4 = models().withExistingParent(id("block/" + name + "_stage4"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage4"));
+        final ModelFile stage5 = models().withExistingParent(id("block/" + name + "_stage5"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage5"));
+        final ModelFile stage6 = models().withExistingParent(id("block/" + name + "_stage6"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage6"));
+        final ModelFile stage7 = models().withExistingParent(id("block/" + name + "_stage7"), "block/crop")
+                .texture("crop", modLoc("block/" + name + "_stage7"));
+
+        getVariantBuilder(crop).forAllStates(state -> ConfiguredModel.builder().modelFile(
+                switch (state.getValue(crop.getAgeProperty())) {
+                    case 0 -> stage0;
+                    case 1 -> stage1;
+                    case 2 -> stage2;
+                    case 3 -> stage3;
+                    case 4 -> stage4;
+                    case 5 -> stage5;
+                    case 6 -> stage6;
+                    default -> stage7;
+                }).build());
+        getVariantBuilder(wildCrop).forAllStates(state -> ConfiguredModel.builder().modelFile(
+                switch (state.getValue(wildCrop.getAgeProperty())) {
+                    case 0 -> stage0;
+                    case 1 -> stage1;
+                    case 2 -> stage2;
+                    case 3 -> stage3;
+                    case 4 -> stage4;
+                    case 5 -> stage5;
+                    case 6 -> stage6;
+                    default -> stage7;
+                }).build());
     }
 
     private void ironBars(IronBarsBlock block, String name) {

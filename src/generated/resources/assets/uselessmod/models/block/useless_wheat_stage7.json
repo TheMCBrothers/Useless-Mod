@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "uselessmod:block/useless_wheat_stage7"
+  }
+}

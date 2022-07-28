@@ -43,6 +43,8 @@ public final class ModItems {
     public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(500).rarity(Rarity.UNCOMMON)));
     public static final ItemObject<Item> SUPER_USELESS_ELYTRA = ITEMS.register("super_useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(500).rarity(Rarity.UNCOMMON)));
 
+    public static final ItemObject<Item> USELESS_WHEAT_SEEDS = ITEMS.register("useless_wheat_seeds", () -> new ItemNameBlockItem(ModBlocks.USELESS_WHEAT.get(), GENERAL_PROPS));
+    public static final ItemObject<Item> USELESS_WHEAT = ITEMS.register("useless_wheat", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_BONE = ITEMS.register("useless_bone", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_LEATHER = ITEMS.register("useless_leather", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_FEATHER = ITEMS.register("useless_feather", GENERAL_PROPS);
