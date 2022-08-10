@@ -21,7 +21,7 @@ public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLe
 
     @Override
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType type, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ModBlocks.RAW_USELESS_BLOCK.get().defaultBlockState(),
+        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ModBlocks.COFFEE_MACHINE.get().defaultBlockState(),
                 poseStack, buffer, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
     }
 }

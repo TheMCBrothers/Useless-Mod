@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.world.item.CoffeeMachineBlockItem;
 import net.themcbrothers.uselessmod.world.level.block.*;
 import net.themcbrothers.uselessmod.world.level.block.grower.UselessOakTreeGrower;
 import slimeknights.mantle.registration.object.ItemObject;
@@ -61,7 +62,7 @@ public final class ModBlocks {
     // todo useless skeleton skull
 
     // Functional Blocks
-    public static final ItemObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of(Material.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of(Material.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)), block -> new CoffeeMachineBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
 
     // Blocks without Item

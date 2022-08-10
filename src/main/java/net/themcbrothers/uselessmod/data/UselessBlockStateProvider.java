@@ -64,6 +64,13 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
         ironBars((IronBarsBlock) SUPER_USELESS_BARS.get(), "super_useless_bars");
 
+        // Special Blocks
+        getVariantBuilder(COFFEE_MACHINE.get())
+                .forAllStatesExcept(state -> ConfiguredModel.builder()
+                        .modelFile(models().getExistingFile(blockTexture(COFFEE_MACHINE.get())))
+                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                        .build(), BlockStateProperties.WATERLOGGED);
+
         // Block Item Models
         simpleBlockItem(USELESS_OAK_WOOD.getLog());
         simpleBlockItem(USELESS_OAK_WOOD.getWood());
