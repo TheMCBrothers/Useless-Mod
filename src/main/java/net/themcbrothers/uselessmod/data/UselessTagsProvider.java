@@ -14,8 +14,7 @@ import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class UselessTagsProvider {
     public static class Blocks extends BlockTagsProvider {

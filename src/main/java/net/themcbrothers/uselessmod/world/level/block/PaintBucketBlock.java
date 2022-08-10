@@ -18,8 +18,9 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.util.stream.Stream;
 
 public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -38,14 +39,14 @@ public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public FluidState getFluidState(BlockState blockState) {
-        return blockState.getValue(WATERLOGGED) ? Fluids.WATER.defaultFluidState() : Fluids.EMPTY.defaultFluidState();
+        return blockState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
-        return defaultBlockState().setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+        return defaultBlockState().setValue(WATERLOGGED, fluidState.is(Fluids.WATER));
     }
 
     @Override
@@ -67,21 +68,18 @@ public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     private VoxelShape makeShape() {
-        VoxelShape shape = Shapes.empty();
-        shape = Shapes.join(shape, Shapes.box(0.375, 0, 0.25, 0.625, 0.5, 0.3125), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.375, 0, 0.6875, 0.625, 0.5, 0.75), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.25, 0, 0.375, 0.3125, 0.5, 0.625), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.6875, 0, 0.375, 0.75, 0.5, 0.625), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.3125, 0.375, 0.5, 0.375), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.625, 0.375, 0.5, 0.6875), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.625, 0, 0.625, 0.6875, 0.5, 0.6875), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.625, 0, 0.3125, 0.6875, 0.5, 0.375), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.1875, 0.375, 0.46875, 0.25, 0.4375, 0.91625), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.25, 0.007443497627736495, 0.6175565023722636, 0.75, 0.0699434976277365, 0.6800565023722636), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.375, 0, 0.3125, 0.625, 0.0625, 0.6875), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.375, 0.375, 0.0625, 0.625), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.625, 0, 0.375, 0.6875, 0.0625, 0.625), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.75, 0.375, 0.46875, 0.8125, 0.4375, 0.91625), BooleanOp.OR);
-        return shape;
+        return Stream.of(
+                Block.box(10, 0, 6, 11, 1, 10),
+                Block.box(5, 0, 6, 6, 1, 10),
+                Block.box(6, 0, 4, 10, 8, 5),
+                Block.box(6, 0, 11, 10, 8, 12),
+                Block.box(4, 0, 6, 5, 8, 10),
+                Block.box(11, 0, 6, 12, 8, 10),
+                Block.box(5, 0, 5, 6, 8, 6),
+                Block.box(5, 0, 10, 6, 8, 11),
+                Block.box(10, 0, 10, 11, 8, 11),
+                Block.box(10, 0, 5, 11, 8, 6),
+                Block.box(6, 0, 5, 10, 1, 11)
+        ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).orElseThrow();
     }
 }

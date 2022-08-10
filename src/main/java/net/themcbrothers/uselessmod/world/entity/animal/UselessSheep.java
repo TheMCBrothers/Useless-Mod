@@ -16,10 +16,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.world.level.storage.loot.UselessLootTables;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class UselessSheep extends Sheep {
 
     @Nonnull
     @Override
-    public List<ItemStack> onSheared(@Nullable Player player, @NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
+    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
         world.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         this.gameEvent(GameEvent.SHEAR, player);
         if (!world.isClientSide) {

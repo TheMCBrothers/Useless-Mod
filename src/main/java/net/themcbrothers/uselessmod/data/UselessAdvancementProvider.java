@@ -16,8 +16,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.init.ModBiomes;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 import static net.themcbrothers.uselessmod.UselessMod.rl;
