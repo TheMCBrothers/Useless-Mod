@@ -50,20 +50,25 @@ public class UselessItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.USELESS_BONE);
         simpleItem(ModItems.USELESS_LEATHER);
         simpleItem(ModItems.USELESS_FEATHER);
-        this.withExistingParent("useless_sheep_spawn_egg", mcLoc("item/template_spawn_egg"));
-        this.withExistingParent("useless_pig_spawn_egg", mcLoc("item/template_spawn_egg"));
-        this.withExistingParent("useless_chicken_spawn_egg", mcLoc("item/template_spawn_egg"));
-        this.withExistingParent("useless_cow_spawn_egg", mcLoc("item/template_spawn_egg"));
-        this.withExistingParent("useless_skeleton_spawn_egg", mcLoc("item/template_spawn_egg"));
+
+        withExistingParent("paint_brush", mcLoc(ITEM_FOLDER + "/handheld"))
+                .texture("layer0", modLoc(ITEM_FOLDER + "/paint_brush_0"))
+                .texture("layer1", modLoc(ITEM_FOLDER + "/paint_brush_1"));
+
+        this.withExistingParent("useless_sheep_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
+        this.withExistingParent("useless_pig_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
+        this.withExistingParent("useless_chicken_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
+        this.withExistingParent("useless_cow_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
+        this.withExistingParent("useless_skeleton_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
     }
 
     private void simpleItem(ItemLike item) {
         final ResourceLocation id = item.asItem().getRegistryName();
-        this.singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath()));
+        this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
     }
 
     private void simpleTool(ItemLike item) {
         final ResourceLocation id = item.asItem().getRegistryName();
-        this.singleTexture(id.getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/" + id.getPath()));
+        this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/handheld"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
     }
 }

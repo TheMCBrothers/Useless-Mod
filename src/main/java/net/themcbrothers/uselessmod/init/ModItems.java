@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.init;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 import slimeknights.mantle.registration.object.ItemObject;
 
@@ -54,4 +55,7 @@ public final class ModItems {
     public static final ItemObject<Item> USELESS_BONE = ITEMS.register("useless_bone", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_LEATHER = ITEMS.register("useless_leather", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_FEATHER = ITEMS.register("useless_feather", GENERAL_PROPS);
+
+    // Color
+    public static final ItemObject<Item> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintBrushItem(GENERAL_PROPS.durability(16)));
 }
