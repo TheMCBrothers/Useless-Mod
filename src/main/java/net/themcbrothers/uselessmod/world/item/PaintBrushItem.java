@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.item;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -11,7 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags;
+import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
 
 import java.util.Random;
 
@@ -43,8 +45,12 @@ public class PaintBrushItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         final ItemStack stack = context.getItemInHand();
         final Level level = context.getLevel();
+        final BlockPos pos = context.getClickedPos();
         if (stack.getDamageValue() < stack.getMaxDamage() &&
-                level.getBlockState(context.getClickedPos()).is(Tags.Blocks.GLASS)) {
+                level.getBlockState(pos).is(ModBlocks.CANVAS.get()) &&
+                level.getBlockEntity(pos) instanceof CanvasBlockEntity canvas &&
+                canvas.getColor() != this.getBarColor(stack)) {
+            canvas.setColor(this.getBarColor(stack));
             stack.hurt(1, new Random(), null);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

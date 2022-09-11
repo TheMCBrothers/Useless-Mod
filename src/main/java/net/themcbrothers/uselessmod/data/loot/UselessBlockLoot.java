@@ -2,10 +2,18 @@ package net.themcbrothers.uselessmod.data.loot;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.nbt.NbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -59,9 +67,10 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_OAK_WOOD.getPressurePlate());
         this.dropSelf(USELESS_OAK_WOOD.getButton());
         this.dropSelf(USELESS_OAK_WOOD.getSign());
-        this.dropSelf(PAINT_BUCKET.get());
         this.dropSelf(USELESS_BARS.get());
         this.dropSelf(SUPER_USELESS_BARS.get());
+        this.dropSelf(PAINT_BUCKET.get());
+        this.add(CANVAS.get(), UselessBlockLoot::createCopyColorDrop);
         // Rails
         this.dropSelf(USELESS_RAIL.get());
         this.dropSelf(USELESS_POWERED_RAIL.get());
@@ -69,6 +78,10 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
         this.dropSelf(COFFEE_MACHINE.get());
+    }
+
+    private static LootTable.Builder createCopyColorDrop(ItemLike p_124127_) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(p_124127_, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(p_124127_)).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Color", "BlockEntityTag.Color"))));
     }
 
     @Override

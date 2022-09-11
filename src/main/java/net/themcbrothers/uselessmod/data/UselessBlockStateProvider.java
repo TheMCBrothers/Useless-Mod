@@ -56,6 +56,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         fenceBlock(USELESS_OAK_WOOD.getFence(), blockTexture(USELESS_OAK_WOOD.get()));
         fenceGateBlock(USELESS_OAK_WOOD.getFenceGate(), blockTexture(USELESS_OAK_WOOD.get()));
         simpleBlock(PAINT_BUCKET.get(), models().getExistingFile(blockTexture(PAINT_BUCKET.get())));
+        simpleBlock(CANVAS.get(), models().getExistingFile(blockTexture(CANVAS.get())));
         doorBlock(USELESS_OAK_WOOD.getDoor(), modLoc("block/useless_oak_door_bottom"), modLoc("block/useless_oak_door_top"));
         trapdoorBlock(USELESS_OAK_WOOD.getTrapdoor(), blockTexture(USELESS_OAK_WOOD.getTrapdoor()), true);
         buttonBlock(USELESS_OAK_WOOD.getButton(), blockTexture(USELESS_OAK_WOOD.get()));
@@ -86,6 +87,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleItemItem(USELESS_OAK_WOOD.getDoor());
         simpleItemItem(USELESS_OAK_WOOD.getSign());
         simpleBlockItem(PAINT_BUCKET.get());
+        simpleBlockItem(CANVAS.get());
 
         // rail pain
         simpleItem(USELESS_RAIL.get());

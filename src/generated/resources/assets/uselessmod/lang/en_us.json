@@ -8,6 +8,7 @@
   "advancement.uselessmod.visit_useless_forest.description": "Visit the useless forest",
   "advancement.uselessmod.visit_useless_forest.title": "Another Forest",
   "block.uselessmod.blue_rose": "Blue Rose",
+  "block.uselessmod.canvas": "Canvas",
   "block.uselessmod.coffee_machine": "Coffee Machine",
   "block.uselessmod.deepslate_super_useless_ore": "Deepslate Super-Useless Ore",
   "block.uselessmod.deepslate_useless_ore": "Deepslate Useless Ore",
@@ -90,5 +91,6 @@
   "item.uselessmod.useless_sword": "Useless Sword",
   "item.uselessmod.useless_wheat": "Useless Wheat",
   "item.uselessmod.useless_wheat_seeds": "Useless Wheat Seeds",
-  "itemGroup.uselessmod": "Useless Mod"
+  "itemGroup.uselessmod": "Useless Mod",
+  "misc.uselessmod.color": "Color: %s"
 }

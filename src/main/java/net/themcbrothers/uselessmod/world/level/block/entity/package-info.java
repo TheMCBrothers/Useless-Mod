@@ -1,7 +1,4 @@
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@net.minecraft.MethodsReturnNonnullByDefault
+@net.minecraft.FieldsAreNonnullByDefault
+@javax.annotation.ParametersAreNonnullByDefault
 package net.themcbrothers.uselessmod.world.level.block.entity;
-
-import net.minecraft.MethodsReturnNonnullByDefault;
-
-import javax.annotation.ParametersAreNonnullByDefault;

@@ -50,7 +50,6 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add(ModBlocks.USELESS_OAK_WOOD.getPressurePlate(), "Useless Oak Pressure Plate");
         this.add(ModBlocks.USELESS_OAK_WOOD.getButton(), "Useless Oak Button");
         this.add(ModBlocks.USELESS_OAK_WOOD.getSign(), "Useless Oak Sign");
-        this.addBlock(ModBlocks.PAINT_BUCKET, "Paint Bucket");
         this.addBlock(ModBlocks.USELESS_RAIL, "Useless Rail");
         this.addBlock(ModBlocks.USELESS_POWERED_RAIL, "Useless Powered Rail");
         this.addBlock(ModBlocks.USELESS_DETECTOR_RAIL, "Useless Detector Rail");
@@ -58,6 +57,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_BARS, "Useless Bars");
         this.addBlock(ModBlocks.SUPER_USELESS_BARS, "Super-Useless Bars");
         this.addBlock(ModBlocks.COFFEE_MACHINE, "Coffee Machine");
+        this.addBlock(ModBlocks.PAINT_BUCKET, "Paint Bucket");
+        this.addBlock(ModBlocks.CANVAS, "Canvas");
 
         this.addItem(ModItems.RAW_USELESS, "Raw Useless");
         this.addItem(ModItems.RAW_SUPER_USELESS, "Raw Super-Useless");
@@ -104,6 +105,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addEntityType(ModEntityTypes.USELESS_CHICKEN, "Useless Chicken");
         this.addEntityType(ModEntityTypes.USELESS_COW, "Useless Cow");
         this.addEntityType(ModEntityTypes.USELESS_SKELETON, "Useless Skeleton");
+
+        this.add("misc.uselessmod.color", "Color: %s");
 
         this.add("itemGroup.uselessmod", "Useless Mod");
     }
