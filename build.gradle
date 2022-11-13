@@ -190,7 +190,7 @@ curseforge {
     project {
         id = project.project_id
         changelog = file('changelog.txt')
-        releaseType = project.curse_type
+        releaseType = project.artifact_type
         addGameVersion(project.mc_version)
         mainArtifact jar
         relations {
