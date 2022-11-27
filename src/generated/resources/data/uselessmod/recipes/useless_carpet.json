@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "carpet",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "uselessmod:useless_wool"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_carpet",
+    "count": 3
+  }
+}

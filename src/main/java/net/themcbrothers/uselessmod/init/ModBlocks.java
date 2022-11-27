@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.CoffeeMachineBlockItem;
+import net.themcbrothers.uselessmod.world.item.UselessBedItem;
 import net.themcbrothers.uselessmod.world.level.block.*;
 import net.themcbrothers.uselessmod.world.level.block.grower.UselessOakTreeGrower;
 import slimeknights.mantle.registration.object.ItemObject;
@@ -25,6 +27,7 @@ public final class ModBlocks {
     }
 
     private static final Item.Properties GENERAL_PROPS = new Item.Properties().tab(UselessMod.TAB);
+    private static final Item.Properties ONE_STACKING_PROPS = new Item.Properties().tab(UselessMod.TAB).stacksTo(1);
     private static final Function<Block, ? extends BlockItem> GENERAL_BLOCK_ITEM = (b) -> new BlockItem(b, GENERAL_PROPS);
 
     // Metal
@@ -58,6 +61,9 @@ public final class ModBlocks {
     // Decoration Blocks
     public static final ItemObject<Block> USELESS_BARS = BLOCKS.register("useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> SUPER_USELESS_BARS = BLOCKS.register("super_useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_WOOL = BLOCKS.register("useless_wool", () -> new Block(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_CARPET = BLOCKS.register("useless_carpet", () -> new WoolCarpetBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), block -> new UselessBedItem(block, ONE_STACKING_PROPS));
 
     // todo useless skeleton skull
 

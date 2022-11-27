@@ -59,6 +59,9 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.COFFEE_MACHINE, "Coffee Machine");
         this.addBlock(ModBlocks.PAINT_BUCKET, "Paint Bucket");
         this.addBlock(ModBlocks.CANVAS, "Canvas");
+        this.addBlock(ModBlocks.USELESS_WOOL, "Useless Wool");
+        this.addBlock(ModBlocks.USELESS_CARPET, "Useless Carpet");
+        this.addBlock(ModBlocks.USELESS_BED, "Useless Bed");
 
         this.addItem(ModItems.RAW_USELESS, "Raw Useless");
         this.addItem(ModItems.RAW_SUPER_USELESS, "Raw Super-Useless");

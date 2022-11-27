@@ -12,13 +12,13 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.world.level.storage.loot.UselessLootTables;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class UselessSheep extends Sheep {
         int i = 1 + this.random.nextInt(3);
 
         for (int j = 0; j < i; ++j) {
-            ItemEntity itementity = this.spawnAtLocation(Blocks.WHITE_WOOL, 1); // TODO: replace placeholder
+            ItemEntity itementity = this.spawnAtLocation(ModBlocks.USELESS_WOOL, 1);
             if (itementity != null) {
                 itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
             }
@@ -66,7 +66,7 @@ public class UselessSheep extends Sheep {
 
             java.util.List<ItemStack> items = new java.util.ArrayList<>();
             for (int j = 0; j < i; ++j) {
-                items.add(new ItemStack(Blocks.WHITE_WOOL)); // TODO: replace placeholder
+                items.add(new ItemStack(ModBlocks.USELESS_WOOL));
             }
             return items;
         }

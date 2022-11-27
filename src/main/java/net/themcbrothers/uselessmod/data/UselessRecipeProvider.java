@@ -80,6 +80,10 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_LEGGINGS.get()).define('#', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("###").pattern("# #").pattern("# #").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.USELESS_BOOTS.get()).define('#', UselessTags.Items.INGOTS_USELESS).pattern("# #").pattern("# #").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.SUPER_USELESS_BOOTS.get()).define('#', UselessTags.Items.INGOTS_SUPER_USELESS).pattern("# #").pattern("# #").unlockedBy("has_super_useless_ingot", has(UselessTags.Items.INGOTS_SUPER_USELESS)).save(consumer);
+
+        // OTHER
+        carpet(consumer, ModBlocks.USELESS_CARPET.get(), ModBlocks.USELESS_WOOL.get());
+        bedFromPlanksAndWool(consumer, ModBlocks.USELESS_BED.get(), ModBlocks.USELESS_WOOL.get());
     }
 
     @Override

@@ -64,6 +64,9 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         signBlock(USELESS_OAK_WOOD.getSign(), USELESS_OAK_WOOD.getWallSign(), blockTexture(USELESS_OAK_WOOD.get()));
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
         ironBars((IronBarsBlock) SUPER_USELESS_BARS.get(), "super_useless_bars");
+        simpleBlockWithItem(USELESS_WOOL.get());
+        simpleBlock(USELESS_CARPET.get(), models().carpet("useless_carpet", modLoc("block/useless_wool")));
+        simpleBlock(USELESS_BED.get(), models().getExistingFile(mcLoc("block/bed")));
 
         // Special Blocks
         getVariantBuilder(COFFEE_MACHINE.get())
@@ -88,6 +91,8 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleItemItem(USELESS_OAK_WOOD.getSign());
         simpleBlockItem(PAINT_BUCKET.get());
         simpleBlockItem(CANVAS.get());
+        simpleBlockItem(USELESS_CARPET.get());
+        itemModels().withExistingParent("useless_bed", mcLoc("item/template_bed")).texture("particle", modLoc("block/useless_wool"));
 
         // rail pain
         simpleItem(USELESS_RAIL.get());

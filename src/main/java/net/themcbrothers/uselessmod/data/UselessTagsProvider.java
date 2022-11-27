@@ -60,6 +60,8 @@ public class UselessTagsProvider {
             this.tag(BlockTags.WOODEN_TRAPDOORS).add(ModBlocks.USELESS_OAK_WOOD.getTrapdoor());
             this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.USELESS_OAK_WOOD.getPressurePlate());
             this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.USELESS_OAK_WOOD.getButton());
+            this.tag(BlockTags.WOOL).add(ModBlocks.USELESS_WOOL.get());
+            this.tag(BlockTags.CARPETS).add(ModBlocks.USELESS_CARPET.get());
         }
     }
 
@@ -98,6 +100,8 @@ public class UselessTagsProvider {
             this.copy(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS);
             this.copy(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES);
             this.copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
+            this.copy(BlockTags.WOOL, ItemTags.WOOL);
+            this.copy(BlockTags.CARPETS, ItemTags.CARPETS);
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());

@@ -200,6 +200,7 @@ curseforge {
     }
 }
 
+/*
 modrinth {
     token = getSecret('modrinth_token')
     projectId = project.modrinth_project
@@ -209,4 +210,4 @@ modrinth {
     changelog = getChangelogText()
     uploadFile = jar
     gameVersions = ["$project.mc_version"]
-}
+}*/

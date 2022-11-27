@@ -3,8 +3,10 @@ package net.themcbrothers.uselessmod.data.loot;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -12,7 +14,6 @@ import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
-import net.minecraft.world.level.storage.loot.providers.nbt.NbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -71,6 +72,9 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(SUPER_USELESS_BARS.get());
         this.dropSelf(PAINT_BUCKET.get());
         this.add(CANVAS.get(), UselessBlockLoot::createCopyColorDrop);
+        this.dropSelf(USELESS_WOOL.get());
+        this.dropSelf(USELESS_CARPET.get());
+        this.add(USELESS_BED.get(), (block) -> createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
         // Rails
         this.dropSelf(USELESS_RAIL.get());
         this.dropSelf(USELESS_POWERED_RAIL.get());

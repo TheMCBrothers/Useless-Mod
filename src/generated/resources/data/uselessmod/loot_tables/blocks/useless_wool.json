@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:entity",
+  "type": "minecraft:block",
   "pools": [
     {
       "rolls": 1.0,
@@ -9,15 +9,10 @@
           "type": "minecraft:item",
           "name": "uselessmod:useless_wool"
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
+      ],
+      "conditions": [
         {
-          "type": "minecraft:loot_table",
-          "name": "uselessmod:entities/useless_sheep"
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }
