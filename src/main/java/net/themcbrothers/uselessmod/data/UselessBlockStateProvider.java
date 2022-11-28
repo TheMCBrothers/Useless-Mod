@@ -74,6 +74,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                         .modelFile(models().getExistingFile(blockTexture(COFFEE_MACHINE.get())))
                         .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                         .build(), BlockStateProperties.WATERLOGGED);
+        // TODO wall closet
 
         // Block Item Models
         simpleBlockItem(USELESS_OAK_WOOD.getLog());

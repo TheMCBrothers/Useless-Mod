@@ -57,6 +57,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_BARS, "Useless Bars");
         this.addBlock(ModBlocks.SUPER_USELESS_BARS, "Super-Useless Bars");
         this.addBlock(ModBlocks.COFFEE_MACHINE, "Coffee Machine");
+        this.addBlock(ModBlocks.WALL_CLOSET, "Wall Closet");
         this.addBlock(ModBlocks.PAINT_BUCKET, "Paint Bucket");
         this.addBlock(ModBlocks.CANVAS, "Canvas");
         this.addBlock(ModBlocks.USELESS_WOOL, "Useless Wool");
@@ -108,6 +109,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addEntityType(ModEntityTypes.USELESS_CHICKEN, "Useless Chicken");
         this.addEntityType(ModEntityTypes.USELESS_COW, "Useless Cow");
         this.addEntityType(ModEntityTypes.USELESS_SKELETON, "Useless Skeleton");
+
+        this.add("container.uselessmod.wall_closet", "Wall Closet");
 
         this.add("misc.uselessmod.color", "Color: %s");
 

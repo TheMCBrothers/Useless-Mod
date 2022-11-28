@@ -82,6 +82,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
         this.dropSelf(COFFEE_MACHINE.get());
+        this.add(WALL_CLOSET.get(), BlockLoot::createNameableBlockEntityTable);
     }
 
     private static LootTable.Builder createCopyColorDrop(ItemLike p_124127_) {
