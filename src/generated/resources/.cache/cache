@@ -267,6 +267,7 @@ e9ae26e8aed146a8fc19d711269602dc08ca783d data/forge/tags/items/storage_blocks/ra
 ce885074e2013a373675f1f7302c53c4c2204677 data/forge/tags/items/storage_blocks/super_useless.json
 8d182f2b3874f921202d1b083fba4add2e358c90 data/forge/tags/items/storage_blocks/useless.json
 9994f6a22aca88b9b03b678968f0ee14ac0aa927 data/minecraft/tags/blocks/beacon_base_blocks.json
+9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/blocks/beds.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/blocks/carpets.json
 1dcc3a702c679ecf7fcfe64a517f3a92a74701db data/minecraft/tags/blocks/crops.json
 d112d7d7f48ac9761d2d207fc792c06ed9a1c7d5 data/minecraft/tags/blocks/fence_gates.json
@@ -291,6 +292,7 @@ ff245586195be122ea6601da7ad93692a14c3130 data/minecraft/tags/blocks/wooden_stair
 f26fffaf3d77b816e68c43dd876abbd8b37500ee data/minecraft/tags/blocks/wooden_trapdoors.json
 67c4bcf04bb64e312c06c93425e9041ca55c6065 data/minecraft/tags/blocks/wool.json
 552b3c7299ee83208a2a0ce2f3fcaa10e0e4cf2a data/minecraft/tags/entity_types/skeletons.json
+9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/items/beds.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/items/carpets.json
 3a32e055b3e9c5d1d39fb3018551fd167be30c74 data/minecraft/tags/items/leaves.json
 27817e645f9924013b48ad38609d37a6a4385702 data/minecraft/tags/items/logs_that_burn.json

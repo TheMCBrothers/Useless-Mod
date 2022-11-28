@@ -62,6 +62,7 @@ public class UselessTagsProvider {
             this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.USELESS_OAK_WOOD.getButton());
             this.tag(BlockTags.WOOL).add(ModBlocks.USELESS_WOOL.get());
             this.tag(BlockTags.CARPETS).add(ModBlocks.USELESS_CARPET.get());
+            this.tag(BlockTags.BEDS).add(ModBlocks.USELESS_BED.get());
         }
     }
 
@@ -102,6 +103,7 @@ public class UselessTagsProvider {
             this.copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
             this.copy(BlockTags.WOOL, ItemTags.WOOL);
             this.copy(BlockTags.CARPETS, ItemTags.CARPETS);
+            this.copy(BlockTags.BEDS, ItemTags.BEDS);
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());
