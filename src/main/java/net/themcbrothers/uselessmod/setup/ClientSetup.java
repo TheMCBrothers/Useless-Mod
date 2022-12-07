@@ -10,9 +10,13 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.client.model.WallClosetModel;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
@@ -29,6 +33,7 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::blockColors);
         bus.addListener(this::itemColors);
         bus.addListener(this::entityRenders);
+        bus.addListener(this::modelRegistry);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
@@ -88,5 +93,9 @@ public class ClientSetup extends CommonSetup {
         event.registerEntityRenderer(ModEntityTypes.USELESS_CHICKEN.get(), UselessChickenRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.USELESS_COW.get(), UselessCowRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.USELESS_SKELETON.get(), UselessSkeletonRenderer::new);
+    }
+
+    private void modelRegistry(final ModelRegistryEvent event) {
+        ModelLoaderRegistry.registerLoader(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
     }
 }
