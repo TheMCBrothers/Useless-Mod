@@ -2,7 +2,6 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,12 +14,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 
 public class WallClosetBlockEntity extends BaseContainerBlockEntity {
@@ -28,13 +28,13 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
-            WallClosetBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
+            WallClosetBlockEntity.this.playSound(SoundEvents.BARREL_OPEN);
             WallClosetBlockEntity.this.updateBlockState(state, true);
         }
 
         @Override
         protected void onClose(Level level, BlockPos pos, BlockState state) {
-            WallClosetBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
+            WallClosetBlockEntity.this.playSound(SoundEvents.BARREL_CLOSE);
             WallClosetBlockEntity.this.updateBlockState(state, false);
         }
 
@@ -97,7 +97,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
-        return ChestMenu.twoRows(id, inventory);
+        return new ChestMenu(MenuType.GENERIC_9x2, id, inventory, this, 2);
     }
 
     @Override
@@ -155,14 +155,13 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     private void updateBlockState(BlockState state, boolean isOpen) {
-        this.level.setBlock(this.getBlockPos(), state.setValue(BarrelBlock.OPEN, isOpen), 3);
+        this.level.setBlock(this.getBlockPos(), state.setValue(BlockStateProperties.OPEN, isOpen), 3);
     }
 
-    private void playSound(BlockState state, SoundEvent soundEvent) {
-        Vec3i vec3i = state.getValue(BarrelBlock.FACING).getNormal();
-        double x = (double) this.worldPosition.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
-        double y = (double) this.worldPosition.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
-        double z = (double) this.worldPosition.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
+    private void playSound(SoundEvent soundEvent) {
+        double x = (double) this.worldPosition.getX() + 0.5D;
+        double y = (double) this.worldPosition.getY() + 0.5D;
+        double z = (double) this.worldPosition.getZ() + 0.5D;
         this.level.playSound(null, x, y, z, soundEvent, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
     }
 }
