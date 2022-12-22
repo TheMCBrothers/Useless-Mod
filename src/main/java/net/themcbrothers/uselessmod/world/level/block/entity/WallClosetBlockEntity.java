@@ -3,7 +3,6 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -20,20 +19,24 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+import slimeknights.mantle.client.model.data.SinglePropertyData;
+
+import java.util.Objects;
 
 public class WallClosetBlockEntity extends BaseContainerBlockEntity {
-    public static final ModelProperty<Block> MATERIAL_PROPERTY = new ModelProperty<>(block -> !block.hasDynamicShape());
+    public static final ModelProperty<Block> MATERIAL_PROPERTY = new ModelProperty<>();
 
-    @Nullable
-    private Block material;
+    private Block material = Blocks.AIR;
     private NonNullList<ItemStack> items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
@@ -67,13 +70,22 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         super(ModBlockEntityTypes.WALL_CLOSET.get(), pos, state);
     }
 
+    @NotNull
+    @Override
+    public IModelData getModelData() {
+        return new SinglePropertyData<>(MATERIAL_PROPERTY, this.material);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithFullMetadata();
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         ContainerHelper.saveAllItems(tag, this.items);
-        if (material != null) {
-            tag.putString("Material", String.valueOf(this.material.getRegistryName()));
-        }
+        tag.putString("Material", String.valueOf(this.material.getRegistryName()));
     }
 
     @Override
@@ -81,16 +93,20 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         super.load(tag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, this.items);
-        if (tag.contains("Material", Tag.TAG_STRING)) {
-            final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-            material = ForgeRegistries.BLOCKS.containsKey(key) ? ForgeRegistries.BLOCKS.getValue(key) : null;
-        }
+        final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
+        material = ForgeRegistries.BLOCKS.containsKey(key) ? Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(key)) : Blocks.AIR;
     }
 
-    private void setMaterial(@Nullable Block material) {
-        if (level.isClientSide) {
-            // TODO: correctly set model property
-        }
+    public void parseMaterial(String registryName) {
+        final ResourceLocation key = ResourceLocation.tryParse(registryName);
+        setMaterial(ForgeRegistries.BLOCKS.containsKey(key) ? Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(key)) : Blocks.AIR);
+    }
+
+    public void setMaterial(Block material) {
+        this.material = material;
+        //noinspection ConstantConditions
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        setChanged();
     }
 
     @Override
@@ -188,7 +204,6 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         this.level.playSound(null, x, y, z, soundEvent, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
     }
 
-    @Nullable
     public Block getMaterial() {
         return this.material;
     }

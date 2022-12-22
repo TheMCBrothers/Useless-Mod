@@ -19,6 +19,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
@@ -79,7 +80,6 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.name = this.model.name;
             newModel.parent = this.model.parent;
 
-            ;
             Material renderMaterial = new Material(TextureAtlas.LOCATION_BLOCKS, Minecraft.getInstance()
                     .getBlockRenderer().getBlockModel(material.defaultBlockState()).getParticleIcon(EmptyModelData.INSTANCE).getName());
             newModel.textureMap.put("planks", Either.left(renderMaterial));
@@ -107,6 +107,12 @@ public class WallClosetModel implements IDynamicBakedModel {
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull Random rand, @NotNull IModelData extraData) {
         return this.getCustomModel(getMaterial(extraData.getData(WallClosetBlockEntity.MATERIAL_PROPERTY)), getFacing(state))
                 .getQuads(state, side, rand, extraData);
+    }
+
+    @Override
+    public TextureAtlasSprite getParticleIcon(@NotNull IModelData data) {
+        //noinspection deprecation
+        return this.getCustomModel(getMaterial(data.getData(WallClosetBlockEntity.MATERIAL_PROPERTY)), Direction.NORTH).getParticleIcon();
     }
 
     @NotNull
@@ -158,7 +164,7 @@ public class WallClosetModel implements IDynamicBakedModel {
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
             if (model instanceof WallClosetModel wallClosetModel) {
-                CompoundTag tag = stack.getTag();
+                CompoundTag tag = BlockItem.getBlockEntityData(stack);
                 if (tag != null && tag.contains("Material", Tag.TAG_STRING)) {
                     final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
                     final Block material = ForgeRegistries.BLOCKS.containsKey(key) ? ForgeRegistries.BLOCKS.getValue(key) : Blocks.OAK_PLANKS;

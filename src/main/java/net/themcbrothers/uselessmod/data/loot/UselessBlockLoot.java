@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -82,11 +83,20 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
         this.dropSelf(COFFEE_MACHINE.get());
-        this.add(WALL_CLOSET.get(), BlockLoot::createNameableBlockEntityTable);
+        this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
     }
 
     private static LootTable.Builder createCopyColorDrop(ItemLike p_124127_) {
         return LootTable.lootTable().withPool(applyExplosionCondition(p_124127_, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(p_124127_)).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Color", "BlockEntityTag.Color"))));
+    }
+
+    private static LootTable.Builder wallClosetDrop(Block block) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)
+                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                        .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                .copy("Material", "BlockEntityTag.Material")
+                                .copy("id", "BlockEntityTag.id")))));
     }
 
     @Override

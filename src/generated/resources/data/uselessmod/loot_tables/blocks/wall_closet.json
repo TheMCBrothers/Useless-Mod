@@ -11,6 +11,22 @@
             {
               "function": "minecraft:copy_name",
               "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "Material",
+                  "target": "BlockEntityTag.Material",
+                  "op": "replace"
+                },
+                {
+                  "source": "id",
+                  "target": "BlockEntityTag.id",
+                  "op": "replace"
+                }
+              ]
             }
           ],
           "name": "uselessmod:wall_closet"
