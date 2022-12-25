@@ -2,10 +2,7 @@ package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.RegistryObject;
-import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
-import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
-import net.themcbrothers.uselessmod.world.level.block.entity.UselessBedBlockEntity;
-import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.*;
 
 import static net.themcbrothers.uselessmod.init.Registration.BLOCK_ENTITIES;
 
@@ -21,4 +18,7 @@ public final class ModBlockEntityTypes {
             BLOCK_ENTITIES.register("bed", UselessBedBlockEntity::new, ModBlocks.USELESS_BED);
     public static final RegistryObject<BlockEntityType<WallClosetBlockEntity>> WALL_CLOSET =
             BLOCK_ENTITIES.register("wall_closet", WallClosetBlockEntity::new, ModBlocks.WALL_CLOSET);
+    public static final RegistryObject<BlockEntityType<UselessSkullBlockEntity>> SKULL =
+            BLOCK_ENTITIES.register("skull", UselessSkullBlockEntity::new,
+                    blocks -> blocks.add(ModBlocks.USELESS_SKELETON_SKULL.get(), ModBlocks.USELESS_SKELETON_WALL_SKULL.get()));
 }

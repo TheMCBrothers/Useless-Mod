@@ -83,6 +83,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
         this.dropSelf(COFFEE_MACHINE.get());
+        this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
         this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
     }
 

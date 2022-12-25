@@ -23,8 +23,7 @@ public class UselessSkeleton extends AbstractSkeleton {
         if (entity instanceof Creeper creeper) {
             if (creeper.canDropMobsSkull()) {
                 creeper.increaseDroppedSkulls();
-                // TODO: useless skeleton skull
-                this.spawnAtLocation(ModBlocks.USELESS_BLOCK.get());
+                this.spawnAtLocation(ModBlocks.USELESS_SKELETON_SKULL.get());
             }
         }
     }

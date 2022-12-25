@@ -49,6 +49,8 @@ public final class ModItems {
     public static final ItemObject<Item> SUPER_USELESS_LEGGINGS = ITEMS.register("super_useless_leggings", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.LEGS, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> SUPER_USELESS_BOOTS = ITEMS.register("super_useless_boots", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.FEET, new Item.Properties().tab(UselessMod.TAB)));
 
+    public static final ItemObject<Item> USELESS_SKELETON_SKULL = ITEMS.register("useless_skeleton_skull", () -> new StandingAndWallBlockItem(ModBlocks.USELESS_SKELETON_SKULL.get(), ModBlocks.USELESS_SKELETON_WALL_SKULL.get(), new Item.Properties().tab(UselessMod.TAB).rarity(Rarity.UNCOMMON)));
+
     // Misc Items
     public static final ItemObject<Item> USELESS_WHEAT_SEEDS = ITEMS.register("useless_wheat_seeds", () -> new ItemNameBlockItem(ModBlocks.USELESS_WHEAT.get(), GENERAL_PROPS));
     public static final ItemObject<Item> USELESS_WHEAT = ITEMS.register("useless_wheat", GENERAL_PROPS);

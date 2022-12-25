@@ -4,6 +4,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -54,6 +55,8 @@ public class UselessItemModelProvider extends ItemModelProvider {
         withExistingParent("paint_brush", mcLoc(ITEM_FOLDER + "/handheld"))
                 .texture("layer0", modLoc(ITEM_FOLDER + "/paint_brush_0"))
                 .texture("layer1", modLoc(ITEM_FOLDER + "/paint_brush_1"));
+
+        getBuilder(String.valueOf(ModItems.USELESS_SKELETON_SKULL.getRegistryName())).parent(getExistingFile(mcLoc(ITEM_FOLDER + "/template_skull")));
 
         this.withExistingParent("useless_sheep_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_pig_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));

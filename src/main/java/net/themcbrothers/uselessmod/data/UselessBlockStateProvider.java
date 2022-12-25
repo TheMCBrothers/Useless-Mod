@@ -10,10 +10,12 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
 
+import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOLDER;
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
 public class UselessBlockStateProvider extends BlockStateProvider {
@@ -67,6 +69,8 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(USELESS_WOOL.get());
         simpleBlock(USELESS_CARPET.get(), models().carpet("useless_carpet", modLoc("block/useless_wool")));
         simpleBlock(USELESS_BED.get(), models().getExistingFile(mcLoc("block/bed")));
+        simpleBlock(USELESS_SKELETON_SKULL.get(), this.models().getExistingFile(mcLoc(BLOCK_FOLDER + "/skull")));
+        simpleBlock(USELESS_SKELETON_WALL_SKULL.get(), this.models().getExistingFile(mcLoc(BLOCK_FOLDER + "/skull")));
 
         // Special Blocks
         getVariantBuilder(COFFEE_MACHINE.get())
