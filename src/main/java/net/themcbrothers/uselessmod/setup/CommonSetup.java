@@ -21,6 +21,7 @@ import net.themcbrothers.uselessmod.init.ModBiomes;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.Registration;
+import net.themcbrothers.uselessmod.network.Messages;
 
 public class CommonSetup {
     public CommonSetup() {
@@ -29,6 +30,8 @@ public class CommonSetup {
         Registration.register(bus);
         bus.addListener(this::setup);
         bus.addListener(this::entityAttributes);
+
+        Messages.init();
     }
 
     private void setup(final FMLCommonSetupEvent event) {
