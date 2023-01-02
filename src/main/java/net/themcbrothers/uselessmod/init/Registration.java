@@ -1,6 +1,8 @@
 package net.themcbrothers.uselessmod.init;
 
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,6 +17,7 @@ public final class Registration {
     public static final MenuTypeDeferredRegister MENU_TYPES = new MenuTypeDeferredRegister(UselessMod.MOD_ID);
     public static final EntityTypeDeferredRegister ENTITIES = new EntityTypeDeferredRegister(UselessMod.MOD_ID);
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, UselessMod.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, UselessMod.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
@@ -24,6 +27,8 @@ public final class Registration {
         ModMenuTypes.register();
         ModEntityTypes.register();
         ModBiomes.register();
+        ModRecipeTypes.register();
+        ModRecipeSerializers.register();
 
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -31,6 +36,8 @@ public final class Registration {
         MENU_TYPES.register(bus);
         ENTITIES.register(bus);
         BIOMES.register(bus);
+        RECIPE_TYPES.register(bus);
+        RECIPE_SERIALIZERS.register(bus);
     }
 
     private Registration() {
