@@ -2,42 +2,37 @@ package net.themcbrothers.uselessmod.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class ServerConfig {
+public final class ServerConfig {
+    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static final ForgeConfigSpec SPEC;
+
     // World Generation
-    public final ForgeConfigSpec.BooleanValue oreGenOverworld;
-    public final ForgeConfigSpec.BooleanValue oreGenNether;
-    public final ForgeConfigSpec.BooleanValue oreGenEnd;
+    public static final ForgeConfigSpec.BooleanValue ORE_GEN_OVERWORLD;
+    public static final ForgeConfigSpec.BooleanValue ORE_GEN_NETHER;
+    public static final ForgeConfigSpec.BooleanValue ORE_GEN_END;
 
     // Coffee Machine
-    public final ForgeConfigSpec.IntValue coffeeMachineEnergyCapacity;
-    public final ForgeConfigSpec.IntValue coffeeMachineEnergyTransfer;
-    public final ForgeConfigSpec.IntValue coffeeMachineEnergyPerTick;
-    public final ForgeConfigSpec.IntValue coffeeMachineWaterCapacity;
-    public final ForgeConfigSpec.IntValue coffeeMachineMilkCapacity;
-    public final ForgeConfigSpec.IntValue coffeeMachineRecipeWaterAmount;
+    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_ENERGY_CAPACITY;
+    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_ENERGY_TRANSFER;
+    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_ENERGY_PER_TICK;
+    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_WATER_CAPACITY;
+    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_MILK_CAPACITY;
 
-    // Recipes
-    public final ForgeConfigSpec.BooleanValue disableWallClosetRecipes;
+    static {
+        BUILDER.push("oregen");
+        ORE_GEN_OVERWORLD = BUILDER.comment("Should ores generate in the overworld and other dimensions?").define("oreGenOverworld", true);
+        ORE_GEN_NETHER = BUILDER.comment("Should ores generate in the nether?").define("oreGenNether", true);
+        ORE_GEN_END = BUILDER.comment("Should ores generate in the end?").define("oreGenEnd", true);
+        BUILDER.pop();
 
-    public ServerConfig(ForgeConfigSpec.Builder builder) {
-        builder.comment("Welcome to the config file!");
-        builder.push("oregen");
-        this.oreGenOverworld = builder.comment("Should ores generate in the overworld and other dimensions?").define("oreGenOverworld", true);
-        this.oreGenNether = builder.comment("Should ores generate in the nether?").define("oreGenNether", true);
-        this.oreGenEnd = builder.comment("Should ores generate in the end?").define("oreGenEnd", true);
-        builder.pop();
+        BUILDER.push("coffee_machine");
+        COFFEE_MACHINE_ENERGY_CAPACITY = BUILDER.comment("Energy capacity of the Coffee Machine").defineInRange("energyCapacity", 10_000, 150, 200_000);
+        COFFEE_MACHINE_ENERGY_TRANSFER = BUILDER.comment("Max Energy transfer rate").defineInRange("energyTransfer", 1000, 50, 200_000);
+        COFFEE_MACHINE_ENERGY_PER_TICK = BUILDER.comment("Energy consumed by the Coffee Machine while running").defineInRange("energyPerTick", 15, 1, 200_000);
+        COFFEE_MACHINE_WATER_CAPACITY = BUILDER.comment("Water tank capacity of the Coffee Machine").defineInRange("waterTankCapacity", 2000, 500, 16000);
+        COFFEE_MACHINE_MILK_CAPACITY = BUILDER.comment("Milk tank capacity of the Coffee Machine").defineInRange("milkTankCapacity", 2000, 250, 16000);
+        BUILDER.pop();
 
-        builder.push("coffee_machine");
-        this.coffeeMachineEnergyCapacity = builder.comment("Energy capacity of the Coffee Machine").defineInRange("energyCapacity", 10_000, 150, 200_000);
-        this.coffeeMachineEnergyTransfer = builder.comment("Max Energy transfer rate").defineInRange("energyTransfer", 1000, 50, 200_000);
-        this.coffeeMachineEnergyPerTick = builder.comment("Energy consumed by the Coffee Machine while running").defineInRange("energyPerTick", 15, 1, 200_000);
-        this.coffeeMachineWaterCapacity = builder.comment("Water tank capacity of the Coffee Machine").defineInRange("waterTankCapacity", 2000, 500, 16000);
-        this.coffeeMachineMilkCapacity = builder.comment("Milk tank capacity of the Coffee Machine").defineInRange("milkTankCapacity", 2000, 250, 16000);
-        this.coffeeMachineRecipeWaterAmount = builder.comment("Water amount used per operation").defineInRange("waterAmountPerOperation", 250, 1, 16000);
-        builder.pop();
-
-        builder.push("recipes");
-        this.disableWallClosetRecipes = builder.comment("Disable wall closet recipes?").define("disableWallClosetRecipes", false);
-        builder.pop();
+        SPEC = BUILDER.build();
     }
 }
