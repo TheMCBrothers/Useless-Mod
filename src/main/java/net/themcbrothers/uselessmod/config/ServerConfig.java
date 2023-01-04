@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fluids.FluidAttributes;
 
 public final class ServerConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -26,11 +27,11 @@ public final class ServerConfig {
         BUILDER.pop();
 
         BUILDER.push("coffee_machine");
-        COFFEE_MACHINE_ENERGY_CAPACITY = BUILDER.comment("Energy capacity of the Coffee Machine").defineInRange("energyCapacity", 10_000, 150, 200_000);
-        COFFEE_MACHINE_ENERGY_TRANSFER = BUILDER.comment("Max Energy transfer rate").defineInRange("energyTransfer", 1000, 50, 200_000);
-        COFFEE_MACHINE_ENERGY_PER_TICK = BUILDER.comment("Energy consumed by the Coffee Machine while running").defineInRange("energyPerTick", 15, 1, 200_000);
-        COFFEE_MACHINE_WATER_CAPACITY = BUILDER.comment("Water tank capacity of the Coffee Machine").defineInRange("waterTankCapacity", 2000, 500, 16000);
-        COFFEE_MACHINE_MILK_CAPACITY = BUILDER.comment("Milk tank capacity of the Coffee Machine").defineInRange("milkTankCapacity", 2000, 250, 16000);
+        COFFEE_MACHINE_ENERGY_CAPACITY = BUILDER.comment("Energy capacity of the Coffee Machine").defineInRange("energyCapacity", 10_000, 1000, Short.MAX_VALUE);
+        COFFEE_MACHINE_ENERGY_TRANSFER = BUILDER.comment("Max Energy transfer rate").defineInRange("energyTransfer", 1000, 50, Short.MAX_VALUE);
+        COFFEE_MACHINE_ENERGY_PER_TICK = BUILDER.comment("Energy consumed by the Coffee Machine while running").defineInRange("energyPerTick", 15, 1, Short.MAX_VALUE);
+        COFFEE_MACHINE_WATER_CAPACITY = BUILDER.comment("Water tank capacity of the Coffee Machine").defineInRange("waterTankCapacity", 4000, FluidAttributes.BUCKET_VOLUME, 16_000);
+        COFFEE_MACHINE_MILK_CAPACITY = BUILDER.comment("Milk tank capacity of the Coffee Machine").defineInRange("milkTankCapacity", 4000, FluidAttributes.BUCKET_VOLUME, 16_000);
         BUILDER.pop();
 
         SPEC = BUILDER.build();
