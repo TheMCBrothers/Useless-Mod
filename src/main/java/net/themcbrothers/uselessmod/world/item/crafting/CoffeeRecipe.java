@@ -119,10 +119,13 @@ public class CoffeeRecipe implements ICommonRecipe<CoffeeContainer> {
             Ingredient cupIngredient = Ingredient.fromJson(jsonCup);
             JsonElement jsonBean = GsonHelper.isArrayNode(json, "bean") ? GsonHelper.getAsJsonArray(json, "bean") : GsonHelper.getAsJsonObject(json, "bean");
             Ingredient beanIngredient = Ingredient.fromJson(jsonBean);
-            JsonElement jsonExtra = GsonHelper.isArrayNode(json, "extra") ? GsonHelper.getAsJsonArray(json, "extra") : GsonHelper.getAsJsonObject(json, "extra");
-            Ingredient extraIngredient = Ingredient.fromJson(jsonExtra);
+            Ingredient extraIngredient = Ingredient.EMPTY;
+            if (json.has("extra")) {
+                JsonElement jsonExtra = GsonHelper.isArrayNode(json, "extra") ? GsonHelper.getAsJsonArray(json, "extra") : GsonHelper.getAsJsonObject(json, "extra");
+                extraIngredient = Ingredient.fromJson(jsonExtra);
+            }
             FluidIngredient waterIngredient = FluidIngredient.deserialize(json, "water");
-            FluidIngredient milkIngredient = FluidIngredient.deserialize(json, "milk");
+            FluidIngredient milkIngredient = json.has("milk") ? FluidIngredient.deserialize(json, "milk") : FluidIngredient.EMPTY;
             ItemStack recipeOutput = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
             int cookingTime = GsonHelper.getAsInt(json, "cookingtime", 150);
 
