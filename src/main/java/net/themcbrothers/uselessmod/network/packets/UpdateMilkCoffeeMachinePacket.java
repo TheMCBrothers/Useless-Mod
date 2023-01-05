@@ -29,7 +29,7 @@ public class UpdateMilkCoffeeMachinePacket implements IMessage {
         context.get().enqueueWork(() ->{
             if (serverPlayerEntity != null) {
                 if (serverPlayerEntity.containerMenu instanceof CoffeeMachineMenu) {
-                    CoffeeMachineBlockEntity coffeeMachine = ((CoffeeMachineMenu) serverPlayerEntity.containerMenu).container;
+                    CoffeeMachineBlockEntity coffeeMachine = ((CoffeeMachineMenu) serverPlayerEntity.containerMenu).blockEntity;
                     coffeeMachine.updateUseMilk(this.useMilk);
                 }
             }

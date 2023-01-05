@@ -26,10 +26,10 @@ public class StartCoffeeMachinePacket implements IMessage {
     @Override
     public void process(Supplier<NetworkEvent.Context> context) {
         ServerPlayer serverPlayerEntity = context.get().getSender();
-        context.get().enqueueWork(() ->{
+        context.get().enqueueWork(() -> {
             if (serverPlayerEntity != null) {
                 if (serverPlayerEntity.containerMenu instanceof CoffeeMachineMenu) {
-                    CoffeeMachineBlockEntity coffeeMachine = ((CoffeeMachineMenu) serverPlayerEntity.containerMenu).container;
+                    CoffeeMachineBlockEntity coffeeMachine = ((CoffeeMachineMenu) serverPlayerEntity.containerMenu).blockEntity;
                     coffeeMachine.startMachine(this.start);
                 }
             }

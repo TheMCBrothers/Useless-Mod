@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.setup;
 
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -11,7 +12,6 @@ import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.level.block.SkullBlock;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -22,6 +22,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
 import net.themcbrothers.uselessmod.client.model.WallClosetModel;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
@@ -40,6 +41,8 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::entityRenders);
         bus.addListener(this::skullModels);
         bus.addListener(this::modelRegistry);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ClientConfig.SPEC);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
@@ -69,6 +72,8 @@ public class ClientSetup extends CommonSetup {
 
             BlockEntityRenderers.register(ModBlockEntityTypes.BED.get(), UselessBedRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
+
+            MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
         });
     }
 

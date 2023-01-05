@@ -112,8 +112,17 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addEntityType(ModEntityTypes.USELESS_SKELETON, "Useless Skeleton");
 
         this.add("container.uselessmod.wall_closet", "Wall Closet");
-
+        this.add("container.uselessmod.coffee_machine", "Coffee Machine");
+        this.add("gui.uselessmod.use_milk", "Use Milk");
+        this.add("gui.uselessmod.start", "Start");
+        this.add("gui.uselessmod.stop", "Stop");
         this.add("misc.uselessmod.color", "Color: %s");
+        this.add("misc.uselessmod.energy", "%s FE");
+        this.add("misc.uselessmod.energyWithMax", "%s / %s FE");
+        this.add("misc.uselessmod.fluidWithMax", "%s / %s mB");
+        this.add("misc.uselessmod.fluidWithMaxName", "%s: %s / %s mB");
+        this.add("misc.uselessmod.fluidAmount", "%s mB");
+        this.add("misc.uselessmod.empty", "Empty");
 
         this.add("itemGroup.uselessmod", "Useless Mod");
     }
