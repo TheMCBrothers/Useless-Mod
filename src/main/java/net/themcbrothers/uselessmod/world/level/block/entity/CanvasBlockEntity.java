@@ -5,10 +5,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.world.level.block.CanvasBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class CanvasBlockEntity extends BlockEntity {
@@ -49,9 +49,9 @@ public class CanvasBlockEntity extends BlockEntity {
 
     public void setColor(int color) {
         this.color = color;
-        if (this.level != null && this.level.isClientSide) {
-            this.requestModelDataUpdate();
-            level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
-        }
+        //noinspection DataFlowIssue
+        level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(CanvasBlock.PAINTED, Boolean.TRUE));
+        this.requestModelDataUpdate();
+        this.setChanged();
     }
 }

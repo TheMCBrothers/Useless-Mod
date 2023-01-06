@@ -4,7 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -14,8 +17,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
-
-import java.util.Random;
 
 public class PaintBrushItem extends Item {
     public PaintBrushItem(Properties properties) {
@@ -46,15 +47,26 @@ public class PaintBrushItem extends Item {
         final ItemStack stack = context.getItemInHand();
         final Level level = context.getLevel();
         final BlockPos pos = context.getClickedPos();
-        if (stack.getDamageValue() < stack.getMaxDamage() &&
-                level.getBlockState(pos).is(ModBlocks.CANVAS.get()) &&
-                level.getBlockEntity(pos) instanceof CanvasBlockEntity canvas &&
-                canvas.getColor() != this.getBarColor(stack)) {
-            canvas.setColor(this.getBarColor(stack));
-            stack.hurt(1, new Random(), null);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        final Player player = context.getPlayer();
+
+        if (stack.getDamageValue() < stack.getMaxDamage()) {
+            if (level.getBlockState(pos).is(BlockTags.WOOL)) {
+                level.setBlockAndUpdate(pos, ModBlocks.CANVAS.get().defaultBlockState());
+            }
+
+            if (level.getBlockEntity(pos) instanceof CanvasBlockEntity canvas
+                    && canvas.getColor() != stack.getBarColor()) {
+                canvas.setColor(stack.getBarColor());
+                level.scheduleTick(pos, canvas.getBlockState().getBlock(), 2);
+
+                if (player == null || !player.getAbilities().instabuild) {
+                    stack.hurt(1, level.getRandom(), player instanceof ServerPlayer ? (ServerPlayer) player : null);
+                }
+
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
         }
-        return super.useOn(context);
+        return InteractionResult.PASS;
     }
 
     @Override

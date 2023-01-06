@@ -2,9 +2,10 @@ package net.themcbrothers.uselessmod.world.level.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -17,25 +18,48 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.HitResult;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class CanvasBlock extends BaseEntityBlock {
+    public static final BooleanProperty PAINTED = BooleanProperty.create("painted");
+
     public CanvasBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(PAINTED, Boolean.FALSE));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(PAINTED);
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+        if (state.getValue(PAINTED)) {
+            level.setBlock(pos, state.setValue(PAINTED, Boolean.FALSE), UPDATE_CLIENTS);
+        } else {
+            level.setBlock(pos, state.setValue(PAINTED, Boolean.TRUE), UPDATE_CLIENTS);
+            level.scheduleTick(pos, this, 2);
+        }
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity livingEntity, ItemStack stack) {
-        final BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CanvasBlockEntity) {
-            blockEntity.requestModelDataUpdate();
-            level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
-        }
+        level.getBlockEntity(pos, ModBlockEntityTypes.CANVAS.get()).ifPresent(canvasBlockEntity -> {
+            CompoundTag tag = BlockItem.getBlockEntityData(stack);
+            if (tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC)) {
+                canvasBlockEntity.setColor(tag.getInt("Color"));
+            }
+        });
     }
 
     @Override
