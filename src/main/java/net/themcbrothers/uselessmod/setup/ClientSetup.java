@@ -22,14 +22,17 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
 import net.themcbrothers.uselessmod.client.model.WallClosetModel;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.init.*;
+import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 
 public class ClientSetup extends CommonSetup {
     public ClientSetup() {
@@ -79,24 +82,40 @@ public class ClientSetup extends CommonSetup {
 
     private void blockColors(final ColorHandlerEvent.Block event) {
         final BlockColors colors = event.getBlockColors();
+
         colors.register(((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CanvasBlockEntity canvas) {
                 return canvas.getColor();
             }
             return -1;
         }), ModBlocks.CANVAS.get());
+
+        colors.register((state, level, pos, tintIndex) -> {
+            if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup
+                    && cup.getCoffeeType() != null) {
+                return cup.getCoffeeType().getColor();
+            }
+            return -1;
+        }, ModBlocks.CUP_COFFEE.get());
     }
 
     private void itemColors(final ColorHandlerEvent.Item event) {
         final ItemColors colors = event.getItemColors();
+
         colors.register(((stack, layer) -> {
             final CompoundTag tag = stack.getTag();
             return layer == 1 && tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
         }), ModItems.PAINT_BRUSH);
+
         colors.register(((stack, layer) -> {
             final CompoundTag tag = BlockItem.getBlockEntityData(stack);
             return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
-        }), ModBlocks.CANVAS.get());
+        }), ModBlocks.CANVAS);
+
+        colors.register((stack, layer) -> {
+            final CoffeeType type = CoffeeUtils.getCoffeeType(stack);
+            return type != null ? type.getColor() : -1;
+        }, ModBlocks.CUP_COFFEE);
     }
 
     private void entityRenders(final EntityRenderersEvent.RegisterRenderers event) {

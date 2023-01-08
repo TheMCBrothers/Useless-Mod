@@ -3,9 +3,13 @@ package net.themcbrothers.uselessmod.data;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.init.ModCoffeeTypes;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
+
+import java.util.function.Supplier;
 
 public class UselessLanguageProvider extends LanguageProvider {
     public UselessLanguageProvider(DataGenerator gen) {
@@ -57,6 +61,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_BARS, "Useless Bars");
         this.addBlock(ModBlocks.SUPER_USELESS_BARS, "Super-Useless Bars");
         this.addBlock(ModBlocks.COFFEE_MACHINE, "Coffee Machine");
+        this.addBlock(ModBlocks.CUP, "Cup");
+        this.addBlock(ModBlocks.CUP_COFFEE, "Cup with Coffee");
         this.addBlock(ModBlocks.WALL_CLOSET, "Wall Closet");
         this.addBlock(ModBlocks.PAINT_BUCKET, "Paint Bucket");
         this.addBlock(ModBlocks.CANVAS, "Canvas");
@@ -111,6 +117,11 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addEntityType(ModEntityTypes.USELESS_COW, "Useless Cow");
         this.addEntityType(ModEntityTypes.USELESS_SKELETON, "Useless Skeleton");
 
+        this.addCoffeeType(ModCoffeeTypes.BLACK, "Black Coffee");
+        this.addCoffeeType(ModCoffeeTypes.MILK, "Milk Coffee");
+        this.addCoffeeType(ModCoffeeTypes.SUGAR, "Sugar Coffee");
+        this.addCoffeeType(ModCoffeeTypes.MILK_SUGAR, "Milk-Sugar Coffee");
+
         this.add("container.uselessmod.wall_closet", "Wall Closet");
         this.add("container.uselessmod.coffee_machine", "Coffee Machine");
         this.add("gui.uselessmod.use_milk", "Use Milk");
@@ -130,5 +141,9 @@ public class UselessLanguageProvider extends LanguageProvider {
     private void addAdvancement(String id, String title, String description) {
         this.add("advancement." + UselessMod.MOD_ID + "." + id + ".title", title);
         this.add("advancement." + UselessMod.MOD_ID + "." + id + ".description", description);
+    }
+
+    private void addCoffeeType(Supplier<CoffeeType> key, String name) {
+        this.add(key.get().getDescriptionId(), name);
     }
 }

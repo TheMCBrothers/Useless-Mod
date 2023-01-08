@@ -12,6 +12,8 @@ public final class ModBlockEntityTypes {
 
     public static final RegistryObject<BlockEntityType<CoffeeMachineBlockEntity>> COFFEE_MACHINE =
             BLOCK_ENTITIES.register("coffee_machine", CoffeeMachineBlockEntity::new, ModBlocks.COFFEE_MACHINE);
+    public static final RegistryObject<BlockEntityType<CupBlockEntity>> CUP =
+            BLOCK_ENTITIES.register("cup", CupBlockEntity::new, ModBlocks.CUP_COFFEE);
     public static final RegistryObject<BlockEntityType<CanvasBlockEntity>> CANVAS =
             BLOCK_ENTITIES.register("canvas", CanvasBlockEntity::new, ModBlocks.CANVAS);
     public static final RegistryObject<BlockEntityType<UselessBedBlockEntity>> BED =

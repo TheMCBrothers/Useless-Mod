@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "uselessmod:block/cup_coffee"
+    },
+    "facing=south": {
+      "model": "uselessmod:block/cup_coffee",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "uselessmod:block/cup_coffee",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "uselessmod:block/cup_coffee",
+      "y": 90
+    }
+  }
+}

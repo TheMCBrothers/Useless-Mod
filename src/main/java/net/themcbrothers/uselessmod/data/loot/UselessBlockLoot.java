@@ -83,12 +83,22 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
         this.dropSelf(COFFEE_MACHINE.get());
+        this.dropSelf(CUP.get());
+        this.add(CUP_COFFEE.get(), UselessBlockLoot::copyCoffeeDrop);
         this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
         this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
     }
 
-    private static LootTable.Builder createCopyColorDrop(ItemLike p_124127_) {
-        return LootTable.lootTable().withPool(applyExplosionCondition(p_124127_, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(p_124127_)).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Color", "BlockEntityTag.Color"))));
+    private static LootTable.Builder createCopyColorDrop(ItemLike itemLike) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
+                .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Color", "BlockEntityTag.Color"))));
+    }
+
+    private static LootTable.Builder copyCoffeeDrop(ItemLike itemLike) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
+                .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Coffee", "Coffee"))));
     }
 
     private static LootTable.Builder wallClosetDrop(Block block) {

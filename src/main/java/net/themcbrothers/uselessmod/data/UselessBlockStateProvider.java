@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
@@ -73,11 +72,9 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlock(USELESS_SKELETON_WALL_SKULL.get(), this.models().getExistingFile(mcLoc(BLOCK_FOLDER + "/skull")));
 
         // Special Blocks
-        getVariantBuilder(COFFEE_MACHINE.get())
-                .forAllStatesExcept(state -> ConfiguredModel.builder()
-                        .modelFile(models().getExistingFile(blockTexture(COFFEE_MACHINE.get())))
-                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                        .build(), BlockStateProperties.WATERLOGGED);
+        waterloggedHorizontalFacingBlock(COFFEE_MACHINE.get(), models().getExistingFile(blockTexture(COFFEE_MACHINE.get())));
+        waterloggedHorizontalFacingBlock(CUP.get(), models().getExistingFile(blockTexture(CUP.get())));
+        waterloggedHorizontalFacingBlock(CUP_COFFEE.get(), models().getExistingFile(blockTexture(CUP_COFFEE.get())));
         // TODO wall closet
 
         // Block Item Models
@@ -94,6 +91,8 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(USELESS_OAK_WOOD.getFenceGate());
         simpleItemItem(USELESS_OAK_WOOD.getDoor());
         simpleItemItem(USELESS_OAK_WOOD.getSign());
+        simpleBlockItem(CUP.get());
+        simpleBlockItem(CUP_COFFEE.get());
         simpleBlockItem(PAINT_BUCKET.get());
         simpleBlockItem(CANVAS.get());
         simpleBlockItem(USELESS_CARPET.get());
@@ -128,6 +127,14 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     private void pottedPlant(Block block, Block plant) {
         ResourceLocation id = block.getRegistryName();
         simpleBlock(block, this.models().withExistingParent(id.getPath(), mcLoc("block/flower_pot_cross")).texture("plant", blockTexture(plant)));
+    }
+
+    private void waterloggedHorizontalFacingBlock(Block block, ModelFile model) {
+        getVariantBuilder(block)
+                .forAllStatesExcept(state -> ConfiguredModel.builder()
+                        .modelFile(model)
+                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                        .build(), BlockStateProperties.WATERLOGGED);
     }
 
     private void simpleItemItem(Block block) {
