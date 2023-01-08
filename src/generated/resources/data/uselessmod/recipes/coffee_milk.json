@@ -1,0 +1,22 @@
+{
+  "type": "uselessmod:coffee",
+  "cup": {
+    "item": "uselessmod:cup"
+  },
+  "bean": {
+    "item": "uselessmod:useless_wheat"
+  },
+  "water": {
+    "tag": "minecraft:water",
+    "amount": 250
+  },
+  "milk": {
+    "tag": "forge:milk",
+    "amount": 100
+  },
+  "result": {
+    "item": "uselessmod:cup_coffee",
+    "nbt": "{Coffee:\"uselessmod:milk\"}"
+  },
+  "cookingtime": 100
+}

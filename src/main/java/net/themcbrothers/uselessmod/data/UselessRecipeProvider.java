@@ -2,11 +2,17 @@ package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import net.themcbrothers.uselessmod.UselessTags;
+import net.themcbrothers.uselessmod.data.builder.CoffeeRecipeBuilder;
 import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.init.ModCoffeeTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.util.CoffeeUtils;
+import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 
 import java.util.function.Consumer;
 
@@ -84,6 +90,12 @@ public class UselessRecipeProvider extends RecipeProvider {
         // OTHER
         carpet(consumer, ModBlocks.USELESS_CARPET.get(), ModBlocks.USELESS_WOOL.get());
         bedFromPlanksAndWool(consumer, ModBlocks.USELESS_BED.get(), ModBlocks.USELESS_WOOL.get());
+
+        // Coffee
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.getCoffeeStack(ModCoffeeTypes.BLACK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(ModItems.USELESS_WHEAT), Ingredient.EMPTY, FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_coffee_bean", has(ModItems.USELESS_WHEAT)).save(consumer, rl("coffee_black"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.getCoffeeStack(ModCoffeeTypes.MILK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(ModItems.USELESS_WHEAT), Ingredient.EMPTY, FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_coffee_bean", has(ModItems.USELESS_WHEAT)).save(consumer, rl("coffee_milk"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.getCoffeeStack(ModCoffeeTypes.SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(ModItems.USELESS_WHEAT), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_sugar"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.getCoffeeStack(ModCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(ModItems.USELESS_WHEAT), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
     }
 
     @Override
