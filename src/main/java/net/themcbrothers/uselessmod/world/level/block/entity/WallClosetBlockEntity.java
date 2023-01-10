@@ -5,6 +5,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -29,6 +30,7 @@ import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.model.data.SinglePropertyData;
 
 import java.util.Objects;
@@ -78,7 +80,13 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return this.saveWithFullMetadata();
+        return this.saveWithoutMetadata();
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -104,9 +112,10 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
 
     public void setMaterial(Block material) {
         this.material = material;
-        //noinspection ConstantConditions
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-        setChanged();
+        //noinspection DataFlowIssue
+        this.level.setBlockAndUpdate(getBlockPos(), getBlockState());
+        this.requestModelDataUpdate();
+        this.setChanged();
     }
 
     @Override
