@@ -23,7 +23,9 @@ public class VanillaCompatibility {
         registerFlammable(ModBlocks.USELESS_OAK_WOOD.getSlab(), 5, 20);
         registerFlammable(ModBlocks.USELESS_OAK_WOOD.getFence(), 5, 20);
         registerFlammable(ModBlocks.USELESS_OAK_WOOD.getFenceGate(), 5, 20);
-        
+        registerFlammable(ModBlocks.USELESS_WOOL.get(), 30, 60);
+        registerFlammable(ModBlocks.CANVAS.get(), 30, 60);
+
         // Strippable logs
         registerStrippable(ModBlocks.USELESS_OAK_WOOD.getLog(), ModBlocks.USELESS_OAK_WOOD.getStrippedLog());
         registerStrippable(ModBlocks.USELESS_OAK_WOOD.getWood(), ModBlocks.USELESS_OAK_WOOD.getStrippedWood());

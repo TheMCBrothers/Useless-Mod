@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "uselessmod:useless_wool"
+    "uselessmod:useless_wool",
+    "uselessmod:canvas"
   ]
 }
