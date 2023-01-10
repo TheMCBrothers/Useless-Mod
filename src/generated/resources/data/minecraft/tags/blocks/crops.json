@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "uselessmod:useless_wheat",
-    "uselessmod:wild_useless_wheat"
+    "uselessmod:wild_useless_wheat",
+    "uselessmod:coffee_beans",
+    "uselessmod:wild_coffee_beans"
   ]
 }

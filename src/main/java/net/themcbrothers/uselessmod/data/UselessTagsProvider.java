@@ -49,7 +49,7 @@ public class UselessTagsProvider {
             this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.RED_ROSE.get(), ModBlocks.BLUE_ROSE.get(), ModBlocks.USELESS_ROSE.get());
             this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_RED_ROSE.get(), ModBlocks.POTTED_BLUE_ROSE.get(), ModBlocks.POTTED_USELESS_ROSE.get(), ModBlocks.POTTED_USELESS_OAK_SAPLING.get());
             this.tag(BlockTags.SAPLINGS).add(ModBlocks.USELESS_OAK_SAPLING.get());
-            this.tag(BlockTags.CROPS).add(ModBlocks.USELESS_WHEAT.get(), ModBlocks.WILD_USELESS_WHEAT.get());
+            this.tag(BlockTags.CROPS).add(ModBlocks.USELESS_WHEAT.get(), ModBlocks.WILD_USELESS_WHEAT.get(), ModBlocks.COFFEE_BEANS.get(), ModBlocks.WILD_COFFEE_BEANS.get());
             this.tag(BlockTags.LEAVES).add(ModBlocks.USELESS_OAK_LEAVES.get());
             this.tag(BlockTags.PLANKS).add(ModBlocks.USELESS_OAK_WOOD.get());
             this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.USELESS_OAK_WOOD.getStairs());
@@ -118,9 +118,11 @@ public class UselessTagsProvider {
 
             // other forge tags
             this.tag(UselessTags.Items.CROPS_USELESS_WHEAT).add(ModItems.USELESS_WHEAT.get());
-            this.tag(Tags.Items.CROPS).addTag(UselessTags.Items.CROPS_USELESS_WHEAT);
+            this.tag(UselessTags.Items.CROPS_COFFEEBEAN).add(ModItems.COFFEE_BEANS.get());
+            this.tag(Tags.Items.CROPS).addTag(UselessTags.Items.CROPS_USELESS_WHEAT).addTag(UselessTags.Items.CROPS_COFFEEBEAN);
             this.tag(UselessTags.Items.SEEDS_USELESS_WHEAT).add(ModItems.USELESS_WHEAT_SEEDS.get());
-            this.tag(Tags.Items.SEEDS).addTag(UselessTags.Items.SEEDS_USELESS_WHEAT);
+            this.tag(UselessTags.Items.SEEDS_COFFEEBEAN).add(ModItems.COFFEE_SEEDS.get());
+            this.tag(Tags.Items.SEEDS).addTag(UselessTags.Items.SEEDS_USELESS_WHEAT).addTag(UselessTags.Items.SEEDS_COFFEEBEAN);
             this.tag(Tags.Items.BONES).add(ModItems.USELESS_BONE.get());
             this.tag(Tags.Items.LEATHER).add(ModItems.USELESS_LEATHER.get());
             this.tag(Tags.Items.FEATHERS).add(ModItems.USELESS_FEATHER.get());

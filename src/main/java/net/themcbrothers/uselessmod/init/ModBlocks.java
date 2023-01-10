@@ -79,8 +79,10 @@ public final class ModBlocks {
     public static final RegistryObject<Block> POTTED_BLUE_ROSE = BLOCKS.registerNoItem("potted_blue_rose", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BLUE_ROSE, copy(Blocks.POTTED_POPPY)));
     public static final RegistryObject<Block> POTTED_USELESS_ROSE = BLOCKS.registerNoItem("potted_useless_rose", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, USELESS_ROSE, copy(Blocks.POTTED_POPPY)));
     public static final RegistryObject<Block> POTTED_USELESS_OAK_SAPLING = BLOCKS.registerNoItem("potted_useless_oak_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, USELESS_OAK_SAPLING, copy(Blocks.POTTED_OAK_SAPLING)));
-    public static final RegistryObject<Block> USELESS_WHEAT = BLOCKS.registerNoItem("useless_wheat", () -> new UselessCropBlock(false, copy(Blocks.WHEAT)));
-    public static final RegistryObject<Block> WILD_USELESS_WHEAT = BLOCKS.registerNoItem("wild_useless_wheat", () -> new UselessCropBlock(true, copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> USELESS_WHEAT = BLOCKS.registerNoItem("useless_wheat", () -> new UselessCropBlock(false, ModItems.USELESS_WHEAT_SEEDS, copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> WILD_USELESS_WHEAT = BLOCKS.registerNoItem("wild_useless_wheat", () -> new UselessCropBlock(true, ModItems.USELESS_WHEAT_SEEDS, copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> COFFEE_BEANS = BLOCKS.registerNoItem("coffee_beans", () -> new UselessCropBlock(false, ModItems.COFFEE_SEEDS, copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> WILD_COFFEE_BEANS = BLOCKS.registerNoItem("wild_coffee_beans", () -> new UselessCropBlock(true, ModItems.COFFEE_SEEDS, copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> USELESS_SKELETON_SKULL = BLOCKS.registerNoItem("useless_skeleton_skull", () -> new UselessSkullBlock(UselessSkullBlock.Types.USELESS_SKELETON, copy(Blocks.SKELETON_SKULL)));
     public static final RegistryObject<Block> USELESS_SKELETON_WALL_SKULL = BLOCKS.registerNoItem("useless_skeleton_wall_skull", () -> new UselessWallSkullBlock(UselessSkullBlock.Types.USELESS_SKELETON, copy(Blocks.SKELETON_WALL_SKULL).lootFrom(USELESS_SKELETON_SKULL)));
 }

@@ -4,7 +4,7 @@
     "item": "uselessmod:cup"
   },
   "bean": {
-    "item": "uselessmod:useless_wheat"
+    "tag": "forge:crops/coffeebean"
   },
   "extra": {
     "item": "minecraft:sugar"

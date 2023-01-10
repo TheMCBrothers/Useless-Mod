@@ -8,14 +8,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.PlantType;
-import net.themcbrothers.uselessmod.init.ModItems;
 
 public class UselessCropBlock extends CropBlock {
     private final boolean isWild;
+    private final ItemLike seedItem;
 
-    public UselessCropBlock(boolean isWild, Properties properties) {
+    public UselessCropBlock(boolean isWild, ItemLike seedItem, Properties properties) {
         super(properties);
         this.isWild = isWild;
+        this.seedItem = seedItem;
         if (isWild) {
             this.registerDefaultState(this.stateDefinition.any().setValue(AGE, this.getMaxAge()));
         }
@@ -33,6 +34,6 @@ public class UselessCropBlock extends CropBlock {
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return ModItems.USELESS_WHEAT_SEEDS;
+        return this.seedItem;
     }
 }

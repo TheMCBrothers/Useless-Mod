@@ -4,7 +4,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -17,40 +16,42 @@ public class UselessItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleItem(ModItems.RAW_USELESS);
-        simpleItem(ModItems.RAW_SUPER_USELESS);
-        simpleItem(ModItems.USELESS_DUST);
-        simpleItem(ModItems.SUPER_USELESS_DUST);
-        simpleItem(ModItems.USELESS_INGOT);
-        simpleItem(ModItems.SUPER_USELESS_INGOT);
-        simpleItem(ModItems.USELESS_NUGGET);
-        simpleItem(ModItems.SUPER_USELESS_NUGGET);
-        simpleItem(ModBlocks.USELESS_OAK_WOOD.getDoor());
-        simpleTool(ModItems.USELESS_SWORD);
-        simpleTool(ModItems.SUPER_USELESS_SWORD);
-        simpleTool(ModItems.USELESS_SHOVEL);
-        simpleTool(ModItems.SUPER_USELESS_SHOVEL);
-        simpleTool(ModItems.USELESS_PICKAXE);
-        simpleTool(ModItems.SUPER_USELESS_PICKAXE);
-        simpleTool(ModItems.USELESS_AXE);
-        simpleTool(ModItems.SUPER_USELESS_AXE);
-        simpleTool(ModItems.USELESS_HOE);
-        simpleTool(ModItems.SUPER_USELESS_HOE);
-        simpleItem(ModItems.USELESS_HELMET);
-        simpleItem(ModItems.SUPER_USELESS_HELMET);
-        simpleItem(ModItems.USELESS_CHESTPLATE);
-        simpleItem(ModItems.SUPER_USELESS_CHESTPLATE);
-        simpleItem(ModItems.USELESS_LEGGINGS);
-        simpleItem(ModItems.SUPER_USELESS_LEGGINGS);
-        simpleItem(ModItems.USELESS_BOOTS);
-        simpleItem(ModItems.SUPER_USELESS_BOOTS);
-        simpleItem(ModItems.USELESS_ELYTRA);
-        simpleItem(ModItems.SUPER_USELESS_ELYTRA);
-        simpleItem(ModItems.USELESS_WHEAT_SEEDS);
-        simpleItem(ModItems.USELESS_WHEAT);
-        simpleItem(ModItems.USELESS_BONE);
-        simpleItem(ModItems.USELESS_LEATHER);
-        simpleItem(ModItems.USELESS_FEATHER);
+        basicItem(ModItems.RAW_USELESS.get());
+        basicItem(ModItems.RAW_SUPER_USELESS.get());
+        basicItem(ModItems.USELESS_DUST.get());
+        basicItem(ModItems.SUPER_USELESS_DUST.get());
+        basicItem(ModItems.USELESS_INGOT.get());
+        basicItem(ModItems.SUPER_USELESS_INGOT.get());
+        basicItem(ModItems.USELESS_NUGGET.get());
+        basicItem(ModItems.SUPER_USELESS_NUGGET.get());
+        basicItem(ModBlocks.USELESS_OAK_WOOD.getDoor().asItem());
+        basicTool(ModItems.USELESS_SWORD.get());
+        basicTool(ModItems.SUPER_USELESS_SWORD.get());
+        basicTool(ModItems.USELESS_SHOVEL.get());
+        basicTool(ModItems.SUPER_USELESS_SHOVEL.get());
+        basicTool(ModItems.USELESS_PICKAXE.get());
+        basicTool(ModItems.SUPER_USELESS_PICKAXE.get());
+        basicTool(ModItems.USELESS_AXE.get());
+        basicTool(ModItems.SUPER_USELESS_AXE.get());
+        basicTool(ModItems.USELESS_HOE.get());
+        basicTool(ModItems.SUPER_USELESS_HOE.get());
+        basicItem(ModItems.USELESS_HELMET.get());
+        basicItem(ModItems.SUPER_USELESS_HELMET.get());
+        basicItem(ModItems.USELESS_CHESTPLATE.get());
+        basicItem(ModItems.SUPER_USELESS_CHESTPLATE.get());
+        basicItem(ModItems.USELESS_LEGGINGS.get());
+        basicItem(ModItems.SUPER_USELESS_LEGGINGS.get());
+        basicItem(ModItems.USELESS_BOOTS.get());
+        basicItem(ModItems.SUPER_USELESS_BOOTS.get());
+        basicItem(ModItems.USELESS_ELYTRA.get());
+        basicItem(ModItems.SUPER_USELESS_ELYTRA.get());
+        basicItem(ModItems.USELESS_WHEAT_SEEDS.get());
+        basicItem(ModItems.USELESS_WHEAT.get());
+        basicItem(ModItems.COFFEE_SEEDS.get());
+        basicItem(ModItems.COFFEE_BEANS.get());
+        basicItem(ModItems.USELESS_BONE.get());
+        basicItem(ModItems.USELESS_LEATHER.get());
+        basicItem(ModItems.USELESS_FEATHER.get());
 
         withExistingParent("paint_brush", mcLoc(ITEM_FOLDER + "/handheld"))
                 .texture("layer0", modLoc(ITEM_FOLDER + "/paint_brush_0"))
@@ -65,12 +66,7 @@ public class UselessItemModelProvider extends ItemModelProvider {
         this.withExistingParent("useless_skeleton_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
     }
 
-    private void simpleItem(ItemLike item) {
-        final ResourceLocation id = item.asItem().getRegistryName();
-        this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
-    }
-
-    private void simpleTool(ItemLike item) {
+    private void basicTool(ItemLike item) {
         final ResourceLocation id = item.asItem().getRegistryName();
         this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/handheld"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
     }

@@ -68,6 +68,8 @@
   "gui.uselessmod.start": "Start",
   "gui.uselessmod.stop": "Stop",
   "gui.uselessmod.use_milk": "Use Milk",
+  "item.uselessmod.coffee_beans": "Coffee Beans",
+  "item.uselessmod.coffee_seeds": "Coffee Seeds",
   "item.uselessmod.paint_brush": "Paint Brush",
   "item.uselessmod.raw_super_useless": "Raw Super-Useless",
   "item.uselessmod.raw_useless": "Raw Useless",

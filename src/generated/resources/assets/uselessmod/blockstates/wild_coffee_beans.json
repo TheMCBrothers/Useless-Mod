@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "uselessmod:block/coffee_beans_stage0"
+    },
+    "age=1": {
+      "model": "uselessmod:block/coffee_beans_stage1"
+    },
+    "age=2": {
+      "model": "uselessmod:block/coffee_beans_stage2"
+    },
+    "age=3": {
+      "model": "uselessmod:block/coffee_beans_stage3"
+    },
+    "age=4": {
+      "model": "uselessmod:block/coffee_beans_stage4"
+    },
+    "age=5": {
+      "model": "uselessmod:block/coffee_beans_stage5"
+    },
+    "age=6": {
+      "model": "uselessmod:block/coffee_beans_stage6"
+    },
+    "age=7": {
+      "model": "uselessmod:block/coffee_beans_stage7"
+    }
+  }
+}

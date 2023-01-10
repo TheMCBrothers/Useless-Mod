@@ -101,6 +101,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addItem(ModItems.SUPER_USELESS_ELYTRA, "Super-Useless Elytra");
         this.addItem(ModItems.USELESS_WHEAT_SEEDS, "Useless Wheat Seeds");
         this.addItem(ModItems.USELESS_WHEAT, "Useless Wheat");
+        this.addItem(ModItems.COFFEE_SEEDS, "Coffee Seeds");
+        this.addItem(ModItems.COFFEE_BEANS, "Coffee Beans");
         this.addItem(ModItems.USELESS_BONE, "Useless Bone");
         this.addItem(ModItems.USELESS_LEATHER, "Useless Leather");
         this.addItem(ModItems.USELESS_FEATHER, "Useless Feather");

@@ -49,6 +49,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         pottedPlant(POTTED_USELESS_ROSE.get(), USELESS_ROSE.get());
         pottedPlant(POTTED_USELESS_OAK_SAPLING.get(), USELESS_OAK_SAPLING.get());
         wildCropPlant((UselessCropBlock) USELESS_WHEAT.get(), (UselessCropBlock) WILD_USELESS_WHEAT.get(), "useless_wheat");
+        wildCropPlant((UselessCropBlock) COFFEE_BEANS.get(), (UselessCropBlock) WILD_COFFEE_BEANS.get(), "coffee_beans");
         crossPlant(USELESS_OAK_SAPLING.get());
         simpleBlockWithItem(USELESS_OAK_LEAVES.get());
         simpleBlockWithItem(USELESS_OAK_WOOD.get());

@@ -54,6 +54,8 @@ public final class ModItems {
     // Misc Items
     public static final ItemObject<Item> USELESS_WHEAT_SEEDS = ITEMS.register("useless_wheat_seeds", () -> new ItemNameBlockItem(ModBlocks.USELESS_WHEAT.get(), GENERAL_PROPS));
     public static final ItemObject<Item> USELESS_WHEAT = ITEMS.register("useless_wheat", GENERAL_PROPS);
+    public static final ItemObject<Item> COFFEE_SEEDS = ITEMS.register("coffee_seeds", () -> new ItemNameBlockItem(ModBlocks.COFFEE_BEANS.get(), GENERAL_PROPS));
+    public static final ItemObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_BONE = ITEMS.register("useless_bone", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_LEATHER = ITEMS.register("useless_leather", GENERAL_PROPS);
     public static final ItemObject<Item> USELESS_FEATHER = ITEMS.register("useless_feather", GENERAL_PROPS);

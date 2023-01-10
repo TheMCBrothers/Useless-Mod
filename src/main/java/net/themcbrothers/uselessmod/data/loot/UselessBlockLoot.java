@@ -57,6 +57,10 @@ public class UselessBlockLoot extends BlockLoot {
         this.add(USELESS_WHEAT.get(), createCropDrops(USELESS_WHEAT.get(), ModItems.USELESS_WHEAT.get(), ModItems.USELESS_WHEAT_SEEDS.get(), condition1));
         LootItemCondition.Builder condition2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(WILD_USELESS_WHEAT.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         this.add(WILD_USELESS_WHEAT.get(), createCropDrops(USELESS_WHEAT.get(), ModItems.USELESS_WHEAT.get(), ModItems.USELESS_WHEAT_SEEDS.get(), condition2));
+        LootItemCondition.Builder condition3 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(COFFEE_BEANS.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        this.add(COFFEE_BEANS.get(), createCropDrops(COFFEE_BEANS.get(), ModItems.COFFEE_BEANS.get(), ModItems.COFFEE_SEEDS.get(), condition3));
+        LootItemCondition.Builder condition4 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(WILD_COFFEE_BEANS.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        this.add(WILD_COFFEE_BEANS.get(), createCropDrops(COFFEE_BEANS.get(), ModItems.COFFEE_BEANS.get(), ModItems.COFFEE_SEEDS.get(), condition4));
         this.dropSelf(USELESS_OAK_SAPLING.get());
         this.add(USELESS_OAK_LEAVES.get(), (block) -> createOakLeavesDrops(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.dropSelf(USELESS_OAK_WOOD.get());

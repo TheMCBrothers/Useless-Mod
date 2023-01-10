@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:seeds/useless_wheat"
+    "#forge:seeds/useless_wheat",
+    "#forge:seeds/coffeebean"
   ]
 }
