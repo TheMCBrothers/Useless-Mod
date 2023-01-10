@@ -34,7 +34,7 @@ public class CupBlockItem extends BlockItem {
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (this.drinkable) {
+        if (this.drinkable && this.allowdedIn(tab)) {
             for (CoffeeType coffeeType : UselessRegistries.coffeeRegistry.get().getValues()) {
                 items.add(CoffeeUtils.getCoffeeStack(coffeeType));
             }
