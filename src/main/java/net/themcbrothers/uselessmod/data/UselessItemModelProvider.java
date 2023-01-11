@@ -25,6 +25,8 @@ public class UselessItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.USELESS_NUGGET.get());
         basicItem(ModItems.SUPER_USELESS_NUGGET.get());
         basicItem(ModBlocks.USELESS_OAK_WOOD.getDoor().asItem());
+        basicTool(ModItems.USELESS_WRENCH.get());
+        basicItem(ModItems.USELESS_SHEARS.get());
         basicTool(ModItems.USELESS_SWORD.get());
         basicTool(ModItems.SUPER_USELESS_SWORD.get());
         basicTool(ModItems.USELESS_SHOVEL.get());

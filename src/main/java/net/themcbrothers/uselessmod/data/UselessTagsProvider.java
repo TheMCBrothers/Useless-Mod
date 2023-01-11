@@ -121,6 +121,8 @@ public class UselessTagsProvider {
             this.tag(Tags.Items.RAW_MATERIALS).addTag(UselessTags.Items.RAW_MATERIALS_USELESS).addTag(UselessTags.Items.RAW_MATERIALS_SUPER_USELESS);
 
             // other forge tags
+            this.tag(UselessTags.Items.TOOLS_WRENCH).add(ModItems.USELESS_WRENCH.get());
+            this.tag(Tags.Items.SHEARS).add(ModItems.USELESS_SHEARS.get());
             this.tag(UselessTags.Items.CROPS_USELESS_WHEAT).add(ModItems.USELESS_WHEAT.get());
             this.tag(UselessTags.Items.CROPS_COFFEEBEAN).add(ModItems.COFFEE_BEANS.get());
             this.tag(Tags.Items.CROPS).addTag(UselessTags.Items.CROPS_USELESS_WHEAT).addTag(UselessTags.Items.CROPS_COFFEEBEAN);

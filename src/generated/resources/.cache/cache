@@ -55,7 +55,7 @@ dd312eced09f42179d9f737ec8abbbfa9801d40d assets/uselessmod/blockstates/useless_w
 a1d67572759843f06efcb80fc38ac08618f2f720 assets/uselessmod/blockstates/useless_wool.json
 e59ffbc4041f43b3b74f00fa02bc56f70ac03f12 assets/uselessmod/blockstates/wild_coffee_beans.json
 dd312eced09f42179d9f737ec8abbbfa9801d40d assets/uselessmod/blockstates/wild_useless_wheat.json
-85bc2c0a44ce309581ada0ec7b4e993fa12a07ef assets/uselessmod/lang/en_us.json
+896663d34a8cc2dd781281a61387a726f0843877 assets/uselessmod/lang/en_us.json
 4445bf747bfd6e7dd3fc4787510cd9fab56f39f6 assets/uselessmod/models/block/blue_rose.json
 646933fb5055d5499563afe2bc2cf1978901bff3 assets/uselessmod/models/block/coffee_beans_stage0.json
 4d4f4f79a9c8541584c03ab40503056c49280063 assets/uselessmod/models/block/coffee_beans_stage1.json
@@ -241,6 +241,7 @@ dd63764035b89b24156ef189e05716b48209dcd9 assets/uselessmod/models/item/useless_p
 2fdf526c4cd5dd93f6fee14da023382f6be98a6b assets/uselessmod/models/item/useless_powered_rail.json
 5f634f87b192256373158e2fa8ed479b53053dee assets/uselessmod/models/item/useless_rail.json
 86cacd485b116d0917fe09a045fdd3b3c37d1494 assets/uselessmod/models/item/useless_rose.json
+52d562484c46de463ba95caeb3eb18a0be71b53b assets/uselessmod/models/item/useless_shears.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/uselessmod/models/item/useless_sheep_spawn_egg.json
 e12f01a86a055937dcfd57f79e9a7120e34e4c49 assets/uselessmod/models/item/useless_shovel.json
 d5e1c9824cafbb698e2291c88c0ac69c7c702318 assets/uselessmod/models/item/useless_skeleton_skull.json
@@ -249,6 +250,7 @@ d5e1c9824cafbb698e2291c88c0ac69c7c702318 assets/uselessmod/models/item/useless_s
 7d5ffd7676dea99cf6a1f052ee2e819f573d2ff3 assets/uselessmod/models/item/useless_wheat.json
 568af1ac65a743b01c94c07732e3911b477b13dd assets/uselessmod/models/item/useless_wheat_seeds.json
 0eeef97f54c84b4aca92ebe91012ecde728c3419 assets/uselessmod/models/item/useless_wool.json
+233e80a5eb4174177317c04692910c59d3838272 assets/uselessmod/models/item/useless_wrench.json
 27c29979e9f5261cb2db3ac68ae5e5c656c6b3fa data/forge/tags/blocks/ore_rates/singular.json
 4c9503290a4ca46436cbe355a3a9ef39eda06580 data/forge/tags/blocks/ores.json
 93d87d7252b96c2b5aa0ce5af71a36c63322d9fe data/forge/tags/blocks/ores/super_useless.json
@@ -285,11 +287,13 @@ c9dfd7a0cb75699ece7bb7c7a057337f0e1e0287 data/forge/tags/items/raw_materials/use
 cf62fab8622b9fde075a75bf6f5c4de225b01fb0 data/forge/tags/items/seeds.json
 772326976a151409a508ae4274a713d5308c80ed data/forge/tags/items/seeds/coffeebean.json
 417a2122be3809a71f6a5997b81bc4543d801112 data/forge/tags/items/seeds/useless_wheat.json
+fd56e1e53d71e495f216fef08ee84f03af485f93 data/forge/tags/items/shears.json
 1fcfc21f862355fdae55e9af0934749dec54c244 data/forge/tags/items/storage_blocks.json
 8ecc71a7a7ac9718e34ed99642c17db26cca57d3 data/forge/tags/items/storage_blocks/raw_super_useless.json
 e9ae26e8aed146a8fc19d711269602dc08ca783d data/forge/tags/items/storage_blocks/raw_useless.json
 ce885074e2013a373675f1f7302c53c4c2204677 data/forge/tags/items/storage_blocks/super_useless.json
 8d182f2b3874f921202d1b083fba4add2e358c90 data/forge/tags/items/storage_blocks/useless.json
+114a92b3cd88d42af80de27aa3901af54701e888 data/forge/tags/items/tools/wrench.json
 9994f6a22aca88b9b03b678968f0ee14ac0aa927 data/minecraft/tags/blocks/beacon_base_blocks.json
 9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/blocks/beds.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/blocks/carpets.json

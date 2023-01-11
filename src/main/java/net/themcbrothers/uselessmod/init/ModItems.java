@@ -5,6 +5,7 @@ import net.minecraft.world.item.*;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
+import net.themcbrothers.uselessmod.world.item.WrenchItem;
 import slimeknights.mantle.registration.object.ItemObject;
 
 import static net.themcbrothers.uselessmod.init.Registration.ITEMS;
@@ -26,6 +27,8 @@ public final class ModItems {
     public static final ItemObject<Item> SUPER_USELESS_NUGGET = ITEMS.register("super_useless_nugget", GENERAL_PROPS);
 
     // Weapons and Tools
+    public static final ItemObject<Item> USELESS_WRENCH = ITEMS.register("useless_wrench", () -> new WrenchItem(new Item.Properties().tab(UselessMod.TAB).stacksTo(1)));
+    public static final ItemObject<Item> USELESS_SHEARS = ITEMS.register("useless_shears", () -> new ShearsItem(new Item.Properties().tab(UselessMod.TAB).durability(320)));
     public static final ItemObject<Item> USELESS_SWORD = ITEMS.register("useless_sword", () -> new SwordItem(ModTiers.USELESS, 3, -2.4F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_SHOVEL = ITEMS.register("useless_shovel", () -> new ShovelItem(ModTiers.USELESS, 1.5F, -3.0F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_PICKAXE = ITEMS.register("useless_pickaxe", () -> new PickaxeItem(ModTiers.USELESS, 1, -2.8F, new Item.Properties().tab(UselessMod.TAB)));
