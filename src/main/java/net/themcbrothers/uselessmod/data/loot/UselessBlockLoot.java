@@ -86,6 +86,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_DETECTOR_RAIL.get());
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
+        this.add(MACHINE_SUPPLIER.get(), UselessBlockLoot::mimicDrop);
         this.dropSelf(COFFEE_MACHINE.get());
         this.dropSelf(CUP.get());
         this.add(CUP_COFFEE.get(), UselessBlockLoot::copyCoffeeDrop);
@@ -97,6 +98,12 @@ public class UselessBlockLoot extends BlockLoot {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Color", "BlockEntityTag.Color"))));
+    }
+
+    private static LootTable.Builder mimicDrop(ItemLike itemLike) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
+                .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Mimic", "BlockEntityTag.Mimic"))));
     }
 
     private static LootTable.Builder copyCoffeeDrop(ItemLike itemLike) {

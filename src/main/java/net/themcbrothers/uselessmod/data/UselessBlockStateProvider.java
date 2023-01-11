@@ -7,9 +7,7 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.RailShape;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
@@ -78,6 +76,10 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         waterloggedHorizontalFacingBlock(CUP_COFFEE.get(), models().getExistingFile(blockTexture(CUP_COFFEE.get())));
         // TODO wall closet
 
+        simpleBlock(MACHINE_SUPPLIER.get(), models().getBuilder("machine_supplier").customLoader((blockModelBuilder, existingFileHelper) ->
+                new CustomLoaderBuilder<BlockModelBuilder>(UselessMod.rl("machine_supplier"), blockModelBuilder, existingFileHelper) {
+                }).end());
+
         // Block Item Models
         simpleBlockItem(USELESS_OAK_WOOD.getLog());
         simpleBlockItem(USELESS_OAK_WOOD.getWood());
@@ -92,6 +94,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(USELESS_OAK_WOOD.getFenceGate());
         simpleItemItem(USELESS_OAK_WOOD.getDoor());
         simpleItemItem(USELESS_OAK_WOOD.getSign());
+        simpleBlockItem(MACHINE_SUPPLIER.get());
         simpleBlockItem(CUP.get());
         simpleBlockItem(CUP_COFFEE.get());
         simpleBlockItem(PAINT_BUCKET.get());

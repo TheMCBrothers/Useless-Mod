@@ -67,6 +67,7 @@ public final class ModBlocks {
     public static final ItemObject<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), block -> new UselessBedItem(block, ONE_STACKING_PROPS));
 
     // Functional Blocks
+    public static final ItemObject<Block> MACHINE_SUPPLIER = BLOCKS.register("machine_supplier", () -> new MachineSupplierBlock(of(Material.DECORATION).strength(0.5F).dynamicShape().noOcclusion()), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of(Material.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)), block -> new CoffeeMachineBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> CUP = BLOCKS.register("cup", () -> new CupBlock(of(Material.DECORATION).strength(0.5F)), block -> new CupBlockItem(block, GENERAL_PROPS, false));
     public static final ItemObject<Block> CUP_COFFEE = BLOCKS.register("cup_coffee", () -> new CupCoffeeBlock(of(Material.DECORATION).strength(0.5F)), block -> new CupBlockItem(block, ONE_STACKING_PROPS, true));

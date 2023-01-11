@@ -10,6 +10,8 @@ public final class ModBlockEntityTypes {
     static void register() {
     }
 
+    public static final RegistryObject<BlockEntityType<MachineSupplierBlockEntity>> MACHINE_SUPPLIER =
+            BLOCK_ENTITIES.register("machine_supplier", MachineSupplierBlockEntity::new, ModBlocks.MACHINE_SUPPLIER);
     public static final RegistryObject<BlockEntityType<CoffeeMachineBlockEntity>> COFFEE_MACHINE =
             BLOCK_ENTITIES.register("coffee_machine", CoffeeMachineBlockEntity::new, ModBlocks.COFFEE_MACHINE);
     public static final RegistryObject<BlockEntityType<CupBlockEntity>> CUP =

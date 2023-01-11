@@ -10,8 +10,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -24,6 +27,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
+import net.themcbrothers.uselessmod.client.model.MachineSupplierModel;
 import net.themcbrothers.uselessmod.client.model.WallClosetModel;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
@@ -33,6 +37,7 @@ import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 
 public class ClientSetup extends CommonSetup {
     public ClientSetup() {
@@ -68,6 +73,7 @@ public class ClientSetup extends CommonSetup {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_OAK_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_OAK_WOOD.getDoor(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_OAK_WOOD.getTrapdoor(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MACHINE_SUPPLIER.get(), renderType -> true);
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.COFFEE_MACHINE.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WALL_CLOSET.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_RAIL.get(), RenderType.cutout());
@@ -99,6 +105,16 @@ public class ClientSetup extends CommonSetup {
             }
             return -1;
         }, ModBlocks.CUP_COFFEE.get());
+
+        colors.register((state, level, pos, tintIndex) -> {
+            if (level != null && pos != null && level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
+                final BlockState mimic = blockEntity.getMimic();
+                if (mimic != null) {
+                    return colors.getColor(mimic, level, pos, tintIndex);
+                }
+            }
+            return -1;
+        }, ModBlocks.MACHINE_SUPPLIER.get());
     }
 
     private void itemColors(final ColorHandlerEvent.Item event) {
@@ -118,6 +134,15 @@ public class ClientSetup extends CommonSetup {
             final CoffeeType type = CoffeeUtils.getCoffeeType(stack);
             return type != null ? type.getColor() : -1;
         }, ModBlocks.CUP_COFFEE);
+
+        colors.register((stack, layer) -> {
+            final CompoundTag tag = BlockItem.getBlockEntityData(stack);
+            if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
+                final BlockState mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
+                return colors.getColor(new ItemStack(mimic.getBlock().asItem()), layer);
+            }
+            return -1;
+        }, ModBlocks.MACHINE_SUPPLIER);
     }
 
     private void entityRenders(final EntityRenderersEvent.RegisterRenderers event) {
@@ -134,6 +159,7 @@ public class ClientSetup extends CommonSetup {
     }
 
     private void modelRegistry(final ModelRegistryEvent event) {
+        ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), MachineSupplierModel.Loader.INSTANCE);
         ModelLoaderRegistry.registerLoader(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
     }
 }
