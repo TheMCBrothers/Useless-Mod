@@ -1,9 +1,6 @@
 {
   "replace": false,
   "values": [
-    "uselessmod:super_useless_ore",
-    "uselessmod:deepslate_super_useless_ore",
-    "uselessmod:nether_super_useless_ore",
-    "uselessmod:end_super_useless_ore"
+    "#uselessmod:super_useless_ores"
   ]
 }

@@ -24,8 +24,10 @@ public class UselessTagsProvider {
 
         @Override
         protected void addTags() {
-            this.tag(UselessTags.Blocks.ORES_USELESS).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get());
-            this.tag(UselessTags.Blocks.ORES_SUPER_USELESS).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get());
+            this.tag(UselessTags.Blocks.USELESS_ORES).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get());
+            this.tag(UselessTags.Blocks.SUPER_USELESS_ORES).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get());
+            this.tag(UselessTags.Blocks.ORES_USELESS).addTag(UselessTags.Blocks.USELESS_ORES);
+            this.tag(UselessTags.Blocks.ORES_SUPER_USELESS).addTag(UselessTags.Blocks.SUPER_USELESS_ORES);
             this.tag(Tags.Blocks.ORES).addTag(UselessTags.Blocks.ORES_USELESS).addTag(UselessTags.Blocks.ORES_SUPER_USELESS);
             this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get());
             this.tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get());
@@ -37,8 +39,8 @@ public class UselessTagsProvider {
             this.tag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS).add(ModBlocks.RAW_SUPER_USELESS_BLOCK.get());
             this.tag(Tags.Blocks.STORAGE_BLOCKS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS);
 
-            this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.USELESS_WHEAT.get(), ModBlocks.WILD_USELESS_WHEAT.get());
-            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get(), ModBlocks.SUPER_USELESS_BLOCK.get(), ModBlocks.RAW_USELESS_BLOCK.get(), ModBlocks.RAW_SUPER_USELESS_BLOCK.get(), ModBlocks.USELESS_BARS.get(), ModBlocks.SUPER_USELESS_BARS.get(), ModBlocks.PAINT_BUCKET.get(), ModBlocks.USELESS_RAIL.get(), ModBlocks.USELESS_POWERED_RAIL.get(), ModBlocks.USELESS_DETECTOR_RAIL.get(), ModBlocks.USELESS_ACTIVATOR_RAIL.get());
+            this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.USELESS_WHEAT.get(), ModBlocks.WILD_USELESS_WHEAT.get(), ModBlocks.COFFEE_BEANS.get(), ModBlocks.WILD_COFFEE_BEANS.get());
+            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get(), ModBlocks.SUPER_USELESS_BLOCK.get(), ModBlocks.RAW_USELESS_BLOCK.get(), ModBlocks.RAW_SUPER_USELESS_BLOCK.get(), ModBlocks.USELESS_BARS.get(), ModBlocks.SUPER_USELESS_BARS.get(), ModBlocks.PAINT_BUCKET.get(), ModBlocks.USELESS_RAIL.get(), ModBlocks.USELESS_POWERED_RAIL.get(), ModBlocks.USELESS_DETECTOR_RAIL.get(), ModBlocks.USELESS_ACTIVATOR_RAIL.get(), ModBlocks.COFFEE_MACHINE.get());
             this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.USELESS_OAK_LEAVES.get());
             this.tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get());
             this.tag(BlockTags.NEEDS_IRON_TOOL).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_BLOCK.get());
@@ -74,6 +76,8 @@ public class UselessTagsProvider {
         @Override
         protected void addTags() {
             // ores
+            this.copy(UselessTags.Blocks.USELESS_ORES, UselessTags.Items.USELESS_ORES);
+            this.copy(UselessTags.Blocks.SUPER_USELESS_ORES, UselessTags.Items.SUPER_USELESS_ORES);
             this.copy(UselessTags.Blocks.ORES_USELESS, UselessTags.Items.ORES_USELESS);
             this.copy(UselessTags.Blocks.ORES_SUPER_USELESS, UselessTags.Items.ORES_SUPER_USELESS);
             this.copy(Tags.Blocks.ORES, Tags.Items.ORES);
