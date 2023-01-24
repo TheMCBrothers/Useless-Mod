@@ -29,7 +29,7 @@ public final class ModBlocks {
 
     private static final Item.Properties GENERAL_PROPS = new Item.Properties().tab(UselessMod.TAB);
     private static final Item.Properties ONE_STACKING_PROPS = new Item.Properties().tab(UselessMod.TAB).stacksTo(1);
-    private static final Function<Block, ? extends BlockItem> GENERAL_BLOCK_ITEM = (b) -> new BlockItem(b, GENERAL_PROPS);
+    private static final Function<? super Block, BlockItem> GENERAL_BLOCK_ITEM = (b) -> new BlockItem(b, GENERAL_PROPS);
 
     // Metal
     public static final ItemObject<Block> USELESS_ORE = BLOCKS.register("useless_ore", () -> new OreBlock(copy(Blocks.IRON_ORE)), GENERAL_BLOCK_ITEM);
