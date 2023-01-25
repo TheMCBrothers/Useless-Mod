@@ -6,11 +6,11 @@
     "#W#"
   ],
   "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
     "W": {
       "item": "uselessmod:useless_oak_planks"
-    },
-    "#": {
-      "tag": "forge:rods/wooden"
     }
   },
   "result": {

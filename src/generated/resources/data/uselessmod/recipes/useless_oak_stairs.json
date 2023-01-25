@@ -1,7 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "wooden_slab",
+  "group": "wooden_stairs",
   "pattern": [
+    "#  ",
+    "## ",
     "###"
   ],
   "key": {
@@ -10,7 +12,7 @@
     }
   },
   "result": {
-    "item": "uselessmod:useless_oak_planks_slab",
-    "count": 6
+    "item": "uselessmod:useless_oak_stairs",
+    "count": 4
   }
 }

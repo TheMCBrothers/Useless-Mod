@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "uselessmod:useless_oak_planks_stairs"
+          "name": "uselessmod:useless_oak_stairs"
         }
       ],
       "conditions": [

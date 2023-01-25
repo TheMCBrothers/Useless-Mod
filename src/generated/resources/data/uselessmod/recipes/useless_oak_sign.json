@@ -11,7 +11,7 @@
       "item": "uselessmod:useless_oak_planks"
     },
     "X": {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:stick"
     }
   },
   "result": {
