@@ -25,4 +25,7 @@ public final class ModBlockEntityTypes {
     public static final RegistryObject<BlockEntityType<UselessSkullBlockEntity>> SKULL =
             BLOCK_ENTITIES.register("skull", UselessSkullBlockEntity::new,
                     blocks -> blocks.add(ModBlocks.USELESS_SKELETON_SKULL.get(), ModBlocks.USELESS_SKELETON_WALL_SKULL.get()));
+    public static final RegistryObject<BlockEntityType<UselessSignBlockEntity>> SIGN =
+            BLOCK_ENTITIES.register("sign", UselessSignBlockEntity::new,
+                    blocks -> blocks.add(ModBlocks.USELESS_OAK_WALL_SIGN.get(), ModBlocks.USELESS_OAK_SIGN.get()));
 }
