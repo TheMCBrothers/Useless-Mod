@@ -13,15 +13,15 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.themcbrothers.lib.crafting.CommonRecipe;
+import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
 import net.themcbrothers.uselessmod.world.CoffeeContainer;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.mantle.recipe.ICommonRecipe;
-import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 
-public class CoffeeRecipe implements ICommonRecipe<CoffeeContainer> {
+public class CoffeeRecipe implements CommonRecipe<CoffeeContainer> {
     private final ResourceLocation id;
     private final String group;
     private final Ingredient cupIngredient;
@@ -73,7 +73,7 @@ public class CoffeeRecipe implements ICommonRecipe<CoffeeContainer> {
 
     @Override
     public ItemStack getToastSymbol() {
-        return new ItemStack(ModBlocks.COFFEE_MACHINE.get());
+        return new ItemStack(ModBlocks.COFFEE_MACHINE);
     }
 
     @Override

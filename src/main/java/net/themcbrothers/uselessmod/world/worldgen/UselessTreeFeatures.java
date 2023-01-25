@@ -34,10 +34,10 @@ public final class UselessTreeFeatures {
     public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> FANCY_USELESS_OAK_BEES = FeatureUtils.register("fancy_useless_oak_bees", Feature.TREE, createFancyUselessOak().decorators(List.of(BEEHIVE)).build());
 
     private static TreeConfiguration.TreeConfigurationBuilder createUselessOak() {
-        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_WOOD.getLog()), new StraightTrunkPlacer(5, 1, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines();
+        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_LOG.get()), new StraightTrunkPlacer(5, 1, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines();
     }
 
     private static TreeConfiguration.TreeConfigurationBuilder createFancyUselessOak() {
-        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_WOOD.getLog()), new FancyTrunkPlacer(3, 11, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).ignoreVines();
+        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_LOG.get()), new FancyTrunkPlacer(3, 11, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).ignoreVines();
     }
 }

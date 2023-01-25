@@ -8,10 +8,10 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryBuilder;
+import net.themcbrothers.lib.registration.deferred.*;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
-import slimeknights.mantle.registration.deferred.*;
 
 public final class Registration {
     public static final BlockDeferredRegister BLOCKS = new BlockDeferredRegister(UselessMod.MOD_ID);

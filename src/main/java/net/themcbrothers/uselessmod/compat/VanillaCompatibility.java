@@ -14,21 +14,21 @@ public class VanillaCompatibility {
     public static void register() {
         // Flammable Blocks
         registerFlammable(ModBlocks.USELESS_OAK_LEAVES.get(), 30, 60);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getLog(), 5, 5);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getWood(), 5, 5);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getStrippedLog(), 5, 5);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getStrippedWood(), 5, 5);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.get(), 5, 20);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getStairs(), 5, 20);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getSlab(), 5, 20);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getFence(), 5, 20);
-        registerFlammable(ModBlocks.USELESS_OAK_WOOD.getFenceGate(), 5, 20);
+        registerFlammable(ModBlocks.USELESS_OAK_LOG.get(), 5, 5);
+        registerFlammable(ModBlocks.USELESS_OAK_WOOD.get(), 5, 5);
+        registerFlammable(ModBlocks.STRIPPED_USELESS_OAK_LOG.get(), 5, 5);
+        registerFlammable(ModBlocks.STRIPPED_USELESS_OAK_WOOD.get(), 5, 5);
+        registerFlammable(ModBlocks.USELESS_OAK_PLANKS.get(), 5, 20);
+        registerFlammable(ModBlocks.USELESS_OAK_STAIRS.get(), 5, 20);
+        registerFlammable(ModBlocks.USELESS_OAK_SLAB.get(), 5, 20);
+        registerFlammable(ModBlocks.USELESS_OAK_FENCE.get(), 5, 20);
+        registerFlammable(ModBlocks.USELESS_OAK_FENCE_GATE.get(), 5, 20);
         registerFlammable(ModBlocks.USELESS_WOOL.get(), 30, 60);
         registerFlammable(ModBlocks.CANVAS.get(), 30, 60);
 
         // Strippable logs
-        registerStrippable(ModBlocks.USELESS_OAK_WOOD.getLog(), ModBlocks.USELESS_OAK_WOOD.getStrippedLog());
-        registerStrippable(ModBlocks.USELESS_OAK_WOOD.getWood(), ModBlocks.USELESS_OAK_WOOD.getStrippedWood());
+        registerStrippable(ModBlocks.USELESS_OAK_LOG.get(), ModBlocks.STRIPPED_USELESS_OAK_LOG.get());
+        registerStrippable(ModBlocks.USELESS_OAK_WOOD.get(), ModBlocks.STRIPPED_USELESS_OAK_WOOD.get());
 
         // Compostable blocks
         registerCompostable(0.3F, ModBlocks.USELESS_OAK_SAPLING.get());

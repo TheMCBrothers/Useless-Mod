@@ -38,10 +38,10 @@ public class CommonSetup {
 
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.RED_ROSE.getRegistryName(), ModBlocks.POTTED_RED_ROSE);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_ROSE.getRegistryName(), ModBlocks.POTTED_BLUE_ROSE);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_ROSE.getRegistryName(), ModBlocks.POTTED_USELESS_ROSE);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_OAK_SAPLING.getRegistryName(), ModBlocks.POTTED_USELESS_OAK_SAPLING);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.RED_ROSE.getId(), ModBlocks.POTTED_RED_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_ROSE.getId(), ModBlocks.POTTED_BLUE_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_ROSE.getId(), ModBlocks.POTTED_USELESS_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_OAK_SAPLING.getId(), ModBlocks.POTTED_USELESS_OAK_SAPLING);
 
             CauldronInteraction.WATER.put(ModBlocks.CANVAS.asItem(), (state, level, pos, player, hand, stack) -> {
                 if (!level.isClientSide) {

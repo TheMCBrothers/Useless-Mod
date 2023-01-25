@@ -2,11 +2,11 @@ package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
+import net.themcbrothers.lib.registration.object.ItemObject;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 import net.themcbrothers.uselessmod.world.item.WrenchItem;
-import slimeknights.mantle.registration.object.ItemObject;
 
 import static net.themcbrothers.uselessmod.init.Registration.ITEMS;
 

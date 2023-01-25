@@ -106,7 +106,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:$project.mc_version-$project.forge_version"
 
     // Mantle
-    implementation fg.deobf("slimeknights.mantle:Mantle:$project.mc_version-$project.mantle_version")
+    implementation fg.deobf("net.themcbrothers:TheMCBrosLib:$project.mc_version-$project.lib_version")
 
     // JEI
     compileOnly fg.deobf("mezz.jei:jei-$project.mc_version:$project.jei_version:api")

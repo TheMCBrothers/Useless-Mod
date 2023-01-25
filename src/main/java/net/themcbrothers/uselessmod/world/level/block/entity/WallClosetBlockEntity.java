@@ -26,12 +26,12 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.data.IModelData;
+import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.mantle.client.model.data.SinglePropertyData;
 
 import java.util.Objects;
 
@@ -75,7 +75,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     @NotNull
     @Override
     public IModelData getModelData() {
-        return new SinglePropertyData<>(MATERIAL_PROPERTY, this.material);
+        return new ModelDataMap.Builder().withInitial(MATERIAL_PROPERTY, this.material).build();
     }
 
     @Override

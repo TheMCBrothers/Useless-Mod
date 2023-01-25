@@ -6,13 +6,13 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
+import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.data.builder.CoffeeRecipeBuilder;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModCoffeeTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
-import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 
 import java.util.function.Consumer;
 
@@ -26,18 +26,18 @@ public class UselessRecipeProvider extends RecipeProvider {
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         // WOOD
-        ShapelessRecipeBuilder.shapeless(ModBlocks.USELESS_OAK_WOOD.get(), 4).requires(UselessTags.Items.USELESS_OAK_LOGS).group("planks").unlockedBy("has_logs", has(UselessTags.Items.USELESS_OAK_LOGS)).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getWood(), 3).define('#', ModBlocks.USELESS_OAK_WOOD.getLog()).pattern("##").pattern("##").group("bark").unlockedBy("has_log", has(ModBlocks.USELESS_OAK_WOOD.getLog())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getStrippedWood(), 3).define('#', ModBlocks.USELESS_OAK_WOOD.getStrippedLog()).pattern("##").pattern("##").group("bark").unlockedBy("has_log", has(ModBlocks.USELESS_OAK_WOOD.getStrippedLog())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getStairs(), 4).define('#', ModBlocks.USELESS_OAK_WOOD.get()).pattern("#  ").pattern("## ").pattern("###").group("wooden_stairs").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getSlab(), 6).define('#', ModBlocks.USELESS_OAK_WOOD.get()).pattern("###").group("wooden_slab").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getFence(), 3).define('W', ModBlocks.USELESS_OAK_WOOD.get()).define('#', Tags.Items.RODS_WOODEN).pattern("W#W").pattern("W#W").group("wooden_fence").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getFenceGate()).define('W', ModBlocks.USELESS_OAK_WOOD.get()).define('#', Tags.Items.RODS_WOODEN).pattern("#W#").pattern("#W#").group("wooden_fence_gate").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getDoor(), 3).define('#', ModBlocks.USELESS_OAK_WOOD.get()).pattern("##").pattern("##").pattern("##").group("wooden_door").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getTrapdoor(), 2).define('#', ModBlocks.USELESS_OAK_WOOD.get()).pattern("###").pattern("###").group("wooden_trapdoor").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getPressurePlate()).define('#', ModBlocks.USELESS_OAK_WOOD.get()).pattern("##").group("wooden_pressure_plate").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapelessRecipeBuilder.shapeless(ModBlocks.USELESS_OAK_WOOD.getButton()).requires(ModBlocks.USELESS_OAK_WOOD.get()).group("wooden_button").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.USELESS_OAK_WOOD.getSign(), 3).define('#', ModBlocks.USELESS_OAK_WOOD.get()).define('X', Tags.Items.RODS_WOODEN).pattern("###").pattern("###").pattern(" X ").group("wooden_sign").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        planksFromLogs(consumer, ModBlocks.USELESS_OAK_PLANKS, UselessTags.Items.USELESS_OAK_LOGS);
+        woodFromLogs(consumer, ModBlocks.USELESS_OAK_WOOD, ModBlocks.USELESS_OAK_LOG);
+        woodFromLogs(consumer, ModBlocks.STRIPPED_USELESS_OAK_WOOD, ModBlocks.STRIPPED_USELESS_OAK_LOG);
+        stairBuilder(ModBlocks.USELESS_OAK_STAIRS, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_stairs").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        slabBuilder(ModBlocks.USELESS_OAK_SLAB, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_slab").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        fenceBuilder(ModBlocks.USELESS_OAK_FENCE, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_fence").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        fenceGateBuilder(ModBlocks.USELESS_OAK_FENCE_GATE, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_fence_gate").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        doorBuilder(ModBlocks.USELESS_OAK_DOOR, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_door").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        trapdoorBuilder(ModBlocks.USELESS_OAK_TRAPDOOR, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_trapdoor").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        pressurePlateBuilder(ModBlocks.USELESS_OAK_PRESSURE_PLATE, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_pressure_plate").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        buttonBuilder(ModBlocks.USELESS_OAK_BUTTON, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_button").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        signBuilder(ModBlocks.USELESS_OAK_SIGN, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_sign").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
 
         // METAL
         ShapelessRecipeBuilder.shapeless(ModItems.RAW_USELESS.get(), 9).requires(ModBlocks.RAW_USELESS_BLOCK.get()).group(null).unlockedBy("has_raw_useless_block", has(ModBlocks.RAW_USELESS_BLOCK.get())).save(consumer);

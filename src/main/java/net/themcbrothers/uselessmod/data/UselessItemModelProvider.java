@@ -24,7 +24,7 @@ public class UselessItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.SUPER_USELESS_INGOT.get());
         basicItem(ModItems.USELESS_NUGGET.get());
         basicItem(ModItems.SUPER_USELESS_NUGGET.get());
-        basicItem(ModBlocks.USELESS_OAK_WOOD.getDoor().asItem());
+        basicItem(ModBlocks.USELESS_OAK_DOOR.asItem());
         basicTool(ModItems.USELESS_WRENCH.get());
         basicItem(ModItems.USELESS_SHEARS.get());
         basicTool(ModItems.USELESS_SWORD.get());
@@ -59,7 +59,7 @@ public class UselessItemModelProvider extends ItemModelProvider {
                 .texture("layer0", modLoc(ITEM_FOLDER + "/paint_brush_0"))
                 .texture("layer1", modLoc(ITEM_FOLDER + "/paint_brush_1"));
 
-        getBuilder(String.valueOf(ModItems.USELESS_SKELETON_SKULL.getRegistryName())).parent(getExistingFile(mcLoc(ITEM_FOLDER + "/template_skull")));
+        getBuilder(String.valueOf(ModItems.USELESS_SKELETON_SKULL.getId())).parent(getExistingFile(mcLoc(ITEM_FOLDER + "/template_skull")));
 
         this.withExistingParent("useless_sheep_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_pig_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));

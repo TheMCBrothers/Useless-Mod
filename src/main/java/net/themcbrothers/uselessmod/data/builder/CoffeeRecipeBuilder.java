@@ -14,10 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 
 import java.util.Objects;
 import java.util.function.Consumer;
