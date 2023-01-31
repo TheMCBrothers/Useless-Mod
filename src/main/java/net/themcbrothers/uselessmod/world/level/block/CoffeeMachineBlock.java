@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
+import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +31,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 @SuppressWarnings("deprecation")
-public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, WrenchableBlock {
     private final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 13, 13);
 
     public CoffeeMachineBlock(Properties properties) {
@@ -70,9 +71,14 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (this.tryWrench(state, level, pos, player, hand, hit)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
             NetworkHooks.openGui(serverPlayer, coffeeMachine, pos);
         }
+
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
