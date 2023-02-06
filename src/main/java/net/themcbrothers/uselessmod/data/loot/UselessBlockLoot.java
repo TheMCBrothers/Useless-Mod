@@ -1,7 +1,12 @@
 package net.themcbrothers.uselessmod.data.loot;
 
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
@@ -12,10 +17,15 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -26,6 +36,10 @@ import java.util.stream.Collectors;
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
 public class UselessBlockLoot extends BlockLoot {
+    private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
+    private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS));
+    private static final LootItemCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = HAS_SHEARS.or(HAS_SILK_TOUCH);
+    private static final LootItemCondition.Builder HAS_NO_SHEARS_OR_SILK_TOUCH = HAS_SHEARS_OR_SILK_TOUCH.invert();
     private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
     @Override
@@ -62,7 +76,7 @@ public class UselessBlockLoot extends BlockLoot {
         LootItemCondition.Builder condition4 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(WILD_COFFEE_BEANS.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         this.add(WILD_COFFEE_BEANS.get(), createCropDrops(COFFEE_BEANS.get(), ModItems.COFFEE_BEANS.get(), ModItems.COFFEE_SEEDS.get(), condition4));
         this.dropSelf(USELESS_OAK_SAPLING.get());
-        this.add(USELESS_OAK_LEAVES.get(), (block) -> createOakLeavesDrops(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        this.add(USELESS_OAK_LEAVES.get(), (block) -> createUselessLeavesDrop(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.dropSelf(USELESS_OAK_PLANKS.get());
         this.dropSelf(USELESS_OAK_STAIRS.get());
         this.add(USELESS_OAK_SLAB.get(), BlockLoot::createSlabItemTable);
@@ -119,6 +133,27 @@ public class UselessBlockLoot extends BlockLoot {
                         .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
                                 .copy("Material", "BlockEntityTag.Material")
                                 .copy("id", "BlockEntityTag.id")))));
+    }
+
+    private static LootTable.Builder createUselessLeavesDrop(Block leavesBlock, Block saplingBlock, float... chances) {
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(leavesBlock)
+                                .when(HAS_SHEARS_OR_SILK_TOUCH)
+                                .otherwise(applyExplosionCondition(leavesBlock, LootItem.lootTableItem(saplingBlock))
+                                        .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+                        .add(applyExplosionDecay(leavesBlock, LootItem.lootTableItem(Items.STICK)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+                        .add(applyExplosionCondition(leavesBlock, LootItem.lootTableItem(Items.APPLE))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F))));
     }
 
     @Override
