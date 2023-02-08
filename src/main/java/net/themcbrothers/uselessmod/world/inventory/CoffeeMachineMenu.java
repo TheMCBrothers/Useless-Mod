@@ -18,7 +18,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.themcbrothers.uselessmod.energy.EnergyProvider;
+import net.themcbrothers.lib.energy.EnergyProvider;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModMenuTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
@@ -117,11 +117,11 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
                     if (!this.moveItemStackTo(itemStack1, 6, 7, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= INV_SLOT_START && index < INV_SLOT_END) {
+                } else if (index < INV_SLOT_END) {
                     if (!this.moveItemStackTo(itemStack1, USE_ROW_SLOT_START, USE_ROW_SLOT_END, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= USE_ROW_SLOT_START && index < USE_ROW_SLOT_END && !this.moveItemStackTo(itemStack1, INV_SLOT_START, INV_SLOT_END, false)) {
+                } else if (index < USE_ROW_SLOT_END && !this.moveItemStackTo(itemStack1, INV_SLOT_START, INV_SLOT_END, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemStack1, INV_SLOT_START, USE_ROW_SLOT_END, false)) {
@@ -180,11 +180,11 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
         return stillValid(this.levelAccess, player, ModBlocks.COFFEE_MACHINE.get());
     }
 
-    public int getEnergyStored() {
+    public long getEnergyStored() {
         return this.data.get(0);
     }
 
-    public int getMaxEnergyStored() {
+    public long getMaxEnergyStored() {
         return this.data.get(1);
     }
 

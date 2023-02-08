@@ -17,10 +17,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 import net.minecraftforge.fluids.FluidStack;
+import net.themcbrothers.lib.client.screen.widgets.EnergyBar;
+import net.themcbrothers.lib.client.screen.widgets.FluidTank;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.client.gui.components.EnergyBar;
-import net.themcbrothers.uselessmod.client.gui.components.FluidTank;
-import net.themcbrothers.uselessmod.client.gui.components.TooltipRenderer;
 import net.themcbrothers.uselessmod.network.Messages;
 import net.themcbrothers.uselessmod.network.packets.StartCoffeeMachinePacket;
 import net.themcbrothers.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
@@ -43,14 +42,13 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
 
-        this.addRenderableOnly(new EnergyBar(this.leftPos + 156, this.topPos + 18, 8, 48, this.menu, this::renderTooltip));
-        this.addRenderableOnly(new FluidTank(this.leftPos + 12, this.topPos + 18, 8, 48, this.menu.getWaterTank(), this::renderTooltip));
-        this.addRenderableOnly(new FluidTank(this.leftPos + 30, this.topPos + 18, 8, 48, this.menu.getMilkTank(), this::renderTooltip));
+        this.addRenderableOnly(new FluidTank(this.leftPos + 12, this.topPos + 18, 8, 48, this.menu.getWaterTank(), this));
+        this.addRenderableOnly(new FluidTank(this.leftPos + 30, this.topPos + 18, 8, 48, this.menu.getMilkTank(), this));
+        this.addRenderableWidget(new EnergyBar(this.leftPos + 156, this.topPos + 18, EnergyBar.Size._8x48, this.menu, this));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, true));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, false));
         this.addRenderableWidget(new MilkCheckboxButton(this.leftPos + 29, this.topPos + 5,
-                new TranslatableComponent("gui.uselessmod.use_milk"),
-                this.menu.blockEntity.useMilk(), this::renderTooltip));
+                new TranslatableComponent("gui.uselessmod.use_milk"), this.menu.blockEntity.useMilk()));
     }
 
     @Override
@@ -62,7 +60,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
     @Override
     protected void renderLabels(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
-        this.renderables.stream().filter(widget -> widget instanceof FluidTank tank && tank.isHovered()).forEach(widget -> {
+        this.renderables.stream().filter(widget -> widget instanceof FluidTank tank && tank.isHoveredOrFocused()).forEach(widget -> {
             final FluidTank tank = (FluidTank) widget;
             renderSlotHighlight(poseStack, tank.x - this.leftPos, tank.y - this.topPos, tank.getWidth(), tank.getHeight(), this.slotColor, this.getBlitOffset());
         });
@@ -103,7 +101,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     @Nullable
     public FluidStack getHoveredFluid() {
         for (Widget widget : this.renderables) {
-            if (widget instanceof FluidTank tank && tank.isHovered()) {
+            if (widget instanceof FluidTank tank && tank.isHoveredOrFocused()) {
                 return tank.getFluid();
             }
         }
@@ -143,12 +141,11 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
     public class MilkCheckboxButton extends AbstractButton {
         private final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/checkbox.png");
-        private final TooltipRenderer tooltipRenderer;
         private boolean checked;
 
-        public MilkCheckboxButton(int x, int y, Component title, boolean checked, TooltipRenderer tooltipRenderer) {
+        public MilkCheckboxButton(int x, int y, Component title, boolean checked) {
             super(x, y, 10, 10, title);
-            this.tooltipRenderer = tooltipRenderer;
+            this.checked = checked;
         }
 
         @Override
@@ -171,7 +168,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         @Override
         public void renderToolTip(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
             List<Component> tooltip = Collections.singletonList(this.getMessage());
-            this.tooltipRenderer.renderTooltip(poseStack, Lists.transform(tooltip, Component::getVisualOrderText), mouseX, mouseY);
+            CoffeeMachineScreen.this.renderTooltip(poseStack, Lists.transform(tooltip, Component::getVisualOrderText), mouseX, mouseY);
         }
 
         @Override

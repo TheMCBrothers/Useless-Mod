@@ -40,8 +40,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import net.minecraftforge.network.PacketDistributor;
+import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.energy.UselessEnergyStorage;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
 import net.themcbrothers.uselessmod.network.Messages;
@@ -67,7 +67,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     private static final int[] SLOTS_FOR_SIDES = new int[]{SLOT_INGREDIENT_BEAN, SLOT_INGREDIENT_EXTRA};
 
     public final NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
-    public final UselessEnergyStorage energyStorage = new UselessEnergyStorage(
+    public final ExtendedEnergyStorage energyStorage = new ExtendedEnergyStorage(
             ServerConfig.COFFEE_MACHINE_ENERGY_CAPACITY.get(),
             ServerConfig.COFFEE_MACHINE_ENERGY_TRANSFER.get(), 0);
     public final CoffeeMachineTank tankHandler = new CoffeeMachineTank();
@@ -144,7 +144,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             ItemStack energySlotStack = coffeeMachine.items.get(6);
             if (!energySlotStack.isEmpty()) {
                 int freeEnergySpace = coffeeMachine.energyStorage.getMaxEnergyStored() - coffeeMachine.energyStorage.getEnergyStored();
-                int maxReceive = coffeeMachine.energyStorage.getMaxTransfer(false);
+                int maxReceive = coffeeMachine.energyStorage.getMaxReceive();
                 if (freeEnergySpace > 0) {
                     energySlotStack.getCapability(CapabilityEnergy.ENERGY).ifPresent(itemEnergyStorage -> {
                         if (itemEnergyStorage.canExtract()) {
