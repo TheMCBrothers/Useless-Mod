@@ -1,6 +1,8 @@
 {
     "pack": {
-        "description": "Useless Mod Resources",
-        "pack_format": 8
+        "pack_format": 8,
+        "description": "Useless Mod resources",
+        "forge:resource_pack_format": 8,
+        "forge:data_pack_format": 9
     }
 }
