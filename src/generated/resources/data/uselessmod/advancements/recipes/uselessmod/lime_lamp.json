@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:lime_lamp"
+    ]
+  },
+  "criteria": {
+    "has_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "uselessmod:lamps"
+          }
+        ]
+      }
+    },
+    "has_redstone_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:redstone_lamp"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:lime_lamp"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_lamp",
+      "has_redstone_lamp",
+      "has_the_recipe"
+    ]
+  ]
+}

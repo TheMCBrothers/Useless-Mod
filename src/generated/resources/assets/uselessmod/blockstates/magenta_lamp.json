@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "uselessmod:block/magenta_lamp"
+    },
+    "lit=true": {
+      "model": "uselessmod:block/magenta_lamp_on"
+    }
+  }
+}

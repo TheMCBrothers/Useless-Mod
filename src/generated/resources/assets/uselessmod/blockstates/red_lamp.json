@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "uselessmod:block/red_lamp"
+    },
+    "lit=true": {
+      "model": "uselessmod:block/red_lamp_on"
+    }
+  }
+}

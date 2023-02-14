@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "uselessmod:lamps",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:redstone_lamp"
+      },
+      {
+        "tag": "uselessmod:lamps"
+      }
+    ],
+    {
+      "tag": "forge:dyes/pink"
+    }
+  ],
+  "result": {
+    "item": "uselessmod:pink_lamp"
+  }
+}
