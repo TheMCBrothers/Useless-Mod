@@ -87,6 +87,22 @@ public final class ModBlocks {
     public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> CANVAS = BLOCKS.register("canvas", () -> new CanvasBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of(Material.WOOD).strength(.5F)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> WHITE_LAMP = BLOCKS.register("white_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> ORANGE_LAMP = BLOCKS.register("orange_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> MAGENTA_LAMP = BLOCKS.register("magenta_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> LIGHT_BLUE_LAMP = BLOCKS.register("light_blue_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> YELLOW_LAMP = BLOCKS.register("yellow_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> LIME_LAMP = BLOCKS.register("lime_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> PINK_LAMP = BLOCKS.register("pink_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> GRAY_LAMP = BLOCKS.register("gray_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> LIGHT_GRAY_LAMP = BLOCKS.register("light_gray_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> CYAN_LAMP = BLOCKS.register("cyan_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> PURPLE_LAMP = BLOCKS.register("purple_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> BLUE_LAMP = BLOCKS.register("blue_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> BROWN_LAMP = BLOCKS.register("brown_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> GREEN_LAMP = BLOCKS.register("green_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> RED_LAMP = BLOCKS.register("red_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> BLACK_LAMP = BLOCKS.register("black_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
 
     // Blocks without Item
     public static final RegistryObject<Block> POTTED_RED_ROSE = BLOCKS.registerNoItem("potted_red_rose", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, RED_ROSE, copy(Blocks.POTTED_POPPY)));

@@ -65,6 +65,7 @@ public class UselessTagsProvider {
             this.tag(BlockTags.WOOL).add(ModBlocks.USELESS_WOOL.get(), ModBlocks.CANVAS.get());
             this.tag(BlockTags.CARPETS).add(ModBlocks.USELESS_CARPET.get());
             this.tag(BlockTags.BEDS).add(ModBlocks.USELESS_BED.get());
+            this.tag(UselessTags.Blocks.LAMPS).add(ModBlocks.WHITE_LAMP.get(), ModBlocks.ORANGE_LAMP.get(), ModBlocks.MAGENTA_LAMP.get(), ModBlocks.LIGHT_BLUE_LAMP.get(), ModBlocks.YELLOW_LAMP.get(), ModBlocks.LIME_LAMP.get(), ModBlocks.PINK_LAMP.get(), ModBlocks.GRAY_LAMP.get(), ModBlocks.LIGHT_GRAY_LAMP.get(), ModBlocks.CYAN_LAMP.get(), ModBlocks.PURPLE_LAMP.get(), ModBlocks.BLUE_LAMP.get(), ModBlocks.BROWN_LAMP.get(), ModBlocks.GREEN_LAMP.get(), ModBlocks.RED_LAMP.get(), ModBlocks.BLACK_LAMP.get());
         }
     }
 
@@ -108,6 +109,7 @@ public class UselessTagsProvider {
             this.copy(BlockTags.WOOL, ItemTags.WOOL);
             this.copy(BlockTags.CARPETS, ItemTags.CARPETS);
             this.copy(BlockTags.BEDS, ItemTags.BEDS);
+            this.copy(UselessTags.Blocks.LAMPS, UselessTags.Items.LAMPS);
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());

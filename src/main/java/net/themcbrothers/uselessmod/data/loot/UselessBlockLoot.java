@@ -106,6 +106,22 @@ public class UselessBlockLoot extends BlockLoot {
         this.add(CUP_COFFEE.get(), UselessBlockLoot::copyCoffeeDrop);
         this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
         this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
+        this.dropSelf(WHITE_LAMP.get());
+        this.dropSelf(ORANGE_LAMP.get());
+        this.dropSelf(MAGENTA_LAMP.get());
+        this.dropSelf(LIGHT_BLUE_LAMP.get());
+        this.dropSelf(YELLOW_LAMP.get());
+        this.dropSelf(LIME_LAMP.get());
+        this.dropSelf(PINK_LAMP.get());
+        this.dropSelf(GRAY_LAMP.get());
+        this.dropSelf(LIGHT_GRAY_LAMP.get());
+        this.dropSelf(CYAN_LAMP.get());
+        this.dropSelf(PURPLE_LAMP.get());
+        this.dropSelf(BLUE_LAMP.get());
+        this.dropSelf(BROWN_LAMP.get());
+        this.dropSelf(GREEN_LAMP.get());
+        this.dropSelf(RED_LAMP.get());
+        this.dropSelf(BLACK_LAMP.get());
     }
 
     private static LootTable.Builder createCopyColorDrop(ItemLike itemLike) {

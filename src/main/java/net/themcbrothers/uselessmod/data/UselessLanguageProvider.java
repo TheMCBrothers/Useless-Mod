@@ -71,6 +71,22 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_CARPET, "Useless Carpet");
         this.addBlock(ModBlocks.USELESS_BED, "Useless Bed");
         this.addBlock(ModBlocks.USELESS_SKELETON_SKULL, "Useless Skeleton Skull");
+        this.addBlock(ModBlocks.WHITE_LAMP, "White Lamp");
+        this.addBlock(ModBlocks.ORANGE_LAMP, "Orange Lamp");
+        this.addBlock(ModBlocks.MAGENTA_LAMP, "Magenta Lamp");
+        this.addBlock(ModBlocks.LIGHT_BLUE_LAMP, "Light Blue Lamp");
+        this.addBlock(ModBlocks.YELLOW_LAMP, "Yellow Lamp");
+        this.addBlock(ModBlocks.LIME_LAMP, "Lime Lamp");
+        this.addBlock(ModBlocks.PINK_LAMP, "Pink Lamp");
+        this.addBlock(ModBlocks.GRAY_LAMP, "Gray Lamp");
+        this.addBlock(ModBlocks.LIGHT_GRAY_LAMP, "Light Gray Lamp");
+        this.addBlock(ModBlocks.CYAN_LAMP, "Cyan Lamp");
+        this.addBlock(ModBlocks.PURPLE_LAMP, "Purple Lamp");
+        this.addBlock(ModBlocks.BLUE_LAMP, "Blue Lamp");
+        this.addBlock(ModBlocks.BROWN_LAMP, "Brown Lamp");
+        this.addBlock(ModBlocks.GREEN_LAMP, "Green Lamp");
+        this.addBlock(ModBlocks.RED_LAMP, "Red Lamp");
+        this.addBlock(ModBlocks.BLACK_LAMP, "Black Lamp");
 
         this.addItem(ModItems.RAW_USELESS, "Raw Useless");
         this.addItem(ModItems.RAW_SUPER_USELESS, "Raw Super-Useless");

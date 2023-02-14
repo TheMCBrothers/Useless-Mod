@@ -67,6 +67,22 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlock(USELESS_BED.get(), models().getExistingFile(mcLoc("block/bed")));
         simpleBlock(USELESS_SKELETON_SKULL.get(), this.models().getExistingFile(mcLoc(BLOCK_FOLDER + "/skull")));
         simpleBlock(USELESS_SKELETON_WALL_SKULL.get(), this.models().getExistingFile(mcLoc(BLOCK_FOLDER + "/skull")));
+        lampBlock(WHITE_LAMP.get());
+        lampBlock(ORANGE_LAMP.get());
+        lampBlock(MAGENTA_LAMP.get());
+        lampBlock(LIGHT_BLUE_LAMP.get());
+        lampBlock(YELLOW_LAMP.get());
+        lampBlock(LIME_LAMP.get());
+        lampBlock(PINK_LAMP.get());
+        lampBlock(GRAY_LAMP.get());
+        lampBlock(LIGHT_GRAY_LAMP.get());
+        lampBlock(CYAN_LAMP.get());
+        lampBlock(PURPLE_LAMP.get());
+        lampBlock(BLUE_LAMP.get());
+        lampBlock(BROWN_LAMP.get());
+        lampBlock(GREEN_LAMP.get());
+        lampBlock(RED_LAMP.get());
+        lampBlock(BLACK_LAMP.get());
 
         // Special Blocks
         waterloggedHorizontalFacingBlock(COFFEE_MACHINE.get(), models().getExistingFile(blockTexture(COFFEE_MACHINE.get())));
@@ -137,6 +153,18 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                         .modelFile(model)
                         .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                         .build(), BlockStateProperties.WATERLOGGED);
+    }
+
+    private void lampBlock(Block block) {
+        ResourceLocation blockLoc = blockTexture(block);
+        ModelFile modelOff = models().cubeAll(blockLoc.toString(), blockLoc);
+        ModelFile modelOn = models().cubeAll(blockLoc + "_on", new ResourceLocation(blockLoc.getNamespace(), blockLoc.getPath() + "_on"));
+
+        getVariantBuilder(block)
+                .partialState().with(BlockStateProperties.LIT, Boolean.TRUE).modelForState().modelFile(modelOn).addModel()
+                .partialState().with(BlockStateProperties.LIT, Boolean.FALSE).modelForState().modelFile(modelOff).addModel();
+
+        itemModels().withExistingParent(String.valueOf(block.getRegistryName()), blockLoc);
     }
 
     private void simpleItemItem(Block block) {

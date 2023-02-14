@@ -19,6 +19,7 @@ public class UselessTags {
         public static final TagKey<Block> USELESS_ORES = modTag("useless_ores");
         public static final TagKey<Block> SUPER_USELESS_ORES = modTag("super_useless_ores");
         public static final TagKey<Block> USELESS_OAK_LOGS = modTag("useless_oak_logs");
+        public static final TagKey<Block> LAMPS = modTag("lamps");
 
         private static TagKey<Block> forgeTag(String tag) {
             return BlockTags.create(new ResourceLocation("forge", tag));
@@ -54,6 +55,7 @@ public class UselessTags {
         public static final TagKey<Item> USELESS_ORES = modTag("useless_ores");
         public static final TagKey<Item> SUPER_USELESS_ORES = modTag("super_useless_ores");
         public static final TagKey<Item> USELESS_OAK_LOGS = modTag("useless_oak_logs");
+        public static final TagKey<Item> LAMPS = modTag("lamps");
 
         private static TagKey<Item> forgeTag(String tag) {
             return ItemTags.create(new ResourceLocation("forge", tag));
