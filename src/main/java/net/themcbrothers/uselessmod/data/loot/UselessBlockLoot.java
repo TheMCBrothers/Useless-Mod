@@ -26,12 +26,9 @@ import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.themcbrothers.uselessmod.UselessMod;
+import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.init.ModItems;
-
-import java.util.Objects;
-import java.util.stream.Collectors;
+import net.themcbrothers.uselessmod.init.Registration;
 
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
@@ -106,6 +103,8 @@ public class UselessBlockLoot extends BlockLoot {
         this.add(CUP_COFFEE.get(), UselessBlockLoot::copyCoffeeDrop);
         this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
         this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
+        this.add(LIGHT_SWITCH.get(), UselessBlockLoot::createCopyLightsDrop);
+        this.dropOther(LANTERN.get(), Items.LANTERN);
         this.dropSelf(WHITE_LAMP.get());
         this.dropSelf(ORANGE_LAMP.get());
         this.dropSelf(MAGENTA_LAMP.get());
@@ -122,6 +121,12 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(GREEN_LAMP.get());
         this.dropSelf(RED_LAMP.get());
         this.dropSelf(BLACK_LAMP.get());
+    }
+
+    private static LootTable.Builder createCopyLightsDrop(ItemLike itemLike) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
+                .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Lights", "BlockEntityTag.Lights"))));
     }
 
     private static LootTable.Builder createCopyColorDrop(ItemLike itemLike) {
@@ -174,7 +179,6 @@ public class UselessBlockLoot extends BlockLoot {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return ForgeRegistries.BLOCKS.getValues().stream()
-                .filter(b -> Objects.requireNonNull(b.getRegistryName()).getNamespace().equals(UselessMod.MOD_ID)).collect(Collectors.toList());
+        return Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).toList();
     }
 }

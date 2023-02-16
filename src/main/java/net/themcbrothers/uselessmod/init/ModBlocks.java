@@ -10,6 +10,7 @@ import net.themcbrothers.lib.registration.object.ItemObject;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.CoffeeMachineBlockItem;
 import net.themcbrothers.uselessmod.world.item.CupBlockItem;
+import net.themcbrothers.uselessmod.world.item.LightSwitchBlockItem;
 import net.themcbrothers.uselessmod.world.item.UselessBedItem;
 import net.themcbrothers.uselessmod.world.level.block.*;
 import net.themcbrothers.uselessmod.world.level.block.grower.UselessOakTreeGrower;
@@ -87,6 +88,7 @@ public final class ModBlocks {
     public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> CANVAS = BLOCKS.register("canvas", () -> new CanvasBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of(Material.WOOD).strength(.5F)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> LIGHT_SWITCH = BLOCKS.register("light_switch", () -> new LightSwitchBlock(of(Material.DECORATION).noCollission().strength(.25F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> WHITE_LAMP = BLOCKS.register("white_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> ORANGE_LAMP = BLOCKS.register("orange_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> MAGENTA_LAMP = BLOCKS.register("magenta_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
@@ -115,4 +117,5 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WILD_COFFEE_BEANS = BLOCKS.registerNoItem("wild_coffee_beans", () -> new UselessCropBlock(true, ModItems.COFFEE_SEEDS, copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> USELESS_SKELETON_SKULL = BLOCKS.registerNoItem("useless_skeleton_skull", () -> new UselessSkullBlock(UselessSkullBlock.Types.USELESS_SKELETON, copy(Blocks.SKELETON_SKULL)));
     public static final RegistryObject<Block> USELESS_SKELETON_WALL_SKULL = BLOCKS.registerNoItem("useless_skeleton_wall_skull", () -> new UselessWallSkullBlock(UselessSkullBlock.Types.USELESS_SKELETON, copy(Blocks.SKELETON_WALL_SKULL).lootFrom(USELESS_SKELETON_SKULL)));
+    public static final RegistryObject<Block> LANTERN = BLOCKS.registerNoItem("lantern", () -> new UselessLanternBlock(copy(Blocks.LANTERN).lightLevel(state -> 0)));
 }

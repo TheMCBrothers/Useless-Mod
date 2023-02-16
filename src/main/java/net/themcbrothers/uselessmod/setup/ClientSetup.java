@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.setup;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,6 +42,7 @@ import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup extends CommonSetup {
     public ClientSetup() {
@@ -82,6 +85,7 @@ public class ClientSetup extends CommonSetup {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_POWERED_RAIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_DETECTOR_RAIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_ACTIVATOR_RAIL.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.LANTERN.get(), RenderType.cutout());
 
             BlockEntityRenderers.register(ModBlockEntityTypes.BED.get(), UselessBedRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
@@ -166,5 +170,10 @@ public class ClientSetup extends CommonSetup {
     private void modelRegistry(final ModelRegistryEvent event) {
         ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), MachineSupplierModel.Loader.INSTANCE);
         ModelLoaderRegistry.registerLoader(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
+    }
+
+    @Override
+    public @Nullable Player getLocalPlayer() {
+        return Minecraft.getInstance().player;
     }
 }

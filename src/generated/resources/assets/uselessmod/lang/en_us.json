@@ -22,8 +22,10 @@
   "block.uselessmod.end_useless_ore": "End Useless Ore",
   "block.uselessmod.gray_lamp": "Gray Lamp",
   "block.uselessmod.green_lamp": "Green Lamp",
+  "block.uselessmod.lantern": "Lantern",
   "block.uselessmod.light_blue_lamp": "Light Blue Lamp",
   "block.uselessmod.light_gray_lamp": "Light Gray Lamp",
+  "block.uselessmod.light_switch": "Light Switch",
   "block.uselessmod.lime_lamp": "Lime Lamp",
   "block.uselessmod.machine_supplier": "Machine Supplier",
   "block.uselessmod.magenta_lamp": "Magenta Lamp",
@@ -135,5 +137,10 @@
   "misc.uselessmod.energyWithMax": "%s / %s FE",
   "misc.uselessmod.fluidAmount": "%s mB",
   "misc.uselessmod.fluidWithMax": "%s / %s mB",
-  "misc.uselessmod.fluidWithMaxName": "%s: %s / %s mB"
+  "misc.uselessmod.fluidWithMaxName": "%s: %s / %s mB",
+  "status.uselessmod.light_switch.block_added": "Added Block at [%s] to Light Switch",
+  "status.uselessmod.light_switch.block_already_added": "This Block has already been added to this Light Switch",
+  "status.uselessmod.light_switch.cleared": "Light Switch Configuration cleared",
+  "tooltip.uselessmod.hold_shift": "<Hold Shift>",
+  "tooltip.uselessmod.light_switch.clear": "Sneak and right click to clear Configuration"
 }

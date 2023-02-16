@@ -71,6 +71,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_CARPET, "Useless Carpet");
         this.addBlock(ModBlocks.USELESS_BED, "Useless Bed");
         this.addBlock(ModBlocks.USELESS_SKELETON_SKULL, "Useless Skeleton Skull");
+        this.addBlock(ModBlocks.LIGHT_SWITCH, "Light Switch");
+        this.addBlock(ModBlocks.LANTERN, "Lantern");
         this.addBlock(ModBlocks.WHITE_LAMP, "White Lamp");
         this.addBlock(ModBlocks.ORANGE_LAMP, "Orange Lamp");
         this.addBlock(ModBlocks.MAGENTA_LAMP, "Magenta Lamp");
@@ -155,6 +157,12 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add("misc.uselessmod.fluidWithMaxName", "%s: %s / %s mB");
         this.add("misc.uselessmod.fluidAmount", "%s mB");
         this.add("misc.uselessmod.empty", "Empty");
+
+        this.add("status.uselessmod.light_switch.block_added", "Added Block at [%s] to Light Switch");
+        this.add("status.uselessmod.light_switch.block_already_added", "This Block has already been added to this Light Switch");
+        this.add("status.uselessmod.light_switch.cleared", "Light Switch Configuration cleared");
+        this.add("tooltip.uselessmod.light_switch.clear", "Sneak and right click to clear Configuration");
+        this.add("tooltip.uselessmod.hold_shift", "<Hold Shift>");
 
         this.add("itemGroup.uselessmod", "Useless Mod");
     }

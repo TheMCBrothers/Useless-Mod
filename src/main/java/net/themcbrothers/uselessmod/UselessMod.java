@@ -8,6 +8,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.themcbrothers.uselessmod.init.ModItems;
 import net.themcbrothers.uselessmod.setup.ClientSetup;
+import net.themcbrothers.uselessmod.setup.CommonSetup;
 import net.themcbrothers.uselessmod.setup.ServerSetup;
 
 import javax.annotation.Nonnull;
@@ -24,9 +25,11 @@ public class UselessMod {
         }
     };
 
+    public static CommonSetup setup;
+
     public UselessMod() {
         ForgeMod.enableMilkFluid();
-        DistExecutor.unsafeRunForDist(() -> ClientSetup::new, () -> ServerSetup::new);
+        setup = DistExecutor.unsafeRunForDist(() -> ClientSetup::new, () -> ServerSetup::new);
     }
 
     public static ResourceLocation rl(String path) {

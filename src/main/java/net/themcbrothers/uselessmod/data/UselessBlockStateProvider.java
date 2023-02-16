@@ -1,8 +1,10 @@
 package net.themcbrothers.uselessmod.data;
 
+import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.*;
@@ -88,6 +90,11 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         waterloggedHorizontalFacingBlock(COFFEE_MACHINE.get(), models().getExistingFile(blockTexture(COFFEE_MACHINE.get())));
         waterloggedHorizontalFacingBlock(CUP.get(), models().getExistingFile(blockTexture(CUP.get())));
         waterloggedHorizontalFacingBlock(CUP_COFFEE.get(), models().getExistingFile(blockTexture(CUP_COFFEE.get())));
+        lightSwitch(LIGHT_SWITCH.get());
+        getVariantBuilder(LANTERN.get())
+                .partialState().with(BlockStateProperties.HANGING, Boolean.FALSE).modelForState().modelFile(models().getExistingFile(mcLoc(BLOCK_FOLDER + "/lantern"))).addModel()
+                .partialState().with(BlockStateProperties.HANGING, Boolean.TRUE).modelForState().modelFile(models().getExistingFile(mcLoc(BLOCK_FOLDER + "/lantern_hanging"))).addModel();
+
         // TODO wall closet
 
         simpleBlock(MACHINE_SUPPLIER.get(), models().getBuilder("machine_supplier").customLoader((blockModelBuilder, existingFileHelper) ->
@@ -153,6 +160,27 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                         .modelFile(model)
                         .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                         .build(), BlockStateProperties.WATERLOGGED);
+    }
+
+    private void lightSwitch(Block block) {
+        final ResourceLocation blockLoc = blockTexture(block);
+        final ModelFile model = models().getExistingFile(blockLoc);
+        final ModelFile modelPowered = models().getExistingFile(new ResourceLocation(blockLoc.getNamespace(), blockLoc.getPath() + "_pressed"));
+
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            AttachFace face = state.getValue(BlockStateProperties.ATTACH_FACE);
+            boolean powered = state.getValue(BlockStateProperties.POWERED);
+
+            return ConfiguredModel.builder()
+                    .modelFile(powered ? modelPowered : model)
+                    .rotationX(face == AttachFace.FLOOR ? 0 : (face == AttachFace.WALL ? 90 : 180))
+                    .rotationY((int) (face == AttachFace.CEILING ? facing : facing.getOpposite()).toYRot())
+                    .uvLock(face == AttachFace.WALL)
+                    .build();
+        });
+
+        itemModels().withExistingParent(String.valueOf(block.getRegistryName()), blockLoc);
     }
 
     private void lampBlock(Block block) {
