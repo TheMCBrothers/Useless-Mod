@@ -95,7 +95,17 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                 .partialState().with(BlockStateProperties.HANGING, Boolean.FALSE).modelForState().modelFile(models().getExistingFile(mcLoc(BLOCK_FOLDER + "/lantern"))).addModel()
                 .partialState().with(BlockStateProperties.HANGING, Boolean.TRUE).modelForState().modelFile(models().getExistingFile(mcLoc(BLOCK_FOLDER + "/lantern_hanging"))).addModel();
 
-        // TODO wall closet
+        getVariantBuilder(WALL_CLOSET.get())
+                .forAllStatesExcept(state -> {
+                    final boolean isOpen = state.getValue(BlockStateProperties.OPEN);
+                    final ModelFile model = models().getExistingFile(blockTexture(WALL_CLOSET.get()));
+                    final ModelFile modelOpen = models().getExistingFile(extend(blockTexture(WALL_CLOSET.get()), "_open"));
+
+                    return ConfiguredModel.builder()
+                            .modelFile(isOpen ? modelOpen : model)
+                            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                            .build();
+                }, BlockStateProperties.WATERLOGGED);
 
         simpleBlock(MACHINE_SUPPLIER.get(), models().getBuilder("machine_supplier").customLoader((blockModelBuilder, existingFileHelper) ->
                 new CustomLoaderBuilder<BlockModelBuilder>(UselessMod.rl("machine_supplier"), blockModelBuilder, existingFileHelper) {
@@ -138,6 +148,10 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         return modLoc(path).toString();
     }
 
+    private ResourceLocation extend(ResourceLocation loc, String extension) {
+        return new ResourceLocation(loc.getNamespace(), loc.getPath() + extension);
+    }
+
     private void simpleItem(Block block) {
         final ResourceLocation id = block.getRegistryName();
         this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", blockTexture(block));
@@ -165,7 +179,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     private void lightSwitch(Block block) {
         final ResourceLocation blockLoc = blockTexture(block);
         final ModelFile model = models().getExistingFile(blockLoc);
-        final ModelFile modelPowered = models().getExistingFile(new ResourceLocation(blockLoc.getNamespace(), blockLoc.getPath() + "_pressed"));
+        final ModelFile modelPowered = models().getExistingFile(extend(blockLoc, "_pressed"));
 
         getVariantBuilder(block).forAllStates(state -> {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -186,7 +200,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     private void lampBlock(Block block) {
         ResourceLocation blockLoc = blockTexture(block);
         ModelFile modelOff = models().cubeAll(blockLoc.toString(), blockLoc);
-        ModelFile modelOn = models().cubeAll(blockLoc + "_on", new ResourceLocation(blockLoc.getNamespace(), blockLoc.getPath() + "_on"));
+        ModelFile modelOn = models().cubeAll(blockLoc + "_on", extend(blockLoc, "_on"));
 
         getVariantBuilder(block)
                 .partialState().with(BlockStateProperties.LIT, Boolean.TRUE).modelForState().modelFile(modelOn).addModel()
