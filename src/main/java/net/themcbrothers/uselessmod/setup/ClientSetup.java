@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -22,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -35,6 +38,7 @@ import net.themcbrothers.uselessmod.client.model.MachineSupplierModel;
 import net.themcbrothers.uselessmod.client.model.WallClosetModel;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
+import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
 import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.init.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
@@ -51,8 +55,10 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::clientSetup);
         bus.addListener(this::blockColors);
         bus.addListener(this::itemColors);
-        bus.addListener(this::entityRenders);
-        bus.addListener(this::skullModels);
+        bus.addListener(this::textureStitching);
+        bus.addListener(this::entityRegisterRenders);
+        bus.addListener(this::entityAddLayers);
+        bus.addListener(this::entityCreateSkullModels);
         bus.addListener(this::modelRegistry);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ClientConfig.SPEC);
@@ -154,7 +160,13 @@ public class ClientSetup extends CommonSetup {
         }, ModBlocks.MACHINE_SUPPLIER);
     }
 
-    private void entityRenders(final EntityRenderersEvent.RegisterRenderers event) {
+    private void textureStitching(final TextureStitchEvent.Pre event) {
+        if (event.getAtlas().location() == Sheets.BED_SHEET) {
+            event.addSprite(UselessMod.rl("entity/bed/useless"));
+        }
+    }
+
+    private void entityRegisterRenders(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntityTypes.USELESS_SHEEP.get(), UselessSheepRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.USELESS_PIG.get(), UselessPigRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.USELESS_CHICKEN.get(), UselessChickenRenderer::new);
@@ -162,7 +174,17 @@ public class ClientSetup extends CommonSetup {
         event.registerEntityRenderer(ModEntityTypes.USELESS_SKELETON.get(), UselessSkeletonRenderer::new);
     }
 
-    private void skullModels(final EntityRenderersEvent.CreateSkullModels event) {
+    private void entityAddLayers(final EntityRenderersEvent.AddLayers event) {
+        for (String skin : event.getSkins()) {
+            LivingEntityRenderer<Player, EntityModel<Player>> renderer = event.getSkin(skin);
+
+            if (renderer != null) {
+                renderer.addLayer(new UselessElytraLayer<>(renderer, event.getEntityModels()));
+            }
+        }
+    }
+
+    private void entityCreateSkullModels(final EntityRenderersEvent.CreateSkullModels event) {
         SkullBlockRenderer.SKIN_BY_TYPE.put(UselessSkullBlock.Types.USELESS_SKELETON, UselessMod.rl("textures/entity/useless_skeleton.png"));
         event.registerSkullModel(UselessSkullBlock.Types.USELESS_SKELETON, new SkullModel(event.getEntityModelSet().bakeLayer(ModelLayers.SKELETON_SKULL)));
     }
