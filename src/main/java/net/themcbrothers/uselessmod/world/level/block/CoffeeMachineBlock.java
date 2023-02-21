@@ -24,6 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.ModStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -77,6 +78,7 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
 
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
             NetworkHooks.openGui(serverPlayer, coffeeMachine, pos);
+            player.awardStat(ModStats.INTERACT_WITH_COFFEE_MACHINE.get());
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);

@@ -138,6 +138,7 @@
   "misc.uselessmod.fluidAmount": "%s mB",
   "misc.uselessmod.fluidWithMax": "%s / %s mB",
   "misc.uselessmod.fluidWithMaxName": "%s: %s / %s mB",
+  "stat.uselessmod.interact_with_coffee_machine": "Interactions with Coffee Machine",
   "stat.uselessmod.open_wall_closet": "Wall Closets Opened",
   "status.uselessmod.light_switch.block_added": "Added Block at [%s] to Light Switch",
   "status.uselessmod.light_switch.block_already_added": "This Block has already been added to this Light Switch",

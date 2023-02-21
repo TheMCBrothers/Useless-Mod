@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.setup;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
@@ -23,6 +24,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.init.*;
@@ -104,6 +106,9 @@ public class CommonSetup {
             ResourceKey<Biome> key = ResourceKey.create(ForgeRegistries.Keys.BIOMES, ModBiomes.USELESS_FOREST.getId());
             BiomeDictionary.addTypes(key, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.OVERWORLD);
             BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(key, 10));
+
+            // make sure the stats appear in the menu
+            Registration.CUSTOM_STATS.getEntries().stream().map(RegistryObject::get).forEach(Stats.CUSTOM::get);
 
             VanillaCompatibility.register();
         });

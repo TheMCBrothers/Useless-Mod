@@ -144,6 +144,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addCoffeeType(ModCoffeeTypes.MILK_SUGAR, "Milk-Sugar Coffee");
 
         this.addStat(ModStats.OPEN_WALL_CLOSET, "Wall Closets Opened");
+        this.addStat(ModStats.INTERACT_WITH_COFFEE_MACHINE, "Interactions with Coffee Machine");
 
         this.add("container.uselessmod.wall_closet", "Wall Closet");
         this.add("container.uselessmod.coffee_machine", "Coffee Machine");
