@@ -39,6 +39,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.ModStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -117,7 +118,7 @@ public class WallClosetBlock extends BaseEntityBlock {
         } else {
             if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
                 player.openMenu(wallClosetBlockEntity);
-                // TODO: open wall closet stat
+                player.awardStat(ModStats.OPEN_WALL_CLOSET.get());
                 PiglinAi.angerNearbyPiglins(player, true);
             }
 

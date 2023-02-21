@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.biome.Biome;
@@ -23,6 +24,7 @@ public final class Registration {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, UselessMod.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, UselessMod.MOD_ID);
     public static final DeferredRegister<CoffeeType> COFFEE_TYPES = DeferredRegister.create(UselessRegistries.COFFEE_KEY, UselessMod.MOD_ID);
+    public static final DeferredRegister<ResourceLocation> CUSTOM_STATS = DeferredRegister.create(Registry.CUSTOM_STAT_REGISTRY, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
         UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(CoffeeType.class, RegistryBuilder::new);
@@ -36,6 +38,7 @@ public final class Registration {
         ModRecipeTypes.register();
         ModRecipeSerializers.register();
         ModCoffeeTypes.register();
+        ModStats.register();
 
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -46,6 +49,7 @@ public final class Registration {
         RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
         COFFEE_TYPES.register(bus);
+        CUSTOM_STATS.register(bus);
     }
 
     private Registration() {

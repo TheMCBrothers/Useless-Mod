@@ -1,13 +1,11 @@
 package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModCoffeeTypes;
-import net.themcbrothers.uselessmod.init.ModEntityTypes;
-import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.init.*;
 
 import java.util.function.Supplier;
 
@@ -145,6 +143,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addCoffeeType(ModCoffeeTypes.SUGAR, "Sugar Coffee");
         this.addCoffeeType(ModCoffeeTypes.MILK_SUGAR, "Milk-Sugar Coffee");
 
+        this.addStat(ModStats.OPEN_WALL_CLOSET, "Wall Closets Opened");
+
         this.add("container.uselessmod.wall_closet", "Wall Closet");
         this.add("container.uselessmod.coffee_machine", "Coffee Machine");
         this.add("gui.uselessmod.use_milk", "Use Milk");
@@ -170,6 +170,10 @@ public class UselessLanguageProvider extends LanguageProvider {
     private void addAdvancement(String id, String title, String description) {
         this.add("advancement." + UselessMod.MOD_ID + "." + id + ".title", title);
         this.add("advancement." + UselessMod.MOD_ID + "." + id + ".description", description);
+    }
+
+    private void addStat(Supplier<ResourceLocation> key, String name) {
+        this.add(String.format("stat.%s.%s", key.get().getNamespace(), key.get().getPath()), name);
     }
 
     private void addCoffeeType(Supplier<CoffeeType> key, String name) {
