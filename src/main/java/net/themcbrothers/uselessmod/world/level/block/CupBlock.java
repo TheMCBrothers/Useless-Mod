@@ -2,7 +2,10 @@ package net.themcbrothers.uselessmod.world.level.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -16,9 +19,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +32,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 @SuppressWarnings("deprecation")
-public class CupBlock extends Block implements SimpleWaterloggedBlock {
+public class CupBlock extends Block implements SimpleWaterloggedBlock, WrenchableBlock {
     private static final VoxelShape SHAPE_INTERACTION = box(5, 0, 5, 11, 7, 11);
     private static final VoxelShape SHAPE_BASE = Shapes.or(
             box(6, 0, 5, 10, 7, 6),
@@ -70,6 +75,11 @@ public class CupBlock extends Block implements SimpleWaterloggedBlock {
         if (level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
             cup.setType(CoffeeUtils.getCoffeeType(stack));
         }
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return this.tryWrench(state, level, pos, player, hand, hit) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
 
     @Override

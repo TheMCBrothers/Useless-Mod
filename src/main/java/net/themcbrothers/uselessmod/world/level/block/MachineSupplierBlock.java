@@ -16,10 +16,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -28,6 +25,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.IPlantable;
+import net.themcbrothers.lib.wrench.Wrench;
+import net.themcbrothers.lib.wrench.WrenchUtils;
+import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 @SuppressWarnings("deprecation")
-public class MachineSupplierBlock extends BaseEntityBlock {
+public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableBlock {
     public MachineSupplierBlock(Properties properties) {
         super(properties);
     }
@@ -53,6 +53,10 @@ public class MachineSupplierBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (this.tryWrench(state, level, pos, player, hand, hit)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         if (level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
             ItemStack stack = player.getItemInHand(hand);
             if (blockEntity.getMimic() == null && stack.getItem() instanceof BlockItem blockItem) {
@@ -72,10 +76,35 @@ public class MachineSupplierBlock extends BaseEntityBlock {
     }
 
     @Override
+    public boolean tryWrench(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack stack = player.getItemInHand(hand);
+
+        if (!stack.isEmpty()) {
+            Wrench wrench = WrenchUtils.getWrench(stack);
+            if (wrench != null && wrench.canUseWrench(stack, player, pos)) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                BlockState mimic;
+
+                if (player.isSecondaryUseActive()) {
+                    WrenchUtils.dismantleBlock(state, level, pos, blockEntity, null, null);
+                    return true;
+                } else if (blockEntity instanceof MachineSupplierBlockEntity machineSupplier
+                        && (mimic = machineSupplier.getMimic()) != null) {
+                    Block.popResourceFromFace(level, pos, hitResult.getDirection(), new ItemStack(mimic.getBlock()));
+                    machineSupplier.setMimic(null);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         CompoundTag tag = BlockItem.getBlockEntityData(stack);
-        if (level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity
-                && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
+        if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND) &&
+                level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
             blockEntity.setMimic(NbtUtils.readBlockState(tag.getCompound("Mimic")));
         }
     }
