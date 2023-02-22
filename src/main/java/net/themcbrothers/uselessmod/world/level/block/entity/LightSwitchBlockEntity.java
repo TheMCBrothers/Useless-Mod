@@ -16,6 +16,7 @@ import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.LightSwitchBlock;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class LightSwitchBlockEntity extends BlockEntity {
@@ -50,11 +51,11 @@ public class LightSwitchBlockEntity extends BlockEntity {
 
         if (level != null && state.hasProperty(LightSwitchBlock.POWERED)) {
             boolean trigger = state.getValue(LightSwitchBlock.POWERED);
-            level.setBlock(pos, state.cycle(LightSwitchBlock.POWERED), Block.UPDATE_ALL);
+            level.setBlock(pos, state.cycle(LightSwitchBlock.POWERED), Block.UPDATE_CLIENTS);
 
             SoundEvent sound = trigger ? SoundEvents.STONE_BUTTON_CLICK_OFF : SoundEvents.STONE_BUTTON_CLICK_ON;
-            this.playSound(level, pos, sound);
-            this.internalLightSwitch(!trigger);
+            this.playSound(level, pos, sound, !trigger);
+            this.switchLights(!trigger);
 
             level.scheduleTick(pos, state.getBlock(), 20);
             return true;
@@ -63,7 +64,7 @@ public class LightSwitchBlockEntity extends BlockEntity {
         return false;
     }
 
-    private void internalLightSwitch(boolean turnOn) {
+    public void switchLights(boolean turnOn) {
         if (this.level == null) {
             return;
         }
@@ -81,11 +82,11 @@ public class LightSwitchBlockEntity extends BlockEntity {
         }
     }
 
-    private void playSound(LevelAccessor worldIn, BlockPos pos, SoundEvent sound) {
-        worldIn.playSound(null, pos, sound, SoundSource.BLOCKS, 0.3F, 0.5F);
+    private void playSound(LevelAccessor worldIn, BlockPos pos, SoundEvent sound, boolean isOn) {
+        worldIn.playSound(null, pos, sound, SoundSource.BLOCKS, 0.3F, isOn ? 0.6F : 0.5F);
     }
 
-    public void setBlockPositions(List<BlockPos> blockPositions) {
+    public void setBlockPositions(Collection<BlockPos> blockPositions) {
         this.blockPositions.clear();
         this.blockPositions.addAll(blockPositions);
         this.setChanged();

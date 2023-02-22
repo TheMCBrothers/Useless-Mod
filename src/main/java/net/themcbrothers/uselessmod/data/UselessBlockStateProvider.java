@@ -85,6 +85,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         lampBlock(GREEN_LAMP.get());
         lampBlock(RED_LAMP.get());
         lampBlock(BLACK_LAMP.get());
+        simpleBlock(LIGHT_SWITCH_BLOCK.get(), models().cubeAll(LIGHT_SWITCH_BLOCK.getId().toString(), new ResourceLocation("forge:white")));
 
         // Special Blocks
         waterloggedHorizontalFacingBlock(COFFEE_MACHINE.get(), models().getExistingFile(blockTexture(COFFEE_MACHINE.get())));
@@ -132,6 +133,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(CANVAS.get());
         simpleBlockItem(USELESS_CARPET.get());
         itemModels().withExistingParent("useless_bed", mcLoc("item/template_bed")).texture("particle", modLoc("block/useless_wool"));
+        simpleBlockItem(LIGHT_SWITCH_BLOCK.get());
 
         // rail pain
         simpleItem(USELESS_RAIL.get());

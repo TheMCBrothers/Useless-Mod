@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "uselessmod:block/light_switch_block"
+    }
+  }
+}

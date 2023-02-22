@@ -70,6 +70,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_BED, "Useless Bed");
         this.addBlock(ModBlocks.USELESS_SKELETON_SKULL, "Useless Skeleton Skull");
         this.addBlock(ModBlocks.LIGHT_SWITCH, "Light Switch");
+        this.addBlock(ModBlocks.LIGHT_SWITCH_BLOCK, "Light Switch Block");
         this.addBlock(ModBlocks.LANTERN, "Lantern");
         this.addBlock(ModBlocks.WHITE_LAMP, "White Lamp");
         this.addBlock(ModBlocks.ORANGE_LAMP, "Orange Lamp");

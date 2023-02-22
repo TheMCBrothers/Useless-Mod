@@ -89,6 +89,7 @@ public final class ModBlocks {
     public static final ItemObject<Block> CANVAS = BLOCKS.register("canvas", () -> new CanvasBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of(Material.WOOD).strength(.5F)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> LIGHT_SWITCH = BLOCKS.register("light_switch", () -> new LightSwitchBlock(of(Material.DECORATION).noCollission().strength(.25F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));
+    public static final ItemObject<Block> LIGHT_SWITCH_BLOCK = BLOCKS.register("light_switch_block", () -> new LightSwitchBlockBlock(of(Material.DECORATION).strength(.5F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> WHITE_LAMP = BLOCKS.register("white_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> ORANGE_LAMP = BLOCKS.register("orange_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> MAGENTA_LAMP = BLOCKS.register("magenta_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);

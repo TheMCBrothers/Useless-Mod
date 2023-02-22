@@ -30,5 +30,5 @@ public final class ModBlockEntityTypes {
                     blocks -> blocks.add(ModBlocks.USELESS_OAK_WALL_SIGN.get(), ModBlocks.USELESS_OAK_SIGN.get()));
     public static final RegistryObject<BlockEntityType<LightSwitchBlockEntity>> LIGHT_SWITCH =
             BLOCK_ENTITIES.register("light_switch", LightSwitchBlockEntity::new,
-                    blocks -> blocks.add(ModBlocks.LIGHT_SWITCH.get())); // TODO
+                    blocks -> blocks.add(ModBlocks.LIGHT_SWITCH.get(), ModBlocks.LIGHT_SWITCH_BLOCK.get()));
 }

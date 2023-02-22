@@ -1,6 +1,5 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
-import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -30,9 +29,13 @@ import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.LightSwitchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Definition of the Light Switch (can be placed on the floor, walls and ceiling)
+ */
 public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock implements EntityBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
@@ -75,20 +78,7 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
      */
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        CompoundTag tag = BlockItem.getBlockEntityData(stack);
-
-        if (tag != null && tag.contains("Lights", Tag.TAG_LONG_ARRAY)) {
-            long[] packedPositions = tag.getLongArray("Lights");
-            List<BlockPos> blockPositions = Lists.newArrayList();
-
-            for (long packedPos : packedPositions) {
-                blockPositions.add(BlockPos.of(packedPos));
-            }
-
-            if (level.getBlockEntity(pos) instanceof LightSwitchBlockEntity blockEntity) {
-                blockEntity.setBlockPositions(blockPositions);
-            }
-        }
+        LightSwitchBlock.setPlacedBy(level, pos, stack);
     }
 
     @SuppressWarnings("deprecation")
@@ -105,5 +95,17 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return ModBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
+    }
+
+    static void setPlacedBy(Level level, BlockPos pos, ItemStack stack) {
+        CompoundTag tag = BlockItem.getBlockEntityData(stack);
+
+        if (tag != null && tag.contains("Lights", Tag.TAG_LONG_ARRAY)) {
+            List<BlockPos> lights = Arrays.stream(tag.getLongArray("Lights")).mapToObj(BlockPos::of).toList();
+
+            if (level.getBlockEntity(pos) instanceof LightSwitchBlockEntity blockEntity) {
+                blockEntity.setBlockPositions(lights);
+            }
+        }
     }
 }

@@ -104,6 +104,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
         this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
         this.add(LIGHT_SWITCH.get(), UselessBlockLoot::createCopyLightsDrop);
+        this.add(LIGHT_SWITCH_BLOCK.get(), UselessBlockLoot::createCopyLightsDrop);
         this.dropOther(LANTERN.get(), Items.LANTERN);
         this.dropSelf(WHITE_LAMP.get());
         this.dropSelf(ORANGE_LAMP.get());
