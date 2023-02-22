@@ -50,8 +50,6 @@ public class UselessTags {
         public static final TagKey<Item> SEEDS_USELESS_WHEAT = forgeTag("seeds/useless_wheat");
         public static final TagKey<Item> SEEDS_COFFEEBEAN = forgeTag("seeds/coffeebean");
 
-        public static final TagKey<Item> TOOLS_WRENCH = forgeTag("tools/wrench");
-
         public static final TagKey<Item> USELESS_ORES = modTag("useless_ores");
         public static final TagKey<Item> SUPER_USELESS_ORES = modTag("super_useless_ores");
         public static final TagKey<Item> USELESS_OAK_LOGS = modTag("useless_oak_logs");

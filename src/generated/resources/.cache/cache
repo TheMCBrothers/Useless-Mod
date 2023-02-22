@@ -74,7 +74,7 @@ a1d67572759843f06efcb80fc38ac08618f2f720 assets/uselessmod/blockstates/useless_w
 e59ffbc4041f43b3b74f00fa02bc56f70ac03f12 assets/uselessmod/blockstates/wild_coffee_beans.json
 dd312eced09f42179d9f737ec8abbbfa9801d40d assets/uselessmod/blockstates/wild_useless_wheat.json
 9be3ce3ea4df880431e8e7f11b642facf213babe assets/uselessmod/blockstates/yellow_lamp.json
-a7accb75ea7530e047b9e0380f6ce5214b6e4d54 assets/uselessmod/lang/en_us.json
+c53428ed4bab75542df10da197e04496dea4fe33 assets/uselessmod/lang/en_us.json
 feea654996f1f69f3ba555ffa7f3a74a3cab01f1 assets/uselessmod/models/block/black_lamp.json
 52c0ab8d4165c54c4a2b25e5d8d67db365d0bae2 assets/uselessmod/models/block/black_lamp_on.json
 85273a9b67eb9254731280525afce9aba0c01f9e assets/uselessmod/models/block/blue_lamp.json
@@ -316,7 +316,6 @@ d5e1c9824cafbb698e2291c88c0ac69c7c702318 assets/uselessmod/models/item/useless_s
 7d5ffd7676dea99cf6a1f052ee2e819f573d2ff3 assets/uselessmod/models/item/useless_wheat.json
 568af1ac65a743b01c94c07732e3911b477b13dd assets/uselessmod/models/item/useless_wheat_seeds.json
 0eeef97f54c84b4aca92ebe91012ecde728c3419 assets/uselessmod/models/item/useless_wool.json
-233e80a5eb4174177317c04692910c59d3838272 assets/uselessmod/models/item/useless_wrench.json
 178eecfd6d0cb84a7b60d7af5387750eaf8b2293 assets/uselessmod/models/item/white_lamp.json
 2c21c1eb12314273e7eb79d568c33ddf9f184306 assets/uselessmod/models/item/yellow_lamp.json
 27c29979e9f5261cb2db3ac68ae5e5c656c6b3fa data/forge/tags/blocks/ore_rates/singular.json
@@ -361,7 +360,6 @@ fd56e1e53d71e495f216fef08ee84f03af485f93 data/forge/tags/items/shears.json
 e9ae26e8aed146a8fc19d711269602dc08ca783d data/forge/tags/items/storage_blocks/raw_useless.json
 ce885074e2013a373675f1f7302c53c4c2204677 data/forge/tags/items/storage_blocks/super_useless.json
 8d182f2b3874f921202d1b083fba4add2e358c90 data/forge/tags/items/storage_blocks/useless.json
-114a92b3cd88d42af80de27aa3901af54701e888 data/forge/tags/items/tools/wrench.json
 9994f6a22aca88b9b03b678968f0ee14ac0aa927 data/minecraft/tags/blocks/beacon_base_blocks.json
 9299d7ebe3363cfa779fee23923de2e5fe6abff4 data/minecraft/tags/blocks/beds.json
 dd85b6e3bb80ef4d1a1916d578aad15229a585c4 data/minecraft/tags/blocks/carpets.json
