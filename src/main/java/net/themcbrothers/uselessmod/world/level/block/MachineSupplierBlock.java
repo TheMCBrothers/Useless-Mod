@@ -244,6 +244,16 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
+    public float getShadeBrightness(BlockState pState, BlockGetter level, BlockPos pos) {
+        return this.getMimic(level, pos).getShadeBrightness(level, pos);
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return this.getMimic(level, pos).propagatesSkylightDown(level, pos);
+    }
+
+    @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float distance) {
         BlockState mimic = this.getMimic(level, pos);
         mimic.getBlock().fallOn(level, mimic, pos, entity, distance);
