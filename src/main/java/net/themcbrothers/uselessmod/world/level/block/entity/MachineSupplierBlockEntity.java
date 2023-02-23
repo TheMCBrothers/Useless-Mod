@@ -57,9 +57,9 @@ public class MachineSupplierBlockEntity extends BlockEntity {
         this.mimic = mimic;
         this.setChanged();
         this.requestModelDataUpdate();
+
         if (this.level != null) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
-            this.level.setBlocksDirty(this.getBlockPos(), this.getBlockState(), this.getBlockState());
+            this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
         }
     }
 
@@ -102,7 +102,7 @@ public class MachineSupplierBlockEntity extends BlockEntity {
         if (!Objects.equals(oldMimic, this.mimic)) {
             this.requestModelDataUpdate();
             if (this.level != null) {
-                this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
+                this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
             }
         }
     }
