@@ -22,17 +22,17 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.HitResult;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class CanvasBlock extends BaseEntityBlock {
+public class PaintedWoolBlock extends BaseEntityBlock {
     public static final BooleanProperty PAINTED = BooleanProperty.create("painted");
 
-    public CanvasBlock(Properties properties) {
+    public PaintedWoolBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(PAINTED, Boolean.FALSE));
     }
@@ -54,10 +54,10 @@ public class CanvasBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity livingEntity, ItemStack stack) {
-        level.getBlockEntity(pos, ModBlockEntityTypes.CANVAS.get()).ifPresent(canvasBlockEntity -> {
+        level.getBlockEntity(pos, ModBlockEntityTypes.PAINTED_WOOL.get()).ifPresent(paintedWool -> {
             CompoundTag tag = BlockItem.getBlockEntityData(stack);
             if (tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC)) {
-                canvasBlockEntity.setColor(tag.getInt("Color"));
+                paintedWool.setColor(tag.getInt("Color"));
             }
         });
     }
@@ -66,8 +66,8 @@ public class CanvasBlock extends BaseEntityBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         final ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
 
-        if (level.getBlockEntity(pos) instanceof CanvasBlockEntity canvasBlockEntity) {
-            BlockItem.setBlockEntityData(stack, canvasBlockEntity.getType(), canvasBlockEntity.getUpdateTag());
+        if (level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity paintedWool) {
+            BlockItem.setBlockEntityData(stack, paintedWool.getType(), paintedWool.getUpdateTag());
         }
         return stack;
     }
@@ -90,6 +90,6 @@ public class CanvasBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.CANVAS.get().create(pos, state);
+        return ModBlockEntityTypes.PAINTED_WOOL.get().create(pos, state);
     }
 }

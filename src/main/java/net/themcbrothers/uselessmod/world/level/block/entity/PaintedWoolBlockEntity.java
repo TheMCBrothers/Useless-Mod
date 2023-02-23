@@ -8,14 +8,14 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.world.level.block.CanvasBlock;
+import net.themcbrothers.uselessmod.world.level.block.PaintedWoolBlock;
 import org.jetbrains.annotations.Nullable;
 
-public class CanvasBlockEntity extends BlockEntity {
+public class PaintedWoolBlockEntity extends BlockEntity {
     private int color = 0xFFFFFFFF;
 
-    public CanvasBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.CANVAS.get(), pos, state);
+    public PaintedWoolBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntityTypes.PAINTED_WOOL.get(), pos, state);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CanvasBlockEntity extends BlockEntity {
     public void setColor(int color) {
         this.color = color;
         //noinspection DataFlowIssue
-        level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(CanvasBlock.PAINTED, Boolean.TRUE));
+        level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(PaintedWoolBlock.PAINTED, Boolean.TRUE));
         this.requestModelDataUpdate();
         this.setChanged();
     }

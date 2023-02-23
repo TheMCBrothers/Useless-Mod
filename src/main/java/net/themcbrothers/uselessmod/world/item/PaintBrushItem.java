@@ -16,7 +16,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 
 public class PaintBrushItem extends Item {
     public PaintBrushItem(Properties properties) {
@@ -51,13 +51,13 @@ public class PaintBrushItem extends Item {
 
         if (stack.getDamageValue() < stack.getMaxDamage()) {
             if (level.getBlockState(pos).is(BlockTags.WOOL)) {
-                level.setBlockAndUpdate(pos, ModBlocks.CANVAS.get().defaultBlockState());
+                level.setBlockAndUpdate(pos, ModBlocks.PAINTED_WOOL.get().defaultBlockState());
             }
 
-            if (level.getBlockEntity(pos) instanceof CanvasBlockEntity canvas
-                    && canvas.getColor() != stack.getBarColor()) {
-                canvas.setColor(stack.getBarColor());
-                level.scheduleTick(pos, canvas.getBlockState().getBlock(), 2);
+            if (level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity paintedWool
+                    && paintedWool.getColor() != stack.getBarColor()) {
+                paintedWool.setColor(stack.getBarColor());
+                level.scheduleTick(pos, paintedWool.getBlockState().getBlock(), 2);
 
                 if (player == null || !player.getAbilities().instabuild) {
                     stack.hurt(1, level.getRandom(), player instanceof ServerPlayer ? (ServerPlayer) player : null);

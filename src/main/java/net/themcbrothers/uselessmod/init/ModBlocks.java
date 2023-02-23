@@ -86,7 +86,7 @@ public final class ModBlocks {
     public static final ItemObject<Block> CUP = BLOCKS.register("cup", () -> new CupBlock(of(Material.DECORATION).strength(0.5F)), block -> new CupBlockItem(block, GENERAL_PROPS, false));
     public static final ItemObject<Block> CUP_COFFEE = BLOCKS.register("cup_coffee", () -> new CupCoffeeBlock(of(Material.DECORATION).strength(0.5F)), block -> new CupBlockItem(block, ONE_STACKING_PROPS, true));
     public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> CANVAS = BLOCKS.register("canvas", () -> new CanvasBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> PAINTED_WOOL = BLOCKS.register("painted_wool", () -> new PaintedWoolBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of(Material.WOOD).strength(.5F)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> LIGHT_SWITCH = BLOCKS.register("light_switch", () -> new LightSwitchBlock(of(Material.DECORATION).noCollission().strength(.25F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> LIGHT_SWITCH_BLOCK = BLOCKS.register("light_switch_block", () -> new LightSwitchBlockBlock(of(Material.DECORATION).strength(.5F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));

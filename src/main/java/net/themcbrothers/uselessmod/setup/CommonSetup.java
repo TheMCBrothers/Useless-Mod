@@ -23,7 +23,6 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
@@ -75,7 +74,7 @@ public class CommonSetup {
                             .setValue(BlockStateProperties.HANGING, state.getValue(BlockStateProperties.HANGING))
                             .setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)), state -> state);
 
-            CauldronInteraction.WATER.put(ModBlocks.CANVAS.asItem(), (state, level, pos, player, hand, stack) -> {
+            CauldronInteraction.WATER.put(ModBlocks.PAINTED_WOOL.asItem(), (state, level, pos, player, hand, stack) -> {
                 if (!level.isClientSide) {
                     ItemStack itemStack = new ItemStack(Blocks.WHITE_WOOL);
 

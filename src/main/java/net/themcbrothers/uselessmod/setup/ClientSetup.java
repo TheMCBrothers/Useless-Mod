@@ -43,7 +43,7 @@ import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.init.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
-import net.themcbrothers.uselessmod.world.level.block.entity.CanvasBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -107,11 +107,11 @@ public class ClientSetup extends CommonSetup {
         final BlockColors colors = event.getBlockColors();
 
         colors.register(((state, level, pos, tintIndex) -> {
-            if (level != null && pos != null && level.getBlockEntity(pos) instanceof CanvasBlockEntity canvas) {
+            if (level != null && pos != null && level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity canvas) {
                 return canvas.getColor();
             }
             return -1;
-        }), ModBlocks.CANVAS.get());
+        }), ModBlocks.PAINTED_WOOL.get());
 
         colors.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup
@@ -143,7 +143,7 @@ public class ClientSetup extends CommonSetup {
         colors.register(((stack, layer) -> {
             final CompoundTag tag = BlockItem.getBlockEntityData(stack);
             return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
-        }), ModBlocks.CANVAS);
+        }), ModBlocks.PAINTED_WOOL);
 
         colors.register((stack, layer) -> {
             final CoffeeType type = CoffeeUtils.getCoffeeType(stack);

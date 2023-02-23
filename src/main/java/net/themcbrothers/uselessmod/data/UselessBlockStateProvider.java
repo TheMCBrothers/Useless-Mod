@@ -56,7 +56,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         fenceBlock((FenceBlock) USELESS_OAK_FENCE.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         fenceGateBlock((FenceGateBlock) USELESS_OAK_FENCE_GATE.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         simpleBlock(PAINT_BUCKET.get(), models().getExistingFile(blockTexture(PAINT_BUCKET.get())));
-        simpleBlock(CANVAS.get(), models().getExistingFile(blockTexture(CANVAS.get())));
+        simpleBlock(PAINTED_WOOL.get(), models().getExistingFile(blockTexture(PAINTED_WOOL.get())));
         doorBlock((DoorBlock) USELESS_OAK_DOOR.get(), modLoc("block/useless_oak_door_bottom"), modLoc("block/useless_oak_door_top"));
         trapdoorBlock((TrapDoorBlock) USELESS_OAK_TRAPDOOR.get(), blockTexture(USELESS_OAK_TRAPDOOR.get()), true);
         buttonBlock((ButtonBlock) USELESS_OAK_BUTTON.get(), blockTexture(USELESS_OAK_PLANKS.get()));
@@ -130,7 +130,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(CUP.get());
         simpleBlockItem(CUP_COFFEE.get());
         simpleBlockItem(PAINT_BUCKET.get());
-        simpleBlockItem(CANVAS.get());
+        simpleBlockItem(PAINTED_WOOL.get());
         simpleBlockItem(USELESS_CARPET.get());
         itemModels().withExistingParent("useless_bed", mcLoc("item/template_bed")).texture("particle", modLoc("block/useless_wool"));
         simpleBlockItem(LIGHT_SWITCH_BLOCK.get());

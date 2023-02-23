@@ -87,7 +87,7 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_BARS.get());
         this.dropSelf(SUPER_USELESS_BARS.get());
         this.dropSelf(PAINT_BUCKET.get());
-        this.add(CANVAS.get(), UselessBlockLoot::createCopyColorDrop);
+        this.add(PAINTED_WOOL.get(), UselessBlockLoot::createCopyColorDrop);
         this.dropSelf(USELESS_WOOL.get());
         this.dropSelf(USELESS_CARPET.get());
         this.add(USELESS_BED.get(), (block) -> createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
