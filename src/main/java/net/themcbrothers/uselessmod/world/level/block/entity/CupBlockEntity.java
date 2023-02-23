@@ -3,7 +3,11 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.api.CoffeeType;
@@ -24,11 +28,21 @@ public class CupBlockEntity extends BlockEntity {
     public void setType(@Nullable CoffeeType type) {
         this.type = type;
         this.setChanged();
+
+        if (this.level != null) {
+            this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+        }
     }
 
     @Nullable
     public CoffeeType getCoffeeType() {
         return this.type;
+    }
+
+    private void writeCoffeeNbt(CompoundTag tag) {
+        if (this.type != null) {
+            tag.putString("Coffee", String.valueOf(this.type.getRegistryName()));
+        }
     }
 
     @Override
@@ -41,9 +55,20 @@ public class CupBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
-        if (this.type != null) {
-            tag.putString("Coffee", String.valueOf(this.type.getRegistryName()));
-        }
         super.saveAdditional(tag);
+        this.writeCoffeeNbt(tag);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = super.getUpdateTag();
+        this.writeCoffeeNbt(tag);
+        return tag;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }
