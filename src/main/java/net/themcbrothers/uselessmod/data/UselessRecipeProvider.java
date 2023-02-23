@@ -7,11 +7,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import net.themcbrothers.lib.crafting.FluidIngredient;
+import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.data.builder.CoffeeRecipeBuilder;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModCoffeeTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 
 import java.util.List;
@@ -91,6 +93,9 @@ public class UselessRecipeProvider extends RecipeProvider {
         // OTHER
         carpet(consumer, ModBlocks.USELESS_CARPET.get(), ModBlocks.USELESS_WOOL.get());
         bedFromPlanksAndWool(consumer, ModBlocks.USELESS_BED.get(), ModBlocks.USELESS_WOOL.get());
+
+        // Light Switch
+        SpecialRecipeBuilder.special(ModRecipeSerializers.LIGHT_SWITCH_CONVERT.get()).save(consumer, UselessMod.rl("light_switch_convert").toString());
 
         // Lamps
         ShapelessRecipeBuilder.shapeless(ModBlocks.WHITE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_WHITE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
