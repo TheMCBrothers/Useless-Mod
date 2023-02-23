@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
@@ -83,7 +82,7 @@ public class WallClosetBlock extends BaseEntityBlock {
             final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
             Block block = ForgeRegistries.BLOCKS.getValue(key);
             if (block != null) {
-                hoverText.add(new TranslatableComponent(block.getDescriptionId()).withStyle(ChatFormatting.GREEN));
+                hoverText.add(block.getName().withStyle(ChatFormatting.GREEN));
             }
         }
     }
