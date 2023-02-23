@@ -5,6 +5,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -12,7 +13,7 @@ import net.themcbrothers.uselessmod.init.ModEntityTypes;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = UselessMod.MOD_ID)
 public final class UselessBiomeModifications {
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void setupBiomeModifications(final BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.BiomeCategory.PLAINS) {
             event.getSpawns().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_SKELETON.get(), 50, 2, 2));

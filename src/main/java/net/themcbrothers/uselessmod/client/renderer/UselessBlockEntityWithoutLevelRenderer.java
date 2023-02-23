@@ -18,16 +18,16 @@ import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockE
 import net.themcbrothers.uselessmod.world.level.block.entity.UselessBedBlockEntity;
 
 public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
+    private final UselessBedBlockEntity bed = new UselessBedBlockEntity(BlockPos.ZERO, ModBlocks.USELESS_BED.get().defaultBlockState());
+    private final CoffeeMachineBlockEntity coffeeMachine = new CoffeeMachineBlockEntity(BlockPos.ZERO, ModBlocks.COFFEE_MACHINE.get().defaultBlockState());
+
     public UselessBlockEntityWithoutLevelRenderer() {
-        super(null, null);
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
     }
-
-    private final UselessBedBlockEntity bed = new UselessBedBlockEntity(BlockPos.ZERO, ModBlocks.USELESS_BED.get().defaultBlockState());
-    private final CoffeeMachineBlockEntity coffeeMachine = new CoffeeMachineBlockEntity(BlockPos.ZERO, ModBlocks.COFFEE_MACHINE.get().defaultBlockState());
 
     @Override
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType type, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
@@ -43,7 +43,7 @@ public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLe
                         poseStack, buffer, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
             }
 
-            Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, poseStack, buffer, combinedLight, combinedOverlay);
+            this.blockEntityRenderDispatcher.renderItem(blockEntity, poseStack, buffer, combinedLight, combinedOverlay);
         }
     }
 }

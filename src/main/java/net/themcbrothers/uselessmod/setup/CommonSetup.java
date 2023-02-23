@@ -103,7 +103,7 @@ public class CommonSetup {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             });
 
-            ResourceKey<Biome> key = ResourceKey.create(ForgeRegistries.Keys.BIOMES, ModBiomes.USELESS_FOREST.getId());
+            ResourceKey<Biome> key = ModBiomes.USELESS_FOREST.getKey();
             BiomeDictionary.addTypes(key, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.OVERWORLD);
             BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(key, 10));
 
