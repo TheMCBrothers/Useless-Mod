@@ -6,6 +6,7 @@ import net.themcbrothers.lib.registration.object.ItemObject;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
+import net.themcbrothers.uselessmod.world.item.UselessShieldItem;
 
 import static net.themcbrothers.uselessmod.init.Registration.ITEMS;
 
@@ -27,11 +28,13 @@ public final class ModItems {
 
     // Weapons and Tools
     public static final ItemObject<Item> USELESS_SHEARS = ITEMS.register("useless_shears", () -> new ShearsItem(new Item.Properties().tab(UselessMod.TAB).durability(320)));
+    public static final ItemObject<Item> USELESS_SHIELD = ITEMS.register("useless_shield", () -> new UselessShieldItem(ModTiers.USELESS, new Item.Properties().tab(UselessMod.TAB).durability(420)));
     public static final ItemObject<Item> USELESS_SWORD = ITEMS.register("useless_sword", () -> new SwordItem(ModTiers.USELESS, 3, -2.4F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_SHOVEL = ITEMS.register("useless_shovel", () -> new ShovelItem(ModTiers.USELESS, 1.5F, -3.0F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_PICKAXE = ITEMS.register("useless_pickaxe", () -> new PickaxeItem(ModTiers.USELESS, 1, -2.8F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_AXE = ITEMS.register("useless_axe", () -> new AxeItem(ModTiers.USELESS, 6.0F, -3.1F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_HOE = ITEMS.register("useless_hoe", () -> new HoeItem(ModTiers.USELESS, -2, -1.0F, new Item.Properties().tab(UselessMod.TAB)));
+    public static final ItemObject<Item> SUPER_USELESS_SHIELD = ITEMS.register("super_useless_shield", () -> new UselessShieldItem(ModTiers.SUPER_USELESS, new Item.Properties().tab(UselessMod.TAB).durability(640)));
     public static final ItemObject<Item> SUPER_USELESS_SWORD = ITEMS.register("super_useless_sword", () -> new SwordItem(ModTiers.SUPER_USELESS, 3, -2.4F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> SUPER_USELESS_SHOVEL = ITEMS.register("super_useless_shovel", () -> new ShovelItem(ModTiers.SUPER_USELESS, 1.5F, -3.0F, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> SUPER_USELESS_PICKAXE = ITEMS.register("super_useless_pickaxe", () -> new PickaxeItem(ModTiers.SUPER_USELESS, 1, -2.8F, new Item.Properties().tab(UselessMod.TAB)));

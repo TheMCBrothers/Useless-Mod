@@ -98,6 +98,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addItem(ModItems.USELESS_NUGGET, "Useless Nugget");
         this.addItem(ModItems.SUPER_USELESS_NUGGET, "Super-Useless Nugget");
         this.addItem(ModItems.USELESS_SHEARS, "Useless Shears");
+        this.addItem(ModItems.USELESS_SHIELD, "Useless Shield");
+        this.addItem(ModItems.SUPER_USELESS_SHIELD, "Super-Useless Shield");
         this.addItem(ModItems.USELESS_SWORD, "Useless Sword");
         this.addItem(ModItems.SUPER_USELESS_SWORD, "Super-Useless Sword");
         this.addItem(ModItems.USELESS_SHOVEL, "Useless Shovel");

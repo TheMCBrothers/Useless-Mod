@@ -17,9 +17,11 @@ import net.themcbrothers.uselessmod.world.level.block.UselessBedBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.UselessBedBlockEntity;
 
+import java.util.function.Supplier;
+
 public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
-    private final UselessBedBlockEntity bed = new UselessBedBlockEntity(BlockPos.ZERO, ModBlocks.USELESS_BED.get().defaultBlockState());
-    private final CoffeeMachineBlockEntity coffeeMachine = new CoffeeMachineBlockEntity(BlockPos.ZERO, ModBlocks.COFFEE_MACHINE.get().defaultBlockState());
+    private final Supplier<UselessBedBlockEntity> bed = () -> new UselessBedBlockEntity(BlockPos.ZERO, ModBlocks.USELESS_BED.get().defaultBlockState());
+    private final Supplier<CoffeeMachineBlockEntity> coffeeMachine = () -> new CoffeeMachineBlockEntity(BlockPos.ZERO, ModBlocks.COFFEE_MACHINE.get().defaultBlockState());
 
     public UselessBlockEntityWithoutLevelRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
@@ -36,9 +38,9 @@ public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLe
             BlockEntity blockEntity;
 
             if (block instanceof UselessBedBlock) {
-                blockEntity = this.bed;
+                blockEntity = this.bed.get();
             } else {
-                blockEntity = this.coffeeMachine;
+                blockEntity = this.coffeeMachine.get();
                 Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ModBlocks.COFFEE_MACHINE.get().defaultBlockState(),
                         poseStack, buffer, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
             }

@@ -14,10 +14,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +39,7 @@ import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
 import net.themcbrothers.uselessmod.client.model.MachineSupplierModel;
 import net.themcbrothers.uselessmod.client.model.WallClosetModel;
+import net.themcbrothers.uselessmod.client.renderer.UselessItemStackRendererProvider;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
@@ -43,9 +47,9 @@ import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.init.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
-import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup extends CommonSetup {
@@ -60,6 +64,7 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::entityAddLayers);
         bus.addListener(this::entityCreateSkullModels);
         bus.addListener(this::modelRegistry);
+        bus.addListener(UselessItemStackRendererProvider::initialize);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ClientConfig.SPEC);
     }
@@ -100,6 +105,11 @@ public class ClientSetup extends CommonSetup {
             MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
 
             Sheets.addWoodType(UselessWoodTypes.USELESS_OAK);
+
+            ItemProperties.register(ModItems.USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
+            ItemProperties.register(ModItems.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
         });
     }
 
@@ -163,6 +173,11 @@ public class ClientSetup extends CommonSetup {
     private void textureStitching(final TextureStitchEvent.Pre event) {
         if (event.getAtlas().location() == Sheets.BED_SHEET) {
             event.addSprite(UselessMod.rl("entity/bed/useless"));
+        }
+
+        if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
+            event.addSprite(UselessMod.rl("entity/shield/useless"));
+            event.addSprite(UselessMod.rl("entity/shield/super_useless"));
         }
     }
 

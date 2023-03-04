@@ -1,9 +1,12 @@
 package net.themcbrothers.uselessmod.data;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -65,10 +68,60 @@ public class UselessItemModelProvider extends ItemModelProvider {
         this.withExistingParent("useless_chicken_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_cow_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_skeleton_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
+
+        // Items with special renderer
+        final ModelFile builtInEntityModel = new ModelFile.UncheckedModelFile("builtin/entity");
+
+        final ModelFile uselessShieldBlocking = shieldBlockingModel("useless_shield_blocking", builtInEntityModel, "useless_block");
+        shieldModel("useless_shield", builtInEntityModel, "useless_block", uselessShieldBlocking);
+
+        final ModelFile superUselessShieldBlocking = shieldBlockingModel("super_useless_shield_blocking", builtInEntityModel, "super_useless_block");
+        shieldModel("super_useless_shield", builtInEntityModel, "super_useless_block", superUselessShieldBlocking);
     }
 
     private void basicTool(ItemLike item) {
         final ResourceLocation id = item.asItem().getRegistryName();
         this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/handheld"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
+    }
+
+    private void shieldModel(String path, ModelFile parent, String particleTexture, ModelFile blockingModel) {
+        getBuilder(path)
+                .parent(parent).guiLight(BlockModel.GuiLight.FRONT)
+                .texture("particle", modLoc(BLOCK_FOLDER + "/" + particleTexture))
+                .transforms()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+                .rotation(0, 90, 0).translation(10, 6, -4).scale(1, 1, 1).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+                .rotation(0, 90, 0).translation(10, 6, 12).scale(1, 1, 1).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0, 180, 5).translation(-10, 2, -10).scale(1.25F, 1.25F, 1.25F).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+                .rotation(0, 180, 5).translation(10, 0, -10).scale(1.25F, 1.25F, 1.25F).end()
+                .transform(ItemTransforms.TransformType.GUI)
+                .rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F, 0.65F, 0.65F).end()
+                .transform(ItemTransforms.TransformType.FIXED)
+                .rotation(0, 180, 0).translation(-2, 4, -5).scale(0.5F, 0.5F, 0.5F).end()
+                .transform(ItemTransforms.TransformType.GROUND)
+                .rotation(0, 0, 0).translation(4, 4, 2).scale(0.25F, 0.25F, 0.25F).end()
+                .end()
+                .override().predicate(mcLoc("blocking"), 1).model(blockingModel).end();
+    }
+
+    private ModelFile shieldBlockingModel(String path, ModelFile parent, String particleTexture) {
+        return getBuilder(path)
+                .parent(parent).guiLight(BlockModel.GuiLight.FRONT)
+                .texture("particle", modLoc(BLOCK_FOLDER + "/" + particleTexture))
+                .transforms()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+                .rotation(45, 135, 0).translation(3.51F, 11, -2).scale(1, 1, 1).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+                .rotation(45, 135, 0).translation(13.51F, 3, 5).scale(1, 1, 1).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0, 180, -5).translation(-15, 5, -11).scale(1.25F, 1.25F, 1.25F).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+                .rotation(0, 180, -5).translation(5, 5, -11).scale(1.25F, 1.25F, 1.25F).end()
+                .transform(ItemTransforms.TransformType.GUI)
+                .rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F, 0.65F, 0.65F).end()
+                .end();
     }
 }

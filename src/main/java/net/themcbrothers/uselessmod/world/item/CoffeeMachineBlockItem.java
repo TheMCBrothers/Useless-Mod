@@ -15,6 +15,6 @@ public class CoffeeMachineBlockItem extends BlockItem {
 
     @Override
     public void initializeClient(@NotNull Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(UselessItemStackRendererProvider.useless());
+        consumer.accept(UselessItemStackRendererProvider.blockEntity());
     }
 }

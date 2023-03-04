@@ -14,6 +14,6 @@ public class UselessBedItem extends BedItem {
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(UselessItemStackRendererProvider.useless());
+        consumer.accept(UselessItemStackRendererProvider.blockEntity());
     }
 }
