@@ -22,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -106,6 +107,10 @@ public class ClientSetup extends CommonSetup {
 
             Sheets.addWoodType(UselessWoodTypes.USELESS_OAK);
 
+            ItemProperties.register(ModItems.USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+                    (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
+            ItemProperties.register(ModItems.SUPER_USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+                    (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
             ItemProperties.register(ModItems.USELESS_SHIELD.get(), new ResourceLocation("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
             ItemProperties.register(ModItems.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),

@@ -47,8 +47,6 @@ public class UselessItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.SUPER_USELESS_LEGGINGS.get());
         basicItem(ModItems.USELESS_BOOTS.get());
         basicItem(ModItems.SUPER_USELESS_BOOTS.get());
-        basicItem(ModItems.USELESS_ELYTRA.get());
-        basicItem(ModItems.SUPER_USELESS_ELYTRA.get());
         basicItem(ModItems.USELESS_WHEAT_SEEDS.get());
         basicItem(ModItems.USELESS_WHEAT.get());
         basicItem(ModItems.COFFEE_SEEDS.get());
@@ -56,6 +54,11 @@ public class UselessItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.USELESS_BONE.get());
         basicItem(ModItems.USELESS_LEATHER.get());
         basicItem(ModItems.USELESS_FEATHER.get());
+
+        final ModelFile brokenUselessElytra = basicItem(UselessMod.rl("broken_useless_elytra"));
+        basicItem(ModItems.USELESS_ELYTRA.get()).override().predicate(mcLoc("broken"), 1).model(brokenUselessElytra).end();
+        final ModelFile brokenSuperUselessElytra = basicItem(UselessMod.rl("broken_super_useless_elytra"));
+        basicItem(ModItems.SUPER_USELESS_ELYTRA.get()).override().predicate(mcLoc("broken"), 1).model(brokenSuperUselessElytra).end();
 
         withExistingParent("paint_brush", mcLoc(ITEM_FOLDER + "/handheld"))
                 .texture("layer0", modLoc(ITEM_FOLDER + "/paint_brush_0"))
