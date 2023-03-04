@@ -42,12 +42,12 @@ public final class ModItems {
     public static final ItemObject<Item> SUPER_USELESS_HOE = ITEMS.register("super_useless_hoe", () -> new HoeItem(ModTiers.SUPER_USELESS, -2, -1.0F, new Item.Properties().tab(UselessMod.TAB)));
 
     // Armor
-    public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(500).rarity(Rarity.UNCOMMON)));
+    public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(540).rarity(Rarity.UNCOMMON)));
     public static final ItemObject<Item> USELESS_HELMET = ITEMS.register("useless_helmet", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.HEAD, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_CHESTPLATE = ITEMS.register("useless_chestplate", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.CHEST, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_LEGGINGS = ITEMS.register("useless_leggings", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.LEGS, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.FEET, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_ELYTRA = ITEMS.register("super_useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(500).rarity(Rarity.UNCOMMON)));
+    public static final ItemObject<Item> SUPER_USELESS_ELYTRA = ITEMS.register("super_useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(864).rarity(Rarity.UNCOMMON)));
     public static final ItemObject<Item> SUPER_USELESS_HELMET = ITEMS.register("super_useless_helmet", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.HEAD, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> SUPER_USELESS_CHESTPLATE = ITEMS.register("super_useless_chestplate", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.CHEST, new Item.Properties().tab(UselessMod.TAB)));
     public static final ItemObject<Item> SUPER_USELESS_LEGGINGS = ITEMS.register("super_useless_leggings", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.LEGS, new Item.Properties().tab(UselessMod.TAB)));
