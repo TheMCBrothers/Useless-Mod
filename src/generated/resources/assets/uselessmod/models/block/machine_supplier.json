@@ -1,3 +1,4 @@
 {
+  "parent": "uselessmod:block/machine_supplier_base",
   "loader": "uselessmod:machine_supplier"
 }

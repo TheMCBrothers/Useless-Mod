@@ -2,14 +2,16 @@ package net.themcbrothers.uselessmod.client.model;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.Direction;
@@ -21,7 +23,6 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.IModelConfiguration;
@@ -40,7 +41,12 @@ import java.util.function.Function;
 
 public class MachineSupplierModel implements IDynamicBakedModel {
     private static final ItemOverrides OVERRIDE = new ItemOverrideHandler();
-    private static final ResourceLocation TEXTURE = new ResourceLocation("block/cobblestone");
+
+    private final BakedModel baseModel;
+
+    private MachineSupplierModel(BakedModel baseModel) {
+        this.baseModel = baseModel;
+    }
 
     @NotNull
     @Override
@@ -49,11 +55,11 @@ public class MachineSupplierModel implements IDynamicBakedModel {
 
         BlockState mimic = extraData.getData(MachineSupplierBlockEntity.MIMIC_PROPERTY);
         if (mimic == null || mimic.is(ModBlocks.MACHINE_SUPPLIER.get())) {
-            mimic = Blocks.COBBLESTONE.defaultBlockState();
+            return this.baseModel.getQuads(mimic, side, rand, EmptyModelData.INSTANCE);
         }
 
         if (type == null || ItemBlockRenderTypes.canRenderInLayer(mimic, type)) {
-            BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(mimic);
+            BakedModel model = getMimicModel(mimic);
             return model.getQuads(mimic, side, rand, EmptyModelData.INSTANCE);
         }
 
@@ -63,11 +69,21 @@ public class MachineSupplierModel implements IDynamicBakedModel {
     @Override
     public TextureAtlasSprite getParticleIcon(@NotNull IModelData data) {
         BlockState mimic = data.getData(MachineSupplierBlockEntity.MIMIC_PROPERTY);
-        if (mimic != null) {
-            BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(mimic);
-            return model.getParticleIcon(EmptyModelData.INSTANCE);
+        BakedModel model = getMimicModel(mimic);
+        return model.getParticleIcon(EmptyModelData.INSTANCE);
+    }
+
+    @Override
+    public BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack) {
+        return this.baseModel.handlePerspective(cameraTransformType, poseStack);
+    }
+
+    private BakedModel getMimicModel(@Nullable BlockState mimic) {
+        if (mimic == null || mimic.isAir()) {
+            return this.baseModel;
         }
-        return this.getParticleIcon();
+
+        return Minecraft.getInstance().getBlockRenderer().getBlockModel(mimic);
     }
 
     @Override
@@ -82,7 +98,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
 
     @Override
     public boolean usesBlockLight() {
-        return false;
+        return this.baseModel.usesBlockLight();
     }
 
     @Override
@@ -92,7 +108,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(TEXTURE);
+        return getMimicModel(null).getParticleIcon(EmptyModelData.INSTANCE);
     }
 
     @Override
@@ -105,18 +121,27 @@ public class MachineSupplierModel implements IDynamicBakedModel {
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
             CompoundTag tag = BlockItem.getBlockEntityData(stack);
+            BlockState mimic = null;
+
             if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-                BlockState mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
-                return Minecraft.getInstance().getBlockRenderer().getBlockModel(mimic);
+                mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
             }
-            return model;
+
+            return ((MachineSupplierModel) model).getMimicModel(mimic);
         }
     }
 
     private static class Geometry implements IModelGeometry<Geometry> {
         @Override
         public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-            return new MachineSupplierModel();
+            BlockModel baseModel = ((BlockModel) Objects.requireNonNull(owner.getOwnerModel())).parent;
+
+            if (baseModel == null) {
+                throw new NullPointerException("Expected model parent model " + modelLocation);
+            }
+
+            BakedModel bakedModel = baseModel.bake(bakery, baseModel, spriteGetter, modelTransform, modelLocation, owner.isSideLit());
+            return new MachineSupplierModel(bakedModel);
         }
 
         @Override

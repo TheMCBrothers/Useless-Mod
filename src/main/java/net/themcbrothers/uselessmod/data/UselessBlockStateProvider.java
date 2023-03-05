@@ -108,9 +108,14 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                             .build();
                 }, BlockStateProperties.WATERLOGGED);
 
-        simpleBlock(MACHINE_SUPPLIER.get(), models().getBuilder("machine_supplier").customLoader((blockModelBuilder, existingFileHelper) ->
-                new CustomLoaderBuilder<BlockModelBuilder>(UselessMod.rl("machine_supplier"), blockModelBuilder, existingFileHelper) {
-                }).end());
+        // Machine Supplier
+        final ModelFile machineSupplierModelBase = models().cubeAll("machine_supplier_base", modLoc(BLOCK_FOLDER + "/machine_supplier"));
+        final ModelFile machineSupplierModel = models().getBuilder("machine_supplier")
+                .parent(machineSupplierModelBase).customLoader((blockModelBuilder, existingFileHelper) ->
+                        new CustomLoaderBuilder<BlockModelBuilder>(UselessMod.rl("machine_supplier"), blockModelBuilder, existingFileHelper) {
+                        }).end();
+        simpleBlock(MACHINE_SUPPLIER.get(), machineSupplierModel);
+        simpleBlockItem(MACHINE_SUPPLIER.get());
 
         // Block Item Models
         simpleBlockItem(USELESS_OAK_LOG.get());
@@ -126,7 +131,6 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(USELESS_OAK_FENCE_GATE.get());
         simpleItemItem(USELESS_OAK_DOOR.get());
         simpleItemItem(USELESS_OAK_SIGN.get());
-        simpleBlockItem(MACHINE_SUPPLIER.get());
         simpleBlockItem(CUP.get());
         simpleBlockItem(CUP_COFFEE.get());
         simpleBlockItem(PAINT_BUCKET.get());
