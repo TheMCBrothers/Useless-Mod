@@ -67,7 +67,7 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::modelRegistry);
         bus.addListener(UselessItemStackRendererProvider::initialize);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ClientConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
