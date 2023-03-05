@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "powered=false": {
       "model": "uselessmod:block/light_switch_block"
+    },
+    "powered=true": {
+      "model": "uselessmod:block/light_switch_block_powered"
     }
   }
 }

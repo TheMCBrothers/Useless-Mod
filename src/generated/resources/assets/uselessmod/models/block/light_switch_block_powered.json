@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "uselessmod:block/light_switch"
+    "all": "uselessmod:block/light_switch_powered"
   }
 }

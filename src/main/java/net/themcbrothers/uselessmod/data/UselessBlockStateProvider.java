@@ -85,7 +85,9 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         lampBlock(GREEN_LAMP.get());
         lampBlock(RED_LAMP.get());
         lampBlock(BLACK_LAMP.get());
-        simpleBlock(LIGHT_SWITCH_BLOCK.get(), models().cubeAll(LIGHT_SWITCH_BLOCK.getId().toString(), new ResourceLocation("forge:white")));
+        getVariantBuilder(LIGHT_SWITCH_BLOCK.get())
+                .partialState().with(BlockStateProperties.POWERED, Boolean.FALSE).modelForState().modelFile(models().cubeAll("light_switch_block", modLoc(BLOCK_FOLDER + "/light_switch"))).addModel()
+                .partialState().with(BlockStateProperties.POWERED, Boolean.TRUE).modelForState().modelFile(models().cubeAll("light_switch_block_powered", modLoc(BLOCK_FOLDER + "/light_switch_powered"))).addModel();
 
         // Special Blocks
         waterloggedHorizontalFacingBlock(COFFEE_MACHINE.get(), models().getExistingFile(blockTexture(COFFEE_MACHINE.get())));
