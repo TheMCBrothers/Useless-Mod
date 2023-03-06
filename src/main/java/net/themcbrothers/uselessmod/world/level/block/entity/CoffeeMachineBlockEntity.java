@@ -55,6 +55,8 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible, SyncableBlockEntity {
+    public static final int DATA_COUNT = 5;
+
     private static final int SYNC_WATER_TANK = 0;
     private static final int SYNC_MILK_TANK = 1;
     private static final int SYNC_USE_MILK = 2;
@@ -91,17 +93,11 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
         @Override
         public void set(int index, int value) {
-            switch (index) {
-                case 0 -> CoffeeMachineBlockEntity.this.energyStorage.setEnergyStored(value);
-                case 1 -> CoffeeMachineBlockEntity.this.energyStorage.setMaxEnergyStored(value);
-                case 2 -> CoffeeMachineBlockEntity.this.cookingProgress = value;
-                case 3 -> CoffeeMachineBlockEntity.this.cookingTotalTime = value;
-            }
         }
 
         @Override
         public int getCount() {
-            return 5;
+            return DATA_COUNT;
         }
     };
 
@@ -433,11 +429,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
-        return new CoffeeMachineMenu(id, inventory, this);
-    }
-
-    public ContainerData getContainerData() {
-        return this.dataAccess;
+        return new CoffeeMachineMenu(id, inventory, this, this.dataAccess);
     }
 
     private final LazyOptional<IItemHandlerModifiable>[] itemHandlers = SidedInvWrapper.create(this, Direction.values());

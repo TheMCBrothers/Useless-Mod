@@ -5,10 +5,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -40,10 +37,10 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     private final ContainerLevelAccess levelAccess;
     private final Level level;
 
-    public CoffeeMachineMenu(int id, Inventory inventory, CoffeeMachineBlockEntity coffeeMachine) {
+    public CoffeeMachineMenu(int id, Inventory inventory, CoffeeMachineBlockEntity coffeeMachine, ContainerData data) {
         super(ModMenuTypes.COFFEE_MACHINE.get(), id);
         this.blockEntity = coffeeMachine;
-        this.data = coffeeMachine.getContainerData();
+        this.data = data;
         this.levelAccess = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
         this.level = coffeeMachine.getLevel();
 
@@ -69,7 +66,7 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     public CoffeeMachineMenu(int id, Inventory inventory, FriendlyByteBuf data) {
-        this(id, inventory, getBlockEntity(inventory, data));
+        this(id, inventory, getBlockEntity(inventory, data), new SimpleContainerData(CoffeeMachineBlockEntity.DATA_COUNT));
     }
 
     private static CoffeeMachineBlockEntity getBlockEntity(Inventory inv, FriendlyByteBuf data) {
