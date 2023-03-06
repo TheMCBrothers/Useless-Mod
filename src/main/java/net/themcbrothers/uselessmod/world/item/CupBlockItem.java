@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -35,9 +37,8 @@ public class CupBlockItem extends BlockItem {
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
         if (this.drinkable && this.allowdedIn(tab)) {
-            for (CoffeeType coffeeType : UselessRegistries.coffeeRegistry.get().getValues()) {
-                items.add(CoffeeUtils.getCoffeeStack(coffeeType));
-            }
+            UselessRegistries.coffeeRegistry.get().getValues().stream()
+                    .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
         } else {
             super.fillItemCategory(tab, items);
         }
@@ -124,14 +125,17 @@ public class CupBlockItem extends BlockItem {
 
     @Override
     public boolean isFoil(ItemStack stack) {
-        final CoffeeType type = CoffeeUtils.getCoffeeType(stack);
-        return super.isFoil(stack) || type != null && type.isFoil();
+        return super.isFoil(stack) ||
+                CoffeeUtils.getCoffeeType(stack)
+                        .map(CoffeeType::isFoil)
+                        .orElse(false);
     }
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        final CoffeeType type = CoffeeUtils.getCoffeeType(stack);
-        return type != null ? type.getDescriptionId() : super.getDescriptionId(stack);
+        return CoffeeUtils.getCoffeeType(stack)
+                .map(CoffeeType::getDescriptionId)
+                .orElse(super.getDescriptionId(stack));
     }
 
     @Override
@@ -142,5 +146,14 @@ public class CupBlockItem extends BlockItem {
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
         return this.drinkable ? new ItemStack(ModBlocks.CUP) : ItemStack.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public String getCreatorModId(ItemStack itemStack) {
+        return CoffeeUtils.getCoffeeType(itemStack)
+                .map(ForgeRegistryEntry::getRegistryName)
+                .map(ResourceLocation::getNamespace)
+                .orElse(super.getCreatorModId(itemStack));
     }
 }

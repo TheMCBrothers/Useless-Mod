@@ -9,32 +9,31 @@ import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 public class CoffeeUtils {
     private static final String TAG_COFFEE = "Coffee";
 
-    @Nullable
-    public static CoffeeType getCoffeeType(final ItemStack stack) {
+    public static Optional<CoffeeType> getCoffeeType(final ItemStack stack) {
         final CompoundTag tag = stack.getTag();
         if (tag != null && tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
-            return UselessRegistries.coffeeRegistry.get().getValue(ResourceLocation.tryParse(tag.getString(TAG_COFFEE)));
+            final ResourceLocation registryName = ResourceLocation.tryParse(tag.getString(TAG_COFFEE));
+            return Optional.ofNullable(UselessRegistries.coffeeRegistry.get().getValue(registryName));
         }
 
-        return null;
+        return Optional.empty();
     }
 
     @NotNull
     public static Set<MobEffectInstance> getMobEffects(final ItemStack stack) {
-        final CoffeeType type = getCoffeeType(stack);
-        return type == null ? Collections.emptySet() : type.getEffects();
+        return getCoffeeType(stack).map(CoffeeType::getEffects).orElse(Collections.emptySet());
     }
 
     @NotNull
-    public static ItemStack getCoffeeStack(final CoffeeType type) {
+    public static ItemStack createCoffeeStack(final CoffeeType type) {
         final ItemStack stack = new ItemStack(ModBlocks.CUP_COFFEE);
         stack.getOrCreateTag().putString(TAG_COFFEE, String.valueOf(type.getRegistryName()));
         return stack;

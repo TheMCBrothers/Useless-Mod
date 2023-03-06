@@ -28,7 +28,7 @@ public class CupCoffeeBlock extends CupBlock implements EntityBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof CupBlockEntity cupBlockEntity
                 && cupBlockEntity.getCoffeeType() != null) {
-            return CoffeeUtils.getCoffeeStack(cupBlockEntity.getCoffeeType());
+            return CoffeeUtils.createCoffeeStack(cupBlockEntity.getCoffeeType());
         }
 
         return super.getCloneItemStack(state, target, level, pos, player);

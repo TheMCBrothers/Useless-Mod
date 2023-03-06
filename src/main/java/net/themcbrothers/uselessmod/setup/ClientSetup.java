@@ -160,10 +160,8 @@ public class ClientSetup extends CommonSetup {
             return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
         }), ModBlocks.PAINTED_WOOL);
 
-        colors.register((stack, layer) -> {
-            final CoffeeType type = CoffeeUtils.getCoffeeType(stack);
-            return type != null ? type.getColor() : -1;
-        }, ModBlocks.CUP_COFFEE);
+        colors.register((stack, layer) ->
+                CoffeeUtils.getCoffeeType(stack).map(CoffeeType::getColor).orElse(-1), ModBlocks.CUP_COFFEE);
 
         colors.register((stack, layer) -> {
             final CompoundTag tag = BlockItem.getBlockEntityData(stack);

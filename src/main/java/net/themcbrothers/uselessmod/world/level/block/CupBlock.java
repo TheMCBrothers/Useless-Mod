@@ -73,7 +73,7 @@ public class CupBlock extends Block implements SimpleWaterloggedBlock, Wrenchabl
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         if (level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
-            cup.setType(CoffeeUtils.getCoffeeType(stack));
+            cup.setType(CoffeeUtils.getCoffeeType(stack).orElse(null));
         }
     }
 
