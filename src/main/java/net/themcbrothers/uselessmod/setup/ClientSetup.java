@@ -57,6 +57,7 @@ import org.jetbrains.annotations.Nullable;
 public class ClientSetup extends CommonSetup {
     public ClientSetup() {
         super();
+
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::clientSetup);
         bus.addListener(this::blockColors);
@@ -72,7 +73,7 @@ public class ClientSetup extends CommonSetup {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        // client setup
+        // Render Layer
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_OAK_LEAVES.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_BARS.get(), RenderType.cutoutMipped());
@@ -99,16 +100,24 @@ public class ClientSetup extends CommonSetup {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_DETECTOR_RAIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.USELESS_ACTIVATOR_RAIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.LANTERN.get(), RenderType.cutout());
+        });
 
+        // Block Entity Renderer
+        event.enqueueWork(() -> {
             BlockEntityRenderers.register(ModBlockEntityTypes.BED.get(), UselessBedRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SIGN.get(), SignRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineRenderer::new);
+        });
 
-            MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
+        // Screen
+        event.enqueueWork(() -> MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new));
 
-            Sheets.addWoodType(UselessWoodTypes.USELESS_OAK);
+        // Wood Type
+        event.enqueueWork(() -> Sheets.addWoodType(UselessWoodTypes.USELESS_OAK));
 
+        // Item Properties
+        event.enqueueWork(() -> {
             ItemProperties.register(ModItems.USELESS_ELYTRA.get(), new ResourceLocation("broken"),
                     (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
             ItemProperties.register(ModItems.SUPER_USELESS_ELYTRA.get(), new ResourceLocation("broken"),

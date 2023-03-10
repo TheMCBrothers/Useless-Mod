@@ -3,7 +3,6 @@ package net.themcbrothers.uselessmod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -28,7 +27,6 @@ public class UselessMod {
     public static CommonSetup setup;
 
     public UselessMod() {
-        ForgeMod.enableMilkFluid();
         setup = DistExecutor.unsafeRunForDist(() -> ClientSetup::new, () -> ServerSetup::new);
     }
 

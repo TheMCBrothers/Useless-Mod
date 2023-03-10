@@ -1,21 +1,16 @@
 package net.themcbrothers.uselessmod.setup;
 
-import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
@@ -26,7 +21,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
-import net.themcbrothers.uselessmod.init.*;
+import net.themcbrothers.uselessmod.init.ModBiomes;
+import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.init.ModEntityTypes;
+import net.themcbrothers.uselessmod.init.Registration;
 import net.themcbrothers.uselessmod.network.Messages;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +45,9 @@ public class CommonSetup {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_ROSE.getId(), ModBlocks.POTTED_BLUE_ROSE);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_ROSE.getId(), ModBlocks.POTTED_USELESS_ROSE);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_OAK_SAPLING.getId(), ModBlocks.POTTED_USELESS_OAK_SAPLING);
+        });
 
+        event.enqueueWork(() -> {
             LampRegistry.registerLampState(Blocks.REDSTONE_LAMP);
             LampRegistry.registerLampState(ModBlocks.WHITE_LAMP.get());
             LampRegistry.registerLampState(ModBlocks.ORANGE_LAMP.get());
@@ -73,44 +73,20 @@ public class CommonSetup {
                     state -> Blocks.LANTERN.defaultBlockState()
                             .setValue(BlockStateProperties.HANGING, state.getValue(BlockStateProperties.HANGING))
                             .setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)), state -> state);
+        });
 
-            CauldronInteraction.WATER.put(ModBlocks.PAINTED_WOOL.asItem(), (state, level, pos, player, hand, stack) -> {
-                if (!level.isClientSide) {
-                    ItemStack itemStack = new ItemStack(Blocks.WHITE_WOOL);
-
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-
-                    if (stack.isEmpty()) {
-                        player.setItemInHand(hand, itemStack);
-                    } else if (player.getInventory().add(itemStack)) {
-                        player.inventoryMenu.sendAllDataToRemote();
-                    } else {
-                        player.drop(itemStack, false);
-                    }
-
-                    LayeredCauldronBlock.lowerFillLevel(state, level, pos);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            });
-            CauldronInteraction.WATER.put(ModItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
-                if (!level.isClientSide) {
-                    stack.setTag(new CompoundTag());
-                    LayeredCauldronBlock.lowerFillLevel(state, level, pos);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            });
-
+        // Biome Dictionary
+        event.enqueueWork(() -> {
             ResourceKey<Biome> key = ModBiomes.USELESS_FOREST.getKey();
             BiomeDictionary.addTypes(key, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.OVERWORLD);
             BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(key, 10));
-
-            // make sure the stats appear in the menu
-            Registration.CUSTOM_STATS.getEntries().stream().map(RegistryObject::get).forEach(Stats.CUSTOM::get);
-
-            VanillaCompatibility.register();
         });
+
+        // make sure the stats appear in the menu
+        event.enqueueWork(() -> Registration.CUSTOM_STATS.getEntries().stream().map(RegistryObject::get).forEach(Stats.CUSTOM::get));
+
+        // Vanilla Compatibility: Flammable, Strippable, Compostable, Cauldron
+        event.enqueueWork(VanillaCompatibility::register);
     }
 
     private void entityAttributes(final EntityAttributeCreationEvent event) {
