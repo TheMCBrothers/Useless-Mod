@@ -41,6 +41,7 @@ import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineSc
 import net.themcbrothers.uselessmod.client.model.MachineSupplierModel;
 import net.themcbrothers.uselessmod.client.model.WallClosetModel;
 import net.themcbrothers.uselessmod.client.renderer.UselessItemStackRendererProvider;
+import net.themcbrothers.uselessmod.client.renderer.blockentity.CoffeeMachineRenderer;
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
@@ -102,6 +103,7 @@ public class ClientSetup extends CommonSetup {
             BlockEntityRenderers.register(ModBlockEntityTypes.BED.get(), UselessBedRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SIGN.get(), SignRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineRenderer::new);
 
             MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
 
