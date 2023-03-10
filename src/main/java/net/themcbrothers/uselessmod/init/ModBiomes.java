@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.registries.RegistryObject;
@@ -30,7 +31,10 @@ public final class ModBiomes {
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, UselessVegetationPlacements.TREES_USELESS_OAK);
 
         MobSpawnSettings.Builder mobSpawnSettings = new MobSpawnSettings.Builder();
-        BiomeDefaultFeatures.farmAnimals(mobSpawnSettings);
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_SHEEP.get(), 12, 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_PIG.get(), 10, 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_CHICKEN.get(), 10, 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_COW.get(), 8, 4, 4));
         BiomeDefaultFeatures.commonSpawns(mobSpawnSettings);
         return new Biome.BiomeBuilder().precipitation(Biome.Precipitation.RAIN).biomeCategory(Biome.BiomeCategory.FOREST)
                 .temperature(0.7F).downfall(0.8F).specialEffects(new BiomeSpecialEffects.Builder()
