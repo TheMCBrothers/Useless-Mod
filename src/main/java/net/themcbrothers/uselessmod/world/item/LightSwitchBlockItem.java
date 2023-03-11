@@ -23,13 +23,14 @@ import net.minecraftforge.fml.ModList;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.util.Styles;
-import net.themcbrothers.uselessmod.util.TextUtils;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static net.themcbrothers.uselessmod.UselessMod.translate;
 
 public class LightSwitchBlockItem extends BlockItem {
     public LightSwitchBlockItem(Block block, Properties properties) {
@@ -54,9 +55,9 @@ public class LightSwitchBlockItem extends BlockItem {
 
                     tooltip.add(displayComponent.withStyle(Styles.TOOLTIP));
                 }
-                tooltip.add(TextUtils.translate("tooltip", "light_switch.clear").withStyle(Styles.TOOLTIP));
+                tooltip.add(translate("tooltip", "light_switch.clear").withStyle(Styles.TOOLTIP));
             } else {
-                tooltip.add(TextUtils.translate("tooltip", "hold_shift").withStyle(Styles.TOOLTIP));
+                tooltip.add(translate("tooltip", "hold_shift").withStyle(Styles.TOOLTIP));
             }
         }
     }
@@ -78,11 +79,11 @@ public class LightSwitchBlockItem extends BlockItem {
             Component statusMessage;
 
             if (positions.contains(longPos)) {
-                statusMessage = TextUtils.translate("status", "light_switch.block_already_added").withStyle(ChatFormatting.RED);
+                statusMessage = translate("status", "light_switch.block_already_added").withStyle(ChatFormatting.RED);
             } else {
                 positions.add(longPos);
                 blockEntityTag.putLongArray("Lights", positions);
-                statusMessage = TextUtils.translate("status", "light_switch.block_added", pos.toShortString());
+                statusMessage = translate("status", "light_switch.block_added", pos.toShortString());
             }
 
             if (player != null) {
@@ -101,7 +102,7 @@ public class LightSwitchBlockItem extends BlockItem {
 
         if (player.isSecondaryUseActive()) {
             stack.setTag(null);
-            player.displayClientMessage(TextUtils.translate("status", "light_switch.cleared"), true);
+            player.displayClientMessage(translate("status", "light_switch.cleared"), true);
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
         }
 

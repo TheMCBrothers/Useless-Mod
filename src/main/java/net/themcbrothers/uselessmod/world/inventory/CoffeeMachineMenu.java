@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -24,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+
+import static net.themcbrothers.lib.util.ContainerHelper.getBlockEntity;
 
 public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyProvider {
 
@@ -66,17 +67,8 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     public CoffeeMachineMenu(int id, Inventory inventory, FriendlyByteBuf data) {
-        this(id, inventory, getBlockEntity(inventory, data), new SimpleContainerData(CoffeeMachineBlockEntity.DATA_COUNT));
-    }
-
-    private static CoffeeMachineBlockEntity getBlockEntity(Inventory inv, FriendlyByteBuf data) {
-        Objects.requireNonNull(inv, "inv cannot be null");
-        Objects.requireNonNull(data, "data cannot be null");
-        BlockEntity blockEntity = inv.player.level.getBlockEntity(data.readBlockPos());
-        if (blockEntity instanceof CoffeeMachineBlockEntity coffeeMachine) {
-            return coffeeMachine;
-        }
-        throw new IllegalStateException("BlockEntity is not correct! " + blockEntity);
+        this(id, inventory, getBlockEntity(CoffeeMachineBlockEntity.class, inventory, data),
+                new SimpleContainerData(CoffeeMachineBlockEntity.DATA_COUNT));
     }
 
     @Nonnull
