@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
-import net.themcbrothers.uselessmod.util.Styles;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -53,11 +52,11 @@ public class LightSwitchBlockItem extends BlockItem {
                     ModList.get().getModContainerById(modId).ifPresent(modContainer ->
                             displayComponent.append(" (").append(modContainer.getModInfo().getDisplayName()).append(")"));
 
-                    tooltip.add(displayComponent.withStyle(Styles.TOOLTIP));
+                    tooltip.add(displayComponent.withStyle(ChatFormatting.GRAY));
                 }
-                tooltip.add(translate("tooltip", "light_switch.clear").withStyle(Styles.TOOLTIP));
+                tooltip.add(translate("tooltip", "light_switch.clear").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             } else {
-                tooltip.add(translate("tooltip", "hold_shift").withStyle(Styles.TOOLTIP));
+                tooltip.add(translate("tooltip", "hold_shift").withStyle(ChatFormatting.GRAY));
             }
         }
     }

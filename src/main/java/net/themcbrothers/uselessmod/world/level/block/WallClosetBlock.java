@@ -82,7 +82,7 @@ public class WallClosetBlock extends BaseEntityBlock {
             final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
             Block block = ForgeRegistries.BLOCKS.getValue(key);
             if (block != null) {
-                hoverText.add(block.getName().withStyle(ChatFormatting.GREEN));
+                hoverText.add(block.getName().withStyle(ChatFormatting.GRAY));
             }
         }
     }
@@ -90,10 +90,12 @@ public class WallClosetBlock extends BaseEntityBlock {
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallCloset) {
-            final CompoundTag tag = new CompoundTag();
-            tag.putString("Material", String.valueOf(wallCloset.getMaterial().getRegistryName()));
             final ItemStack stack = new ItemStack(this);
+            final CompoundTag tag = new CompoundTag();
+
+            tag.putString("Material", String.valueOf(wallCloset.getMaterial().getRegistryName()));
             BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
+
             return stack;
         }
 
