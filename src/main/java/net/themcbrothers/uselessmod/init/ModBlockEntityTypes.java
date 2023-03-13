@@ -17,7 +17,9 @@ public final class ModBlockEntityTypes {
     public static final RegistryObject<BlockEntityType<CupBlockEntity>> CUP =
             BLOCK_ENTITIES.register("cup", CupBlockEntity::new, ModBlocks.CUP_COFFEE);
     public static final RegistryObject<BlockEntityType<PaintedWoolBlockEntity>> PAINTED_WOOL =
-            BLOCK_ENTITIES.register("canvas", PaintedWoolBlockEntity::new, ModBlocks.PAINTED_WOOL);
+            BLOCK_ENTITIES.register("painted_wool", PaintedWoolBlockEntity::new, ModBlocks.PAINTED_WOOL);
+    public static final RegistryObject<BlockEntityType<PaintBucketBlockEntity>> PAINT_BUCKET =
+            BLOCK_ENTITIES.register("paint_bucket", PaintBucketBlockEntity::new, ModBlocks.PAINT_BUCKET);
     public static final RegistryObject<BlockEntityType<UselessBedBlockEntity>> BED =
             BLOCK_ENTITIES.register("bed", UselessBedBlockEntity::new, ModBlocks.USELESS_BED);
     public static final RegistryObject<BlockEntityType<WallClosetBlockEntity>> WALL_CLOSET =

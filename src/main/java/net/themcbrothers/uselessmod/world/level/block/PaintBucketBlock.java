@@ -5,12 +5,17 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -19,17 +24,21 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.Tags;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
+import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.world.level.block.entity.PaintBucketBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
-public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock, WrenchableBlock {
+public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, WrenchableBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private final VoxelShape SHAPE;
 
@@ -61,16 +70,46 @@ public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock, W
         if (state.getValue(WATERLOGGED)) {
             world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
+
         return super.updateShape(state, facing, newState, world, pos, newPos);
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        // Interaction with Wrench
         if (this.tryWrench(state, level, pos, player, hand, hit)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
+        if (level.getBlockEntity(pos) instanceof PaintBucketBlockEntity) {
+            final ItemStack stack = player.getItemInHand(hand);
+
+            // Interaction with Dye Item
+            if (DyeColor.getColor(stack) != null) {
+                player.displayClientMessage(UselessMod.translate("status", "coming_soon"), true);
+            }
+
+            // Interaction with Stick
+            if (stack.is(Tags.Items.RODS_WOODEN)) {
+                player.displayClientMessage(UselessMod.translate("status", "coming_soon"), true);
+            }
+
+            // Interaction with Paint Brush
+            if (stack.is(ModItems.PAINT_BRUSH.get())) {
+                player.displayClientMessage(UselessMod.translate("status", "coming_soon"), true);
+            }
+        }
+
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            // drop dye item
+
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
     }
 
     @Override
@@ -96,6 +135,17 @@ public class PaintBucketBlock extends Block implements SimpleWaterloggedBlock, W
                 Block.box(10, 0, 10, 11, 8, 11),
                 Block.box(10, 0, 5, 11, 8, 6),
                 Block.box(6, 0, 5, 10, 1, 11)
-        ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).orElseThrow();
+        ).reduce(Shapes::or).orElseThrow();
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return ModBlockEntityTypes.PAINT_BUCKET.get().create(pos, state);
     }
 }

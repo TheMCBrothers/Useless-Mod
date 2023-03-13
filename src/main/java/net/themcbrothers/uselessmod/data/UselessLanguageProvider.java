@@ -161,6 +161,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add("misc.uselessmod.fluidAmount", "%s mB");
         this.add("misc.uselessmod.empty", "Empty");
 
+        this.add("status.uselessmod.coming_soon", "This Feature is coming soon");
         this.add("status.uselessmod.light_switch.block_added", "Added Block at [%s] to Light Switch");
         this.add("status.uselessmod.light_switch.block_already_added", "This Block has already been added to this Light Switch");
         this.add("status.uselessmod.light_switch.cleared", "Light Switch Configuration cleared");

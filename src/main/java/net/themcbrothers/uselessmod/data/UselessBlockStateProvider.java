@@ -135,7 +135,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleItemItem(USELESS_OAK_SIGN.get());
         simpleBlockItem(CUP.get());
         simpleBlockItem(CUP_COFFEE.get());
-        simpleBlockItem(PAINT_BUCKET.get());
+        simpleBlockItem(PAINT_BUCKET.get(), models().getExistingFile(extend(blockTexture(PAINT_BUCKET.get()), "_inventory")));
         simpleBlockItem(PAINTED_WOOL.get());
         simpleBlockItem(USELESS_CARPET.get());
         itemModels().withExistingParent("useless_bed", mcLoc("item/template_bed")).texture("particle", modLoc("block/useless_wool"));
