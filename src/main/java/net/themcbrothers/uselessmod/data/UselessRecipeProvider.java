@@ -94,9 +94,6 @@ public class UselessRecipeProvider extends RecipeProvider {
         carpet(consumer, ModBlocks.USELESS_CARPET.get(), ModBlocks.USELESS_WOOL.get());
         bedFromPlanksAndWool(consumer, ModBlocks.USELESS_BED.get(), ModBlocks.USELESS_WOOL.get());
 
-        // Light Switch
-        SpecialRecipeBuilder.special(ModRecipeSerializers.LIGHT_SWITCH_CONVERT.get()).save(consumer, UselessMod.rl("light_switch_convert").toString());
-
         // Lamps
         ShapelessRecipeBuilder.shapeless(ModBlocks.WHITE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_WHITE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
         ShapelessRecipeBuilder.shapeless(ModBlocks.ORANGE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_ORANGE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
@@ -120,6 +117,10 @@ public class UselessRecipeProvider extends RecipeProvider {
         CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_milk"));
         CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_sugar"));
         CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
+
+        // Special Recipes
+        SpecialRecipeBuilder.special(ModRecipeSerializers.LIGHT_SWITCH_CONVERT.get()).save(consumer, UselessMod.rl("light_switch_convert").toString());
+        SpecialRecipeBuilder.special(ModRecipeSerializers.PAINT_BRUSH_DYE.get()).save(consumer, UselessMod.rl("paint_brush_dye").toString());
     }
 
     @Override

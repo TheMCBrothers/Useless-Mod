@@ -3,20 +3,20 @@ package net.themcbrothers.uselessmod.world.item;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class PaintBrushItem extends Item {
     public PaintBrushItem(Properties properties) {
@@ -33,13 +33,20 @@ public class PaintBrushItem extends Item {
         if (this.allowdedIn(tab)) {
             for (DyeColor color : DyeColor.values()) {
                 final ItemStack stack = new ItemStack(this);
-                final CompoundTag tag = new CompoundTag();
-                tag.putInt("Damage", 0);
-                tag.putInt("Color", color.getFireworkColor());
-                stack.setTag(tag);
+                float[] colors = color.getTextureDiffuseColors();
+                int r = (int) (colors[0] * 255.0F);
+                int g = (int) (colors[1] * 255.0F);
+                int b = (int) (colors[2] * 255.0F);
+                this.setColor(stack, (r << 16) + (g << 8) + b);
+                stack.setDamageValue(0);
                 items.add(stack);
             }
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
     @Override
@@ -80,13 +87,79 @@ public class PaintBrushItem extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        final CompoundTag tag = stack.getTag();
-        return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC);
+        return this.hasCustomColor(stack);
     }
 
     @Override
     public int getBarColor(ItemStack stack) {
-        final CompoundTag tag = stack.getTag();
-        return tag != null ? tag.getInt("Color") : -1;
+        return this.getColor(stack);
+    }
+
+    public boolean hasCustomColor(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag != null && tag.contains("Color", 99);
+    }
+
+    public int getColor(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag != null && tag.contains("Color", 99) ? tag.getInt("Color") : -1;
+    }
+
+    public void setColor(ItemStack stack, int color) {
+        stack.getOrCreateTag().putInt("Color", color);
+    }
+
+    public static ItemStack dye(ItemStack stack, List<DyeColor> dyes) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        int[] colors = new int[3];
+        int i = 0;
+        int j = 0;
+        PaintBrushItem paintBrushItem = null;
+        Item item = stack.getItem();
+        if (item instanceof PaintBrushItem) {
+            paintBrushItem = (PaintBrushItem) item;
+            itemstack = stack.copy();
+            itemstack.setCount(1);
+            if (paintBrushItem.hasCustomColor(stack)) {
+                int currentColor = paintBrushItem.getColor(itemstack);
+                float r = (float) (currentColor >> 16 & 0xFF) / 255.0F;
+                float g = (float) (currentColor >> 8 & 0xFF) / 255.0F;
+                float b = (float) (currentColor & 0xFF) / 255.0F;
+                i += (int) (Math.max(r, Math.max(g, b)) * 255.0F);
+                colors[0] += (int) (r * 255.0F);
+                colors[1] += (int) (g * 255.0F);
+                colors[2] += (int) (b * 255.0F);
+                ++j;
+            }
+
+            for (DyeColor dyeColor : dyes) {
+                float[] dyeColors = dyeColor.getTextureDiffuseColors();
+                int r = (int) (dyeColors[0] * 255.0F);
+                int g = (int) (dyeColors[1] * 255.0F);
+                int b = (int) (dyeColors[2] * 255.0F);
+                i += Math.max(r, Math.max(g, b));
+                colors[0] += r;
+                colors[1] += g;
+                colors[2] += b;
+                ++j;
+            }
+        }
+
+        if (paintBrushItem == null) {
+            return ItemStack.EMPTY;
+        } else {
+            int r = colors[0] / j;
+            int g = colors[1] / j;
+            int b = colors[2] / j;
+            float f3 = (float) i / (float) j;
+            float f4 = (float) Math.max(r, Math.max(g, b));
+            r = (int) ((float) r * f3 / f4);
+            g = (int) ((float) g * f3 / f4);
+            b = (int) ((float) b * f3 / f4);
+            int color = (r << 8) + g;
+            color = (color << 8) + b;
+            paintBrushItem.setColor(itemstack, color);
+            return itemstack;
+        }
     }
 }
