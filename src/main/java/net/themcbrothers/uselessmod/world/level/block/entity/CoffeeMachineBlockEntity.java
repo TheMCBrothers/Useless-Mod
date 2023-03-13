@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -339,6 +340,12 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         return tag;
     }
 
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
     @Override
     public int[] getSlotsForFace(Direction face) {
         if (face == Direction.DOWN) {
@@ -390,9 +397,17 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public void setItem(int index, ItemStack stack) {
+        ItemStack itemStack = this.items.get(index);
+        boolean isSame = !stack.isEmpty() && stack.sameItem(itemStack) && ItemStack.matches(stack, itemStack);
+
         this.items.set(index, stack);
+
         if (stack.getCount() > this.getMaxStackSize()) {
             stack.setCount(this.getMaxStackSize());
+        }
+
+        if (!isSame) {
+            this.setChanged();
         }
     }
 
