@@ -44,8 +44,15 @@ public final class ModBlocks {
     public static final ItemObject<Block> RAW_USELESS_BLOCK = BLOCKS.register("raw_useless_block", () -> new Block(copy(Blocks.RAW_IRON_BLOCK)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> SUPER_USELESS_BLOCK = BLOCKS.register("super_useless_block", () -> new Block(copy(Blocks.GOLD_BLOCK)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> RAW_SUPER_USELESS_BLOCK = BLOCKS.register("raw_super_useless_block", () -> new Block(copy(Blocks.RAW_GOLD_BLOCK)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_BARS = BLOCKS.register("useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> SUPER_USELESS_BARS = BLOCKS.register("super_useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
 
-    // Wood and Plants
+    // Natural
+    public static final ItemObject<Block> RED_ROSE = BLOCKS.register("red_rose", () -> new FlowerBlock(() -> MobEffects.NIGHT_VISION, 5, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> BLUE_ROSE = BLOCKS.register("blue_rose", () -> new FlowerBlock(() -> MobEffects.SATURATION, 7, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_ROSE = BLOCKS.register("useless_rose", () -> new FlowerBlock(() -> MobEffects.LUCK, 2, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_OAK_SAPLING = BLOCKS.register("useless_oak_sapling", () -> new SaplingBlock(new UselessOakTreeGrower(), copy(Blocks.OAK_SAPLING)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_OAK_LEAVES = BLOCKS.register("useless_oak_leaves", () -> new LeavesBlock(copy(Blocks.OAK_LEAVES)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_OAK_LOG = BLOCKS.register("useless_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_OAK_WOOD = BLOCKS.register("useless_oak_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> STRIPPED_USELESS_OAK_LOG = BLOCKS.register("stripped_useless_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)), GENERAL_BLOCK_ITEM);
@@ -61,11 +68,13 @@ public final class ModBlocks {
     public static final ItemObject<Block> USELESS_OAK_BUTTON = BLOCKS.register("useless_oak_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON)), GENERAL_BLOCK_ITEM);
     public static final RegistryObject<Block> USELESS_OAK_WALL_SIGN = BLOCKS.registerNoItem("useless_oak_wall_sign", () -> new UselessWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN).lootFrom(ModBlocks.USELESS_OAK_SIGN), UselessWoodTypes.USELESS_OAK));
     public static final ItemObject<Block> USELESS_OAK_SIGN = BLOCKS.register("useless_oak_sign", () -> new UselessStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN), UselessWoodTypes.USELESS_OAK), block -> new SignItem(STACKS_TO_16_PROPS, ModBlocks.USELESS_OAK_SIGN.get(), ModBlocks.USELESS_OAK_WALL_SIGN.get()));
-    public static final ItemObject<Block> USELESS_OAK_LEAVES = BLOCKS.register("useless_oak_leaves", () -> new LeavesBlock(copy(Blocks.OAK_LEAVES)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_OAK_SAPLING = BLOCKS.register("useless_oak_sapling", () -> new SaplingBlock(new UselessOakTreeGrower(), copy(Blocks.OAK_SAPLING)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> RED_ROSE = BLOCKS.register("red_rose", () -> new FlowerBlock(() -> MobEffects.NIGHT_VISION, 5, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> BLUE_ROSE = BLOCKS.register("blue_rose", () -> new FlowerBlock(() -> MobEffects.SATURATION, 7, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_ROSE = BLOCKS.register("useless_rose", () -> new FlowerBlock(() -> MobEffects.LUCK, 2, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+
+    // Colorful Blocks
+    public static final ItemObject<Block> USELESS_WOOL = BLOCKS.register("useless_wool", () -> new Block(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_CARPET = BLOCKS.register("useless_carpet", () -> new WoolCarpetBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), block -> new UselessBedItem(block, ONE_STACKING_PROPS));
+    public static final ItemObject<Block> PAINTED_WOOL = BLOCKS.register("painted_wool", () -> new PaintedWoolBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
 
     // Rails
     public static final ItemObject<Block> USELESS_RAIL = BLOCKS.register("useless_rail", () -> new UselessRailBlock(copy(Blocks.RAIL)), GENERAL_BLOCK_ITEM);
@@ -73,21 +82,14 @@ public final class ModBlocks {
     public static final ItemObject<Block> USELESS_DETECTOR_RAIL = BLOCKS.register("useless_detector_rail", () -> new UselessDetectorRailBlock(copy(Blocks.DETECTOR_RAIL)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_ACTIVATOR_RAIL = BLOCKS.register("useless_activator_rail", () -> new UselessPoweredRailBlock(copy(Blocks.ACTIVATOR_RAIL)), GENERAL_BLOCK_ITEM);
 
-    // Decoration Blocks
-    public static final ItemObject<Block> USELESS_BARS = BLOCKS.register("useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> SUPER_USELESS_BARS = BLOCKS.register("super_useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_WOOL = BLOCKS.register("useless_wool", () -> new Block(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_CARPET = BLOCKS.register("useless_carpet", () -> new WoolCarpetBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), block -> new UselessBedItem(block, ONE_STACKING_PROPS));
-
     // Functional Blocks
+    public static final ItemObject<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of(Material.WOOD).strength(.5F)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> MACHINE_SUPPLIER = BLOCKS.register("machine_supplier", () -> new MachineSupplierBlock(of(Material.DECORATION).strength(0.5F).dynamicShape().noOcclusion()), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of(Material.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)), block -> new CoffeeMachineBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> CUP = BLOCKS.register("cup", () -> new CupBlock(of(Material.DECORATION).strength(0.5F)), block -> new CupBlockItem(block, GENERAL_PROPS, false));
     public static final ItemObject<Block> CUP_COFFEE = BLOCKS.register("cup_coffee", () -> new CupCoffeeBlock(of(Material.DECORATION).strength(0.5F)), block -> new CupBlockItem(block, ONE_STACKING_PROPS, true));
-    public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> PAINTED_WOOL = BLOCKS.register("painted_wool", () -> new PaintedWoolBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of(Material.WOOD).strength(.5F)), GENERAL_BLOCK_ITEM);
+
+    // Lights
     public static final ItemObject<Block> LIGHT_SWITCH = BLOCKS.register("light_switch", () -> new LightSwitchBlock(of(Material.DECORATION).noCollission().strength(.25F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> LIGHT_SWITCH_BLOCK = BLOCKS.register("light_switch_block", () -> new LightSwitchBlockBlock(of(Material.DECORATION).strength(.5F)), block -> new LightSwitchBlockItem(block, GENERAL_PROPS));
     public static final ItemObject<Block> WHITE_LAMP = BLOCKS.register("white_lamp", () -> new RedstoneLampBlock(copy(Blocks.REDSTONE_LAMP)), GENERAL_BLOCK_ITEM);
