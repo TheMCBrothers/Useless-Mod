@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    " # ",
-    " # "
-  ],
   "key": {
     "#": {
       "tag": "forge:rods/wooden"
@@ -13,6 +8,11 @@
       "tag": "forge:ingots/useless"
     }
   },
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
   "result": {
     "item": "uselessmod:useless_pickaxe"
   }

@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "# #",
-    "# #"
-  ],
   "key": {
     "#": {
       "tag": "forge:ingots/super_useless"
     }
   },
+  "pattern": [
+    "###",
+    "# #",
+    "# #"
+  ],
   "result": {
     "item": "uselessmod:super_useless_leggings"
   }

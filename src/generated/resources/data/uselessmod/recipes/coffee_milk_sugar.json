@@ -1,25 +1,25 @@
 {
   "type": "uselessmod:coffee",
-  "cup": {
-    "item": "uselessmod:cup"
-  },
   "bean": {
     "tag": "forge:crops/coffeebean"
+  },
+  "cookingtime": 100,
+  "cup": {
+    "item": "uselessmod:cup"
   },
   "extra": {
     "item": "minecraft:sugar"
   },
-  "water": {
-    "tag": "minecraft:water",
-    "amount": 250
-  },
   "milk": {
-    "tag": "forge:milk",
-    "amount": 100
+    "amount": 100,
+    "tag": "forge:milk"
   },
   "result": {
     "item": "uselessmod:cup_coffee",
     "nbt": "{Coffee:\"uselessmod:milk_sugar\"}"
   },
-  "cookingtime": 100
+  "water": {
+    "amount": 250,
+    "tag": "minecraft:water"
+  }
 }

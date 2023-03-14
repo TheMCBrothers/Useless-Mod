@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "uselessmod:block/useless_oak_slab_top"
-    },
     "type=bottom": {
       "model": "uselessmod:block/useless_oak_slab"
     },
     "type=double": {
       "model": "uselessmod:block/useless_oak_planks"
+    },
+    "type=top": {
+      "model": "uselessmod:block/useless_oak_slab_top"
     }
   }
 }

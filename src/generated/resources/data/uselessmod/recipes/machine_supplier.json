@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "forge:cobblestone/normal"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "X": {
+      "tag": "forge:glass"
+    }
+  },
   "pattern": [
     "#X#",
     "XRX",
     "#X#"
   ],
-  "key": {
-    "#": {
-      "tag": "forge:cobblestone/normal"
-    },
-    "X": {
-      "tag": "forge:glass"
-    },
-    "R": {
-      "tag": "forge:dusts/redstone"
-    }
-  },
   "result": {
     "item": "uselessmod:machine_supplier"
   }

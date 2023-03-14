@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "uselessmod:block/cup",
+      "y": 90
+    },
     "facing=north": {
       "model": "uselessmod:block/cup"
     },
@@ -10,10 +14,6 @@
     "facing=west": {
       "model": "uselessmod:block/cup",
       "y": 270
-    },
-    "facing=east": {
-      "model": "uselessmod:block/cup",
-      "y": 90
     }
   }
 }

@@ -1,23 +1,7 @@
 {
   "parent": "uselessmod:root",
-  "display": {
-    "icon": {
-      "item": "uselessmod:useless_ore"
-    },
-    "title": {
-      "translate": "advancement.uselessmod.mine_ore.title"
-    },
-    "description": {
-      "translate": "advancement.uselessmod.mine_ore.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "has_ingot": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.uselessmod.mine_ore.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "uselessmod:useless_ore"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.uselessmod.mine_ore.title"
     }
   },
   "requirements": [

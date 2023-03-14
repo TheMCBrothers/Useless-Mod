@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "#X#",
-    "###"
-  ],
   "key": {
     "#": {
       "tag": "forge:ingots/super_useless"
@@ -13,6 +8,11 @@
       "item": "minecraft:elytra"
     }
   },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
   "result": {
     "item": "uselessmod:super_useless_elytra"
   }

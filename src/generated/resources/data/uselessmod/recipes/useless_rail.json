@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "X#X",
-    "X X"
-  ],
   "key": {
     "#": {
       "item": "minecraft:stick"
@@ -13,8 +8,13 @@
       "tag": "forge:ingots/useless"
     }
   },
+  "pattern": [
+    "X X",
+    "X#X",
+    "X X"
+  ],
   "result": {
-    "item": "uselessmod:useless_rail",
-    "count": 16
+    "count": 16,
+    "item": "uselessmod:useless_rail"
   }
 }

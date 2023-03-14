@@ -1,16 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "U#U",
-    "XRX"
-  ],
   "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
     "#": {
       "item": "minecraft:stick"
+    },
+    "R": {
+      "item": "minecraft:redstone"
     },
     "U": {
       "tag": "forge:ingots/useless"
@@ -19,8 +14,13 @@
       "tag": "forge:ingots/gold"
     }
   },
+  "pattern": [
+    "X X",
+    "U#U",
+    "XRX"
+  ],
   "result": {
-    "item": "uselessmod:useless_powered_rail",
-    "count": 6
+    "count": 6,
+    "item": "uselessmod:useless_powered_rail"
   }
 }

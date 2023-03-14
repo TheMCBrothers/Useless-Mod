@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/door_bottom",
+  "parent": "minecraft:block/door_top_left_open",
   "textures": {
     "bottom": "uselessmod:block/useless_oak_door_bottom",
     "top": "uselessmod:block/useless_oak_door_top"

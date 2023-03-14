@@ -1,18 +1,7 @@
 {
   "variants": {
-    "shape=north_south": {
-      "model": "uselessmod:block/useless_rail"
-    },
-    "shape=east_west": {
-      "model": "uselessmod:block/useless_rail",
-      "y": 90
-    },
     "shape=ascending_east": {
       "model": "uselessmod:block/useless_rail_raised_ne",
-      "y": 90
-    },
-    "shape=ascending_west": {
-      "model": "uselessmod:block/useless_rail_raised_sw",
       "y": 90
     },
     "shape=ascending_north": {
@@ -21,20 +10,31 @@
     "shape=ascending_south": {
       "model": "uselessmod:block/useless_rail_raised_sw"
     },
+    "shape=ascending_west": {
+      "model": "uselessmod:block/useless_rail_raised_sw",
+      "y": 90
+    },
+    "shape=east_west": {
+      "model": "uselessmod:block/useless_rail",
+      "y": 90
+    },
+    "shape=north_east": {
+      "model": "uselessmod:block/useless_rail_corner",
+      "y": 270
+    },
+    "shape=north_south": {
+      "model": "uselessmod:block/useless_rail"
+    },
+    "shape=north_west": {
+      "model": "uselessmod:block/useless_rail_corner",
+      "y": 180
+    },
     "shape=south_east": {
       "model": "uselessmod:block/useless_rail_corner"
     },
     "shape=south_west": {
       "model": "uselessmod:block/useless_rail_corner",
       "y": 90
-    },
-    "shape=north_west": {
-      "model": "uselessmod:block/useless_rail_corner",
-      "y": 180
-    },
-    "shape=north_east": {
-      "model": "uselessmod:block/useless_rail_corner",
-      "y": 270
     }
   }
 }

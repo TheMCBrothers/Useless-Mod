@@ -2,32 +2,32 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "uselessmod:light_switch_block"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "functions": [
         {
           "function": "minecraft:copy_nbt",
-          "source": "block_entity",
           "ops": [
             {
+              "op": "replace",
               "source": "Lights",
-              "target": "BlockEntityTag.Lights",
-              "op": "replace"
+              "target": "BlockEntityTag.Lights"
             }
-          ]
+          ],
+          "source": "block_entity"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

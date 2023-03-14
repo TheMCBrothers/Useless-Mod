@@ -1,26 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "uselessmod:useless_ingot_from_useless_ore_smelting"
-    ]
-  },
   "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "uselessmod:useless_ingot_from_useless_ore_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
     "has_useless_ore": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "tag": "forge:ores/useless"
           }
         ]
-      }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "uselessmod:useless_ingot_from_useless_ore_smelting"
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
@@ -28,5 +23,10 @@
       "has_useless_ore",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "uselessmod:useless_ingot_from_useless_ore_smelting"
+    ]
+  }
 }

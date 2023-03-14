@@ -1,10 +1,10 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
   "group": "super_useless_ingot",
   "ingredient": {
     "tag": "forge:ores/super_useless"
   },
-  "result": "uselessmod:super_useless_ingot",
-  "experience": 1.0,
-  "cookingtime": 200
+  "result": "uselessmod:super_useless_ingot"
 }

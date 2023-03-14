@@ -1,10 +1,10 @@
 {
   "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.7,
   "group": "useless_ingot",
   "ingredient": {
     "tag": "forge:dusts/useless"
   },
-  "result": "uselessmod:useless_ingot",
-  "experience": 0.7,
-  "cookingtime": 100
+  "result": "uselessmod:useless_ingot"
 }

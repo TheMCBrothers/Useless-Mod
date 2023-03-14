@@ -2,32 +2,32 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "uselessmod:machine_supplier"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "functions": [
         {
           "function": "minecraft:copy_nbt",
-          "source": "block_entity",
           "ops": [
             {
+              "op": "replace",
               "source": "Mimic",
-              "target": "BlockEntityTag.Mimic",
-              "op": "replace"
+              "target": "BlockEntityTag.Mimic"
             }
-          ]
+          ],
+          "source": "block_entity"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }
