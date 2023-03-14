@@ -8,13 +8,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
+import net.themcbrothers.lib.network.PacketMessage;
 import net.themcbrothers.uselessmod.network.MessageProxy;
 import net.themcbrothers.uselessmod.world.level.block.entity.SyncableBlockEntity;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class SyncTileEntityPacket implements IMessage {
+public class SyncTileEntityPacket implements PacketMessage {
     private final BlockPos pos;
     private final CompoundTag tag;
 

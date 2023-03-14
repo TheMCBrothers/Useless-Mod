@@ -3,12 +3,13 @@ package net.themcbrothers.uselessmod.network.packets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
+import net.themcbrothers.lib.network.PacketMessage;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 
 import java.util.function.Supplier;
 
-public class StartCoffeeMachinePacket implements IMessage {
+public class StartCoffeeMachinePacket implements PacketMessage {
     private final boolean start;
 
     public StartCoffeeMachinePacket(boolean start) {

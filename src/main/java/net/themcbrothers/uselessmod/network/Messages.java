@@ -3,8 +3,8 @@ package net.themcbrothers.uselessmod.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.themcbrothers.lib.network.PacketMessage;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.network.packets.IMessage;
 import net.themcbrothers.uselessmod.network.packets.StartCoffeeMachinePacket;
 import net.themcbrothers.uselessmod.network.packets.SyncTileEntityPacket;
 import net.themcbrothers.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
@@ -34,8 +34,8 @@ public class Messages {
         return ID++;
     }
 
-    private static <T extends IMessage> void registerMessage(Class<T> packetType, Function<FriendlyByteBuf, T> decoder) {
-        INSTANCE.registerMessage(nextID(), packetType, IMessage::toBytes, decoder, ((t, ctx) -> {
+    private static <T extends PacketMessage> void registerMessage(Class<T> packetType, Function<FriendlyByteBuf, T> decoder) {
+        INSTANCE.registerMessage(nextID(), packetType, PacketMessage::toBytes, decoder, ((t, ctx) -> {
             t.process(ctx);
             ctx.get().setPacketHandled(true);
         }));
@@ -43,5 +43,4 @@ public class Messages {
 
     public static void init() {
     }
-
 }
