@@ -12,23 +12,31 @@ issueTrackerURL = "https://github.com/TheMCBrothers/Useless-Mod/issues"
     logoFile = "uselessmod.png"
     credits = "Thank you for every single download!"
     authors = "TheMCBrothers"
-    description = '''
-    A mod for Minecraft. Not very useless ;)
-    '''
+    description = "A mod for Minecraft. Not very useless ;)"
 
 [[dependencies.uselessmod]]
     modId = "forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
     mandatory = true #mandatory
-    # The version range of the dependency
-    versionRange = "[39,)" #mandatory
+    versionRange = "[39.2,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering = "NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side = "BOTH"
+
 [[dependencies.uselessmod]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.18,1.19)"
+    versionRange = "1.18.2"
     ordering = "NONE"
     side = "BOTH"
+
+[[dependencies.uselessmod]]
+    modId = "tmcb_lib"
+    mandatory = true
+    versionRange = "[1.18.2-2.0.4,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[modproperties.uselessmod]
+    catalogueItemIcon = "uselessmod:useless_ingot"
+    configuredBackground = "uselessmod:textures/block/useless_planks.png"
