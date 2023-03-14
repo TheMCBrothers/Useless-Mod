@@ -173,12 +173,13 @@ curseforge {
 
     project {
         id = project.project_id
-        changelog = file('changelog.txt')
+        changelogType = 'markdown'
+        changelog = file('changelog.md')
         releaseType = project.artifact_type
         addGameVersion(project.mc_version)
         mainArtifact jar
         relations {
-            requiredDependency 'mantle'
+            requiredDependency 'themcbroslib'
             optionalDependency 'jei'
         }
     }
