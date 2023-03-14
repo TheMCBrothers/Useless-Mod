@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#U#",
+    "RXR"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:glass"
+    },
+    "X": {
+      "item": "uselessmod:machine_supplier"
+    },
+    "R": {
+      "item": "minecraft:redstone_torch"
+    },
+    "U": {
+      "tag": "forge:ingots/useless"
+    }
+  },
+  "result": {
+    "item": "uselessmod:coffee_machine"
+  }
+}

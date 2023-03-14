@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WoW",
+    "WWW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "tag": "forge:rods/wooden"
+    },
+    "o": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "uselessmod:paint_brush"
+  }
+}

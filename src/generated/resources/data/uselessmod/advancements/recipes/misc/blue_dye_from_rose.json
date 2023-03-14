@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "uselessmod:blue_dye_from_rose"
+    ]
+  },
+  "criteria": {
+    "has_blue_flower": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uselessmod:blue_rose"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "uselessmod:blue_dye_from_rose"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blue_flower",
+      "has_the_recipe"
+    ]
+  ]
+}

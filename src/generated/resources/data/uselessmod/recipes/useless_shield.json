@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WoW",
+    "WWW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "tag": "forge:ingots/useless"
+    },
+    "o": {
+      "item": "minecraft:shield"
+    }
+  },
+  "result": {
+    "item": "uselessmod:useless_shield"
+  }
+}

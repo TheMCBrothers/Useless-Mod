@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WoW",
+    "WWW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "tag": "forge:ingots/super_useless"
+    },
+    "o": {
+      "item": "minecraft:shield"
+    }
+  },
+  "result": {
+    "item": "uselessmod:super_useless_shield"
+  }
+}
