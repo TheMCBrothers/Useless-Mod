@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -26,6 +27,8 @@ import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.Registration;
 import net.themcbrothers.uselessmod.network.Messages;
+import net.themcbrothers.uselessmod.util.RecipeHelper;
+import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
 import org.jetbrains.annotations.Nullable;
 
 public class CommonSetup {
@@ -35,6 +38,9 @@ public class CommonSetup {
         Registration.register(bus);
         bus.addListener(this::setup);
         bus.addListener(this::entityAttributes);
+
+        MinecraftForge.EVENT_BUS.register(new RecipeHelper());
+        MinecraftForge.EVENT_BUS.register(new WallClosetRecipeManager());
 
         Messages.init();
     }
