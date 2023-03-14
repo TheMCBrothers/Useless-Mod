@@ -25,11 +25,10 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -129,25 +128,24 @@ public class ClientSetup extends CommonSetup {
         });
     }
 
-    private void blockColors(final ColorHandlerEvent.Block event) {
+    private void blockColors(final RegisterColorHandlersEvent.Block event) {
         final BlockColors colors = event.getBlockColors();
 
-        colors.register(((state, level, pos, tintIndex) -> {
+        event.register(((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity canvas) {
                 return canvas.getColor();
             }
             return -1;
         }), ModBlocks.PAINTED_WOOL.get());
 
-        colors.register((state, level, pos, tintIndex) -> {
-            if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup
-                    && cup.getCoffeeType() != null) {
-                return cup.getCoffeeType().getColor();
+        event.register((state, level, pos, tintIndex) -> {
+            if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
+                return cup.getCoffeeType().map(CoffeeType::getColor).orElse(-1);
             }
             return -1;
         }, ModBlocks.CUP_COFFEE.get());
 
-        colors.register((state, level, pos, tintIndex) -> {
+        event.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
                 final BlockState mimic = blockEntity.getMimic();
                 if (mimic != null) {
@@ -158,23 +156,23 @@ public class ClientSetup extends CommonSetup {
         }, ModBlocks.MACHINE_SUPPLIER.get());
     }
 
-    private void itemColors(final ColorHandlerEvent.Item event) {
+    private void itemColors(final RegisterColorHandlersEvent.Item event) {
         final ItemColors colors = event.getItemColors();
 
-        colors.register(((stack, layer) -> {
+        event.register(((stack, layer) -> {
             final CompoundTag tag = stack.getTag();
             return layer == 1 && tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
         }), ModItems.PAINT_BRUSH);
 
-        colors.register(((stack, layer) -> {
+        event.register(((stack, layer) -> {
             final CompoundTag tag = BlockItem.getBlockEntityData(stack);
             return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
         }), ModBlocks.PAINTED_WOOL);
 
-        colors.register((stack, layer) ->
+        event.register((stack, layer) ->
                 CoffeeUtils.getCoffeeType(stack).map(CoffeeType::getColor).orElse(-1), ModBlocks.CUP_COFFEE);
 
-        colors.register((stack, layer) -> {
+        event.register((stack, layer) -> {
             final CompoundTag tag = BlockItem.getBlockEntityData(stack);
             if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
                 final BlockState mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
@@ -218,9 +216,9 @@ public class ClientSetup extends CommonSetup {
         event.registerSkullModel(UselessSkullBlock.Types.USELESS_SKELETON, new SkullModel(event.getEntityModelSet().bakeLayer(ModelLayers.SKELETON_SKULL)));
     }
 
-    private void modelRegistry(final ModelRegistryEvent event) {
-        ModelLoaderRegistry.registerLoader(UselessMod.rl("machine_supplier"), MachineSupplierModel.Loader.INSTANCE);
-        ModelLoaderRegistry.registerLoader(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
+    private void modelRegistry(final ModelEvent.RegisterGeometryLoaders event) {
+        event.register("machine_supplier", MachineSupplierModel.Loader.INSTANCE);
+        event.register("wall_closet", WallClosetModel.Loader.INSTANCE);
     }
 
     @Override

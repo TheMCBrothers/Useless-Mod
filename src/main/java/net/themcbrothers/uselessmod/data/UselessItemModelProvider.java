@@ -8,6 +8,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -83,7 +84,7 @@ public class UselessItemModelProvider extends ItemModelProvider {
     }
 
     private void basicTool(ItemLike item) {
-        final ResourceLocation id = item.asItem().getRegistryName();
+        final ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.asItem());
         this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/handheld"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
     }
 

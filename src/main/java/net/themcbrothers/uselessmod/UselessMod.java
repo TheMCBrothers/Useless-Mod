@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +37,6 @@ public class UselessMod {
     }
 
     public static MutableComponent translate(String prefix, String suffix, Object... args) {
-        return new TranslatableComponent(String.format("%s.%s.%s", prefix, MOD_ID, suffix), args);
+        return Component.translatable(String.format("%s.%s.%s", prefix, MOD_ID, suffix), args);
     }
 }

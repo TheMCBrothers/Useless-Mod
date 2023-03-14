@@ -237,10 +237,9 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
         return this.getMimic(level, pos).addLandingEffects(level, pos, state2, entity, numberOfParticles);
     }
 
-    @Nullable
     @Override
-    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob entity) {
-        return this.getMimic(level, pos).getBlockPathType(level, pos, entity);
+    public @Nullable BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+        return this.getMimic(level, pos).getBlockPathType(level, pos, mob);
     }
 
     @Override

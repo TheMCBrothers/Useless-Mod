@@ -21,7 +21,7 @@ import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
 import net.themcbrothers.uselessmod.world.level.storage.loot.UselessLootTables;
 
-import java.util.Objects;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UselessEntityLoot extends EntityLoot {
@@ -37,7 +37,9 @@ public class UselessEntityLoot extends EntityLoot {
 
     @Override
     protected Iterable<EntityType<?>> getKnownEntities() {
-        return ForgeRegistries.ENTITIES.getValues().stream()
-                .filter(b -> Objects.requireNonNull(b.getRegistryName()).getNamespace().equals(UselessMod.MOD_ID)).collect(Collectors.toList());
+        return ForgeRegistries.ENTITY_TYPES.getEntries().stream()
+                .filter(entry -> entry.getKey().location().getNamespace().equals(UselessMod.MOD_ID))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 }

@@ -3,7 +3,7 @@ package net.themcbrothers.uselessmod.world.item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.themcbrothers.uselessmod.client.renderer.UselessItemStackRendererProvider;
 
 import java.util.function.Consumer;
@@ -17,7 +17,7 @@ public class UselessShieldItem extends ShieldItem {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(UselessItemStackRendererProvider.shield());
     }
 

@@ -16,10 +16,10 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
+import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
@@ -36,7 +36,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
     public CoffeeRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 11, 15, 104, 54);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.COFFEE_MACHINE.get()));
-        this.localizedName = new TranslatableComponent("container.uselessmod.coffee_machine");
+        this.localizedName = UselessMod.translate("container", "coffee_machine");
         this.cachedArrows = CacheBuilder.newBuilder()
                 .maximumSize(43)
                 .build(new CacheLoader<>() {
@@ -65,12 +65,20 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(recipe.getExtraIngredient());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(recipe.getResultItem());
 
+        FluidIngredient waterIngredient = recipe.getWaterIngredient();
+        FluidIngredient milkIngredient = recipe.getMilkIngredient();
+
+        int waterAmount = waterIngredient.getFluids().isEmpty() ? FluidType.BUCKET_VOLUME :
+                waterIngredient.getAmount(waterIngredient.getFluids().get(0).getFluid());
+        int milkAmount = milkIngredient.getFluids().isEmpty() ? FluidType.BUCKET_VOLUME :
+                milkIngredient.getAmount(milkIngredient.getFluids().get(0).getFluid());
+
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 3)
-                .setFluidRenderer(FluidAttributes.BUCKET_VOLUME, false, 8, 48)
-                .addIngredients(ForgeTypes.FLUID_STACK, recipe.getWaterIngredient().getFluids());
+                .setFluidRenderer(waterAmount, false, 8, 48)
+                .addIngredients(ForgeTypes.FLUID_STACK, waterIngredient.getFluids());
         builder.addSlot(RecipeIngredientRole.INPUT, 19, 3)
-                .setFluidRenderer(FluidAttributes.BUCKET_VOLUME, false, 8, 48)
-                .addIngredients(ForgeTypes.FLUID_STACK, recipe.getMilkIngredient().getFluids());
+                .setFluidRenderer(milkAmount, false, 8, 48)
+                .addIngredients(ForgeTypes.FLUID_STACK, milkIngredient.getFluids());
     }
 
     @Override
@@ -86,14 +94,6 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
     @Override
     public IDrawable getIcon() {
         return this.icon;
-    }
-
-    public ResourceLocation getUid() {
-        return this.getRecipeType().getUid();
-    }
-
-    public Class<? extends CoffeeRecipe> getRecipeClass() {
-        return this.getRecipeType().getRecipeClass();
     }
 
     @Override

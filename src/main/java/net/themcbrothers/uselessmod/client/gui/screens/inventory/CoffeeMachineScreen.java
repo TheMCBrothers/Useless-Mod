@@ -11,8 +11,6 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
@@ -48,7 +46,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, true));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, false));
         this.addRenderableWidget(new MilkCheckboxButton(this.leftPos + 29, this.topPos + 5,
-                new TranslatableComponent("gui.uselessmod.use_milk"), this.menu.blockEntity.useMilk()));
+                UselessMod.translate("gui", "use_milk"), this.menu.blockEntity.useMilk()));
     }
 
     @Override
@@ -109,12 +107,12 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     }
 
     private class StartStopButton extends ExtendedButton {
-        private static final Component MSG_START = new TranslatableComponent("gui.uselessmod.start");
-        private static final Component MSG_STOP = new TranslatableComponent("gui.uselessmod.stop");
+        private static final Component MSG_START = UselessMod.translate("gui", "start");
+        private static final Component MSG_STOP = UselessMod.translate("gui", "stop");
         private final boolean start;
 
         public StartStopButton(int xPos, int yPos, int width, int height, boolean start) {
-            super(xPos, yPos, width, height, TextComponent.EMPTY, button -> {
+            super(xPos, yPos, width, height, Component.empty(), button -> {
             });
             this.start = start;
         }

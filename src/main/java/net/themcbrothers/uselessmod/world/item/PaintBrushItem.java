@@ -30,7 +30,7 @@ public class PaintBrushItem extends Item {
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             for (DyeColor color : DyeColor.values()) {
                 final ItemStack stack = new ItemStack(this);
                 float[] colors = color.getTextureDiffuseColors();

@@ -15,6 +15,7 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.init.ModMenuTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +52,7 @@ public class UselessJEI implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(CoffeeMachineMenu.class, CoffeeRecipeCategory.TYPE, 0, 3, 7, 36);
+        registration.addRecipeTransferHandler(CoffeeMachineMenu.class, ModMenuTypes.COFFEE_MACHINE.get(), CoffeeRecipeCategory.TYPE, 0, 3, 7, 36);
     }
 
     @Override

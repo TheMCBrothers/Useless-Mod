@@ -11,7 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.world.level.block.UselessBedBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
@@ -42,7 +42,7 @@ public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLe
             } else {
                 blockEntity = this.coffeeMachine.get();
                 Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ModBlocks.COFFEE_MACHINE.get().defaultBlockState(),
-                        poseStack, buffer, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+                        poseStack, buffer, combinedLight, combinedOverlay, ModelData.EMPTY, null);
             }
 
             this.blockEntityRenderDispatcher.renderItem(blockEntity, poseStack, buffer, combinedLight, combinedOverlay);

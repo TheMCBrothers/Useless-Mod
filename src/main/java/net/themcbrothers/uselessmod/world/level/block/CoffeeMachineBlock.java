@@ -77,7 +77,7 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
         }
 
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
-            NetworkHooks.openGui(serverPlayer, coffeeMachine, pos);
+            NetworkHooks.openScreen(serverPlayer, coffeeMachine, pos);
             player.awardStat(ModStats.INTERACT_WITH_COFFEE_MACHINE.get());
         }
 

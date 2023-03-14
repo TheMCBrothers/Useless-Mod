@@ -36,7 +36,7 @@ public final class ModBiomes {
         mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_CHICKEN.get(), 10, 4, 4));
         mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntityTypes.USELESS_COW.get(), 8, 4, 4));
         BiomeDefaultFeatures.commonSpawns(mobSpawnSettings);
-        return new Biome.BiomeBuilder().precipitation(Biome.Precipitation.RAIN).biomeCategory(Biome.BiomeCategory.FOREST)
+        return new Biome.BiomeBuilder().precipitation(Biome.Precipitation.RAIN)
                 .temperature(0.7F).downfall(0.8F).specialEffects(new BiomeSpecialEffects.Builder()
                         .waterColor(0x468b44).waterFogColor(0x468b44).fogColor(12638463).skyColor(0x40B45F).grassColorOverride(0x40B45F)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).backgroundMusic(null).build())

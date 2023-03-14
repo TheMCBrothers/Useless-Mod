@@ -12,7 +12,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.themcbrothers.lib.crafting.CommonRecipe;
 import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -111,7 +110,7 @@ public class CoffeeRecipe implements CommonRecipe<CoffeeContainer> {
         return ModRecipeTypes.COFFEE.get();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CoffeeRecipe> {
+    public static class Serializer implements RecipeSerializer<CoffeeRecipe> {
         @Override
         public CoffeeRecipe fromJson(ResourceLocation id, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

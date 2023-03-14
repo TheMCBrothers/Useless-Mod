@@ -32,14 +32,14 @@ public final class ModBlocks {
     private static final Function<? super Block, DoubleHighBlockItem> DOUBLE_HIGH_BLOCK_ITEM = (b) -> new DoubleHighBlockItem(b, GENERAL_PROPS);
 
     // Metal
-    public static final ItemObject<Block> USELESS_ORE = BLOCKS.register("useless_ore", () -> new OreBlock(copy(Blocks.IRON_ORE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> DEEPSLATE_USELESS_ORE = BLOCKS.register("deepslate_useless_ore", () -> new OreBlock(copy(Blocks.DEEPSLATE_IRON_ORE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> NETHER_USELESS_ORE = BLOCKS.register("nether_useless_ore", () -> new OreBlock(copy(Blocks.NETHER_QUARTZ_ORE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> END_USELESS_ORE = BLOCKS.register("end_useless_ore", () -> new OreBlock(copy(Blocks.END_STONE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> SUPER_USELESS_ORE = BLOCKS.register("super_useless_ore", () -> new OreBlock(copy(Blocks.GOLD_ORE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> DEEPSLATE_SUPER_USELESS_ORE = BLOCKS.register("deepslate_super_useless_ore", () -> new OreBlock(copy(Blocks.DEEPSLATE_GOLD_ORE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> NETHER_SUPER_USELESS_ORE = BLOCKS.register("nether_super_useless_ore", () -> new OreBlock(copy(Blocks.NETHER_QUARTZ_ORE)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> END_SUPER_USELESS_ORE = BLOCKS.register("end_super_useless_ore", () -> new OreBlock(copy(Blocks.END_STONE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_ORE = BLOCKS.register("useless_ore", () -> new DropExperienceBlock(copy(Blocks.IRON_ORE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> DEEPSLATE_USELESS_ORE = BLOCKS.register("deepslate_useless_ore", () -> new DropExperienceBlock(copy(Blocks.DEEPSLATE_IRON_ORE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> NETHER_USELESS_ORE = BLOCKS.register("nether_useless_ore", () -> new DropExperienceBlock(copy(Blocks.NETHER_QUARTZ_ORE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> END_USELESS_ORE = BLOCKS.register("end_useless_ore", () -> new DropExperienceBlock(copy(Blocks.END_STONE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> SUPER_USELESS_ORE = BLOCKS.register("super_useless_ore", () -> new DropExperienceBlock(copy(Blocks.GOLD_ORE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> DEEPSLATE_SUPER_USELESS_ORE = BLOCKS.register("deepslate_super_useless_ore", () -> new DropExperienceBlock(copy(Blocks.DEEPSLATE_GOLD_ORE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> NETHER_SUPER_USELESS_ORE = BLOCKS.register("nether_super_useless_ore", () -> new DropExperienceBlock(copy(Blocks.NETHER_QUARTZ_ORE)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> END_SUPER_USELESS_ORE = BLOCKS.register("end_super_useless_ore", () -> new DropExperienceBlock(copy(Blocks.END_STONE)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_BLOCK = BLOCKS.register("useless_block", () -> new Block(copy(Blocks.IRON_BLOCK)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> RAW_USELESS_BLOCK = BLOCKS.register("raw_useless_block", () -> new Block(copy(Blocks.RAW_IRON_BLOCK)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> SUPER_USELESS_BLOCK = BLOCKS.register("super_useless_block", () -> new Block(copy(Blocks.GOLD_BLOCK)), GENERAL_BLOCK_ITEM);

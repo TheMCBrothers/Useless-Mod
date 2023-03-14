@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -27,7 +26,6 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import static net.themcbrothers.uselessmod.UselessMod.translate;
 
@@ -46,8 +44,8 @@ public class LightSwitchBlockItem extends BlockItem {
                     final BlockPos pos = BlockPos.of(packedPos);
                     final BlockState state = level.getBlockState(pos);
                     final ItemStack cloneStack = state.getCloneItemStack(Minecraft.getInstance().hitResult, level, pos, UselessMod.setup.getLocalPlayer());
-                    final String modId = Objects.requireNonNull(cloneStack.getItem().getRegistryName()).getNamespace();
-                    final MutableComponent displayComponent = new TextComponent(pos.toShortString()).append(": ").append(state.getBlock().getName());
+                    final String modId = cloneStack.getItem().getCreatorModId(cloneStack);
+                    final MutableComponent displayComponent = Component.literal(pos.toShortString()).append(": ").append(state.getBlock().getName());
 
                     ModList.get().getModContainerById(modId).ifPresent(modContainer ->
                             displayComponent.append(" (").append(modContainer.getModInfo().getDisplayName()).append(")"));

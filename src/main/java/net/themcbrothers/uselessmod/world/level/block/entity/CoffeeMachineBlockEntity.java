@@ -6,7 +6,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -27,21 +26,20 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import net.minecraftforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
+import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
@@ -112,7 +110,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             final ItemStack stackFluidIn = coffeeMachine.getItem(4);
 
             if (!stackFluidIn.isEmpty()) {
-                FluidActionResult result = FluidUtil.tryEmptyContainer(stackFluidIn, coffeeMachine.tankHandler, FluidAttributes.BUCKET_VOLUME, null, true);
+                FluidActionResult result = FluidUtil.tryEmptyContainer(stackFluidIn, coffeeMachine.tankHandler, FluidType.BUCKET_VOLUME, null, true);
 
                 if (result.isSuccess()) {
                     ItemStack stackFluidOut = coffeeMachine.getItem(5);
@@ -143,7 +141,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 int freeEnergySpace = coffeeMachine.energyStorage.getMaxEnergyStored() - coffeeMachine.energyStorage.getEnergyStored();
                 int maxReceive = coffeeMachine.energyStorage.getMaxReceive();
                 if (freeEnergySpace > 0) {
-                    energySlotStack.getCapability(CapabilityEnergy.ENERGY).ifPresent(itemEnergyStorage -> {
+                    energySlotStack.getCapability(ForgeCapabilities.ENERGY).ifPresent(itemEnergyStorage -> {
                         if (itemEnergyStorage.canExtract()) {
                             int extracted = itemEnergyStorage.extractEnergy(Math.min(freeEnergySpace, maxReceive), false);
                             coffeeMachine.energyStorage.growEnergy(extracted);
@@ -210,8 +208,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             inputCup.shrink(1);
             inputBean.shrink(1);
 
-            if (inputExtra.hasContainerItem()) {
-                this.items.set(2, inputExtra.getContainerItem());
+            if (inputExtra.hasCraftingRemainingItem()) {
+                this.items.set(2, inputExtra.getCraftingRemainingItem());
             } else {
                 inputExtra.shrink(1);
             }
@@ -439,7 +437,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.uselessmod.coffee_machine");
+        return UselessMod.translate("container", "coffee_machine");
     }
 
     @Override
@@ -453,11 +451,11 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side != null) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER && side != null) {
             return this.itemHandlers[side.ordinal()].cast();
-        } else if (cap == CapabilityEnergy.ENERGY) {
+        } else if (cap == ForgeCapabilities.ENERGY) {
             return this.energyHolder.cast();
-        } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+        } else if (cap == ForgeCapabilities.FLUID_HANDLER) {
             return this.fluidHolder.cast();
         } else {
             return super.getCapability(cap, side);

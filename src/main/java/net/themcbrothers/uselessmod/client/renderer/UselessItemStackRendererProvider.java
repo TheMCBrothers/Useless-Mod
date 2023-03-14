@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.client.renderer;
 
-import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 public class UselessItemStackRendererProvider {
     private static UselessBlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer;
@@ -15,19 +15,19 @@ public class UselessItemStackRendererProvider {
         event.registerReloadListener(shieldItemRenderer);
     }
 
-    public static IItemRenderProperties blockEntity() {
-        return new IItemRenderProperties() {
+    public static IClientItemExtensions blockEntity() {
+        return new IClientItemExtensions() {
             @Override
-            public UselessBlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            public UselessBlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return blockEntityWithoutLevelRenderer;
             }
         };
     }
 
-    public static IItemRenderProperties shield() {
-        return new IItemRenderProperties() {
+    public static IClientItemExtensions shield() {
+        return new IClientItemExtensions() {
             @Override
-            public UselessShieldItemRenderer getItemStackRenderer() {
+            public UselessShieldItemRenderer getCustomRenderer() {
                 return shieldItemRenderer;
             }
         };

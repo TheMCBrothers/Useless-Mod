@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.level.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -16,8 +17,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.LightSwitchBlockEntity;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 /**
  * Definition of the Light Switch Block (full cube), which can be activated only with redstone
@@ -63,7 +62,7 @@ public class LightSwitchBlockBlock extends Block implements EntityBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(POWERED) && !level.hasNeighborSignal(pos)) {
             if (level.getBlockEntity(pos) instanceof LightSwitchBlockEntity blockEntity) {
                 blockEntity.switchLights(false);

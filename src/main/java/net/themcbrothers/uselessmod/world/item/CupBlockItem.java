@@ -17,7 +17,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -36,7 +35,7 @@ public class CupBlockItem extends BlockItem {
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (this.drinkable && this.allowdedIn(tab)) {
+        if (this.drinkable && this.allowedIn(tab)) {
             UselessRegistries.coffeeRegistry.get().getValues().stream()
                     .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
         } else {
@@ -82,7 +81,7 @@ public class CupBlockItem extends BlockItem {
             }
         }
 
-        level.gameEvent(entity, GameEvent.DRINKING_FINISH, entity.eyeBlockPosition());
+        entity.gameEvent(GameEvent.DRINK);
         return stack;
     }
 
@@ -139,12 +138,12 @@ public class CupBlockItem extends BlockItem {
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack stack) {
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
         return this.drinkable;
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
+    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
         return this.drinkable ? new ItemStack(ModBlocks.CUP) : ItemStack.EMPTY;
     }
 
@@ -152,7 +151,7 @@ public class CupBlockItem extends BlockItem {
     @Override
     public String getCreatorModId(ItemStack itemStack) {
         return CoffeeUtils.getCoffeeType(itemStack)
-                .map(ForgeRegistryEntry::getRegistryName)
+                .map(UselessRegistries.coffeeRegistry.get()::getKey)
                 .map(ResourceLocation::getNamespace)
                 .orElse(super.getCreatorModId(itemStack));
     }

@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
@@ -15,18 +16,20 @@ import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class CupBlockEntity extends BlockEntity {
     private static final String TAG_COFFEE = "Coffee";
 
     @Nullable
-    private CoffeeType type;
+    private Holder<CoffeeType> type;
 
     public CupBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypes.CUP.get(), pos, state);
     }
 
     public void setType(@Nullable CoffeeType type) {
-        this.type = type;
+        this.type = UselessRegistries.coffeeRegistry.get().getHolder(type).orElse(null);
         this.setChanged();
 
         if (this.level != null) {
@@ -34,14 +37,17 @@ public class CupBlockEntity extends BlockEntity {
         }
     }
 
-    @Nullable
-    public CoffeeType getCoffeeType() {
-        return this.type;
+    public Optional<CoffeeType> getCoffeeType() {
+        if (this.type == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(this.type.get());
     }
 
     private void writeCoffeeNbt(CompoundTag tag) {
         if (this.type != null) {
-            tag.putString("Coffee", String.valueOf(this.type.getRegistryName()));
+            this.type.unwrapKey().ifPresent(key -> tag.putString("Coffee", key.location().toString()));
         }
     }
 
@@ -49,7 +55,7 @@ public class CupBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         if (tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
-            this.type = UselessRegistries.coffeeRegistry.get().getValue(ResourceLocation.tryParse(tag.getString(TAG_COFFEE)));
+            this.type = UselessRegistries.coffeeRegistry.get().getHolder(ResourceLocation.tryParse(tag.getString(TAG_COFFEE))).orElse(null);
         }
     }
 

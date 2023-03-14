@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
 
@@ -161,18 +162,18 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     }
 
     private void simpleItem(Block block) {
-        final ResourceLocation id = block.getRegistryName();
+        final ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", blockTexture(block));
     }
 
     private void crossPlant(Block block) {
-        ResourceLocation id = block.getRegistryName();
+        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         simpleItem(block);
         simpleBlock(block, this.models().cross(id.getPath(), blockTexture(block)));
     }
 
     private void pottedPlant(Block block, Block plant) {
-        ResourceLocation id = block.getRegistryName();
+        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         simpleBlock(block, this.models().withExistingParent(id.getPath(), mcLoc("block/flower_pot_cross")).texture("plant", blockTexture(plant)));
     }
 
@@ -202,7 +203,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                     .build();
         });
 
-        itemModels().withExistingParent(String.valueOf(block.getRegistryName()), blockLoc);
+        itemModels().withExistingParent(String.valueOf(ForgeRegistries.BLOCKS.getKey(block)), blockLoc);
     }
 
     private void lampBlock(Block block) {
@@ -214,11 +215,11 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                 .partialState().with(BlockStateProperties.LIT, Boolean.TRUE).modelForState().modelFile(modelOn).addModel()
                 .partialState().with(BlockStateProperties.LIT, Boolean.FALSE).modelForState().modelFile(modelOff).addModel();
 
-        itemModels().withExistingParent(String.valueOf(block.getRegistryName()), blockLoc);
+        itemModels().withExistingParent(String.valueOf(ForgeRegistries.BLOCKS.getKey(block)), blockLoc);
     }
 
     private void simpleItemItem(Block block) {
-        final ResourceLocation id = block.getRegistryName();
+        final ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath()));
     }
 

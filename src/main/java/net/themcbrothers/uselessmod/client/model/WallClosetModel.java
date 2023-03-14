@@ -3,11 +3,13 @@ package net.themcbrothers.uselessmod.client.model;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -17,7 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -25,13 +27,12 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.ForgeModelBakery;
-import net.minecraftforge.client.model.IModelConfiguration;
-import net.minecraftforge.client.model.IModelLoader;
-import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.IDynamicBakedModel;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.geometry.IModelGeometry;
+import net.minecraftforge.client.model.IDynamicBakedModel;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.geometry.BlockGeometryBakingContext;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
+import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
@@ -51,6 +52,7 @@ public class WallClosetModel implements IDynamicBakedModel {
     private final BlockModel model;
     private final BakedModel bakedModel;
     private final ModelState modelTransform;
+    private final Function<Material, TextureAtlasSprite> spriteGetter;
 
     private final Map<String, BakedModel> cache = Maps.newHashMap();
 
@@ -59,11 +61,12 @@ public class WallClosetModel implements IDynamicBakedModel {
         this.model = model;
         this.bakedModel = model.bake(modelBakery, model, spriteGetter, modelTransform, UselessMod.rl("closet"), true);
         this.modelTransform = modelTransform;
+        this.spriteGetter = spriteGetter;
     }
 
     private BakedModel getCustomModel(Block material, Direction facing) {
         BakedModel customModel;
-        String key = material.getRegistryName() + ";" + facing.getName();
+        String key = ForgeRegistries.BLOCKS.getKey(material) + ";" + facing.getName();
         BakedModel possibleModel = this.cache.get(key);
 
         if (possibleModel != null) {
@@ -81,11 +84,11 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.parent = this.model.parent;
 
             Material renderMaterial = new Material(TextureAtlas.LOCATION_BLOCKS, Minecraft.getInstance()
-                    .getBlockRenderer().getBlockModel(material.defaultBlockState()).getParticleIcon(EmptyModelData.INSTANCE).getName());
+                    .getBlockRenderer().getBlockModel(material.defaultBlockState()).getParticleIcon(ModelData.EMPTY).getName());
             newModel.textureMap.put("planks", Either.left(renderMaterial));
             newModel.textureMap.put("particle", Either.left(renderMaterial));
 
-            customModel = newModel.bake(this.modelBakery, newModel, ForgeModelBakery.defaultTextureGetter(),
+            customModel = newModel.bake(this.modelBakery, newModel, this.spriteGetter,
                     this.modelTransform, UselessMod.rl("closet_overriding"), true);
 
             this.cache.put(key, customModel);
@@ -104,23 +107,24 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     @NotNull
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull Random rand, @NotNull IModelData extraData) {
-        return this.getCustomModel(getMaterial(extraData.getData(WallClosetBlockEntity.MATERIAL_PROPERTY)), getFacing(state))
-                .getQuads(state, side, rand, extraData);
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, RenderType renderType) {
+        return this.getCustomModel(getMaterial(extraData.get(WallClosetBlockEntity.MATERIAL_PROPERTY)), getFacing(state))
+                .getQuads(state, side, rand, extraData, renderType);
     }
 
     @Override
-    public TextureAtlasSprite getParticleIcon(@NotNull IModelData data) {
+    public TextureAtlasSprite getParticleIcon(@NotNull ModelData data) {
         //noinspection deprecation
-        return this.getCustomModel(getMaterial(data.getData(WallClosetBlockEntity.MATERIAL_PROPERTY)), Direction.NORTH).getParticleIcon();
+        return this.getCustomModel(getMaterial(data.get(WallClosetBlockEntity.MATERIAL_PROPERTY)), Direction.NORTH).getParticleIcon();
     }
 
     @NotNull
     @Override
-    public IModelData getModelData(@NotNull BlockAndTintGetter level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull IModelData modelData) {
+    public ModelData getModelData(@NotNull BlockAndTintGetter level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull ModelData modelData) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
-            modelData.setData(WallClosetBlockEntity.MATERIAL_PROPERTY, wallClosetBlockEntity.getMaterial());
+            return modelData.derive().with(WallClosetBlockEntity.MATERIAL_PROPERTY, wallClosetBlockEntity.getMaterial()).build();
         }
+
         return modelData;
     }
 
@@ -150,8 +154,8 @@ public class WallClosetModel implements IDynamicBakedModel {
     }
 
     @Override
-    public BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack) {
-        return this.bakedModel.handlePerspective(cameraTransformType, poseStack);
+    public BakedModel applyTransform(ItemTransforms.TransformType transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+        return this.bakedModel.applyTransform(transformType, poseStack, applyLeftHandTransform);
     }
 
     @Override
@@ -175,10 +179,10 @@ public class WallClosetModel implements IDynamicBakedModel {
         }
     }
 
-    private static class Geometry implements IModelGeometry<Geometry> {
+    private static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BlockModel ownerModel = (BlockModel) owner.getOwnerModel();
+        public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
+            BlockModel ownerModel = ((BlockGeometryBakingContext) context).owner;
             if (ownerModel == null)
                 throw new RuntimeException("Wall Closet owner model is null");
             BlockModel blockModel = ownerModel.parent;
@@ -188,26 +192,23 @@ public class WallClosetModel implements IDynamicBakedModel {
         }
 
         @Override
-        public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
+        public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
             return Collections.emptyList();
         }
     }
 
-    public static class Loader implements IModelLoader<Geometry> {
+    public static class Loader implements IGeometryLoader<Geometry> {
         public static final Loader INSTANCE = new Loader();
 
         private Loader() {
         }
 
         @Override
-        public Geometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
-            if (!modelContents.has("parent"))
+        public Geometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
+            if (!jsonObject.has("parent"))
                 throw new RuntimeException("Wall Closet model requires 'parent' value.");
-            return new Geometry();
-        }
 
-        @Override
-        public void onResourceManagerReload(ResourceManager resourceManager) {
+            return new Geometry();
         }
     }
 }

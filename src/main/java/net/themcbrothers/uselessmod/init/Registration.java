@@ -27,7 +27,7 @@ public final class Registration {
     public static final DeferredRegister<ResourceLocation> CUSTOM_STATS = DeferredRegister.create(Registry.CUSTOM_STAT_REGISTRY, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
-        UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(CoffeeType.class, RegistryBuilder::new);
+        UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(RegistryBuilder::new);
 
         ModBlocks.register();
         ModItems.register();

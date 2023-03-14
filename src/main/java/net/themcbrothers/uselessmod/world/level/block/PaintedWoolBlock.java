@@ -4,8 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -21,12 +21,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.HitResult;
+import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class PaintedWoolBlock extends BaseEntityBlock {
@@ -43,7 +43,7 @@ public class PaintedWoolBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(PAINTED)) {
             level.setBlock(pos, state.setValue(PAINTED, Boolean.FALSE), UPDATE_CLIENTS);
         } else {
@@ -78,7 +78,7 @@ public class PaintedWoolBlock extends BaseEntityBlock {
         if (tag != null) {
             int color = tag.getInt("Color");
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
-            tooltip.add(new TranslatableComponent("misc.uselessmod.color", hexColor));
+            tooltip.add(UselessMod.translate("misc", "color", hexColor));
         }
     }
 

@@ -57,10 +57,10 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
 
         ItemStack output = new ItemStack(ModBlocks.WALL_CLOSET);
         CompoundTag tag = new CompoundTag();
-        tag.putString("Material", String.valueOf(ForgeRegistries.BLOCKS.getKey(material)));
+        String reg = String.valueOf(ForgeRegistries.BLOCKS.getKey(material));
+        tag.putString("Material", reg);
         BlockItem.setBlockEntityData(output, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
-        String reg = String.valueOf(material.getRegistryName());
         ResourceLocation name = UselessMod.rl("closet." + reg.replace(':', '.'));
         return new ShapedRecipe(name, "uselessmod:closets", 3, 3, ingredients, output);
     }

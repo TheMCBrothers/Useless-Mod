@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -25,10 +24,10 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -74,8 +73,8 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
 
     @NotNull
     @Override
-    public IModelData getModelData() {
-        return new ModelDataMap.Builder().withInitial(MATERIAL_PROPERTY, this.material).build();
+    public ModelData getModelData() {
+        return ModelData.builder().with(MATERIAL_PROPERTY, this.material).build();
     }
 
     @Override
@@ -93,7 +92,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         ContainerHelper.saveAllItems(tag, this.items);
-        tag.putString("Material", String.valueOf(this.material.getRegistryName()));
+        tag.putString("Material", String.valueOf(ForgeRegistries.BLOCKS.getKey(this.material)));
     }
 
     @Override
@@ -140,7 +139,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.uselessmod.wall_closet");
+        return UselessMod.translate("container", "wall_closet");
     }
 
     @Override

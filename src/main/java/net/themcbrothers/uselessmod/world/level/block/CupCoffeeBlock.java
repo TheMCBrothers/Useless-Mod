@@ -13,6 +13,8 @@ import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class CupCoffeeBlock extends CupBlock implements EntityBlock {
     public CupCoffeeBlock(Properties properties) {
         super(properties);
@@ -26,11 +28,11 @@ public class CupCoffeeBlock extends CupBlock implements EntityBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        if (level.getBlockEntity(pos) instanceof CupBlockEntity cupBlockEntity
-                && cupBlockEntity.getCoffeeType() != null) {
-            return CoffeeUtils.createCoffeeStack(cupBlockEntity.getCoffeeType());
-        }
-
-        return super.getCloneItemStack(state, target, level, pos, player);
+        return Optional.ofNullable(level.getBlockEntity(pos))
+                .map(blockEntity -> blockEntity instanceof CupBlockEntity cup ? cup : null)
+                .map(CupBlockEntity::getCoffeeType)
+                .flatMap(coffeeType -> coffeeType)
+                .map(CoffeeUtils::createCoffeeStack)
+                .orElse(super.getCloneItemStack(state, target, level, pos, player));
     }
 }

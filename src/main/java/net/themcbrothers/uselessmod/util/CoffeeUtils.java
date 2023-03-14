@@ -35,7 +35,7 @@ public class CoffeeUtils {
     @NotNull
     public static ItemStack createCoffeeStack(final CoffeeType type) {
         final ItemStack stack = new ItemStack(ModBlocks.CUP_COFFEE);
-        stack.getOrCreateTag().putString(TAG_COFFEE, String.valueOf(type.getRegistryName()));
+        stack.getOrCreateTag().putString(TAG_COFFEE, String.valueOf(UselessRegistries.coffeeRegistry.get().getKey(type)));
         return stack;
     }
 }

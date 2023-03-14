@@ -2,9 +2,8 @@ package net.themcbrothers.uselessmod.world.item;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.themcbrothers.uselessmod.client.renderer.UselessItemStackRendererProvider;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -14,7 +13,7 @@ public class CoffeeMachineBlockItem extends BlockItem {
     }
 
     @Override
-    public void initializeClient(@NotNull Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(UselessItemStackRendererProvider.blockEntity());
     }
 }

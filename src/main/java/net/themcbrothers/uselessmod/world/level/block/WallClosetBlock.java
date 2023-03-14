@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -43,7 +44,6 @@ import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEnti
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Random;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
 
@@ -93,7 +93,7 @@ public class WallClosetBlock extends BaseEntityBlock {
             final ItemStack stack = new ItemStack(this);
             final CompoundTag tag = new CompoundTag();
 
-            tag.putString("Material", String.valueOf(wallCloset.getMaterial().getRegistryName()));
+            tag.putString("Material", String.valueOf(ForgeRegistries.BLOCKS.getKey(wallCloset.getMaterial())));
             BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
             return stack;
@@ -172,7 +172,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
             wallClosetBlockEntity.recheckOpen();
         }

@@ -109,8 +109,9 @@ dependencies {
     implementation fg.deobf("net.themcbrothers:TheMCBrosLib:$project.mc_version-$project.lib_version")
 
     // JEI
-    compileOnly fg.deobf("mezz.jei:jei-$project.mc_version:$project.jei_version:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-$project.mc_version:$project.jei_version")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

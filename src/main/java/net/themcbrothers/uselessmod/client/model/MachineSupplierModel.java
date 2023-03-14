@@ -2,11 +2,11 @@ package net.themcbrothers.uselessmod.client.model;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -19,24 +19,26 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.model.IModelConfiguration;
-import net.minecraftforge.client.model.IModelLoader;
-import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.IDynamicBakedModel;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.geometry.IModelGeometry;
+import net.minecraftforge.client.model.IDynamicBakedModel;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.geometry.BlockGeometryBakingContext;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
+import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 public class MachineSupplierModel implements IDynamicBakedModel {
@@ -48,34 +50,31 @@ public class MachineSupplierModel implements IDynamicBakedModel {
         this.baseModel = baseModel;
     }
 
-    @NotNull
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull Random rand, @NotNull IModelData extraData) {
-        RenderType type = MinecraftForgeClient.getRenderType();
-
-        BlockState mimic = extraData.getData(MachineSupplierBlockEntity.MIMIC_PROPERTY);
+    public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType renderType) {
+        BlockState mimic = extraData.get(MachineSupplierBlockEntity.MIMIC_PROPERTY);
         if (mimic == null || mimic.is(ModBlocks.MACHINE_SUPPLIER.get())) {
-            return this.baseModel.getQuads(mimic, side, rand, EmptyModelData.INSTANCE);
+            return this.baseModel.getQuads(mimic, side, rand, ModelData.EMPTY, renderType);
         }
 
-        if (type == null || ItemBlockRenderTypes.canRenderInLayer(mimic, type)) {
+        if (renderType == null /*TODO: || ItemBlockRenderTypes.canRenderInLayer(mimic, renderType)*/) {
             BakedModel model = getMimicModel(mimic);
-            return model.getQuads(mimic, side, rand, EmptyModelData.INSTANCE);
+            return model.getQuads(mimic, side, rand, ModelData.EMPTY, renderType);
         }
 
         return Collections.emptyList();
     }
 
     @Override
-    public TextureAtlasSprite getParticleIcon(@NotNull IModelData data) {
-        BlockState mimic = data.getData(MachineSupplierBlockEntity.MIMIC_PROPERTY);
+    public TextureAtlasSprite getParticleIcon(@NotNull ModelData data) {
+        BlockState mimic = data.get(MachineSupplierBlockEntity.MIMIC_PROPERTY);
         BakedModel model = getMimicModel(mimic);
-        return model.getParticleIcon(EmptyModelData.INSTANCE);
+        return model.getParticleIcon(ModelData.EMPTY);
     }
 
     @Override
-    public BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack) {
-        return this.baseModel.handlePerspective(cameraTransformType, poseStack);
+    public BakedModel applyTransform(ItemTransforms.TransformType transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+        return this.baseModel.applyTransform(transformType, poseStack, applyLeftHandTransform);
     }
 
     private BakedModel getMimicModel(@Nullable BlockState mimic) {
@@ -108,7 +107,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return getMimicModel(null).getParticleIcon(EmptyModelData.INSTANCE);
+        return getMimicModel(null).getParticleIcon(ModelData.EMPTY);
     }
 
     @Override
@@ -131,35 +130,31 @@ public class MachineSupplierModel implements IDynamicBakedModel {
         }
     }
 
-    private static class Geometry implements IModelGeometry<Geometry> {
+    private static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BlockModel baseModel = ((BlockModel) Objects.requireNonNull(owner.getOwnerModel())).parent;
+        public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+            BlockModel baseModel = ((BlockGeometryBakingContext) context).owner.parent;
 
             if (baseModel == null) {
                 throw new NullPointerException("Expected model parent model " + modelLocation);
             }
 
-            BakedModel bakedModel = baseModel.bake(bakery, baseModel, spriteGetter, modelTransform, modelLocation, owner.isSideLit());
+            BakedModel bakedModel = baseModel.bake(bakery, baseModel, spriteGetter, modelState, modelLocation, context.useBlockLight());
             return new MachineSupplierModel(bakedModel);
         }
 
         @Override
-        public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
+        public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
             return Collections.emptyList();
         }
     }
 
-    public static class Loader implements IModelLoader<Geometry> {
+    public static class Loader implements IGeometryLoader<Geometry> {
         public static final Loader INSTANCE = new Loader();
 
         @Override
-        public Geometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
+        public Geometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
             return new Geometry();
-        }
-
-        @Override
-        public void onResourceManagerReload(ResourceManager resourceManager) {
         }
     }
 }

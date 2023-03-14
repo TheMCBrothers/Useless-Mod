@@ -10,8 +10,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -109,7 +108,7 @@ public class MachineSupplierBlockEntity extends BlockEntity {
 
     @NotNull
     @Override
-    public IModelData getModelData() {
-        return new ModelDataMap.Builder().withInitial(MIMIC_PROPERTY, this.mimic).build();
+    public ModelData getModelData() {
+        return ModelData.builder().with(MIMIC_PROPERTY, this.mimic).build();
     }
 }

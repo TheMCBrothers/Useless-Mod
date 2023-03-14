@@ -2,12 +2,11 @@ package net.themcbrothers.uselessmod.api;
 
 import net.minecraft.Util;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public class CoffeeType extends ForgeRegistryEntry<CoffeeType> {
+public class CoffeeType {
     private final Set<MobEffectInstance> effects;
     private final int color;
     private final boolean foil;
@@ -34,7 +33,7 @@ public class CoffeeType extends ForgeRegistryEntry<CoffeeType> {
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {
-            this.descriptionId = Util.makeDescriptionId("coffee", this.getRegistryName());
+            this.descriptionId = Util.makeDescriptionId("coffee", UselessRegistries.coffeeRegistry.get().getKey(this));
         }
 
         return this.descriptionId;
