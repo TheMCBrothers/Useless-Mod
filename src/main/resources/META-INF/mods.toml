@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[39,)"
+loaderVersion = "[43,)"
 license = "MIT License"
 issueTrackerURL = "https://github.com/TheMCBrothers/Useless-Mod/issues"
 
@@ -17,7 +17,7 @@ issueTrackerURL = "https://github.com/TheMCBrothers/Useless-Mod/issues"
 [[dependencies.uselessmod]]
     modId = "forge" #mandatory
     mandatory = true #mandatory
-    versionRange = "[39.2,)" #mandatory
+    versionRange = "[43.2,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering = "NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -26,14 +26,14 @@ issueTrackerURL = "https://github.com/TheMCBrothers/Useless-Mod/issues"
 [[dependencies.uselessmod]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "1.18.2"
+    versionRange = "1.19.2"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.uselessmod]]
     modId = "tmcb_lib"
     mandatory = true
-    versionRange = "[1.18.2-2.0.4,)"
+    versionRange = "[1.19.2-2.0.4,)"
     ordering = "NONE"
     side = "BOTH"
 
