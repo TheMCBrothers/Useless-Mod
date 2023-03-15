@@ -20,6 +20,7 @@ public class UselessTags {
         public static final TagKey<Block> SUPER_USELESS_ORES = modTag("super_useless_ores");
         public static final TagKey<Block> USELESS_OAK_LOGS = modTag("useless_oak_logs");
         public static final TagKey<Block> LAMPS = modTag("lamps");
+        public static final TagKey<Block> WALL_CLOSET_MATERIALS = modTag("wall_closet_materials");
 
         private static TagKey<Block> forgeTag(String tag) {
             return BlockTags.create(new ResourceLocation("forge", tag));

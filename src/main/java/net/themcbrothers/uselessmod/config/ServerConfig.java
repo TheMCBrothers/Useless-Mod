@@ -19,9 +19,6 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_WATER_CAPACITY;
     public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_MILK_CAPACITY;
 
-    // Recipes
-    public static final ForgeConfigSpec.BooleanValue ENABLE_WALL_CLOSET_RECIPES;
-
     static {
         BUILDER.push("oregen");
         ORE_GEN_OVERWORLD = BUILDER.comment("Should ores generate in the overworld and other dimensions?").define("oreGenOverworld", true);
@@ -35,10 +32,6 @@ public final class ServerConfig {
         COFFEE_MACHINE_ENERGY_PER_TICK = BUILDER.comment("Energy consumed by the Coffee Machine while running").defineInRange("energyPerTick", 15, 1, Short.MAX_VALUE);
         COFFEE_MACHINE_WATER_CAPACITY = BUILDER.comment("Water tank capacity of the Coffee Machine").defineInRange("waterTankCapacity", 4000, FluidType.BUCKET_VOLUME, 16_000);
         COFFEE_MACHINE_MILK_CAPACITY = BUILDER.comment("Milk tank capacity of the Coffee Machine").defineInRange("milkTankCapacity", 4000, FluidType.BUCKET_VOLUME, 16_000);
-        BUILDER.pop();
-
-        BUILDER.push("recipes").comment("Dynamic recipes");
-        ENABLE_WALL_CLOSET_RECIPES = BUILDER.comment("Should the recipe for the Wall Closet be enabled?").define("wall_closet", true);
         BUILDER.pop();
 
         SPEC = BUILDER.build();
