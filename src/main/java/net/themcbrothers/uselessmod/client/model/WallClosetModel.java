@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.BlockPos;
@@ -21,6 +20,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -83,7 +83,7 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.name = this.model.name;
             newModel.parent = this.model.parent;
 
-            Material renderMaterial = new Material(TextureAtlas.LOCATION_BLOCKS, Minecraft.getInstance()
+            Material renderMaterial = new Material(InventoryMenu.BLOCK_ATLAS, Minecraft.getInstance()
                     .getBlockRenderer().getBlockModel(material.defaultBlockState()).getParticleIcon(ModelData.EMPTY).getName());
             newModel.textureMap.put("planks", Either.left(renderMaterial));
             newModel.textureMap.put("particle", Either.left(renderMaterial));
@@ -107,7 +107,7 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     @NotNull
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, RenderType renderType) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType renderType) {
         return this.getCustomModel(getMaterial(extraData.get(WallClosetBlockEntity.MATERIAL_PROPERTY)), getFacing(state))
                 .getQuads(state, side, rand, extraData, renderType);
     }
@@ -150,7 +150,7 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return this.bakedModel.getParticleIcon();
+        return this.bakedModel.getParticleIcon(ModelData.EMPTY);
     }
 
     @Override

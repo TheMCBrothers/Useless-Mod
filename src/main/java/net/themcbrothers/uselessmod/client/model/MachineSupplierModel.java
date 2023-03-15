@@ -24,6 +24,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.ChunkRenderTypeSet;
 import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.geometry.BlockGeometryBakingContext;
@@ -57,7 +58,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
             return this.baseModel.getQuads(mimic, side, rand, ModelData.EMPTY, renderType);
         }
 
-        if (renderType == null /*TODO: || ItemBlockRenderTypes.canRenderInLayer(mimic, renderType)*/) {
+        if (renderType == null || this.getRenderTypes(mimic, rand, ModelData.EMPTY).contains(renderType)) {
             BakedModel model = getMimicModel(mimic);
             return model.getQuads(mimic, side, rand, ModelData.EMPTY, renderType);
         }
@@ -83,6 +84,13 @@ public class MachineSupplierModel implements IDynamicBakedModel {
         }
 
         return Minecraft.getInstance().getBlockRenderer().getBlockModel(mimic);
+    }
+
+    @Override
+    public ChunkRenderTypeSet getRenderTypes(@NotNull BlockState state, @NotNull RandomSource rand, @NotNull ModelData data) {
+        BlockState mimic = data.get(MachineSupplierBlockEntity.MIMIC_PROPERTY);
+        BakedModel model = getMimicModel(mimic);
+        return mimic != null ? model.getRenderTypes(mimic, rand, ModelData.EMPTY) : this.baseModel.getRenderTypes(state, rand, data);
     }
 
     @Override
