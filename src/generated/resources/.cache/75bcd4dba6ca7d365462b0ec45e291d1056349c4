@@ -1,4 +1,4 @@
-// 1.19.2	2023-03-14T16:28:37.0786256	Tags for minecraft:block
+// 1.19.2	2023-03-15T13:59:36.0547492	Tags for minecraft:block
 d6211abd6eb8816206a661fc28c44f412cf0ffa4 data/forge/tags/blocks/ores.json
 c8688c50b9b94c15dddc345d5ba45f7a2a1fe8a7 data/forge/tags/blocks/ores/super_useless.json
 56bd58c8cef70090091b84575666b87924d4f5ae data/forge/tags/blocks/ores/useless.json
@@ -23,7 +23,7 @@ fcbb47e5d7a15545360feea92bdbce3028e956bc data/minecraft/tags/blocks/logs_that_bu
 53acec88f5f24b7cc03366edcd34bf8e9ca3685c data/minecraft/tags/blocks/mineable/pickaxe.json
 a5bae152734dbe1455144365487bdd97a430488f data/minecraft/tags/blocks/needs_iron_tool.json
 0a4292a85094ce8f95cdef8c5010f02a931c8de7 data/minecraft/tags/blocks/needs_stone_tool.json
-a112f441203dd8adebafdbad301d8652d8744bcf data/minecraft/tags/blocks/planks.json
+1800be9cf5c4da53a551e0342bfdd9aac0e93eea data/minecraft/tags/blocks/planks.json
 49f32c601d87729e3a632d14412fc7eb0a4f33d2 data/minecraft/tags/blocks/rails.json
 247b9031ac7efd39f5d498b59eebfba118e71b82 data/minecraft/tags/blocks/saplings.json
 e43f0c88df5e9e91e931c74a7494b348c4433d6e data/minecraft/tags/blocks/small_flowers.json

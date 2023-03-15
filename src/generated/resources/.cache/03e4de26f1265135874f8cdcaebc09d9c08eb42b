@@ -1,4 +1,4 @@
-// 1.19.2	2023-03-14T16:28:37.085633	Tags for minecraft:item
+// 1.19.2	2023-03-15T13:59:36.0587218	Tags for minecraft:item
 9fb5afd98294dcf78124ac7f8419b487aee1d074 data/forge/tags/items/bones.json
 18596753f5a7036df69086eb98d5dda360acb848 data/forge/tags/items/crops.json
 4997ad4c69630206921cb7af7b2a2bad536b93b8 data/forge/tags/items/crops/coffeebean.json
@@ -32,7 +32,7 @@ d8e55ac673781aac63995c03ef37c56c77172826 data/forge/tags/items/storage_blocks/ra
 2d7a2f7662fb3f18424b0bb037dc5b397b6bf01d data/minecraft/tags/items/beds.json
 21e300aead90cbdbe254e7471aafaafa412af666 data/minecraft/tags/items/leaves.json
 fcbb47e5d7a15545360feea92bdbce3028e956bc data/minecraft/tags/items/logs_that_burn.json
-a112f441203dd8adebafdbad301d8652d8744bcf data/minecraft/tags/items/planks.json
+1800be9cf5c4da53a551e0342bfdd9aac0e93eea data/minecraft/tags/items/planks.json
 49f32c601d87729e3a632d14412fc7eb0a4f33d2 data/minecraft/tags/items/rails.json
 247b9031ac7efd39f5d498b59eebfba118e71b82 data/minecraft/tags/items/saplings.json
 e43f0c88df5e9e91e931c74a7494b348c4433d6e data/minecraft/tags/items/small_flowers.json
