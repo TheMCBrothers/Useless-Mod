@@ -30,8 +30,6 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -44,7 +42,6 @@ import net.themcbrothers.uselessmod.client.renderer.blockentity.CoffeeMachineRen
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
-import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.init.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
@@ -67,8 +64,6 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::entityCreateSkullModels);
         bus.addListener(this::modelRegistry);
         bus.addListener(UselessItemStackRendererProvider::initialize);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

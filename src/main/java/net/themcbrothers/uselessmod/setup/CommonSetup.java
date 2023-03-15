@@ -16,11 +16,15 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
+import net.themcbrothers.uselessmod.config.ClientConfig;
+import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.init.ModBiomes;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
@@ -32,6 +36,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class CommonSetup {
     public CommonSetup() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         Registration.register(bus);
