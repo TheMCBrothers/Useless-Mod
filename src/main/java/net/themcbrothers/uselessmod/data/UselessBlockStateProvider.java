@@ -58,8 +58,8 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         fenceGateBlock((FenceGateBlock) USELESS_OAK_FENCE_GATE.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         simpleBlock(PAINT_BUCKET.get(), models().getExistingFile(blockTexture(PAINT_BUCKET.get())));
         simpleBlock(PAINTED_WOOL.get(), models().getExistingFile(blockTexture(PAINTED_WOOL.get())));
-        doorBlock((DoorBlock) USELESS_OAK_DOOR.get(), modLoc("block/useless_oak_door_bottom"), modLoc("block/useless_oak_door_top"));
-        trapdoorBlock((TrapDoorBlock) USELESS_OAK_TRAPDOOR.get(), blockTexture(USELESS_OAK_TRAPDOOR.get()), true);
+        doorBlockWithRenderType((DoorBlock) USELESS_OAK_DOOR.get(), modLoc("block/useless_oak_door_bottom"), modLoc("block/useless_oak_door_top"), "cutout");
+        trapdoorBlockWithRenderType((TrapDoorBlock) USELESS_OAK_TRAPDOOR.get(), blockTexture(USELESS_OAK_TRAPDOOR.get()), true, "cutout");
         buttonBlock((ButtonBlock) USELESS_OAK_BUTTON.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         pressurePlateBlock((PressurePlateBlock) USELESS_OAK_PRESSURE_PLATE.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         signBlock((StandingSignBlock) USELESS_OAK_SIGN.get(), (WallSignBlock) USELESS_OAK_WALL_SIGN.get(), blockTexture(USELESS_OAK_PLANKS.get()));
@@ -95,9 +95,15 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         waterloggedHorizontalFacingBlock(CUP.get(), models().getExistingFile(blockTexture(CUP.get())));
         waterloggedHorizontalFacingBlock(CUP_COFFEE.get(), models().getExistingFile(blockTexture(CUP_COFFEE.get())));
         lightSwitch(LIGHT_SWITCH.get());
+
+        // Lantern
+        final ModelFile lantern = models().withExistingParent("lantern", mcLoc(BLOCK_FOLDER + "/template_lantern"))
+                .texture("lantern", mcLoc(BLOCK_FOLDER + "/lantern")).renderType(mcLoc("cutout"));
+        final ModelFile lanternHanging = models().withExistingParent("lantern_hanging", mcLoc(BLOCK_FOLDER + "/template_hanging_lantern"))
+                .texture("lantern", mcLoc(BLOCK_FOLDER + "/lantern")).renderType(mcLoc("cutout"));
         getVariantBuilder(LANTERN.get())
-                .partialState().with(BlockStateProperties.HANGING, Boolean.FALSE).modelForState().modelFile(models().getExistingFile(mcLoc(BLOCK_FOLDER + "/lantern"))).addModel()
-                .partialState().with(BlockStateProperties.HANGING, Boolean.TRUE).modelForState().modelFile(models().getExistingFile(mcLoc(BLOCK_FOLDER + "/lantern_hanging"))).addModel();
+                .partialState().with(BlockStateProperties.HANGING, Boolean.FALSE).modelForState().modelFile(lantern).addModel()
+                .partialState().with(BlockStateProperties.HANGING, Boolean.TRUE).modelForState().modelFile(lanternHanging).addModel();
 
         getVariantBuilder(WALL_CLOSET.get())
                 .forAllStatesExcept(state -> {
@@ -169,12 +175,12 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     private void crossPlant(Block block) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         simpleItem(block);
-        simpleBlock(block, this.models().cross(id.getPath(), blockTexture(block)));
+        simpleBlock(block, this.models().cross(id.getPath(), blockTexture(block)).renderType(mcLoc("cutout")));
     }
 
     private void pottedPlant(Block block, Block plant) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
-        simpleBlock(block, this.models().withExistingParent(id.getPath(), mcLoc("block/flower_pot_cross")).texture("plant", blockTexture(plant)));
+        simpleBlock(block, this.models().withExistingParent(id.getPath(), mcLoc("block/flower_pot_cross")).texture("plant", blockTexture(plant)).renderType(mcLoc("cutout")));
     }
 
     private void waterloggedHorizontalFacingBlock(Block block, ModelFile model) {
@@ -234,21 +240,21 @@ public class UselessBlockStateProvider extends BlockStateProvider {
 
     private void wildCropPlant(UselessCropBlock crop, UselessCropBlock wildCrop, String name) {
         final ModelFile stage0 = models().withExistingParent(id("block/" + name + "_stage0"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage0"));
+                .texture("crop", modLoc("block/" + name + "_stage0")).renderType(mcLoc("cutout"));
         final ModelFile stage1 = models().withExistingParent(id("block/" + name + "_stage1"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage1"));
+                .texture("crop", modLoc("block/" + name + "_stage1")).renderType(mcLoc("cutout"));
         final ModelFile stage2 = models().withExistingParent(id("block/" + name + "_stage2"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage2"));
+                .texture("crop", modLoc("block/" + name + "_stage2")).renderType(mcLoc("cutout"));
         final ModelFile stage3 = models().withExistingParent(id("block/" + name + "_stage3"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage3"));
+                .texture("crop", modLoc("block/" + name + "_stage3")).renderType(mcLoc("cutout"));
         final ModelFile stage4 = models().withExistingParent(id("block/" + name + "_stage4"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage4"));
+                .texture("crop", modLoc("block/" + name + "_stage4")).renderType(mcLoc("cutout"));
         final ModelFile stage5 = models().withExistingParent(id("block/" + name + "_stage5"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage5"));
+                .texture("crop", modLoc("block/" + name + "_stage5")).renderType(mcLoc("cutout"));
         final ModelFile stage6 = models().withExistingParent(id("block/" + name + "_stage6"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage6"));
+                .texture("crop", modLoc("block/" + name + "_stage6")).renderType(mcLoc("cutout"));
         final ModelFile stage7 = models().withExistingParent(id("block/" + name + "_stage7"), "block/crop")
-                .texture("crop", modLoc("block/" + name + "_stage7"));
+                .texture("crop", modLoc("block/" + name + "_stage7")).renderType(mcLoc("cutout"));
 
         getVariantBuilder(crop).forAllStates(state -> ConfiguredModel.builder().modelFile(
                 switch (state.getValue(crop.getAgeProperty())) {
@@ -278,12 +284,12 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleItem(block);
 
         final ResourceLocation texture = modLoc("block/" + name);
-        final ModelFile ironBarsPostEnds = models().getBuilder(id("block/" + name + "_post_ends")).parent(models().getExistingFile(mcLoc("block/iron_bars_post_ends"))).texture("edge", texture).texture("particle", texture);
-        final ModelFile ironBarsPost = models().getBuilder(id("block/" + name + "_post")).parent(models().getExistingFile(mcLoc("block/iron_bars_post"))).texture("bars", texture).texture("particle", texture);
-        final ModelFile ironBarsCap = models().getBuilder(id("block/" + name + "_cap")).parent(models().getExistingFile(mcLoc("block/iron_bars_cap"))).texture("bars", texture).texture("edge", texture).texture("particle", texture);
-        final ModelFile ironBarsCapAlt = models().getBuilder(id("block/" + name + "_cap_alt")).parent(models().getExistingFile(mcLoc("block/iron_bars_cap_alt"))).texture("bars", texture).texture("edge", texture).texture("particle", texture);
-        final ModelFile ironBarsSide = models().getBuilder(id("block/" + name + "_side")).parent(models().getExistingFile(mcLoc("block/iron_bars_side"))).texture("bars", texture).texture("edge", texture).texture("particle", texture);
-        final ModelFile ironBarsSideAlt = models().getBuilder(id("block/" + name + "_side_alt")).parent(models().getExistingFile(mcLoc("block/iron_bars_side_alt"))).texture("bars", texture).texture("edge", texture).texture("particle", texture);
+        final ModelFile ironBarsPostEnds = models().getBuilder(id("block/" + name + "_post_ends")).parent(models().getExistingFile(mcLoc("block/iron_bars_post_ends"))).texture("edge", texture).texture("particle", texture).renderType("cutout_mipped");
+        final ModelFile ironBarsPost = models().getBuilder(id("block/" + name + "_post")).parent(models().getExistingFile(mcLoc("block/iron_bars_post"))).texture("bars", texture).texture("particle", texture).renderType("cutout_mipped");
+        final ModelFile ironBarsCap = models().getBuilder(id("block/" + name + "_cap")).parent(models().getExistingFile(mcLoc("block/iron_bars_cap"))).texture("bars", texture).texture("edge", texture).texture("particle", texture).renderType("cutout_mipped");
+        final ModelFile ironBarsCapAlt = models().getBuilder(id("block/" + name + "_cap_alt")).parent(models().getExistingFile(mcLoc("block/iron_bars_cap_alt"))).texture("bars", texture).texture("edge", texture).texture("particle", texture).renderType("cutout_mipped");
+        final ModelFile ironBarsSide = models().getBuilder(id("block/" + name + "_side")).parent(models().getExistingFile(mcLoc("block/iron_bars_side"))).texture("bars", texture).texture("edge", texture).texture("particle", texture).renderType("cutout_mipped");
+        final ModelFile ironBarsSideAlt = models().getBuilder(id("block/" + name + "_side_alt")).parent(models().getExistingFile(mcLoc("block/iron_bars_side_alt"))).texture("bars", texture).texture("edge", texture).texture("particle", texture).renderType("cutout_mipped");
 
         getMultipartBuilder(block)
                 .part().modelFile(ironBarsPostEnds).addModel().end()
@@ -300,20 +306,20 @@ public class UselessBlockStateProvider extends BlockStateProvider {
 
     private void rail(Block block, String name) {
         getVariantBuilder(block).forAllStatesExcept(state -> {
-            final ModelFile rail = models().getBuilder(id("block/" + name)).parent(models().getExistingFile(mcLoc("block/rail_flat"))).texture("rail", modLoc("block/" + name));
-            final ModelFile railRaisedNE = models().getBuilder(id("block/" + name + "_raised_ne")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_ne"))).texture("rail", modLoc("block/" + name));
-            final ModelFile railRaisedSW = models().getBuilder(id("block/" + name + "_raised_sw")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_sw"))).texture("rail", modLoc("block/" + name));
+            final ModelFile rail = models().getBuilder(id("block/" + name)).parent(models().getExistingFile(mcLoc("block/rail_flat"))).texture("rail", modLoc("block/" + name)).renderType(mcLoc("cutout"));
+            final ModelFile railRaisedNE = models().getBuilder(id("block/" + name + "_raised_ne")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_ne"))).texture("rail", modLoc("block/" + name)).renderType(mcLoc("cutout"));
+            final ModelFile railRaisedSW = models().getBuilder(id("block/" + name + "_raised_sw")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_sw"))).texture("rail", modLoc("block/" + name)).renderType(mcLoc("cutout"));
             ModelFile railOn = null;
             ModelFile railRaisedOnNE = null;
             ModelFile railRaisedOnSW = null;
             ModelFile railCorner = null;
             if (state.hasProperty(BlockStateProperties.POWERED)) {
-                railOn = models().getBuilder(id("block/" + name + "_on")).parent(models().getExistingFile(mcLoc("block/rail_flat"))).texture("rail", modLoc("block/" + name + "_on"));
-                railRaisedOnNE = models().getBuilder(id("block/" + name + "_on_raised_ne")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_ne"))).texture("rail", modLoc("block/" + name + "_on"));
-                railRaisedOnSW = models().getBuilder(id("block/" + name + "_on_raised_sw")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_sw"))).texture("rail", modLoc("block/" + name + "_on"));
+                railOn = models().getBuilder(id("block/" + name + "_on")).parent(models().getExistingFile(mcLoc("block/rail_flat"))).texture("rail", modLoc("block/" + name + "_on")).renderType(mcLoc("cutout"));
+                railRaisedOnNE = models().getBuilder(id("block/" + name + "_on_raised_ne")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_ne"))).texture("rail", modLoc("block/" + name + "_on")).renderType(mcLoc("cutout"));
+                railRaisedOnSW = models().getBuilder(id("block/" + name + "_on_raised_sw")).parent(models().getExistingFile(mcLoc("block/template_rail_raised_sw"))).texture("rail", modLoc("block/" + name + "_on")).renderType(mcLoc("cutout"));
             }
             if (state.hasProperty(BlockStateProperties.RAIL_SHAPE)) {
-                railCorner = models().getBuilder(id("block/useless_rail_corner")).parent(models().getExistingFile(mcLoc("block/rail_curved"))).texture("rail", modLoc("block/useless_rail_corner"));
+                railCorner = models().getBuilder(id("block/useless_rail_corner")).parent(models().getExistingFile(mcLoc("block/rail_curved"))).texture("rail", modLoc("block/useless_rail_corner")).renderType(mcLoc("cutout"));
             }
             final RailShape shape = state.hasProperty(BlockStateProperties.RAIL_SHAPE_STRAIGHT) ? state.getValue(BlockStateProperties.RAIL_SHAPE_STRAIGHT) : state.getValue(BlockStateProperties.RAIL_SHAPE);
             final boolean powered = state.hasProperty(BlockStateProperties.POWERED) && state.getValue(BlockStateProperties.POWERED);

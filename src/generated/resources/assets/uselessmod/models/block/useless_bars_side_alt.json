@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/iron_bars_side_alt",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "bars": "uselessmod:block/useless_bars",
     "edge": "uselessmod:block/useless_bars",

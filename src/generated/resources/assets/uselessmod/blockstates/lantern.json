@@ -1,10 +1,10 @@
 {
   "variants": {
     "hanging=false": {
-      "model": "minecraft:block/lantern"
+      "model": "uselessmod:block/lantern"
     },
     "hanging=true": {
-      "model": "minecraft:block/lantern_hanging"
+      "model": "uselessmod:block/lantern_hanging"
     }
   }
 }

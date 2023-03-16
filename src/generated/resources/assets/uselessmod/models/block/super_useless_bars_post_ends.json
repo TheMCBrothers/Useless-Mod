@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/iron_bars_post_ends",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "edge": "uselessmod:block/super_useless_bars",
     "particle": "uselessmod:block/super_useless_bars"
