@@ -1,7 +1,11 @@
 package net.themcbrothers.uselessmod.data;
 
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.resources.RegistryOps;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,8 +19,10 @@ public class UselessDataGen {
     public static void dataGen(final GatherDataEvent event) {
         final DataGenerator generator = event.getGenerator();
         final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        final RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy());
 
         // Data
+        generator.addProvider(event.includeServer(), new UselessBiomeModifierProvider(generator, existingFileHelper, registryOps));
         generator.addProvider(event.includeServer(), new UselessRecipeProvider(generator));
         generator.addProvider(event.includeServer(), new UselessLanguageProvider(generator));
         generator.addProvider(event.includeServer(), new UselessAdvancementProvider(generator, existingFileHelper));

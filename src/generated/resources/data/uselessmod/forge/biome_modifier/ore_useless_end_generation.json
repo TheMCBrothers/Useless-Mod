@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": {
+    "type": "forge:any"
+  },
+  "features": "uselessmod:ore_useless_end",
+  "step": "underground_ores"
+}

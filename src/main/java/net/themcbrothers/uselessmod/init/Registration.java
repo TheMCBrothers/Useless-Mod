@@ -5,6 +5,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,6 +15,8 @@ import net.themcbrothers.lib.registration.deferred.*;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
+import net.themcbrothers.uselessmod.world.worldgen.UselessOreFeatures;
+import net.themcbrothers.uselessmod.world.worldgen.UselessOrePlacements;
 
 public final class Registration {
     public static final BlockDeferredRegister BLOCKS = new BlockDeferredRegister(UselessMod.MOD_ID);
@@ -25,6 +29,8 @@ public final class Registration {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, UselessMod.MOD_ID);
     public static final DeferredRegister<CoffeeType> COFFEE_TYPES = DeferredRegister.create(UselessRegistries.COFFEE_KEY, UselessMod.MOD_ID);
     public static final DeferredRegister<ResourceLocation> CUSTOM_STATS = DeferredRegister.create(Registry.CUSTOM_STAT_REGISTRY, UselessMod.MOD_ID);
+    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, UselessMod.MOD_ID);
+    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
         UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(RegistryBuilder::new);
@@ -39,6 +45,8 @@ public final class Registration {
         ModRecipeSerializers.register();
         ModCoffeeTypes.register();
         ModStats.register();
+        UselessOreFeatures.register();
+        UselessOrePlacements.register();
 
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -50,6 +58,8 @@ public final class Registration {
         RECIPE_SERIALIZERS.register(bus);
         COFFEE_TYPES.register(bus);
         CUSTOM_STATS.register(bus);
+        CONFIGURED_FEATURES.register(bus);
+        PLACED_FEATURES.register(bus);
     }
 
     private Registration() {
