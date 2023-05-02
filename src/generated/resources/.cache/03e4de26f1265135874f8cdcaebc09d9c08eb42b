@@ -1,4 +1,8 @@
-// 1.19.2	2023-03-15T13:59:36.0587218	Tags for minecraft:item
+// 1.19.2	2023-05-03T11:51:40.1228284	Tags for minecraft:item
+c3ccca8e863f87c05ed3c4f49e781e19f688eb16 data/forge/tags/items/armors/boots.json
+ab95f82e8015dd523e28522c6464f9ac8d85b943 data/forge/tags/items/armors/chestplates.json
+e8ded9eed0487409f632269344533b8977c613d6 data/forge/tags/items/armors/helmets.json
+7bfc0b071549a81ac610ceab8902708c8845cf69 data/forge/tags/items/armors/leggings.json
 9fb5afd98294dcf78124ac7f8419b487aee1d074 data/forge/tags/items/bones.json
 18596753f5a7036df69086eb98d5dda360acb848 data/forge/tags/items/crops.json
 4997ad4c69630206921cb7af7b2a2bad536b93b8 data/forge/tags/items/crops/coffeebean.json
@@ -15,6 +19,7 @@ d6211abd6eb8816206a661fc28c44f412cf0ffa4 data/forge/tags/items/ores.json
 c8688c50b9b94c15dddc345d5ba45f7a2a1fe8a7 data/forge/tags/items/ores/super_useless.json
 56bd58c8cef70090091b84575666b87924d4f5ae data/forge/tags/items/ores/useless.json
 bf8621d3306e21acec20792079a07a0e256c78f6 data/forge/tags/items/ores_in_ground/deepslate.json
+1241eb1ddf7a9b1d8c47d59995c03ef70fae6f5d data/forge/tags/items/ores_in_ground/netherrack.json
 becbcde65afe8d5991aab53f2cc80ca083c75604 data/forge/tags/items/ores_in_ground/stone.json
 b8c83b574c829f7978ae7bf1cd397bfa52fcdde9 data/forge/tags/items/ore_rates/singular.json
 5e4370fe8ddbe2962846d6176fa1023b361f18bd data/forge/tags/items/raw_materials.json
@@ -29,12 +34,20 @@ d8e55ac673781aac63995c03ef37c56c77172826 data/forge/tags/items/storage_blocks/ra
 240b193ef17e41a1567ee4641f77f770474717c5 data/forge/tags/items/storage_blocks/raw_useless.json
 365982592dab6825e3194466b828807b587e2697 data/forge/tags/items/storage_blocks/super_useless.json
 5fec9ca190560d02a252b914e7ba9ed514b92e03 data/forge/tags/items/storage_blocks/useless.json
+43515bf3e278b80bf55aab7e82756a93a5c58778 data/forge/tags/items/tools/axes.json
+53cb08549dac048c778d78a83cecc6c75476f73b data/forge/tags/items/tools/hoes.json
+aaebdf668f6cbe9382c49756dec647a4b113f237 data/forge/tags/items/tools/pickaxes.json
+8a49da4052a7f7ef5671b9f1b1636facfcc10d04 data/forge/tags/items/tools/shields.json
+0f18b38bd7e6c7564c479230fc4f6fadc15b8715 data/forge/tags/items/tools/shovels.json
+4290c49a7bff27aef1865229734acc8a9b099a60 data/forge/tags/items/tools/swords.json
 2d7a2f7662fb3f18424b0bb037dc5b397b6bf01d data/minecraft/tags/items/beds.json
 21e300aead90cbdbe254e7471aafaafa412af666 data/minecraft/tags/items/leaves.json
 fcbb47e5d7a15545360feea92bdbce3028e956bc data/minecraft/tags/items/logs_that_burn.json
+c3ebdb341c6917634bf2a70bee899ef5c1d06529 data/minecraft/tags/items/overworld_natural_logs.json
 1800be9cf5c4da53a551e0342bfdd9aac0e93eea data/minecraft/tags/items/planks.json
 49f32c601d87729e3a632d14412fc7eb0a4f33d2 data/minecraft/tags/items/rails.json
 247b9031ac7efd39f5d498b59eebfba118e71b82 data/minecraft/tags/items/saplings.json
+299ff3cf42988492150f8efd7f440e25faca806e data/minecraft/tags/items/signs.json
 e43f0c88df5e9e91e931c74a7494b348c4433d6e data/minecraft/tags/items/small_flowers.json
 ae8ad153c27b10dd56f421b918e29b39df5a8afb data/minecraft/tags/items/wooden_buttons.json
 81ac2b7272d335aad8d84dcfdc263632106d7222 data/minecraft/tags/items/wooden_doors.json
