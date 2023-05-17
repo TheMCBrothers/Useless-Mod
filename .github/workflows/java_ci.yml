@@ -1,8 +1,10 @@
-name: Java CI with Gradle
+name: Java CI
 
 on:
   push:
     branches: [ "1.19.2" ]
+    paths:
+      - 'src/**'
   pull_request:
     branches: [ "1.19.2" ]
 
