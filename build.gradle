@@ -138,6 +138,11 @@ jar.finalizedBy('reobfJar')
 // publish.dependsOn('reobfJar')
 
 private String getSecret(String key) {
+    def secret = System.getenv(key)
+    if (secret != null) {
+        return secret.trim()
+    }
+    
     File secretFile = file('secrets.properties')
     if (secretFile.canRead()) {
         Properties secretProps = new Properties()
