@@ -2,11 +2,15 @@ name: Java CI
 
 on:
   push:
-    branches: [ "1.19.2" ]
-    paths:
-      - 'src/**'
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '**.txt'
   pull_request:
-    branches: [ "1.19.2" ]
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '**.txt'
 
 permissions:
   contents: read
