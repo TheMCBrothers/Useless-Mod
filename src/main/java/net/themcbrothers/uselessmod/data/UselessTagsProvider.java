@@ -40,7 +40,7 @@ public class UselessTagsProvider {
             this.tag(Tags.Blocks.STORAGE_BLOCKS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS);
 
             this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.USELESS_WHEAT.get(), ModBlocks.WILD_USELESS_WHEAT.get(), ModBlocks.COFFEE_BEANS.get(), ModBlocks.WILD_COFFEE_BEANS.get());
-            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get(), ModBlocks.SUPER_USELESS_BLOCK.get(), ModBlocks.RAW_USELESS_BLOCK.get(), ModBlocks.RAW_SUPER_USELESS_BLOCK.get(), ModBlocks.USELESS_BARS.get(), ModBlocks.SUPER_USELESS_BARS.get(), ModBlocks.PAINT_BUCKET.get(), ModBlocks.COFFEE_MACHINE.get());
+            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get(), ModBlocks.SUPER_USELESS_BLOCK.get(), ModBlocks.RAW_USELESS_BLOCK.get(), ModBlocks.RAW_SUPER_USELESS_BLOCK.get(), ModBlocks.USELESS_BARS.get(), ModBlocks.SUPER_USELESS_BARS.get(), ModBlocks.USELESS_DOOR.get(), ModBlocks.SUPER_USELESS_DOOR.get(), ModBlocks.USELESS_TRAPDOOR.get(), ModBlocks.SUPER_USELESS_TRAPDOOR.get(), ModBlocks.PAINT_BUCKET.get(), ModBlocks.COFFEE_MACHINE.get());
             this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.USELESS_OAK_LEAVES.get());
             this.tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get(), ModBlocks.USELESS_BLOCK.get());
             this.tag(BlockTags.NEEDS_IRON_TOOL).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get(), ModBlocks.SUPER_USELESS_BLOCK.get());
@@ -68,6 +68,8 @@ public class UselessTagsProvider {
             this.tag(BlockTags.WOOL).add(ModBlocks.USELESS_WOOL.get(), ModBlocks.PAINTED_WOOL.get());
             this.tag(BlockTags.WOOL_CARPETS).add(ModBlocks.USELESS_CARPET.get());
             this.tag(BlockTags.BEDS).add(ModBlocks.USELESS_BED.get());
+            this.tag(BlockTags.DOORS).add(ModBlocks.USELESS_DOOR.get(), ModBlocks.SUPER_USELESS_DOOR.get());
+            this.tag(BlockTags.TRAPDOORS).add(ModBlocks.USELESS_TRAPDOOR.get(), ModBlocks.SUPER_USELESS_TRAPDOOR.get());
             this.tag(BlockTags.GUARDED_BY_PIGLINS).add(ModBlocks.WALL_CLOSET.get());
             this.tag(UselessTags.Blocks.LAMPS).add(ModBlocks.WHITE_LAMP.get(), ModBlocks.ORANGE_LAMP.get(), ModBlocks.MAGENTA_LAMP.get(), ModBlocks.LIGHT_BLUE_LAMP.get(), ModBlocks.YELLOW_LAMP.get(), ModBlocks.LIME_LAMP.get(), ModBlocks.PINK_LAMP.get(), ModBlocks.GRAY_LAMP.get(), ModBlocks.LIGHT_GRAY_LAMP.get(), ModBlocks.CYAN_LAMP.get(), ModBlocks.PURPLE_LAMP.get(), ModBlocks.BLUE_LAMP.get(), ModBlocks.BROWN_LAMP.get(), ModBlocks.GREEN_LAMP.get(), ModBlocks.RED_LAMP.get(), ModBlocks.BLACK_LAMP.get());
         }
@@ -116,6 +118,7 @@ public class UselessTagsProvider {
             this.copy(BlockTags.WOOL, ItemTags.WOOL);
             this.copy(BlockTags.WOOL_CARPETS, ItemTags.WOOL_CARPETS);
             this.copy(BlockTags.BEDS, ItemTags.BEDS);
+            this.copy(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS);
             this.copy(UselessTags.Blocks.LAMPS, UselessTags.Items.LAMPS);
 
             // minecraft tags

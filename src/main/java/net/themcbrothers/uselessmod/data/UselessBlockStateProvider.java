@@ -65,6 +65,10 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         signBlock((StandingSignBlock) USELESS_OAK_SIGN.get(), (WallSignBlock) USELESS_OAK_WALL_SIGN.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
         ironBars((IronBarsBlock) SUPER_USELESS_BARS.get(), "super_useless_bars");
+        doorBlockWithRenderType((DoorBlock) USELESS_DOOR.get(), modLoc("block/useless_door_bottom"), modLoc("block/useless_door_top"), "cutout");
+        doorBlockWithRenderType((DoorBlock) SUPER_USELESS_DOOR.get(), modLoc("block/super_useless_door_bottom"), modLoc("block/super_useless_door_top"), "cutout");
+        trapdoorBlockWithRenderType((TrapDoorBlock) USELESS_TRAPDOOR.get(), blockTexture(USELESS_TRAPDOOR.get()), false, "cutout");
+        trapdoorBlockWithRenderType((TrapDoorBlock) SUPER_USELESS_TRAPDOOR.get(), blockTexture(SUPER_USELESS_TRAPDOOR.get()), false, "cutout");
         simpleBlockWithItem(USELESS_WOOL.get());
         simpleBlock(USELESS_CARPET.get(), models().carpet("useless_carpet", modLoc("block/useless_wool")));
         simpleBlock(USELESS_BED.get(), models().getExistingFile(mcLoc("block/bed")));
@@ -140,6 +144,10 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(USELESS_OAK_FENCE_GATE.get());
         simpleItemItem(USELESS_OAK_DOOR.get());
         simpleItemItem(USELESS_OAK_SIGN.get());
+        simpleItemItem(USELESS_DOOR.get());
+        simpleItemItem(SUPER_USELESS_DOOR.get());
+        itemModels().getBuilder("useless_trapdoor").parent(models().getExistingFile(modLoc("block/useless_trapdoor_bottom")));
+        itemModels().getBuilder("super_useless_trapdoor").parent(models().getExistingFile(modLoc("block/super_useless_trapdoor_bottom")));
         simpleBlockItem(CUP.get());
         simpleBlockItem(CUP_COFFEE.get());
         simpleBlockItem(PAINT_BUCKET.get(), models().getExistingFile(extend(blockTexture(PAINT_BUCKET.get()), "_inventory")));

@@ -86,6 +86,10 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_OAK_SIGN.get());
         this.dropSelf(USELESS_BARS.get());
         this.dropSelf(SUPER_USELESS_BARS.get());
+        this.add(USELESS_DOOR.get(), BlockLoot::createDoorTable);
+        this.add(SUPER_USELESS_DOOR.get(), BlockLoot::createDoorTable);
+        this.dropSelf(USELESS_TRAPDOOR.get());
+        this.dropSelf(SUPER_USELESS_TRAPDOOR.get());
         this.dropSelf(PAINT_BUCKET.get());
         this.add(PAINTED_WOOL.get(), UselessBlockLoot::createCopyColorDrop);
         this.dropSelf(USELESS_WOOL.get());

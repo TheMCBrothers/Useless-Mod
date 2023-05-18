@@ -58,6 +58,10 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_ACTIVATOR_RAIL, "Useless Activator Rail");
         this.addBlock(ModBlocks.USELESS_BARS, "Useless Bars");
         this.addBlock(ModBlocks.SUPER_USELESS_BARS, "Super-Useless Bars");
+        this.addBlock(ModBlocks.USELESS_DOOR, "Useless Door");
+        this.addBlock(ModBlocks.SUPER_USELESS_DOOR, "Super-Useless Door");
+        this.addBlock(ModBlocks.USELESS_TRAPDOOR, "Useless Trapdoor");
+        this.addBlock(ModBlocks.SUPER_USELESS_TRAPDOOR, "Super-Useless Trapdoor");
         this.addBlock(ModBlocks.MACHINE_SUPPLIER, "Machine Supplier");
         this.addBlock(ModBlocks.COFFEE_MACHINE, "Coffee Machine");
         this.addBlock(ModBlocks.CUP, "Cup");

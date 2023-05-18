@@ -46,6 +46,10 @@ public final class ModBlocks {
     public static final ItemObject<Block> RAW_SUPER_USELESS_BLOCK = BLOCKS.register("raw_super_useless_block", () -> new Block(copy(Blocks.RAW_GOLD_BLOCK)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_BARS = BLOCKS.register("useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> SUPER_USELESS_BARS = BLOCKS.register("super_useless_bars", () -> new IronBarsBlock(copy(Blocks.IRON_BARS)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_DOOR = BLOCKS.register("useless_door", () -> new DoorBlock(copy(Blocks.IRON_DOOR)), DOUBLE_HIGH_BLOCK_ITEM);
+    public static final ItemObject<Block> SUPER_USELESS_DOOR = BLOCKS.register("super_useless_door", () -> new DoorBlock(copy(Blocks.IRON_DOOR)), DOUBLE_HIGH_BLOCK_ITEM);
+    public static final ItemObject<Block> USELESS_TRAPDOOR = BLOCKS.register("useless_trapdoor", () -> new TrapDoorBlock(copy(Blocks.IRON_TRAPDOOR)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> SUPER_USELESS_TRAPDOOR = BLOCKS.register("super_useless_trapdoor", () -> new TrapDoorBlock(copy(Blocks.IRON_TRAPDOOR)), GENERAL_BLOCK_ITEM);
 
     // Natural
     public static final ItemObject<Block> RED_ROSE = BLOCKS.register("red_rose", () -> new FlowerBlock(() -> MobEffects.NIGHT_VISION, 5, copy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
