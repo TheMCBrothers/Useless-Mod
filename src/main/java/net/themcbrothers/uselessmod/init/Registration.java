@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.biome.Biome;
@@ -31,6 +32,7 @@ public final class Registration {
     public static final DeferredRegister<ResourceLocation> CUSTOM_STATS = DeferredRegister.create(Registry.CUSTOM_STAT_REGISTRY, UselessMod.MOD_ID);
     public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, UselessMod.MOD_ID);
     public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, UselessMod.MOD_ID);
+    public static final DeferredRegister<PaintingVariant> PAINTING_VARIANTS = DeferredRegister.create(Registry.PAINTING_VARIANT_REGISTRY, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
         UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(RegistryBuilder::new);
@@ -47,6 +49,7 @@ public final class Registration {
         ModStats.register();
         UselessOreFeatures.register();
         UselessOrePlacements.register();
+        UselessPaintingVariants.register();
 
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -60,6 +63,7 @@ public final class Registration {
         CUSTOM_STATS.register(bus);
         CONFIGURED_FEATURES.register(bus);
         PLACED_FEATURES.register(bus);
+        PAINTING_VARIANTS.register(bus);
     }
 
     private Registration() {

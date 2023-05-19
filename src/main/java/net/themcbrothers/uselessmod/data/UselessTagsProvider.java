@@ -4,9 +4,11 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.PaintingVariantTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.PaintingVariantTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -14,6 +16,7 @@ import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.init.UselessPaintingVariants;
 import org.jetbrains.annotations.Nullable;
 
 public class UselessTagsProvider {
@@ -167,6 +170,18 @@ public class UselessTagsProvider {
         @Override
         protected void addTags() {
             this.tag(EntityTypeTags.SKELETONS).add(ModEntityTypes.USELESS_SKELETON.get());
+        }
+    }
+
+    public static class Paintings extends PaintingVariantTagsProvider {
+        public Paintings(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
+            super(pGenerator, UselessMod.MOD_ID, existingFileHelper);
+        }
+
+        @Override
+        protected void addTags() {
+            this.tag(PaintingVariantTags.PLACEABLE).add(UselessPaintingVariants.LARGE_LOGO_RED.get(), UselessPaintingVariants.LARGE_LOGO_BLUE.get(),
+                    UselessPaintingVariants.SMALL_LOGO_RED.get(), UselessPaintingVariants.SMALL_LOGO_BLUE.get());
         }
     }
 }
