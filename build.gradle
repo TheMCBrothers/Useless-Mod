@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id 'com.modrinth.minotaur' version '2.4.3'
+    id 'com.modrinth.minotaur' version '2.+'
 }
 
 group = 'net.themcbrothers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -95,7 +95,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url = "https://nexus.themcbrothers.net/repository/maven-progwml6" }
+    maven { url = "https://nexus.themcbrothers.net/repository/maven-blamejared" }
     maven { url = "https://nexus.themcbrothers.net/repository/maven-mod" }
     maven { url = "https://nexus.themcbrothers.net/repository/maven-k4you" }
     maven { url = "https://nexus.themcbrothers.net/repository/maven-releases" }
@@ -105,7 +105,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:$project.mc_version-$project.forge_version"
 
-    // Mantle
+    // TheMCBrosLib
     implementation fg.deobf("net.themcbrothers:TheMCBrosLib:$project.mc_version-$project.lib_version")
 
     // JEI
@@ -152,7 +152,7 @@ private String getSecret(String key) {
     return null
 }
 
-// Publishing on nexus
+// Publish on Nexus
 publishing {
     publications { PublicationContainer publicationContainer ->
         publicationContainer.register("maven", MavenPublication) { MavenPublication publication ->
@@ -173,7 +173,7 @@ publishing {
     }
 }
 
-// Publishing on CurseForge
+// Publish on CurseForge
 curseforge {
     apiKey = getSecret('cf_key')
 
@@ -191,14 +191,15 @@ curseforge {
     }
 }
 
-/*
+// Publish on Modrinth
 modrinth {
     token = getSecret('modrinth_token')
     projectId = project.modrinth_project
-    versionNumber = "$project.mc_version-$project.version"
-    versionName = project.version
     versionType = project.artifact_type
-    changelog = getChangelogText()
+    changelog = file('changelog.md').text
     uploadFile = jar
-    gameVersions = ["$project.mc_version"]
-}*/
+    dependencies {
+        required.project 'themcbroslib'
+        optional.project 'jei'
+    }
+}
