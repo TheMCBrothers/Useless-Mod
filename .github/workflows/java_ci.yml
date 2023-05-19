@@ -2,15 +2,11 @@ name: Java CI
 
 on:
   push:
-    tags-ignore:
-      - '*'
     paths-ignore:
       - '.github/**'
       - '**.md'
       - '**.txt'
   pull_request:
-    tags-ignore:
-      - '*'
     paths-ignore:
       - '.github/**'
       - '**.md'
