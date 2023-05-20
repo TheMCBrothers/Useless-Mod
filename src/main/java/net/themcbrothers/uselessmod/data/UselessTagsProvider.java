@@ -1,10 +1,7 @@
 package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.PaintingVariantTagsProvider;
+import net.minecraft.data.tags.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
@@ -13,10 +10,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModEntityTypes;
-import net.themcbrothers.uselessmod.init.ModItems;
-import net.themcbrothers.uselessmod.init.UselessPaintingVariants;
+import net.themcbrothers.uselessmod.init.*;
 import org.jetbrains.annotations.Nullable;
 
 public class UselessTagsProvider {
@@ -159,6 +153,17 @@ public class UselessTagsProvider {
             this.tag(Tags.Items.BONES).add(ModItems.USELESS_BONE.get());
             this.tag(Tags.Items.LEATHER).add(ModItems.USELESS_LEATHER.get());
             this.tag(Tags.Items.FEATHERS).add(ModItems.USELESS_FEATHER.get());
+        }
+    }
+
+    public static class Fluids extends FluidTagsProvider {
+        public Fluids(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
+            super(pGenerator, UselessMod.MOD_ID, existingFileHelper);
+        }
+
+        @Override
+        protected void addTags() {
+            this.tag(UselessTags.Fluids.PAINT).add(UselessFluids.PAINT.get(), UselessFluids.FLOWING_PAINT.get());
         }
     }
 

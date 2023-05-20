@@ -30,6 +30,7 @@ public class UselessDataGen {
         final BlockTagsProvider blockTagsProvider = new UselessTagsProvider.Blocks(generator, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Items(generator, blockTagsProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new UselessTagsProvider.Fluids(generator, existingFileHelper));
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Entities(generator, existingFileHelper));
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Paintings(generator, existingFileHelper));
 

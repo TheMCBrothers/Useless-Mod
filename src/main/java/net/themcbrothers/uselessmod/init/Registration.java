@@ -8,7 +8,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -33,6 +35,8 @@ public final class Registration {
     public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, UselessMod.MOD_ID);
     public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, UselessMod.MOD_ID);
     public static final DeferredRegister<PaintingVariant> PAINTING_VARIANTS = DeferredRegister.create(Registry.PAINTING_VARIANT_REGISTRY, UselessMod.MOD_ID);
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, UselessMod.MOD_ID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registry.FLUID_REGISTRY, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
         UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(RegistryBuilder::new);
@@ -50,6 +54,8 @@ public final class Registration {
         UselessOreFeatures.register();
         UselessOrePlacements.register();
         UselessPaintingVariants.register();
+        UselessFluidTypes.register();
+        UselessFluids.register();
 
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -64,6 +70,8 @@ public final class Registration {
         CONFIGURED_FEATURES.register(bus);
         PLACED_FEATURES.register(bus);
         PAINTING_VARIANTS.register(bus);
+        FLUID_TYPES.register(bus);
+        FLUIDS.register(bus);
     }
 
     private Registration() {

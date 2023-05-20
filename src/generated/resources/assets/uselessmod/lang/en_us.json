@@ -89,6 +89,7 @@
   "entity.uselessmod.useless_pig": "Useless Pig",
   "entity.uselessmod.useless_sheep": "Useless Sheep",
   "entity.uselessmod.useless_skeleton": "Useless Skeleton",
+  "fluid_type.uselessmod.paint": "Paint",
   "gui.uselessmod.start": "Start",
   "gui.uselessmod.stop": "Stop",
   "gui.uselessmod.use_milk": "Use Milk",

@@ -6,6 +6,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
+import net.themcbrothers.lib.util.TagUtils;
 
 public class UselessTags {
     public static class Blocks {
@@ -63,5 +65,9 @@ public class UselessTags {
         private static TagKey<Item> modTag(String tag) {
             return ItemTags.create(UselessMod.rl(tag));
         }
+    }
+
+    public static class Fluids {
+        public static final TagKey<Fluid> PAINT = TagUtils.forgeFluidTag("paint");
     }
 }
