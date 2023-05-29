@@ -1,42 +1,42 @@
 modLoader = "javafml"
-loaderVersion = "[43,)"
-license = "MIT License"
-issueTrackerURL = "https://github.com/TheMCBrothers/Useless-Mod/issues"
+loaderVersion = "${loaderVersionRange}"
+license = "${modLicense}"
+issueTrackerURL = "${modIssues}"
 
 [[mods]]
-    modId = "uselessmod"
+    modId = "${modId}"
     version = "${file.jarVersion}"
-    displayName = "Useless Mod"
-    updateJSONURL = "https://raw.githubusercontent.com/TheMCBrothers-Manager/Version/master/uselessmod_update.json"
-    displayURL = "https://themcbrothers.net/mods/uselessmod"
-    logoFile = "uselessmod.png"
-    credits = "Thank you for every single download!"
-    authors = "TheMCBrothers"
-    description = "A mod for Minecraft. Not very useless ;)"
+    displayName = "${modName}"
+    updateJSONURL = "${modUpdateJSON}"
+    displayURL = "${modURL}"
+    logoFile = "logo.png"
+    logoBlur = false
+    credits = "${modCredits}"
+    authors = "${modAuthors}"
+    description = "${modDescription}"
 
-[[dependencies.uselessmod]]
-    modId = "forge" #mandatory
-    mandatory = true #mandatory
-    versionRange = "[43.2,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+[[dependencies.${modId}]]
+    modId = "forge"
+    mandatory = true
+    versionRange = "${forgeVersionRange}"
     ordering = "NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side = "BOTH"
 
-[[dependencies.uselessmod]]
+[[dependencies.${modId}]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "1.19.2"
+    versionRange = "${minecraftVersionRange}"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.uselessmod]]
+[[dependencies.${modId}]]
     modId = "tmcb_lib"
     mandatory = true
-    versionRange = "[1.19.2-2.0.4,)"
+    versionRange = "${libraryVersionRange}"
     ordering = "NONE"
     side = "BOTH"
 
-[modproperties.uselessmod]
-    catalogueItemIcon = "uselessmod:useless_ingot"
-    configuredBackground = "uselessmod:textures/block/useless_planks.png"
+[modproperties.${modId}]
+    catalogueItemIcon="${catalogueItemIcon}"
+    catalogueImageIcon="icon.png"
+    configuredBackground = "${configuredBackground}"
