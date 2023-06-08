@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       cf_key: ${{ secrets.CURSEFORGE_TOKEN }}
       modrinth_token: ${{ secrets.MODRINTH_TOKEN }}
