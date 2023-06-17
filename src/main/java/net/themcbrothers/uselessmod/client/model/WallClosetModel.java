@@ -6,13 +6,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.BlockElement;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.*;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +27,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
@@ -41,7 +47,9 @@ import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
@@ -49,7 +57,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class WallClosetModel implements IDynamicBakedModel {
     private static final ItemOverrides OVERRIDE = new ItemOverrideHandler();
 
-    private final ModelBakery modelBakery;
+    private final ModelBaker modelBakery;
     private final BlockModel model;
     private final BakedModel bakedModel;
     private final ModelState modelTransform;
@@ -57,7 +65,7 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     private final Map<String, BakedModel> cache = Maps.newHashMap();
 
-    public WallClosetModel(ModelBakery modelBakery, BlockModel model, ModelState modelTransform, Function<Material, TextureAtlasSprite> spriteGetter) {
+    public WallClosetModel(ModelBaker modelBakery, BlockModel model, ModelState modelTransform, Function<Material, TextureAtlasSprite> spriteGetter) {
         this.modelBakery = modelBakery;
         this.model = model;
         this.bakedModel = model.bake(modelBakery, model, spriteGetter, modelTransform, UselessMod.rl("closet"), true);
@@ -85,7 +93,7 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.parent = this.model.parent;
 
             Material renderMaterial = new Material(InventoryMenu.BLOCK_ATLAS, Minecraft.getInstance()
-                    .getBlockRenderer().getBlockModel(material.defaultBlockState()).getParticleIcon(ModelData.EMPTY).getName());
+                    .getBlockRenderer().getBlockModel(material.defaultBlockState()).getParticleIcon(ModelData.EMPTY).contents().name());
             newModel.textureMap.put("planks", Either.left(renderMaterial));
             newModel.textureMap.put("particle", Either.left(renderMaterial));
 
@@ -160,7 +168,7 @@ public class WallClosetModel implements IDynamicBakedModel {
     }
 
     @Override
-    public BakedModel applyTransform(ItemTransforms.TransformType transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+    public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
         return this.bakedModel.applyTransform(transformType, poseStack, applyLeftHandTransform);
     }
 
@@ -187,19 +195,14 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     private static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
             BlockModel ownerModel = ((BlockGeometryBakingContext) context).owner;
             if (ownerModel == null)
                 throw new RuntimeException("Wall Closet owner model is null");
             BlockModel blockModel = ownerModel.parent;
             if (blockModel == null)
                 throw new RuntimeException("Wall Closet parent model is null");
-            return new WallClosetModel(bakery, blockModel, modelTransform, spriteGetter);
-        }
-
-        @Override
-        public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
-            return Collections.emptyList();
+            return new WallClosetModel(baker, blockModel, modelTransform, spriteGetter);
         }
     }
 

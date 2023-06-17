@@ -1,22 +1,22 @@
 package net.themcbrothers.uselessmod.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.fluids.IFluidTank;
 import net.themcbrothers.lib.client.model.fluid.FluidCuboid;
 import net.themcbrothers.lib.util.RenderUtils;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
+import org.joml.Vector3f;
 
 import static net.themcbrothers.lib.client.model.fluid.FluidCuboid.DEFAULT_FACES;
 
@@ -78,7 +78,7 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
 
             final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             BakedModel model = itemRenderer.getModel(renderStack, null, null, -1);
-            itemRenderer.render(renderStack, ItemTransforms.TransformType.FIXED, false,
+            itemRenderer.render(renderStack, ItemDisplayContext.FIXED, false,
                     poseStack, buffer, packedLight, packedOverlay, model);
 
             poseStack.popPose();

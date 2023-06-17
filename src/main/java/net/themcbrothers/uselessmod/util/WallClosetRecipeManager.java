@@ -9,6 +9,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
@@ -73,7 +74,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
         BlockItem.setBlockEntityData(output, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
         ResourceLocation name = UselessMod.rl("closet." + reg.replace(':', '.'));
-        return new ShapedRecipe(name, "uselessmod:closets", 3, 3, ingredients, output);
+        return new ShapedRecipe(name, "uselessmod:closets", CraftingBookCategory.MISC, 3, 3, ingredients, output);
     }
 
     @NotNull

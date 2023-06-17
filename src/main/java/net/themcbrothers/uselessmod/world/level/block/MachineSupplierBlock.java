@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.level.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -105,7 +106,7 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
         CompoundTag tag = BlockItem.getBlockEntityData(stack);
         if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND) &&
                 level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
-            blockEntity.setMimic(NbtUtils.readBlockState(tag.getCompound("Mimic")));
+            blockEntity.setMimic(NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic")));
         }
     }
 

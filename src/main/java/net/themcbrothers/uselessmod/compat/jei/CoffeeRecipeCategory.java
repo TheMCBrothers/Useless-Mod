@@ -3,7 +3,6 @@ package net.themcbrothers.uselessmod.compat.jei;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -15,11 +14,13 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidType;
 import net.themcbrothers.lib.crafting.FluidIngredient;
+import net.themcbrothers.lib.util.RecipeHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
@@ -53,9 +54,9 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
     }
 
     @Override
-    public void draw(CoffeeRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(CoffeeRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         IDrawableAnimated arrow = this.getArrow(recipe);
-        arrow.draw(stack, 56, 24);
+        arrow.draw(guiGraphics, 56, 24);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 51, 1).addIngredients(recipe.getCupIngredient());
         builder.addSlot(RecipeIngredientRole.INPUT, 69, 1).addIngredients(recipe.getBeanIngredient());
         builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(recipe.getExtraIngredient());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(RecipeHelper.getResultItem(recipe));
 
         FluidIngredient waterIngredient = recipe.getWaterIngredient();
         FluidIngredient milkIngredient = recipe.getMilkIngredient();

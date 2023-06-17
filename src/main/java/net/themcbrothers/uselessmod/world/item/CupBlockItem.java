@@ -33,15 +33,15 @@ public class CupBlockItem extends BlockItem {
         this.drinkable = drinkable;
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (this.drinkable && this.allowedIn(tab)) {
-            UselessRegistries.coffeeRegistry.get().getValues().stream()
-                    .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
-        } else {
-            super.fillItemCategory(tab, items);
-        }
-    }
+//    @Override TODO creative tab
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
+//        if (this.drinkable && this.allowedIn(tab)) {
+//            UselessRegistries.coffeeRegistry.get().getValues().stream()
+//                    .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
+//        } else {
+//            super.fillItemCategory(tab, items);
+//        }
+//    }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {

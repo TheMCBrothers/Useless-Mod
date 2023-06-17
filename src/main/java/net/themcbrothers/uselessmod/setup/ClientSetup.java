@@ -7,18 +7,19 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +27,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -56,7 +56,6 @@ public class ClientSetup extends CommonSetup {
         bus.addListener(this::clientSetup);
         bus.addListener(this::blockColors);
         bus.addListener(this::itemColors);
-        bus.addListener(this::textureStitching);
         bus.addListener(this::entityRegisterRenders);
         bus.addListener(this::entityAddLayers);
         bus.addListener(this::entityCreateSkullModels);
@@ -138,23 +137,13 @@ public class ClientSetup extends CommonSetup {
 
         event.register((stack, layer) -> {
             final CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-                final BlockState mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
+            final ClientLevel level = Minecraft.getInstance().level;
+            if (level != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
+                final BlockState mimic = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
                 return colors.getColor(new ItemStack(mimic.getBlock().asItem()), layer);
             }
             return -1;
         }, ModBlocks.MACHINE_SUPPLIER);
-    }
-
-    private void textureStitching(final TextureStitchEvent.Pre event) {
-        if (event.getAtlas().location() == Sheets.BED_SHEET) {
-            event.addSprite(UselessMod.rl("entity/bed/useless"));
-        }
-
-        if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
-            event.addSprite(UselessMod.rl("entity/shield/useless"));
-            event.addSprite(UselessMod.rl("entity/shield/super_useless"));
-        }
     }
 
     private void entityRegisterRenders(final EntityRenderersEvent.RegisterRenderers event) {

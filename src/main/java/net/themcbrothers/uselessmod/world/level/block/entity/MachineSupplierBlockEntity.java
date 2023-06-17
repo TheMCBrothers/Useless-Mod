@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -77,8 +78,8 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-            this.mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
+        if (tag.contains("Mimic", Tag.TAG_COMPOUND) && this.level != null) {
+            this.mimic = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
         }
     }
 

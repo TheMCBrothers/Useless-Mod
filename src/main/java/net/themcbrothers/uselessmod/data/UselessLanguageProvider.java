@@ -1,6 +1,6 @@
 package net.themcbrothers.uselessmod.data;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -10,8 +10,8 @@ import net.themcbrothers.uselessmod.init.*;
 import java.util.function.Supplier;
 
 public class UselessLanguageProvider extends LanguageProvider {
-    public UselessLanguageProvider(DataGenerator gen) {
-        super(gen, UselessMod.MOD_ID, "en_us");
+    public UselessLanguageProvider(PackOutput packOutput) {
+        super(packOutput, UselessMod.MOD_ID, "en_us");
     }
 
     @Override

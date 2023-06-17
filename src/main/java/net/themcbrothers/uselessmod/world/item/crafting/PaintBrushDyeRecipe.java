@@ -1,10 +1,12 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
 import com.google.common.collect.Lists;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -14,8 +16,8 @@ import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import java.util.List;
 
 public class PaintBrushDyeRecipe extends CustomRecipe {
-    public PaintBrushDyeRecipe(ResourceLocation id) {
-        super(id);
+    public PaintBrushDyeRecipe(ResourceLocation id, CraftingBookCategory category) {
+        super(id, category);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class PaintBrushDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
         ItemStack brushStack = ItemStack.EMPTY;
         List<DyeColor> dyes = Lists.newArrayList();
 

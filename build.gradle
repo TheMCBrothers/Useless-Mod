@@ -18,7 +18,7 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 minecraft {
     mappings channel: mappingsChannel, version: mappingsVersion
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -137,8 +137,8 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-$minecraftVersion-forge:$jeiVersion")
 
     // Optional: Configured and Catalogue
-    runtimeOnly fg.deobf("curse.maven:catalogue-459701:$catalogueFileId")
-    runtimeOnly fg.deobf("curse.maven:configured-457570:$configuredFileId")
+    if (!catalogueFileId.isEmpty()) runtimeOnly fg.deobf("curse.maven:catalogue-459701:$catalogueFileId")
+    if (!configuredFileId.isEmpty()) runtimeOnly fg.deobf("curse.maven:configured-457570:$configuredFileId")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
@@ -168,13 +168,14 @@ private String getSecret(String key) {
     if (secret != null) {
         return secret.trim()
     }
-    
+
     File secretFile = file('secrets.properties')
     if (secretFile.canRead()) {
         Properties secretProps = new Properties()
         secretProps.load(new FileInputStream(secretFile))
         return secretProps.getProperty(key).toString()
     }
+
     return null
 }
 

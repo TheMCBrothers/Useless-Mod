@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.AttachFace;
@@ -17,8 +17,8 @@ import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOL
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
 public class UselessBlockStateProvider extends BlockStateProvider {
-    public UselessBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, UselessMod.MOD_ID, exFileHelper);
+    public UselessBlockStateProvider(PackOutput packOutput, ExistingFileHelper exFileHelper) {
+        super(packOutput, UselessMod.MOD_ID, exFileHelper);
     }
 
     @Override
@@ -265,7 +265,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                 .texture("crop", modLoc("block/" + name + "_stage7")).renderType(mcLoc("cutout"));
 
         getVariantBuilder(crop).forAllStates(state -> ConfiguredModel.builder().modelFile(
-                switch (state.getValue(crop.getAgeProperty())) {
+                switch (state.getValue(CropBlock.AGE)) {
                     case 0 -> stage0;
                     case 1 -> stage1;
                     case 2 -> stage2;
@@ -276,7 +276,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                     default -> stage7;
                 }).build());
         getVariantBuilder(wildCrop).forAllStates(state -> ConfiguredModel.builder().modelFile(
-                switch (state.getValue(wildCrop.getAgeProperty())) {
+                switch (state.getValue(CropBlock.AGE)) {
                     case 0 -> stage0;
                     case 1 -> stage1;
                     case 2 -> stage2;

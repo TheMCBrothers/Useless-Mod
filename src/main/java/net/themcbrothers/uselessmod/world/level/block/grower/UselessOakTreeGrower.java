@@ -1,6 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block.grower;
 
-import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -12,7 +12,7 @@ import static net.themcbrothers.uselessmod.world.worldgen.UselessTreeFeatures.*;
 public class UselessOakTreeGrower extends AbstractTreeGrower {
     @Nullable
     @Override
-    protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(@NotNull RandomSource random, boolean largeHive) {
+    protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(@NotNull RandomSource random, boolean largeHive) {
         if (random.nextInt(10) == 0) {
             return largeHive ? FANCY_USELESS_OAK_BEES_005 : FANCY_USELESS_OAK;
         } else {

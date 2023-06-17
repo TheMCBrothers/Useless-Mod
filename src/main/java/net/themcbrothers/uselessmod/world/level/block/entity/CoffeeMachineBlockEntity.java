@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -120,7 +121,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                             .map(fluidHandler -> fluidHandler.getFluidInTank(0).isEmpty()).orElse(true);
 
                     if (isEmpty) {
-                        if (resultStack.sameItem(stackFluidOut) && resultStack.getMaxStackSize() > 1 && stackFluidOut.getCount() <= stackFluidOut.getMaxStackSize() - resultStack.getCount()) {
+                        if (ItemStack.isSameItem(resultStack, stackFluidOut) && resultStack.getMaxStackSize() > 1 && stackFluidOut.getCount() <= stackFluidOut.getMaxStackSize() - resultStack.getCount()) {
                             stackFluidOut.grow(resultStack.getCount());
                             stackFluidIn.shrink(5);
                         } else if (stackFluidOut.isEmpty()) {
@@ -156,7 +157,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                     if (coffeeMachine.cookingProgress < coffeeMachine.cookingTotalTime && coffeeMachine.getCurrentRecipe() != null) {
                         coffeeMachine.cookingProgress++;
                     } else {
-                        coffeeMachine.process(coffeeMachine.getCurrentRecipe());
+                        coffeeMachine.process(level.registryAccess(), coffeeMachine.getCurrentRecipe());
                         coffeeMachine.cookingProgress = 0;
                         coffeeMachine.cookingTotalTime = 0;
                     }
@@ -170,16 +171,16 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         }
     }
 
-    private boolean canProcess(@Nullable CoffeeRecipe recipe) {
+    private boolean canProcess(RegistryAccess registryAccess, @Nullable CoffeeRecipe recipe) {
         if (!this.items.get(0).isEmpty() && !this.items.get(1).isEmpty() && recipe != null) {
-            ItemStack recipeOutput = recipe.getResultItem();
+            ItemStack recipeOutput = recipe.getResultItem(registryAccess);
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
                 ItemStack outSlotStack = this.items.get(3);
                 if (outSlotStack.isEmpty()) {
                     return true;
-                } else if (!outSlotStack.sameItemStackIgnoreDurability(recipeOutput)) {
+                } else if (!ItemStack.isSameItem(outSlotStack, recipeOutput)) {
                     return false;
                 } else if (outSlotStack.getCount() + recipeOutput.getCount() <= this.getMaxStackSize() && outSlotStack.getCount() + recipeOutput.getCount() <= outSlotStack.getMaxStackSize()) {
                     return true;
@@ -192,12 +193,12 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         }
     }
 
-    private void process(@Nullable CoffeeRecipe recipe) {
-        if (recipe != null && this.canProcess(recipe)) {
+    private void process(RegistryAccess registryAccess, @Nullable CoffeeRecipe recipe) {
+        if (recipe != null && this.canProcess(registryAccess, recipe)) {
             ItemStack inputCup = this.items.get(0);
             ItemStack inputBean = this.items.get(1);
             ItemStack inputExtra = this.items.get(2);
-            ItemStack recipeResult = recipe.getResultItem();
+            ItemStack recipeResult = recipe.getResultItem(registryAccess);
             ItemStack resultSlot = this.items.get(3);
             if (resultSlot.isEmpty()) {
                 this.items.set(3, recipeResult.copy());
@@ -237,7 +238,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             }
             boolean flag3 = (recipe.getExtraIngredient() == Ingredient.EMPTY && getItem(2).isEmpty())
                     || recipe.getExtraIngredient().test(getItem(2));
-            if (this.canProcess(recipe) && flag && flag2 && flag3) return recipe;
+            if (this.canProcess(level.registryAccess(), recipe) && flag && flag2 && flag3) return recipe;
         }
         return null;
     }
@@ -396,7 +397,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     @Override
     public void setItem(int index, ItemStack stack) {
         ItemStack itemStack = this.items.get(index);
-        boolean isSame = !stack.isEmpty() && stack.sameItem(itemStack) && ItemStack.matches(stack, itemStack);
+        boolean isSame = !stack.isEmpty() && ItemStack.isSameItem(stack, itemStack) && ItemStack.matches(stack, itemStack);
 
         this.items.set(index, stack);
 

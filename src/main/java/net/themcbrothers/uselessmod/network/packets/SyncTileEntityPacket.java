@@ -40,7 +40,7 @@ public class SyncTileEntityPacket implements PacketMessage {
         NetworkEvent.Context ctx = context.get();
         if (ctx.getDirection().getReceptionSide() == LogicalSide.SERVER) {
             ctx.enqueueWork(() -> {
-                ServerLevel level = Objects.requireNonNull(ctx.getSender()).getLevel();
+                ServerLevel level = Objects.requireNonNull(ctx.getSender()).serverLevel();
                 if (level.isAreaLoaded(this.pos, 1)) {
                     if (level.getBlockEntity(this.pos) instanceof SyncableBlockEntity blockEntity) {
                         blockEntity.receiveMessageFromClient(this.tag);

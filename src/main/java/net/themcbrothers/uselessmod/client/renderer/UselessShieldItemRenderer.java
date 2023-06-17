@@ -5,12 +5,12 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -28,7 +28,7 @@ public class UselessShieldItemRenderer extends UselessBlockEntityWithoutLevelRen
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType type, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack stack, ItemDisplayContext type, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (stack.getItem() instanceof UselessShieldItem) {
             boolean isUseless = stack.is(ModItems.USELESS_SHIELD.get());
 
@@ -36,12 +36,11 @@ public class UselessShieldItemRenderer extends UselessBlockEntityWithoutLevelRen
             poseStack.scale(1.0F, -1.0F, -1.0F);
 
             Material material = isUseless ? SHIELD_USELESS : SHIELD_SUPER_USELESS;
-            try (TextureAtlasSprite sprite = material.sprite()) {
-                VertexConsumer vertexConsumer = sprite.wrap(ItemRenderer.getFoilBufferDirect(buffer, this.shieldModel.renderType(material.atlasLocation()), true, stack.hasFoil()));
+            TextureAtlasSprite sprite = material.sprite();
+            VertexConsumer vertexConsumer = sprite.wrap(ItemRenderer.getFoilBufferDirect(buffer, this.shieldModel.renderType(material.atlasLocation()), true, stack.hasFoil()));
 
-                this.shieldModel.handle().render(poseStack, vertexConsumer, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-                this.shieldModel.plate().render(poseStack, vertexConsumer, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-            }
+            this.shieldModel.handle().render(poseStack, vertexConsumer, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.shieldModel.plate().render(poseStack, vertexConsumer, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
             poseStack.popPose();
         }

@@ -68,10 +68,10 @@ public class UselessJEI implements IModPlugin {
                 return List.of(new Rect2i(containerScreen.getGuiLeft() - 16, containerScreen.getGuiTop() + 10, 16, 64));
             }
 
-            @Override
-            public @Nullable Object getIngredientUnderMouse(CoffeeMachineScreen containerScreen, double mouseX, double mouseY) {
-                return containerScreen.getHoveredFluid();
-            }
+//            @Override TODO update
+//            public @Nullable Object getIngredientUnderMouse(CoffeeMachineScreen containerScreen, double mouseX, double mouseY) {
+//                return containerScreen.getHoveredFluid();
+//            }
 
             @Override
             public Collection<IGuiClickableArea> getGuiClickableAreas(CoffeeMachineScreen containerScreen, double guiMouseX, double guiMouseY) {

@@ -25,13 +25,13 @@ import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.init.ModBiomes;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.Registration;
 import net.themcbrothers.uselessmod.network.Messages;
 import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
+import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 import org.jetbrains.annotations.Nullable;
 
 public class CommonSetup {
@@ -89,7 +89,7 @@ public class CommonSetup {
 
         // Biome Manager
         event.enqueueWork(() -> {
-            ResourceKey<Biome> key = ModBiomes.USELESS_FOREST.getKey();
+            ResourceKey<Biome> key = UselessBiomes.USELESS_FOREST;
             BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(key, 10));
         });
 

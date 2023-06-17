@@ -1,26 +1,34 @@
 package net.themcbrothers.uselessmod.data;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.FluidTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.PaintingVariantTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.PaintingVariantTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.init.*;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.CompletableFuture;
+
 public class UselessTagsProvider {
     public static class Blocks extends BlockTagsProvider {
-        public Blocks(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator, UselessMod.MOD_ID, existingFileHelper);
+        public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(UselessTags.Blocks.USELESS_ORES).add(ModBlocks.USELESS_ORE.get(), ModBlocks.DEEPSLATE_USELESS_ORE.get(), ModBlocks.NETHER_USELESS_ORE.get(), ModBlocks.END_USELESS_ORE.get());
             this.tag(UselessTags.Blocks.SUPER_USELESS_ORES).add(ModBlocks.SUPER_USELESS_ORE.get(), ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), ModBlocks.NETHER_SUPER_USELESS_ORE.get(), ModBlocks.END_SUPER_USELESS_ORE.get());
             this.tag(UselessTags.Blocks.ORES_USELESS).addTag(UselessTags.Blocks.USELESS_ORES);
@@ -73,12 +81,12 @@ public class UselessTagsProvider {
     }
 
     public static class Items extends ItemTagsProvider {
-        public Items(DataGenerator generator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator, blockTagsProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Items(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
+            super(packOutput, lookupProvider, blockTags, UselessMod.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider lookupProvider) {
             // ores
             this.copy(UselessTags.Blocks.USELESS_ORES, UselessTags.Items.USELESS_ORES);
             this.copy(UselessTags.Blocks.SUPER_USELESS_ORES, UselessTags.Items.SUPER_USELESS_ORES);
@@ -99,7 +107,6 @@ public class UselessTagsProvider {
             this.copy(BlockTags.RAILS, ItemTags.RAILS);
             this.copy(UselessTags.Blocks.USELESS_OAK_LOGS, UselessTags.Items.USELESS_OAK_LOGS);
             this.copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
-            this.copy(BlockTags.OVERWORLD_NATURAL_LOGS, ItemTags.OVERWORLD_NATURAL_LOGS);
             this.copy(BlockTags.SMALL_FLOWERS, ItemTags.SMALL_FLOWERS);
             this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
             this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
@@ -120,6 +127,11 @@ public class UselessTagsProvider {
 
             // minecraft tags
             this.tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(ModItems.USELESS_PICKAXE.get(), ModItems.SUPER_USELESS_PICKAXE.get());
+            this.tag(ItemTags.SWORDS).add(ModItems.USELESS_SWORD.get(), ModItems.SUPER_USELESS_SWORD.get());
+            this.tag(ItemTags.SHOVELS).add(ModItems.USELESS_SHOVEL.get(), ModItems.SUPER_USELESS_SHOVEL.get());
+            this.tag(ItemTags.PICKAXES).add(ModItems.USELESS_PICKAXE.get(), ModItems.SUPER_USELESS_PICKAXE.get());
+            this.tag(ItemTags.AXES).add(ModItems.USELESS_AXE.get(), ModItems.SUPER_USELESS_AXE.get());
+            this.tag(ItemTags.HOES).add(ModItems.USELESS_HOE.get(), ModItems.SUPER_USELESS_HOE.get());
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());
@@ -134,12 +146,7 @@ public class UselessTagsProvider {
 
             // other forge tags
             this.tag(Tags.Items.SHEARS).add(ModItems.USELESS_SHEARS.get());
-            this.tag(Tags.Items.TOOLS_SWORDS).add(ModItems.USELESS_SWORD.get(), ModItems.SUPER_USELESS_SWORD.get());
             this.tag(Tags.Items.TOOLS_SHIELDS).add(ModItems.USELESS_SHIELD.get(), ModItems.SUPER_USELESS_SHIELD.get());
-            this.tag(Tags.Items.TOOLS_SHOVELS).add(ModItems.USELESS_SHOVEL.get(), ModItems.SUPER_USELESS_SHOVEL.get());
-            this.tag(Tags.Items.TOOLS_PICKAXES).add(ModItems.USELESS_PICKAXE.get(), ModItems.SUPER_USELESS_PICKAXE.get());
-            this.tag(Tags.Items.TOOLS_AXES).add(ModItems.USELESS_AXE.get(), ModItems.SUPER_USELESS_AXE.get());
-            this.tag(Tags.Items.TOOLS_HOES).add(ModItems.USELESS_HOE.get(), ModItems.SUPER_USELESS_HOE.get());
             this.tag(Tags.Items.ARMORS_HELMETS).add(ModItems.USELESS_HELMET.get(), ModItems.SUPER_USELESS_HELMET.get());
             this.tag(Tags.Items.ARMORS_CHESTPLATES).add(ModItems.USELESS_CHESTPLATE.get(), ModItems.SUPER_USELESS_CHESTPLATE.get());
             this.tag(Tags.Items.ARMORS_LEGGINGS).add(ModItems.USELESS_LEGGINGS.get(), ModItems.SUPER_USELESS_LEGGINGS.get());
@@ -157,36 +164,36 @@ public class UselessTagsProvider {
     }
 
     public static class Fluids extends FluidTagsProvider {
-        public Fluids(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(pGenerator, UselessMod.MOD_ID, existingFileHelper);
+        public Fluids(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(UselessTags.Fluids.PAINT).add(UselessFluids.PAINT.get(), UselessFluids.FLOWING_PAINT.get());
         }
     }
 
     public static class Entities extends EntityTypeTagsProvider {
-        public Entities(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator, UselessMod.MOD_ID, existingFileHelper);
+        public Entities(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(EntityTypeTags.SKELETONS).add(ModEntityTypes.USELESS_SKELETON.get());
         }
     }
 
     public static class Paintings extends PaintingVariantTagsProvider {
-        public Paintings(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(pGenerator, UselessMod.MOD_ID, existingFileHelper);
+        public Paintings(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
-            this.tag(PaintingVariantTags.PLACEABLE).add(UselessPaintingVariants.LARGE_LOGO_RED.get(), UselessPaintingVariants.LARGE_LOGO_BLUE.get(),
-                    UselessPaintingVariants.SMALL_LOGO_RED.get(), UselessPaintingVariants.SMALL_LOGO_BLUE.get());
+        protected void addTags(HolderLookup.Provider lookupProvider) {
+            this.tag(PaintingVariantTags.PLACEABLE).add(UselessPaintingVariants.LARGE_LOGO_RED.getKey(), UselessPaintingVariants.LARGE_LOGO_BLUE.getKey(),
+                    UselessPaintingVariants.SMALL_LOGO_RED.getKey(), UselessPaintingVariants.SMALL_LOGO_BLUE.getKey());
         }
     }
 }

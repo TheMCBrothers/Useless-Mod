@@ -3,7 +3,6 @@ package net.themcbrothers.uselessmod.world.level.block;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -62,18 +60,18 @@ public class WallClosetBlock extends BaseEntityBlock {
                 .setValue(WATERLOGGED, Boolean.FALSE));
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-        ForgeRegistries.BLOCKS.getKeys().stream()
-                .filter(rl -> rl.getPath().endsWith("_planks"))
-                .forEach(blockRegistryName -> {
-                    final CompoundTag tag = new CompoundTag();
-                    tag.putString("Material", blockRegistryName.toString());
-                    final ItemStack stack = new ItemStack(this);
-                    BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
-                    stacks.add(stack);
-                });
-    }
+//    @Override TODO tab
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
+//        ForgeRegistries.BLOCKS.getKeys().stream()
+//                .filter(rl -> rl.getPath().endsWith("_planks"))
+//                .forEach(blockRegistryName -> {
+//                    final CompoundTag tag = new CompoundTag();
+//                    tag.putString("Material", blockRegistryName.toString());
+//                    final ItemStack stack = new ItemStack(this);
+//                    BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
+//                    stacks.add(stack);
+//                });
+//    }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag) {

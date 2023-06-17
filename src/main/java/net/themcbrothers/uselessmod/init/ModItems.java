@@ -1,9 +1,8 @@
 package net.themcbrothers.uselessmod.init;
 
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.*;
 import net.themcbrothers.lib.registration.object.ItemObject;
-import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 import net.themcbrothers.uselessmod.world.item.UselessShieldItem;
@@ -14,7 +13,7 @@ public final class ModItems {
     static void register() {
     }
 
-    private static final Item.Properties GENERAL_PROPS = new Item.Properties().tab(UselessMod.TAB);
+    private static final Item.Properties GENERAL_PROPS = new Item.Properties();
 
     // Metal
     public static final ItemObject<Item> RAW_USELESS = ITEMS.register("raw_useless", GENERAL_PROPS);
@@ -27,33 +26,33 @@ public final class ModItems {
     public static final ItemObject<Item> SUPER_USELESS_NUGGET = ITEMS.register("super_useless_nugget", GENERAL_PROPS);
 
     // Weapons and Tools
-    public static final ItemObject<Item> USELESS_SHEARS = ITEMS.register("useless_shears", () -> new ShearsItem(new Item.Properties().tab(UselessMod.TAB).durability(320)));
-    public static final ItemObject<Item> USELESS_SHIELD = ITEMS.register("useless_shield", () -> new UselessShieldItem(ModTiers.USELESS, new Item.Properties().tab(UselessMod.TAB).durability(420)));
-    public static final ItemObject<Item> USELESS_SWORD = ITEMS.register("useless_sword", () -> new SwordItem(ModTiers.USELESS, 3, -2.4F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_SHOVEL = ITEMS.register("useless_shovel", () -> new ShovelItem(ModTiers.USELESS, 1.5F, -3.0F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_PICKAXE = ITEMS.register("useless_pickaxe", () -> new PickaxeItem(ModTiers.USELESS, 1, -2.8F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_AXE = ITEMS.register("useless_axe", () -> new AxeItem(ModTiers.USELESS, 6.0F, -3.1F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_HOE = ITEMS.register("useless_hoe", () -> new HoeItem(ModTiers.USELESS, -2, -1.0F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_SHIELD = ITEMS.register("super_useless_shield", () -> new UselessShieldItem(ModTiers.SUPER_USELESS, new Item.Properties().tab(UselessMod.TAB).durability(640)));
-    public static final ItemObject<Item> SUPER_USELESS_SWORD = ITEMS.register("super_useless_sword", () -> new SwordItem(ModTiers.SUPER_USELESS, 3, -2.4F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_SHOVEL = ITEMS.register("super_useless_shovel", () -> new ShovelItem(ModTiers.SUPER_USELESS, 1.5F, -3.0F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_PICKAXE = ITEMS.register("super_useless_pickaxe", () -> new PickaxeItem(ModTiers.SUPER_USELESS, 1, -2.8F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_AXE = ITEMS.register("super_useless_axe", () -> new AxeItem(ModTiers.SUPER_USELESS, 6.0F, -3.1F, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_HOE = ITEMS.register("super_useless_hoe", () -> new HoeItem(ModTiers.SUPER_USELESS, -2, -1.0F, new Item.Properties().tab(UselessMod.TAB)));
+    public static final ItemObject<Item> USELESS_SHEARS = ITEMS.register("useless_shears", () -> new ShearsItem(new Item.Properties().durability(320)));
+    public static final ItemObject<Item> USELESS_SHIELD = ITEMS.register("useless_shield", () -> new UselessShieldItem(ModTiers.USELESS, new Item.Properties().durability(420)));
+    public static final ItemObject<Item> USELESS_SWORD = ITEMS.register("useless_sword", () -> new SwordItem(ModTiers.USELESS, 3, -2.4F, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_SHOVEL = ITEMS.register("useless_shovel", () -> new ShovelItem(ModTiers.USELESS, 1.5F, -3.0F, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_PICKAXE = ITEMS.register("useless_pickaxe", () -> new PickaxeItem(ModTiers.USELESS, 1, -2.8F, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_AXE = ITEMS.register("useless_axe", () -> new AxeItem(ModTiers.USELESS, 6.0F, -3.1F, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_HOE = ITEMS.register("useless_hoe", () -> new HoeItem(ModTiers.USELESS, -2, -1.0F, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_SHIELD = ITEMS.register("super_useless_shield", () -> new UselessShieldItem(ModTiers.SUPER_USELESS, new Item.Properties().durability(640)));
+    public static final ItemObject<Item> SUPER_USELESS_SWORD = ITEMS.register("super_useless_sword", () -> new SwordItem(ModTiers.SUPER_USELESS, 3, -2.4F, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_SHOVEL = ITEMS.register("super_useless_shovel", () -> new ShovelItem(ModTiers.SUPER_USELESS, 1.5F, -3.0F, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_PICKAXE = ITEMS.register("super_useless_pickaxe", () -> new PickaxeItem(ModTiers.SUPER_USELESS, 1, -2.8F, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_AXE = ITEMS.register("super_useless_axe", () -> new AxeItem(ModTiers.SUPER_USELESS, 6.0F, -3.1F, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_HOE = ITEMS.register("super_useless_hoe", () -> new HoeItem(ModTiers.SUPER_USELESS, -2, -1.0F, new Item.Properties()));
 
     // Armor
-    public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(540).rarity(Rarity.UNCOMMON)));
-    public static final ItemObject<Item> USELESS_HELMET = ITEMS.register("useless_helmet", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.HEAD, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_CHESTPLATE = ITEMS.register("useless_chestplate", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.CHEST, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_LEGGINGS = ITEMS.register("useless_leggings", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.LEGS, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(ModArmorMaterials.USELESS, EquipmentSlot.FEET, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_ELYTRA = ITEMS.register("super_useless_elytra", () -> new UselessElytraItem(new Item.Properties().tab(UselessMod.TAB).durability(864).rarity(Rarity.UNCOMMON)));
-    public static final ItemObject<Item> SUPER_USELESS_HELMET = ITEMS.register("super_useless_helmet", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.HEAD, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_CHESTPLATE = ITEMS.register("super_useless_chestplate", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.CHEST, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_LEGGINGS = ITEMS.register("super_useless_leggings", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.LEGS, new Item.Properties().tab(UselessMod.TAB)));
-    public static final ItemObject<Item> SUPER_USELESS_BOOTS = ITEMS.register("super_useless_boots", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, EquipmentSlot.FEET, new Item.Properties().tab(UselessMod.TAB)));
+    public static final ItemObject<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().durability(540).rarity(Rarity.UNCOMMON)));
+    public static final ItemObject<Item> USELESS_HELMET = ITEMS.register("useless_helmet", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_CHESTPLATE = ITEMS.register("useless_chestplate", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_LEGGINGS = ITEMS.register("useless_leggings", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final ItemObject<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.BOOTS, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_ELYTRA = ITEMS.register("super_useless_elytra", () -> new UselessElytraItem(new Item.Properties().durability(864).rarity(Rarity.UNCOMMON)));
+    public static final ItemObject<Item> SUPER_USELESS_HELMET = ITEMS.register("super_useless_helmet", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_CHESTPLATE = ITEMS.register("super_useless_chestplate", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_LEGGINGS = ITEMS.register("super_useless_leggings", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final ItemObject<Item> SUPER_USELESS_BOOTS = ITEMS.register("super_useless_boots", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-    public static final ItemObject<Item> USELESS_SKELETON_SKULL = ITEMS.register("useless_skeleton_skull", () -> new StandingAndWallBlockItem(ModBlocks.USELESS_SKELETON_SKULL.get(), ModBlocks.USELESS_SKELETON_WALL_SKULL.get(), new Item.Properties().tab(UselessMod.TAB).rarity(Rarity.UNCOMMON)));
+    public static final ItemObject<Item> USELESS_SKELETON_SKULL = ITEMS.register("useless_skeleton_skull", () -> new StandingAndWallBlockItem(ModBlocks.USELESS_SKELETON_SKULL.get(), ModBlocks.USELESS_SKELETON_WALL_SKULL.get(), new Item.Properties().rarity(Rarity.UNCOMMON), Direction.DOWN));
 
     // Misc Items
     public static final ItemObject<Item> USELESS_WHEAT_SEEDS = ITEMS.register("useless_wheat_seeds", () -> new ItemNameBlockItem(ModBlocks.USELESS_WHEAT.get(), GENERAL_PROPS));

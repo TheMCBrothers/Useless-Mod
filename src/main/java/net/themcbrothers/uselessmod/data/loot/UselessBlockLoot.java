@@ -4,7 +4,9 @@ import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
@@ -30,17 +32,27 @@ import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.init.ModItems;
 import net.themcbrothers.uselessmod.init.Registration;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
-public class UselessBlockLoot extends BlockLoot {
+public class UselessBlockLoot extends BlockLootSubProvider {
     private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
     private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS));
     private static final LootItemCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = HAS_SHEARS.or(HAS_SILK_TOUCH);
     private static final LootItemCondition.Builder HAS_NO_SHEARS_OR_SILK_TOUCH = HAS_SHEARS_OR_SILK_TOUCH.invert();
     private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
+    private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(USELESS_SKELETON_SKULL.get()).map(ItemLike::asItem).collect(Collectors.toSet());
+
+    protected UselessBlockLoot() {
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
+    }
+
     @Override
-    protected void addTables() {
+    protected void generate() {
         this.add(USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_USELESS.get()));
         this.add(SUPER_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_SUPER_USELESS.get()));
         this.add(DEEPSLATE_USELESS_ORE.get(), (block) -> createOreDrop(block, ModItems.RAW_USELESS.get()));
@@ -76,22 +88,22 @@ public class UselessBlockLoot extends BlockLoot {
         this.add(USELESS_OAK_LEAVES.get(), (block) -> createUselessLeavesDrop(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.dropSelf(USELESS_OAK_PLANKS.get());
         this.dropSelf(USELESS_OAK_STAIRS.get());
-        this.add(USELESS_OAK_SLAB.get(), BlockLoot::createSlabItemTable);
+        this.add(USELESS_OAK_SLAB.get(), this::createSlabItemTable);
         this.dropSelf(USELESS_OAK_FENCE.get());
         this.dropSelf(USELESS_OAK_FENCE_GATE.get());
-        this.add(USELESS_OAK_DOOR.get(), BlockLoot::createDoorTable);
+        this.add(USELESS_OAK_DOOR.get(), this::createDoorTable);
         this.dropSelf(USELESS_OAK_TRAPDOOR.get());
         this.dropSelf(USELESS_OAK_PRESSURE_PLATE.get());
         this.dropSelf(USELESS_OAK_BUTTON.get());
         this.dropSelf(USELESS_OAK_SIGN.get());
         this.dropSelf(USELESS_BARS.get());
         this.dropSelf(SUPER_USELESS_BARS.get());
-        this.add(USELESS_DOOR.get(), BlockLoot::createDoorTable);
-        this.add(SUPER_USELESS_DOOR.get(), BlockLoot::createDoorTable);
+        this.add(USELESS_DOOR.get(), this::createDoorTable);
+        this.add(SUPER_USELESS_DOOR.get(), this::createDoorTable);
         this.dropSelf(USELESS_TRAPDOOR.get());
         this.dropSelf(SUPER_USELESS_TRAPDOOR.get());
         this.dropSelf(PAINT_BUCKET.get());
-        this.add(PAINTED_WOOL.get(), UselessBlockLoot::createCopyColorDrop);
+        this.add(PAINTED_WOOL.get(), this::createCopyColorDrop);
         this.dropSelf(USELESS_WOOL.get());
         this.dropSelf(USELESS_CARPET.get());
         this.add(USELESS_BED.get(), (block) -> createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
@@ -101,14 +113,14 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(USELESS_DETECTOR_RAIL.get());
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
-        this.add(MACHINE_SUPPLIER.get(), UselessBlockLoot::mimicDrop);
+        this.add(MACHINE_SUPPLIER.get(), this::mimicDrop);
         this.dropSelf(COFFEE_MACHINE.get());
         this.dropSelf(CUP.get());
-        this.add(CUP_COFFEE.get(), UselessBlockLoot::copyCoffeeDrop);
+        this.add(CUP_COFFEE.get(), this::copyCoffeeDrop);
         this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
-        this.add(WALL_CLOSET.get(), UselessBlockLoot::wallClosetDrop);
-        this.add(LIGHT_SWITCH.get(), UselessBlockLoot::createCopyLightsDrop);
-        this.add(LIGHT_SWITCH_BLOCK.get(), UselessBlockLoot::createCopyLightsDrop);
+        this.add(WALL_CLOSET.get(), this::wallClosetDrop);
+        this.add(LIGHT_SWITCH.get(), this::createCopyLightsDrop);
+        this.add(LIGHT_SWITCH_BLOCK.get(), this::createCopyLightsDrop);
         this.dropOther(LANTERN.get(), Items.LANTERN);
         this.dropSelf(WHITE_LAMP.get());
         this.dropSelf(ORANGE_LAMP.get());
@@ -128,31 +140,31 @@ public class UselessBlockLoot extends BlockLoot {
         this.dropSelf(BLACK_LAMP.get());
     }
 
-    private static LootTable.Builder createCopyLightsDrop(ItemLike itemLike) {
+    private LootTable.Builder createCopyLightsDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Lights", "BlockEntityTag.Lights"))));
     }
 
-    private static LootTable.Builder createCopyColorDrop(ItemLike itemLike) {
+    private LootTable.Builder createCopyColorDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Color", "BlockEntityTag.Color"))));
     }
 
-    private static LootTable.Builder mimicDrop(ItemLike itemLike) {
+    private LootTable.Builder mimicDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Mimic", "BlockEntityTag.Mimic"))));
     }
 
-    private static LootTable.Builder copyCoffeeDrop(ItemLike itemLike) {
+    private LootTable.Builder copyCoffeeDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Coffee", "Coffee"))));
     }
 
-    private static LootTable.Builder wallClosetDrop(Block block) {
+    private LootTable.Builder wallClosetDrop(Block block) {
         return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
@@ -161,7 +173,7 @@ public class UselessBlockLoot extends BlockLoot {
                                 .copy("id", "BlockEntityTag.id")))));
     }
 
-    private static LootTable.Builder createUselessLeavesDrop(Block leavesBlock, Block saplingBlock, float... chances) {
+    private LootTable.Builder createUselessLeavesDrop(Block leavesBlock, Block saplingBlock, float... chances) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))

@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -22,6 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.ChunkRenderTypeSet;
@@ -74,7 +76,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
     }
 
     @Override
-    public BakedModel applyTransform(ItemTransforms.TransformType transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+    public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
         return this.baseModel.applyTransform(transformType, poseStack, applyLeftHandTransform);
     }
 
@@ -130,8 +132,8 @@ public class MachineSupplierModel implements IDynamicBakedModel {
             CompoundTag tag = BlockItem.getBlockEntityData(stack);
             BlockState mimic = null;
 
-            if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-                mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
+            if (level != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
+                mimic = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
             }
 
             return ((MachineSupplierModel) model).getMimicModel(mimic);
@@ -140,20 +142,15 @@ public class MachineSupplierModel implements IDynamicBakedModel {
 
     private static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
             BlockModel baseModel = ((BlockGeometryBakingContext) context).owner.parent;
 
             if (baseModel == null) {
                 throw new NullPointerException("Expected model parent model " + modelLocation);
             }
 
-            BakedModel bakedModel = baseModel.bake(bakery, baseModel, spriteGetter, modelState, modelLocation, context.useBlockLight());
+            BakedModel bakedModel = baseModel.bake(baker, baseModel, spriteGetter, modelState, modelLocation, context.useBlockLight());
             return new MachineSupplierModel(bakedModel);
-        }
-
-        @Override
-        public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
-            return Collections.emptyList();
         }
     }
 

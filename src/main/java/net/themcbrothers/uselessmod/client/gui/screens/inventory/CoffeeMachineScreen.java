@@ -3,13 +3,14 @@ package net.themcbrothers.uselessmod.client.gui.screens.inventory;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,8 +24,8 @@ import net.themcbrothers.uselessmod.network.packets.StartCoffeeMachinePacket;
 import net.themcbrothers.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,55 +51,47 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
+    protected void renderLabels(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         this.renderables.stream().filter(widget -> widget instanceof FluidTank tank && tank.isHoveredOrFocused()).forEach(widget -> {
             final FluidTank tank = (FluidTank) widget;
-            renderSlotHighlight(poseStack, tank.x - this.leftPos, tank.y - this.topPos, tank.getWidth(), tank.getHeight(), this.slotColor, this.getBlitOffset());
+            renderSlotHighlight(guiGraphics, tank.getX() - this.leftPos, tank.getY() - this.topPos, tank.getWidth(), tank.getHeight(), 0, this.slotColor);
         });
-        super.renderLabels(poseStack, mouseX, mouseY);
+        super.renderLabels(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(@NotNull PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, COFFEE_MACHINE_LOCATION);
-
+    protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         int xPos = (this.width - this.imageWidth) / 2;
         int yPos = (this.height - this.imageHeight) / 2;
-        this.blit(poseStack, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight);
-        this.blit(poseStack, xPos - 16, yPos + 10, 0, 166, 23, 64);
+        guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos - 16, yPos + 10, 0, 166, 23, 64);
 
         double d = this.menu.getScaledCookTime(42);
-        this.blit(poseStack, xPos + 67, yPos + 39, 176, 0, (int) d, 6);
+        guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos + 67, yPos + 39, 176, 0, (int) d, 6);
     }
 
     @Override
-    protected void renderTooltip(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
-        this.renderables.stream().filter(widget -> widget instanceof AbstractWidget abstractWidget && abstractWidget.isMouseOver(mouseX, mouseY))
-                .map(widget -> (AbstractWidget) widget).forEach(abstractWidget -> abstractWidget.renderToolTip(poseStack, mouseX, mouseY));
+    protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
+//        this.renderables.stream().filter(widget -> widget instanceof AbstractWidget abstractWidget && abstractWidget.isMouseOver(mouseX, mouseY))
+//                .map(widget -> (AbstractWidget) widget).forEach(abstractWidget -> );
 
-        super.renderTooltip(poseStack, mouseX, mouseY);
+        super.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    private static void renderSlotHighlight(@NotNull PoseStack poseStack, int x, int y, int width, int height, int color, int offset) {
-        RenderSystem.disableDepthTest();
-        RenderSystem.colorMask(true, true, true, false);
-        fillGradient(poseStack, x, y, x + width, y + height, color, color, offset);
-        RenderSystem.colorMask(true, true, true, true);
-        RenderSystem.enableDepthTest();
+    public static void renderSlotHighlight(GuiGraphics guiGraphics, int x, int y, int width, int height, int offset, int color) {
+        guiGraphics.fillGradient(RenderType.guiOverlay(), x, y, x + width, y + height, color, color, offset);
     }
 
     @Nullable
     public FluidStack getHoveredFluid() {
-        for (Widget widget : this.renderables) {
+        for (Renderable widget : this.renderables) {
             if (widget instanceof FluidTank tank && tank.isHoveredOrFocused()) {
                 return tank.getFluid();
             }
@@ -123,12 +116,12 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         }
 
         @Override
-        public void render(@NotNull PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
             boolean isRunning = CoffeeMachineScreen.this.menu.isRunning();
             boolean validRecipe = CoffeeMachineScreen.this.menu.isRecipeValid();
             this.active = this.start ? !isRunning && validRecipe : isRunning;
             this.visible = this.start != isRunning;
-            super.render(matrixStack, mouseX, mouseY, partialTicks);
+            super.render(guiGraphics, mouseX, mouseY, partialTicks);
         }
 
         @Override
@@ -147,26 +140,25 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         }
 
         @Override
-        public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
             this.checked = CoffeeMachineScreen.this.menu.blockEntity.useMilk();
-            super.render(poseStack, mouseX, mouseY, partialTicks);
+            super.render(guiGraphics, mouseX, mouseY, partialTicks);
         }
 
         @Override
-        public void renderButton(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        public void renderWidget(@NotNull GuiGraphics poseStack, int mouseX, int mouseY, float partialTicks) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
             RenderSystem.setShaderTexture(0, TEXTURE);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            blit(poseStack, this.x, this.y, this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
+            poseStack.blit(TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
         }
 
-        @Override
-        public void renderToolTip(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
-            List<Component> tooltip = Collections.singletonList(this.getMessage());
-            CoffeeMachineScreen.this.renderTooltip(poseStack, Lists.transform(tooltip, Component::getVisualOrderText), mouseX, mouseY);
+        public void renderToolTip(@NotNull GuiGraphics poseStack, int mouseX, int mouseY) {
+//            List<Component> tooltip = Collections.singletonList(this.getMessage());
+//            CoffeeMachineScreen.this.renderTooltip(poseStack, Lists.transform(tooltip, Component::getVisualOrderText), mouseX, mouseY);
         }
 
         @Override
@@ -180,7 +172,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         }
 
         @Override
-        public void updateNarration(@NotNull NarrationElementOutput narrationElementOutput) {
+        protected void updateWidgetNarration(@NotNull NarrationElementOutput narrationElementOutput) {
         }
     }
 }

@@ -14,6 +14,6 @@ public class UselessCow extends Cow {
 
     @Override
     public UselessCow getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-        return ModEntityTypes.USELESS_COW.get().create(this.level);
+        return ModEntityTypes.USELESS_COW.get().create(this.level());
     }
 }

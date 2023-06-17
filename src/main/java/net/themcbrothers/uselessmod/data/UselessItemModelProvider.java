@@ -1,9 +1,9 @@
 package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -14,8 +14,8 @@ import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
 
 public class UselessItemModelProvider extends ItemModelProvider {
-    public UselessItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, UselessMod.MOD_ID, existingFileHelper);
+    public UselessItemModelProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+        super(packOutput, UselessMod.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -93,19 +93,19 @@ public class UselessItemModelProvider extends ItemModelProvider {
                 .parent(parent).guiLight(BlockModel.GuiLight.FRONT)
                 .texture("particle", modLoc(BLOCK_FOLDER + "/" + particleTexture))
                 .transforms()
-                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
                 .rotation(0, 90, 0).translation(10, 6, -4).scale(1, 1, 1).end()
-                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
                 .rotation(0, 90, 0).translation(10, 6, 12).scale(1, 1, 1).end()
-                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
                 .rotation(0, 180, 5).translation(-10, 2, -10).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
                 .rotation(0, 180, 5).translation(10, 0, -10).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemTransforms.TransformType.GUI)
+                .transform(ItemDisplayContext.GUI)
                 .rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F, 0.65F, 0.65F).end()
-                .transform(ItemTransforms.TransformType.FIXED)
+                .transform(ItemDisplayContext.FIXED)
                 .rotation(0, 180, 0).translation(-2, 4, -5).scale(0.5F, 0.5F, 0.5F).end()
-                .transform(ItemTransforms.TransformType.GROUND)
+                .transform(ItemDisplayContext.GROUND)
                 .rotation(0, 0, 0).translation(4, 4, 2).scale(0.25F, 0.25F, 0.25F).end()
                 .end()
                 .override().predicate(mcLoc("blocking"), 1).model(blockingModel).end();
@@ -116,15 +116,15 @@ public class UselessItemModelProvider extends ItemModelProvider {
                 .parent(parent).guiLight(BlockModel.GuiLight.FRONT)
                 .texture("particle", modLoc(BLOCK_FOLDER + "/" + particleTexture))
                 .transforms()
-                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
                 .rotation(45, 135, 0).translation(3.51F, 11, -2).scale(1, 1, 1).end()
-                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
                 .rotation(45, 135, 0).translation(13.51F, 3, 5).scale(1, 1, 1).end()
-                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
                 .rotation(0, 180, -5).translation(-15, 5, -11).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
                 .rotation(0, 180, -5).translation(5, 5, -11).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemTransforms.TransformType.GUI)
+                .transform(ItemDisplayContext.GUI)
                 .rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F, 0.65F, 0.65F).end()
                 .end();
     }

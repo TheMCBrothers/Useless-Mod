@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -51,9 +51,9 @@ public class UselessBedRenderer implements BlockEntityRenderer<UselessBedBlockEn
     private void renderPiece(PoseStack poseStack, MultiBufferSource buffer, ModelPart modelPart, Direction direction, Material material, int combinedLight, int combinedOverlay, boolean isFoot) {
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.5625D, isFoot ? -1.0D : 0.0D);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F + direction.toYRot()));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F + direction.toYRot()));
         poseStack.translate(-0.5D, -0.5D, -0.5D);
         VertexConsumer vertexconsumer = material.buffer(buffer, RenderType::entitySolid);
         modelPart.render(poseStack, vertexconsumer, combinedLight, combinedOverlay);

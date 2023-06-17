@@ -68,12 +68,12 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+    public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
         this.ensureValid(id);
         this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
         consumer.accept(new Result(id, this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
                 this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime, this.advancement,
-                new ResourceLocation(id.getNamespace(), "recipes/" + this.result.getItem().getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
+                new ResourceLocation(id.getNamespace(), "recipes/coffee/" + id.getPath())));
     }
 
     private void ensureValid(ResourceLocation id) {
