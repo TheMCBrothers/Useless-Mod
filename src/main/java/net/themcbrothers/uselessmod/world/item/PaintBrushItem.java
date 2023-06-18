@@ -13,12 +13,13 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.util.CreativeTabFiller;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PaintBrushItem extends Item {
+public class PaintBrushItem extends Item implements CreativeTabFiller {
     public PaintBrushItem(Properties properties) {
         super(properties);
     }
@@ -28,21 +29,19 @@ public class PaintBrushItem extends Item {
         return false;
     }
 
-//    @Override TODO tab
-//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-//        if (this.allowedIn(tab)) {
-//            for (DyeColor color : DyeColor.values()) {
-//                final ItemStack stack = new ItemStack(this);
-//                float[] colors = color.getTextureDiffuseColors();
-//                int r = (int) (colors[0] * 255.0F);
-//                int g = (int) (colors[1] * 255.0F);
-//                int b = (int) (colors[2] * 255.0F);
-//                this.setColor(stack, (r << 16) + (g << 8) + b);
-//                stack.setDamageValue(0);
-//                items.add(stack);
-//            }
-//        }
-//    }
+    @Override
+    public void fillCreativeTab(NonNullList<ItemStack> items) {
+        for (DyeColor color : DyeColor.values()) {
+            final ItemStack stack = new ItemStack(this);
+            float[] colors = color.getTextureDiffuseColors();
+            int r = (int) (colors[0] * 255.0F);
+            int g = (int) (colors[1] * 255.0F);
+            int b = (int) (colors[2] * 255.0F);
+            this.setColor(stack, (r << 16) + (g << 8) + b);
+            stack.setDamageValue(0);
+            items.add(stack);
+        }
+    }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {

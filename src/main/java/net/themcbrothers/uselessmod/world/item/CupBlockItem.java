@@ -11,7 +11,10 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -21,9 +24,10 @@ import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
+import net.themcbrothers.uselessmod.util.CreativeTabFiller;
 import org.jetbrains.annotations.Nullable;
 
-public class CupBlockItem extends BlockItem {
+public class CupBlockItem extends BlockItem implements CreativeTabFiller {
     private static final int DRINK_DURATION = 32;
 
     private final boolean drinkable;
@@ -33,15 +37,15 @@ public class CupBlockItem extends BlockItem {
         this.drinkable = drinkable;
     }
 
-//    @Override TODO creative tab
-//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-//        if (this.drinkable && this.allowedIn(tab)) {
-//            UselessRegistries.coffeeRegistry.get().getValues().stream()
-//                    .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
-//        } else {
-//            super.fillItemCategory(tab, items);
-//        }
-//    }
+    @Override
+    public void fillCreativeTab(NonNullList<ItemStack> items) {
+        if (this.drinkable) {
+            UselessRegistries.coffeeRegistry.get().getValues().stream()
+                    .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
+        } else {
+            items.add(new ItemStack(this));
+        }
+    }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
