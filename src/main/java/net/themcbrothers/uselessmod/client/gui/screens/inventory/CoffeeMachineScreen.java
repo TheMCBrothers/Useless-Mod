@@ -81,6 +81,8 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
                 tank.renderToolTip(guiGraphics, mouseX, mouseY);
             } else if (renderable instanceof EnergyBar energyBar && energyBar.isHoveredOrFocused()) {
                 energyBar.renderToolTip(guiGraphics, mouseX, mouseY);
+            } else if (renderable instanceof MilkCheckboxButton checkbox && checkbox.isHoveredOrFocused()) {
+                checkbox.renderToolTip(guiGraphics, mouseX, mouseY);
             }
         }
 
@@ -162,9 +164,8 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
             poseStack.blit(TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
         }
 
-        public void renderToolTip(@NotNull GuiGraphics poseStack, int mouseX, int mouseY) {
-//            List<Component> tooltip = Collections.singletonList(this.getMessage());
-//            CoffeeMachineScreen.this.renderTooltip(poseStack, Lists.transform(tooltip, Component::getVisualOrderText), mouseX, mouseY);
+        public void renderToolTip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
+            guiGraphics.renderTooltip(font, this.getMessage(), mouseX, mouseY);
         }
 
         @Override
