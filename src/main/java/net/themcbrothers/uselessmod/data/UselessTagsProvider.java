@@ -132,6 +132,7 @@ public class UselessTagsProvider {
             this.tag(ItemTags.PICKAXES).add(ModItems.USELESS_PICKAXE.get(), ModItems.SUPER_USELESS_PICKAXE.get());
             this.tag(ItemTags.AXES).add(ModItems.USELESS_AXE.get(), ModItems.SUPER_USELESS_AXE.get());
             this.tag(ItemTags.HOES).add(ModItems.USELESS_HOE.get(), ModItems.SUPER_USELESS_HOE.get());
+            this.tag(ItemTags.TRIMMABLE_ARMOR).add(ModItems.USELESS_HELMET.get(), ModItems.USELESS_CHESTPLATE.get(), ModItems.USELESS_LEGGINGS.get(), ModItems.USELESS_BOOTS.get(), ModItems.SUPER_USELESS_HELMET.get(), ModItems.SUPER_USELESS_CHESTPLATE.get(), ModItems.SUPER_USELESS_LEGGINGS.get(), ModItems.SUPER_USELESS_BOOTS.get());
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(ModItems.USELESS_INGOT.get());

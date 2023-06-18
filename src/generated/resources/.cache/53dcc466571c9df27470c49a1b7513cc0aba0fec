@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-18T10:07:48.3962238	Tags for minecraft:item mod id uselessmod
+// 1.20.1	2023-06-18T17:18:40.3015012	Tags for minecraft:item mod id uselessmod
 c3ccca8e863f87c05ed3c4f49e781e19f688eb16 data/forge/tags/items/armors/boots.json
 ab95f82e8015dd523e28522c6464f9ac8d85b943 data/forge/tags/items/armors/chestplates.json
 e8ded9eed0487409f632269344533b8977c613d6 data/forge/tags/items/armors/helmets.json
@@ -50,6 +50,7 @@ aaebdf668f6cbe9382c49756dec647a4b113f237 data/minecraft/tags/items/pickaxes.json
 e43f0c88df5e9e91e931c74a7494b348c4433d6e data/minecraft/tags/items/small_flowers.json
 4290c49a7bff27aef1865229734acc8a9b099a60 data/minecraft/tags/items/swords.json
 2afde3f617beba3659c1943e34474534308f4311 data/minecraft/tags/items/trapdoors.json
+cdfa185745ad63c09fdc6722ab144899213e2022 data/minecraft/tags/items/trimmable_armor.json
 ae8ad153c27b10dd56f421b918e29b39df5a8afb data/minecraft/tags/items/wooden_buttons.json
 81ac2b7272d335aad8d84dcfdc263632106d7222 data/minecraft/tags/items/wooden_doors.json
 d7876deaa580768d8204b946957c88c5ef3f1506 data/minecraft/tags/items/wooden_fences.json
