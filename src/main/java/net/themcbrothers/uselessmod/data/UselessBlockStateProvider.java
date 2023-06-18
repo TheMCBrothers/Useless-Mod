@@ -13,6 +13,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
 
+import java.util.Objects;
+
 import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOLDER;
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
@@ -63,6 +65,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         buttonBlock((ButtonBlock) USELESS_OAK_BUTTON.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         pressurePlateBlock((PressurePlateBlock) USELESS_OAK_PRESSURE_PLATE.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         signBlock((StandingSignBlock) USELESS_OAK_SIGN.get(), (WallSignBlock) USELESS_OAK_WALL_SIGN.get(), blockTexture(USELESS_OAK_PLANKS.get()));
+        signBlock((CeilingHangingSignBlock) USELESS_OAK_HANGING_SIGN.get(), (WallHangingSignBlock) USELESS_OAK_WALL_HANGING_SIGN.get(), blockTexture(USELESS_OAK_PLANKS.get()));
         ironBars((IronBarsBlock) USELESS_BARS.get(), "useless_bars");
         ironBars((IronBarsBlock) SUPER_USELESS_BARS.get(), "super_useless_bars");
         doorBlockWithRenderType((DoorBlock) USELESS_DOOR.get(), modLoc("block/useless_door_bottom"), modLoc("block/useless_door_top"), "cutout");
@@ -144,6 +147,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(USELESS_OAK_FENCE_GATE.get());
         simpleItemItem(USELESS_OAK_DOOR.get());
         simpleItemItem(USELESS_OAK_SIGN.get());
+        simpleItemItem(USELESS_OAK_HANGING_SIGN.get());
         simpleItemItem(USELESS_DOOR.get());
         simpleItemItem(SUPER_USELESS_DOOR.get());
         itemModels().getBuilder("useless_trapdoor").parent(models().getExistingFile(modLoc("block/useless_trapdoor_bottom")));
@@ -169,6 +173,14 @@ public class UselessBlockStateProvider extends BlockStateProvider {
 
     private String id(String path) {
         return modLoc(path).toString();
+    }
+
+    private ResourceLocation key(Block block) {
+        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
+    }
+
+    private String name(Block block) {
+        return key(block).getPath();
     }
 
     private ResourceLocation extend(ResourceLocation loc, String extension) {
@@ -353,5 +365,15 @@ public class UselessBlockStateProvider extends BlockStateProvider {
             }
             return ConfiguredModel.builder().modelFile(powered ? railOn : rail).build();
         }, BlockStateProperties.WATERLOGGED);
+    }
+
+    private void signBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ResourceLocation texture) {
+        ModelFile sign = models().sign(name(signBlock), texture);
+        signBlock(signBlock, wallSignBlock, sign);
+    }
+
+    private void signBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ModelFile sign) {
+        simpleBlock(signBlock, sign);
+        simpleBlock(wallSignBlock, sign);
     }
 }

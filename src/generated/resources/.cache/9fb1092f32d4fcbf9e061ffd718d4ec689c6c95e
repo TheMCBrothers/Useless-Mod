@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-18T10:07:48.4012185	Recipes
+// 1.20.1	2023-06-18T19:01:38.1962414	Recipes
 49135e34a528178cde367ad68ed5c48659519e26 data/uselessmod/advancements/recipes/building_blocks/stripped_useless_oak_wood.json
 edcbbd9b91a76a60d40f7a8553c6d828c9f216e6 data/uselessmod/advancements/recipes/building_blocks/useless_oak_planks.json
 683b0239a882da3ed3e195814b35e07caefa42e9 data/uselessmod/advancements/recipes/building_blocks/useless_oak_slab.json
@@ -42,6 +42,7 @@ f3cda34166681575b6bed3cd87787cfbb8d3de76 data/uselessmod/advancements/recipes/de
 31d2a39b6f98f06e124a62b88928744ee97c6a81 data/uselessmod/advancements/recipes/decorations/useless_bed.json
 4e02e89de64a1f5b6a7c3c42a4e2f4333f6109f4 data/uselessmod/advancements/recipes/decorations/useless_carpet.json
 05c0ac71aea984fe32b9b8cc5519bd42fc6afd61 data/uselessmod/advancements/recipes/decorations/useless_oak_fence.json
+f5e897a3a111031bd866fd14c186c082a38d2d2d data/uselessmod/advancements/recipes/decorations/useless_oak_hanging_sign.json
 073056144487b7ecb6f3f87ae8601baadca09ef9 data/uselessmod/advancements/recipes/decorations/useless_oak_sign.json
 309458ad05128f0d99614ac560a790c22ee2bae1 data/uselessmod/advancements/recipes/decorations/white_lamp.json
 0010c28a8dd2dc7ff0053a8721034cc3b1025391 data/uselessmod/advancements/recipes/decorations/yellow_lamp.json
@@ -182,6 +183,7 @@ ca011e664a7567c496bfe431c492d44915253384 data/uselessmod/recipes/useless_helmet.
 49a1da727544f2d0ab40e1d39dd39ca34fa7a2f7 data/uselessmod/recipes/useless_oak_door.json
 9a358a346bc0e7426b98000933a2cd78791cffed data/uselessmod/recipes/useless_oak_fence.json
 1e201ecc383fc668d3fbc696dc90e98db6b70a96 data/uselessmod/recipes/useless_oak_fence_gate.json
+08d0ca7288d353e8372b2eda0d173761d0d53dbc data/uselessmod/recipes/useless_oak_hanging_sign.json
 b632bd69cc79545cd5fcd7abdaec9250c2e48528 data/uselessmod/recipes/useless_oak_planks.json
 a792413be3a9313c1eacdd0e152c185bf1b65825 data/uselessmod/recipes/useless_oak_pressure_plate.json
 340106f69d43a7491c9ed32d37d51f5426713605 data/uselessmod/recipes/useless_oak_sign.json

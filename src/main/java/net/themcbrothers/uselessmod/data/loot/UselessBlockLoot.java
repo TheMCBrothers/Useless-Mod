@@ -96,6 +96,7 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         this.dropSelf(USELESS_OAK_PRESSURE_PLATE.get());
         this.dropSelf(USELESS_OAK_BUTTON.get());
         this.dropSelf(USELESS_OAK_SIGN.get());
+        this.dropSelf(USELESS_OAK_HANGING_SIGN.get());
         this.dropSelf(USELESS_BARS.get());
         this.dropSelf(SUPER_USELESS_BARS.get());
         this.add(USELESS_DOOR.get(), this::createDoorTable);

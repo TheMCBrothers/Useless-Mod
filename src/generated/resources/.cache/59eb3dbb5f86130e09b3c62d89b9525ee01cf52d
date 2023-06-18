@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-18T10:07:48.3952268	Loot Tables
+// 1.20.1	2023-06-18T18:46:33.0322586	Loot Tables
 1616df50ceb9e3b513baefd1af32274658013de1 data/uselessmod/loot_tables/blocks/black_lamp.json
 3e782d55ef1e4f672c21834ea79f75c99957e159 data/uselessmod/loot_tables/blocks/blue_lamp.json
 c2005a2b61e9c34f348eb162cd22ec7c0e668a2a data/uselessmod/loot_tables/blocks/blue_rose.json
@@ -55,6 +55,7 @@ fb65a6bbfa2be6bbf62e1f7c416448edb560f726 data/uselessmod/loot_tables/blocks/usel
 5cdaa8184efc429b82296e580d6e49c651f119a0 data/uselessmod/loot_tables/blocks/useless_oak_door.json
 bba4f88be5443899eac2cc5ee123e43cf7245c82 data/uselessmod/loot_tables/blocks/useless_oak_fence.json
 c10bd94eac974e4f2fb6258f9dc522b7e09e21e0 data/uselessmod/loot_tables/blocks/useless_oak_fence_gate.json
+b93ee5a849df38a97ece3db278265833b7785bdb data/uselessmod/loot_tables/blocks/useless_oak_hanging_sign.json
 954e2d420d6b1d33c469b218e6fdc9c3f9f8f2e9 data/uselessmod/loot_tables/blocks/useless_oak_leaves.json
 d12037d57af3fa650576c10e91f02e29bda45324 data/uselessmod/loot_tables/blocks/useless_oak_log.json
 3291ae81171e8a99f2fdeb03076e175f6c2f193b data/uselessmod/loot_tables/blocks/useless_oak_planks.json

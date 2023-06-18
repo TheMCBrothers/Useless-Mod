@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -69,6 +70,7 @@ public class ClientSetup extends CommonSetup {
             BlockEntityRenderers.register(ModBlockEntityTypes.BED.get(), UselessBedRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.SIGN.get(), SignRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntityTypes.HANGING_SIGN.get(), HangingSignRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineRenderer::new);
         });
 

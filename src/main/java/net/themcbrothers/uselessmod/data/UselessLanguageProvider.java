@@ -52,6 +52,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addBlock(ModBlocks.USELESS_OAK_PRESSURE_PLATE, "Useless Oak Pressure Plate");
         this.addBlock(ModBlocks.USELESS_OAK_BUTTON, "Useless Oak Button");
         this.addBlock(ModBlocks.USELESS_OAK_SIGN, "Useless Oak Sign");
+        this.addBlock(ModBlocks.USELESS_OAK_HANGING_SIGN, "Useless Oak Hanging Sign");
         this.addBlock(ModBlocks.USELESS_RAIL, "Useless Rail");
         this.addBlock(ModBlocks.USELESS_POWERED_RAIL, "Useless Powered Rail");
         this.addBlock(ModBlocks.USELESS_DETECTOR_RAIL, "Useless Detector Rail");

@@ -43,6 +43,7 @@ public class UselessRecipeProvider extends RecipeProvider {
         pressurePlateBuilder(RecipeCategory.REDSTONE, ModBlocks.USELESS_OAK_PRESSURE_PLATE, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_pressure_plate").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
         buttonBuilder(ModBlocks.USELESS_OAK_BUTTON, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_button").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
         signBuilder(ModBlocks.USELESS_OAK_SIGN, Ingredient.of(ModBlocks.USELESS_OAK_PLANKS)).group("wooden_sign").unlockedBy("has_planks", has(ModBlocks.USELESS_OAK_WOOD.get())).save(consumer);
+        hangingSign(consumer, ModBlocks.USELESS_OAK_HANGING_SIGN, ModBlocks.STRIPPED_USELESS_OAK_LOG);
 
         // METAL
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.RAW_USELESS.get(), 9).requires(ModBlocks.RAW_USELESS_BLOCK.get()).group(null).unlockedBy("has_raw_useless_block", has(ModBlocks.RAW_USELESS_BLOCK.get())).save(consumer);
