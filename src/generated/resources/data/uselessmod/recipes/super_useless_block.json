@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "uselessmod:super_useless_ingot"
@@ -12,5 +13,6 @@
   ],
   "result": {
     "item": "uselessmod:super_useless_block"
-  }
+  },
+  "show_notification": true
 }

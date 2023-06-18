@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "uselessmod:entity/shield/useless"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "uselessmod:entity/shield/super_useless"
+    }
+  ]
+}

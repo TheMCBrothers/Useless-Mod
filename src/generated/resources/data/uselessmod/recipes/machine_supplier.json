@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "tag": "forge:cobblestone/normal"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "uselessmod:machine_supplier"
-  }
+  },
+  "show_notification": true
 }

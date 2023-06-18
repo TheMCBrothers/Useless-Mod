@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "minecraft:stick"
@@ -22,5 +23,6 @@
   "result": {
     "count": 6,
     "item": "uselessmod:useless_powered_rail"
-  }
+  },
+  "show_notification": true
 }

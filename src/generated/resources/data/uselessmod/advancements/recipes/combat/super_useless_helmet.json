@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_super_useless_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/super_useless"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "uselessmod:super_useless_helmet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_super_useless_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "uselessmod:super_useless_helmet"
+    ]
+  },
+  "sends_telemetry_event": false
+}

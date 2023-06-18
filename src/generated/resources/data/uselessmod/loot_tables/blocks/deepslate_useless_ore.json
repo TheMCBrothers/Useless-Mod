@@ -45,5 +45,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "uselessmod:blocks/deepslate_useless_ore"
 }

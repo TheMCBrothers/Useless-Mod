@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": "uselessmod:ore_super_useless_nether",
+  "step": "underground_ores"
+}
