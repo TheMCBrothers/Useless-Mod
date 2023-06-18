@@ -58,7 +58,7 @@ public class UselessDataGen {
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(UselessMod.MOD_ID)));
         generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput));
         generator.addProvider(event.includeServer(), new UselessLanguageProvider(packOutput));
-        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of()));
+        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new UselessAdvancementProvider())));
         generator.addProvider(event.includeServer(), UselessLootTableProvider.create(packOutput));
         final BlockTagsProvider blockTagsProvider = new UselessTagsProvider.Blocks(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
