@@ -1,15 +1,14 @@
 package net.themcbrothers.uselessmod.client.gui.screens.inventory;
 
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,11 +22,9 @@ import net.themcbrothers.uselessmod.network.Messages;
 import net.themcbrothers.uselessmod.network.packets.StartCoffeeMachinePacket;
 import net.themcbrothers.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Collections;
-import java.util.List;
 
 public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMenu> {
     private static final ResourceLocation COFFEE_MACHINE_LOCATION = UselessMod.rl("textures/gui/container/coffee_machine.png");
@@ -79,8 +76,13 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
     @Override
     protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
-//        this.renderables.stream().filter(widget -> widget instanceof AbstractWidget abstractWidget && abstractWidget.isMouseOver(mouseX, mouseY))
-//                .map(widget -> (AbstractWidget) widget).forEach(abstractWidget -> );
+        for (Renderable renderable : this.renderables) {
+            if (renderable instanceof FluidTank tank && tank.isHoveredOrFocused()) {
+                tank.renderToolTip(guiGraphics, mouseX, mouseY);
+            } else if (renderable instanceof EnergyBar energyBar && energyBar.isHoveredOrFocused()) {
+                energyBar.renderToolTip(guiGraphics, mouseX, mouseY);
+            }
+        }
 
         super.renderTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -90,10 +92,14 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     }
 
     @Nullable
-    public FluidStack getHoveredFluid() {
+    public Pair<Rect2i, FluidStack> getHoveredFluid() {
         for (Renderable widget : this.renderables) {
             if (widget instanceof FluidTank tank && tank.isHoveredOrFocused()) {
-                return tank.getFluid();
+                return Pair.of(new Rect2i(
+                                this.getGuiLeft() + tank.getX(),
+                                this.getGuiTop() + tank.getY(),
+                                tank.getWidth(), tank.getHeight()),
+                        tank.getFluid());
             }
         }
         return null;
