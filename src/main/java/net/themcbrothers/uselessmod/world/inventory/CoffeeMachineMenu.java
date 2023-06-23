@@ -1,31 +1,41 @@
 package net.themcbrothers.uselessmod.world.inventory;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.themcbrothers.lib.energy.EnergyProvider;
+import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModMenuTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Objects;
 
+import static net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
 import static net.themcbrothers.lib.util.ContainerHelper.getBlockEntity;
 
 public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyProvider {
+    public static final ResourceLocation EMPTY_COFFEE_MACHINE_SLOT_CUP = UselessMod.rl("item/empty_coffee_machine_slot_cup");
+    public static final ResourceLocation EMPTY_COFFEE_MACHINE_SLOT_BEANS = UselessMod.rl("item/empty_coffee_machine_slot_beans");
+    public static final ResourceLocation EMPTY_COFFEE_MACHINE_SLOT_EXTRA = UselessMod.rl("item/empty_coffee_machine_slot_extra");
+    public static final ResourceLocation EMPTY_COFFEE_MACHINE_SLOT_BUCKET = UselessMod.rl("item/empty_coffee_machine_slot_bucket");
 
     private static final int INV_SLOT_START = 7;
     private static final int INV_SLOT_END = INV_SLOT_START + 27;
@@ -35,14 +45,14 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     public final CoffeeMachineBlockEntity blockEntity;
     private final ContainerData data;
     private final ContainerLevelAccess levelAccess;
-    private final Level level;
+    private final List<CoffeeRecipe> recipes;
 
     public CoffeeMachineMenu(int id, Inventory inventory, CoffeeMachineBlockEntity coffeeMachine, ContainerData data) {
         super(ModMenuTypes.COFFEE_MACHINE.get(), id);
         this.blockEntity = coffeeMachine;
         this.data = data;
         this.levelAccess = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
-        this.level = coffeeMachine.getLevel();
+        this.recipes = coffeeMachine.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get());
 
         this.addSlot(new CupSlot(this.blockEntity, 0, 62, 16));
         this.addSlot(new CoffeeBeanSlot(this.blockEntity, 1, 80, 16));
@@ -133,18 +143,15 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isCup(ItemStack stack) {
-        return this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())
-                .stream().anyMatch(recipe -> recipe.getCupIngredient().test(stack));
+        return this.recipes.stream().anyMatch(recipe -> recipe.getCupIngredient().test(stack));
     }
 
     private boolean isBean(ItemStack stack) {
-        return this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())
-                .stream().anyMatch(recipe -> recipe.getBeanIngredient().test(stack));
+        return this.recipes.stream().anyMatch(recipe -> recipe.getBeanIngredient().test(stack));
     }
 
     private boolean isExtra(ItemStack stack) {
-        return this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())
-                .stream().anyMatch(recipe -> recipe.getExtraIngredient().test(stack));
+        return this.recipes.stream().anyMatch(recipe -> recipe.getExtraIngredient().test(stack));
     }
 
     private boolean isFluidItem(ItemStack stack) {
@@ -228,6 +235,12 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
         public boolean mayPlace(@NotNull ItemStack stack) {
             return CoffeeMachineMenu.this.isCup(stack);
         }
+
+        @Nullable
+        @Override
+        public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+            return Pair.of(BLOCK_ATLAS, EMPTY_COFFEE_MACHINE_SLOT_CUP);
+        }
     }
 
     private class CoffeeBeanSlot extends Slot {
@@ -238,6 +251,12 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
         @Override
         public boolean mayPlace(@NotNull ItemStack stack) {
             return CoffeeMachineMenu.this.isBean(stack);
+        }
+
+        @Nullable
+        @Override
+        public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+            return Pair.of(BLOCK_ATLAS, EMPTY_COFFEE_MACHINE_SLOT_BEANS);
         }
     }
 
@@ -250,6 +269,12 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
         public boolean mayPlace(@NotNull ItemStack stack) {
             return CoffeeMachineMenu.this.isExtra(stack);
         }
+
+        @Nullable
+        @Override
+        public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+            return Pair.of(BLOCK_ATLAS, EMPTY_COFFEE_MACHINE_SLOT_EXTRA);
+        }
     }
 
     private class FluidItemSlot extends Slot {
@@ -260,6 +285,12 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
         @Override
         public boolean mayPlace(@NotNull ItemStack stack) {
             return CoffeeMachineMenu.this.isFluidItem(stack);
+        }
+
+        @Nullable
+        @Override
+        public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+            return Pair.of(BLOCK_ATLAS, EMPTY_COFFEE_MACHINE_SLOT_BUCKET);
         }
     }
 
