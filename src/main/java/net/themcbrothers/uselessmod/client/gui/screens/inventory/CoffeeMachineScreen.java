@@ -65,11 +65,14 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
     @Override
     protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-        int xPos = (this.width - this.imageWidth) / 2;
-        int yPos = (this.height - this.imageHeight) / 2;
+        int xPos = this.leftPos;
+        int yPos = this.topPos;
+
+        // Background
         guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight);
         guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos - 16, yPos + 10, 0, 166, 23, 64);
 
+        // Progress
         double d = this.menu.getScaledCookTime(42);
         guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos + 67, yPos + 39, 176, 0, (int) d, 6);
     }
