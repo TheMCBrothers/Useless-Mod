@@ -38,6 +38,11 @@ public final class UselessCreativeModeTabs {
                     .title(Component.translatable("itemGroup.uselessmod.coffee"))
                     .icon(() -> new ItemStack(ModBlocks.COFFEE_MACHINE))
                     .build());
+    public static final RegistryObject<CreativeModeTab> PAINT_TAB = Registration.CREATIVE_MODE_TABS.register("paint_tab",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.uselessmod.paint"))
+                    .icon(() -> new ItemStack(ModItems.PAINT_BRUSH))
+                    .build());
     public static final RegistryObject<CreativeModeTab> WALL_CLOSET_TAB = Registration.CREATIVE_MODE_TABS.register("wall_closet",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.uselessmod.wall_closet"))
@@ -54,13 +59,24 @@ public final class UselessCreativeModeTabs {
             Registration.ITEMS.getEntries().stream().map(RegistryObject::get).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
 
             // remove some items
-            List<ItemLike> ignoredByMainTab = Stream.of(ModItems.COFFEE_BEANS, ModItems.COFFEE_SEEDS, ModBlocks.COFFEE_MACHINE, ModBlocks.CUP, ModBlocks.CUP_COFFEE, ModBlocks.WALL_CLOSET).map(ItemLike::asItem).collect(Collectors.toList());
+            List<ItemLike> ignoredByMainTab = Stream.of(ModBlocks.PAINTED_WOOL, ModBlocks.PAINT_BUCKET, ModItems.PAINT_BRUSH,
+                    ModItems.COFFEE_BEANS, ModItems.COFFEE_SEEDS, ModBlocks.COFFEE_MACHINE, ModBlocks.CUP, ModBlocks.CUP_COFFEE,
+                    ModBlocks.WALL_CLOSET).map(ItemLike::asItem).collect(Collectors.toList());
             itemStacks.removeIf(stack -> ignoredByMainTab.contains(stack.getItem()));
 
             // add the list to the tab
             event.acceptAll(itemStacks);
+        }
 
-            // add Paint Brush
+        // Paint stuff
+        if (event.getTab() == PAINT_TAB.get()) {
+            event.accept(() -> ModBlocks.PAINTED_WOOL);
+            event.accept(() -> ModBlocks.PAINT_BUCKET);
+
+            // empty paint brush
+            event.accept(() -> ModItems.PAINT_BRUSH);
+
+            // colored paint brushes
             for (DyeColor color : DyeColor.values()) {
                 final ItemStack stack = new ItemStack(ModItems.PAINT_BRUSH);
                 float[] colors = color.getTextureDiffuseColors();
@@ -73,6 +89,7 @@ public final class UselessCreativeModeTabs {
             }
         }
 
+        // Coffee stuff
         if (event.getTab() == COFFEE_TAB.get()) {
             event.accept(() -> ModBlocks.COFFEE_MACHINE);
             event.accept(() -> ModItems.COFFEE_SEEDS);
@@ -81,6 +98,7 @@ public final class UselessCreativeModeTabs {
             event.acceptAll(UselessRegistries.coffeeRegistry.get().getValues().stream().map(CoffeeUtils::createCoffeeStack).collect(Collectors.toList()));
         }
 
+        // Wall Closets
         if (event.getTab() == WALL_CLOSET_TAB.get()) {
             ForgeRegistries.BLOCKS.getEntries().stream()
                     .filter(WallClosetRecipeManager::isValidMaterial)
