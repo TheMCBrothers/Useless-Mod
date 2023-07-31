@@ -1,10 +1,14 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -14,6 +18,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -32,6 +37,7 @@ import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 
 @SuppressWarnings("deprecation")
@@ -49,6 +55,17 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return ModBlockEntityTypes.MACHINE_SUPPLIER.get().create(pos, state);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag) {
+        CompoundTag tag = BlockItem.getBlockEntityData(stack);
+        ClientLevel clientLevel = Minecraft.getInstance().level;
+
+        if (clientLevel != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
+            BlockState mimic = NbtUtils.readBlockState(tag.getCompound("Mimic"));
+            hoverText.add(mimic.getBlock().getName().withStyle(ChatFormatting.GRAY));
+        }
     }
 
     @Override
@@ -72,6 +89,7 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
                 }
             }
         }
+
         return InteractionResult.PASS;
     }
 
@@ -135,6 +153,11 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
             }
         }
         return Blocks.COBBLESTONE.defaultBlockState();
+    }
+
+    @Override
+    public BlockState getAppearance(BlockState state, BlockAndTintGetter level, BlockPos pos, Direction side, @Nullable BlockState queryState, @Nullable BlockPos queryPos) {
+        return this.getMimic(level, pos).getAppearance(level, pos, side, queryState, queryPos);
     }
 
     @Override
