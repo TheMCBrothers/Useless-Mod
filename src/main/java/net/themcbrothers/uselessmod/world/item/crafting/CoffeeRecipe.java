@@ -7,6 +7,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -18,10 +19,9 @@ import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
-import net.themcbrothers.uselessmod.world.CoffeeContainer;
 import org.jetbrains.annotations.Nullable;
 
-public class CoffeeRecipe implements CommonRecipe<CoffeeContainer> {
+public class CoffeeRecipe implements CommonRecipe<Container> {
     private final ResourceLocation id;
     private final String group;
     private final Ingredient cupIngredient;
@@ -87,7 +87,7 @@ public class CoffeeRecipe implements CommonRecipe<CoffeeContainer> {
     }
 
     @Override
-    public boolean matches(CoffeeContainer container, Level level) {
+    public boolean matches(Container container, Level level) {
         return false;
     }
 
