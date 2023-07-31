@@ -176,6 +176,8 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add("tooltip.uselessmod.hold_shift", "<Hold Shift>");
 
         this.add("itemGroup.uselessmod", "Useless Mod");
+        this.add("itemGroup.uselessmod.coffee", "Useless Mod: Coffee");
+        this.add("itemGroup.uselessmod.wall_closet", "Useless Mod: Wall Closets");
     }
 
     private void addAdvancement(String id, String title, String description) {

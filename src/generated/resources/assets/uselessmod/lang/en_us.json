@@ -139,6 +139,8 @@
   "item.uselessmod.useless_wheat": "Useless Wheat",
   "item.uselessmod.useless_wheat_seeds": "Useless Wheat Seeds",
   "itemGroup.uselessmod": "Useless Mod",
+  "itemGroup.uselessmod.coffee": "Useless Mod: Coffee",
+  "itemGroup.uselessmod.wall_closet": "Useless Mod: Wall Closets",
   "misc.uselessmod.color": "Color: %s",
   "misc.uselessmod.empty": "Empty",
   "misc.uselessmod.energy": "%s FE",

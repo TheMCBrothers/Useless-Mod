@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.init;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.decoration.PaintingVariant;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.material.Fluid;
@@ -29,6 +30,7 @@ public final class Registration {
     public static final DeferredRegister<PaintingVariant> PAINTING_VARIANTS = DeferredRegister.create(Registries.PAINTING_VARIANT, UselessMod.MOD_ID);
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, UselessMod.MOD_ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, UselessMod.MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
         UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(RegistryBuilder::new);
@@ -45,6 +47,7 @@ public final class Registration {
         UselessPaintingVariants.register();
         UselessFluidTypes.register();
         UselessFluids.register();
+        UselessCreativeModeTabs.register();
 
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -58,6 +61,7 @@ public final class Registration {
         PAINTING_VARIANTS.register(bus);
         FLUID_TYPES.register(bus);
         FLUIDS.register(bus);
+        CREATIVE_MODE_TABS.register(bus);
     }
 
     private Registration() {
