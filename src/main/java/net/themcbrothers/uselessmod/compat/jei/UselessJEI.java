@@ -39,7 +39,7 @@ public class UselessJEI implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.useNbtForSubtypes(ModBlocks.CUP_COFFEE.asItem(), ModItems.PAINT_BRUSH.asItem());
+        registration.useNbtForSubtypes(ModBlocks.WALL_CLOSET.asItem(), ModBlocks.CUP_COFFEE.asItem(), ModItems.PAINT_BRUSH.asItem());
     }
 
     @Override
