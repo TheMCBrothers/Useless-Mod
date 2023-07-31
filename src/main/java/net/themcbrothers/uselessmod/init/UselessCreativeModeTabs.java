@@ -1,19 +1,25 @@
 package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.AirBlock;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.util.CreativeTabFiller;
+import net.themcbrothers.uselessmod.api.UselessRegistries;
+import net.themcbrothers.uselessmod.util.CoffeeUtils;
+import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
+import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,8 +50,8 @@ public final class UselessCreativeModeTabs {
         if (event.getTab() == MAIN_TAB.get()) {
             NonNullList<ItemStack> itemStacks = NonNullList.create();
 
-            Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).map(UselessCreativeModeTabs::toList).forEach(itemStacks::addAll);
-            Registration.ITEMS.getEntries().stream().map(RegistryObject::get).map(UselessCreativeModeTabs::toList).forEach(itemStacks::addAll);
+            Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
+            Registration.ITEMS.getEntries().stream().map(RegistryObject::get).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
 
             // remove some items
             List<ItemLike> ignoredByMainTab = Stream.of(ModItems.COFFEE_BEANS, ModItems.COFFEE_SEEDS, ModBlocks.COFFEE_MACHINE, ModBlocks.CUP, ModBlocks.CUP_COFFEE, ModBlocks.WALL_CLOSET).map(ItemLike::asItem).collect(Collectors.toList());
@@ -53,6 +59,18 @@ public final class UselessCreativeModeTabs {
 
             // add the list to the tab
             event.acceptAll(itemStacks);
+
+            // add Paint Brush
+            for (DyeColor color : DyeColor.values()) {
+                final ItemStack stack = new ItemStack(ModItems.PAINT_BRUSH);
+                float[] colors = color.getTextureDiffuseColors();
+                int r = (int) (colors[0] * 255.0F);
+                int g = (int) (colors[1] * 255.0F);
+                int b = (int) (colors[2] * 255.0F);
+                ((PaintBrushItem) ModItems.PAINT_BRUSH.get()).setColor(stack, (r << 16) + (g << 8) + b);
+                stack.setDamageValue(0);
+                event.accept(stack);
+            }
         }
 
         if (event.getTab() == COFFEE_TAB.get()) {
@@ -60,20 +78,35 @@ public final class UselessCreativeModeTabs {
             event.accept(() -> ModItems.COFFEE_SEEDS);
             event.accept(() -> ModItems.COFFEE_BEANS);
             event.accept(() -> ModBlocks.CUP);
-            event.acceptAll(toList(ModBlocks.CUP_COFFEE.asItem()));
+            event.acceptAll(UselessRegistries.coffeeRegistry.get().getValues().stream().map(CoffeeUtils::createCoffeeStack).collect(Collectors.toList()));
         }
 
         if (event.getTab() == WALL_CLOSET_TAB.get()) {
-            event.acceptAll(toList(ModBlocks.WALL_CLOSET.get()));
+            ForgeRegistries.BLOCKS.getEntries().stream()
+                    .filter(WallClosetRecipeManager::isValidMaterial)
+                    .filter(resourceKeyBlockEntry -> !(WallClosetRecipeManager.getSlab(resourceKeyBlockEntry.getValue()) instanceof AirBlock))
+                    .map(Map.Entry::getKey)
+                    .map(ResourceKey::location)
+                    .map(blockRegistryName -> {
+                        final CompoundTag tag = new CompoundTag();
+                        tag.putString("Material", blockRegistryName.toString());
+                        final ItemStack stack = new ItemStack(ModBlocks.WALL_CLOSET);
+                        BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
+                        return stack;
+                    }).forEach(event::accept);
         }
     }
 
-    private static NonNullList<ItemStack> toList(ItemLike itemLike) {
+    /**
+     * Converts an item to a list of item stacks for creative tabs
+     *
+     * @param itemLike Item like
+     * @return List of item or empty list
+     */
+    private static NonNullList<ItemStack> convert(ItemLike itemLike) {
         NonNullList<ItemStack> itemStacks = NonNullList.create();
 
-        if (itemLike instanceof CreativeTabFiller filler) {
-            filler.fillCreativeTab(itemStacks);
-        } else if (itemLike.asItem() != Items.AIR) {
+        if (itemLike.asItem() != Items.AIR) {
             itemStacks.add(new ItemStack(itemLike));
         }
 

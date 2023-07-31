@@ -48,7 +48,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
                 .forEach(RecipeHelper::addRecipe);
     }
 
-    private static boolean isValidMaterial(Map.Entry<ResourceKey<Block>, Block> entry) {
+    public static boolean isValidMaterial(Map.Entry<ResourceKey<Block>, Block> entry) {
         Collection<Holder<Block>> wallClosetMaterials = context.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS);
         return wallClosetMaterials.isEmpty() || wallClosetMaterials.stream().anyMatch(blockHolder -> blockHolder.is(entry.getKey()));
     }
@@ -78,7 +78,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
     }
 
     @NotNull
-    private static Block getSlab(Block block) {
+    public static Block getSlab(Block block) {
         ResourceLocation blockReg = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
         Block result;
 

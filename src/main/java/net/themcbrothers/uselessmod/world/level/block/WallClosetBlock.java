@@ -3,7 +3,6 @@ package net.themcbrothers.uselessmod.world.level.block;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +38,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModStats;
-import net.themcbrothers.uselessmod.util.CreativeTabFiller;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,7 +46,7 @@ import java.util.List;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
 
 @SuppressWarnings("deprecation")
-public class WallClosetBlock extends BaseEntityBlock implements CreativeTabFiller {
+public class WallClosetBlock extends BaseEntityBlock {
     private static final VoxelShape SHAPE_NORTH = Block.box(1, 1, 9, 15, 15, 16);
     private static final VoxelShape SHAPE_EAST = Block.box(0, 1, 1, 7, 15, 15);
     private static final VoxelShape SHAPE_SOUTH = Block.box(1, 1, 0, 15, 15, 7);
@@ -60,19 +58,6 @@ public class WallClosetBlock extends BaseEntityBlock implements CreativeTabFille
                 .setValue(HORIZONTAL_FACING, Direction.NORTH)
                 .setValue(OPEN, Boolean.FALSE)
                 .setValue(WATERLOGGED, Boolean.FALSE));
-    }
-
-    @Override
-    public void fillCreativeTab(NonNullList<ItemStack> stacks) {
-        ForgeRegistries.BLOCKS.getKeys().stream()
-                .filter(rl -> rl.getPath().endsWith("_planks"))
-                .forEach(blockRegistryName -> {
-                    final CompoundTag tag = new CompoundTag();
-                    tag.putString("Material", blockRegistryName.toString());
-                    final ItemStack stack = new ItemStack(this);
-                    BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
-                    stacks.add(stack);
-                });
     }
 
     @Override

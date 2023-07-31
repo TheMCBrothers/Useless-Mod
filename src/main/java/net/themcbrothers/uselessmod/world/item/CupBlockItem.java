@@ -1,7 +1,6 @@
 package net.themcbrothers.uselessmod.world.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -24,10 +23,9 @@ import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
-import net.themcbrothers.uselessmod.util.CreativeTabFiller;
 import org.jetbrains.annotations.Nullable;
 
-public class CupBlockItem extends BlockItem implements CreativeTabFiller {
+public class CupBlockItem extends BlockItem {
     private static final int DRINK_DURATION = 32;
 
     private final boolean drinkable;
@@ -35,16 +33,6 @@ public class CupBlockItem extends BlockItem implements CreativeTabFiller {
     public CupBlockItem(Block block, Properties properties, boolean drinkable) {
         super(block, properties);
         this.drinkable = drinkable;
-    }
-
-    @Override
-    public void fillCreativeTab(NonNullList<ItemStack> items) {
-        if (this.drinkable) {
-            UselessRegistries.coffeeRegistry.get().getValues().stream()
-                    .map(CoffeeUtils::createCoffeeStack).forEach(items::add);
-        } else {
-            items.add(new ItemStack(this));
-        }
     }
 
     @Override
