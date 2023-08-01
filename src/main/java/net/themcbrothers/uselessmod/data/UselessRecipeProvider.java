@@ -117,6 +117,7 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(ModBlocks.CUP, 2).define('#', Blocks.QUARTZ_SLAB).pattern("# #").pattern(" # ").unlockedBy("has_quartz_slab", has(Blocks.QUARTZ_SLAB)).save(consumer);
         ShapedRecipeBuilder.shaped(ModBlocks.MACHINE_SUPPLIER).define('#', Tags.Items.COBBLESTONE_NORMAL).define('X', Tags.Items.GLASS).define('R', Tags.Items.DUSTS_REDSTONE).pattern("#X#").pattern("XRX").pattern("#X#").unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE)).save(consumer);
         ShapedRecipeBuilder.shaped(ModBlocks.COFFEE_MACHINE).define('#', Tags.Items.GLASS).define('X', ModBlocks.MACHINE_SUPPLIER).define('R', Items.REDSTONE_TORCH).define('U', UselessTags.Items.INGOTS_USELESS).pattern("#U#").pattern("RXR").unlockedBy("has_supplier", has(ModBlocks.MACHINE_SUPPLIER)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.PAINT_BUCKET).define('#', UselessTags.Items.INGOTS_USELESS).define('X', Tags.Items.RODS_WOODEN).pattern("#X#").pattern(" # ").unlockedBy(getHasName(ModItems.USELESS_INGOT), has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
 
         // Lamps
         ShapelessRecipeBuilder.shapeless(ModBlocks.WHITE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_WHITE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);

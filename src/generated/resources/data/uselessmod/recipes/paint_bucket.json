@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "forge:ingots/useless"
+    },
+    "X": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "#X#",
+    " # "
+  ],
+  "result": {
+    "item": "uselessmod:paint_bucket"
+  }
+}
