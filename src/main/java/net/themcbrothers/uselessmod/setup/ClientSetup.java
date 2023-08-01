@@ -156,6 +156,10 @@ public class ClientSetup extends CommonSetup {
         if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
             event.addSprite(UselessMod.rl("entity/shield/useless"));
             event.addSprite(UselessMod.rl("entity/shield/super_useless"));
+            event.addSprite(UselessMod.rl("item/empty_coffee_machine_slot_beans"));
+            event.addSprite(UselessMod.rl("item/empty_coffee_machine_slot_bucket"));
+            event.addSprite(UselessMod.rl("item/empty_coffee_machine_slot_cup"));
+            event.addSprite(UselessMod.rl("item/empty_coffee_machine_slot_extra"));
         }
     }
 
