@@ -54,6 +54,9 @@ public class UselessBiomeModifierProvider implements DataProvider {
         addOreToBiomeGen(modifierMap, UselessOrePlacements.ORE_USELESS_MIDDLE.getId().getPath(), allBiomes, placedFeatures);
         addOreToBiomeGen(modifierMap, UselessOrePlacements.ORE_USELESS_NETHER.getId().getPath(), allBiomes, placedFeatures);
         addOreToBiomeGen(modifierMap, UselessOrePlacements.ORE_USELESS_END.getId().getPath(), allBiomes, placedFeatures);
+        addOreToBiomeGen(modifierMap, UselessOrePlacements.ORE_SUPER_USELESS_NORMAL.getId().getPath(), allBiomes, placedFeatures);
+        addOreToBiomeGen(modifierMap, UselessOrePlacements.ORE_SUPER_USELESS_NETHER.getId().getPath(), allBiomes, placedFeatures);
+        addOreToBiomeGen(modifierMap, UselessOrePlacements.ORE_SUPER_USELESS_END.getId().getPath(), allBiomes, placedFeatures);
     }
 
     private static void addOreToBiomeGen(Map<ResourceLocation, BiomeModifier> map, String name, HolderSet<Biome> biomes, Registry<PlacedFeature> pfRegistry) {

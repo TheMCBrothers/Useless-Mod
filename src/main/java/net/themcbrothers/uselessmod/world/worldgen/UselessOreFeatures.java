@@ -24,8 +24,14 @@ public final class UselessOreFeatures {
             OreConfiguration.target(DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_USELESS_ORE.get().defaultBlockState()),
             OreConfiguration.target(NETHERRACK, ModBlocks.NETHER_USELESS_ORE.get().defaultBlockState()),
             OreConfiguration.target(END_ORE_REPLACEABLES, ModBlocks.END_USELESS_ORE.get().defaultBlockState())));
+    public static final Supplier<List<OreConfiguration.TargetBlockState>> ORE_SUPER_USELESS_TARGET_LIST = Suppliers.memoize(() -> List.of(
+            OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.SUPER_USELESS_ORE.get().defaultBlockState()),
+            OreConfiguration.target(DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get().defaultBlockState()),
+            OreConfiguration.target(NETHERRACK, ModBlocks.NETHER_SUPER_USELESS_ORE.get().defaultBlockState()),
+            OreConfiguration.target(END_ORE_REPLACEABLES, ModBlocks.END_SUPER_USELESS_ORE.get().defaultBlockState())));
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> ORE_USELESS = CONFIGURED_FEATURES.register("ore_useless", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ORE_USELESS_TARGET_LIST.get(), 9)));
+    public static final RegistryObject<ConfiguredFeature<?, ?>> ORE_SUPER_USELESS = CONFIGURED_FEATURES.register("ore_super_useless", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ORE_SUPER_USELESS_TARGET_LIST.get(), 9)));
 
     public static void register() {
     }
