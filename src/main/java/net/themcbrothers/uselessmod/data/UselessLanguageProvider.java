@@ -155,6 +155,15 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addStat(ModStats.OPEN_WALL_CLOSET, "Wall Closets Opened");
         this.addStat(ModStats.INTERACT_WITH_COFFEE_MACHINE, "Interactions with Coffee Machine");
 
+        this.add("painting.uselessmod.small_logo_red.title", "Small 'Useless Mod' Logo (Red)");
+        this.add("painting.uselessmod.small_logo_red.author", "TheMCLoveMan");
+        this.add("painting.uselessmod.small_logo_blue.title", "Small 'Useless Mod' Logo (Blue)");
+        this.add("painting.uselessmod.small_logo_blue.author", "TheMCLoveMan");
+        this.add("painting.uselessmod.large_logo_red.title", "Large 'Useless Mod' Logo (Red)");
+        this.add("painting.uselessmod.large_logo_red.author", "TheMCLoveMan");
+        this.add("painting.uselessmod.large_logo_blue.title", "Large 'Useless Mod' Logo (Blue)");
+        this.add("painting.uselessmod.large_logo_blue.author", "TheMCLoveMan");
+
         this.add("container.uselessmod.wall_closet", "Wall Closet");
         this.add("container.uselessmod.coffee_machine", "Coffee Machine");
         this.add("gui.uselessmod.use_milk", "Use Milk");
