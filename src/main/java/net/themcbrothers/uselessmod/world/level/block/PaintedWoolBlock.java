@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -78,7 +79,7 @@ public class PaintedWoolBlock extends BaseEntityBlock {
         if (tag != null) {
             int color = tag.getInt("Color");
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
-            tooltip.add(UselessMod.translate("misc", "color", hexColor));
+            tooltip.add(UselessMod.translate("misc", "color", hexColor).withStyle(ChatFormatting.GRAY));
         }
     }
 
