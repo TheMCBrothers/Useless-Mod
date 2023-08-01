@@ -2,7 +2,6 @@ package net.themcbrothers.uselessmod.compat;
 
 import com.google.common.collect.Maps;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
