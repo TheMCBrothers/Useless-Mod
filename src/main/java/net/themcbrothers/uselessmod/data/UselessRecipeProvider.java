@@ -3,7 +3,6 @@ package net.themcbrothers.uselessmod.data;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
@@ -80,7 +79,6 @@ public class UselessRecipeProvider extends RecipeProvider {
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(UselessTags.Items.DUSTS_SUPER_USELESS), RecipeCategory.MISC, ModItems.SUPER_USELESS_INGOT, 1.0F, 100).group("super_useless_ingot").unlockedBy("has_super_useless_dust", has(UselessTags.Items.DUSTS_SUPER_USELESS)).save(consumer, rl("super_useless_ingot_from_super_useless_dust_blasting"));
 
         // TOOLS ARMOR
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.PAINT_BRUSH).define('W', Tags.Items.RODS_WOODEN).define('o', ItemTags.WOOL).pattern("WoW").pattern("WWW").pattern(" W ").unlockedBy("has_wool", has(ItemTags.WOOL)).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.USELESS_SHEARS).define('#', UselessTags.Items.INGOTS_USELESS).pattern(" #").pattern("# ").unlockedBy("has_useless_ingot", has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.USELESS_SHIELD).define('W', UselessTags.Items.INGOTS_USELESS).define('o', Items.SHIELD).pattern("WoW").pattern("WWW").pattern(" W ").unlockedBy("has_shield", has(Items.SHIELD)).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SUPER_USELESS_SHIELD).define('W', UselessTags.Items.INGOTS_SUPER_USELESS).define('o', Items.SHIELD).pattern("WoW").pattern("WWW").pattern(" W ").unlockedBy("has_shield", has(Items.SHIELD)).save(consumer);

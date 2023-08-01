@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-18T19:01:38.1962414	Recipes
+// 1.20.1	2023-08-01T14:02:20.1118213	Recipes
 49135e34a528178cde367ad68ed5c48659519e26 data/uselessmod/advancements/recipes/building_blocks/stripped_useless_oak_wood.json
 edcbbd9b91a76a60d40f7a8553c6d828c9f216e6 data/uselessmod/advancements/recipes/building_blocks/useless_oak_planks.json
 683b0239a882da3ed3e195814b35e07caefa42e9 data/uselessmod/advancements/recipes/building_blocks/useless_oak_slab.json
@@ -85,7 +85,6 @@ f43e5767a2178f1bed824f9467070ac1b1486f73 data/uselessmod/advancements/recipes/re
 0ef2629767796a4af9f74497897055f6da86d167 data/uselessmod/advancements/recipes/redstone/useless_oak_fence_gate.json
 26e6bb9115a55127ef1259e0d9ef485596f62353 data/uselessmod/advancements/recipes/redstone/useless_oak_pressure_plate.json
 ca8c1a0fa2930a446425874c0f9a5a914a6b26a8 data/uselessmod/advancements/recipes/redstone/useless_oak_trapdoor.json
-695bd514a7a12bb84b4ac1e1e1d24b65957dd400 data/uselessmod/advancements/recipes/tools/paint_brush.json
 e8ad8f3a4397c7eb453f118ba0119c8f25875a9f data/uselessmod/advancements/recipes/tools/super_useless_axe.json
 c3a828677c0bbd11392a0fc252ed87c375c684be data/uselessmod/advancements/recipes/tools/super_useless_hoe.json
 691bcfca1b7c2f88870bbbcafc0f4bc5ae373266 data/uselessmod/advancements/recipes/tools/super_useless_pickaxe.json
@@ -121,7 +120,6 @@ b1ad8759fb39a1de0cbd7fe325dcaee6ac8cf9a9 data/uselessmod/recipes/light_gray_lamp
 4a00428518bebc69943b80682e1e082971824d8f data/uselessmod/recipes/machine_supplier.json
 3d270f803ba80d19ff81563434289ee3c6cf6e5a data/uselessmod/recipes/magenta_lamp.json
 32f1d29085281399148cbca5d3f73ff7eb7f2bb6 data/uselessmod/recipes/orange_lamp.json
-2bf13060a3f67177bd86a94fc5e4e21243ff8387 data/uselessmod/recipes/paint_brush.json
 c9268d8c5e59771b7ef48b52d111f9518bfd37a4 data/uselessmod/recipes/paint_brush_dye.json
 3ef9371c863c93d3af3f7b73f42431dc3de60d66 data/uselessmod/recipes/pink_lamp.json
 067401b0593b4bf78e6f708fce01b7eda4fad31d data/uselessmod/recipes/purple_lamp.json
