@@ -68,7 +68,7 @@ public class VanillaCompatibility {
         CauldronInteraction.WATER.put(ModItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
             if (stack.hasTag()) {
                 if (!level.isClientSide) {
-                    stack.setTag(new CompoundTag());
+                    stack.getOrCreateTag().remove("Color");
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
 
