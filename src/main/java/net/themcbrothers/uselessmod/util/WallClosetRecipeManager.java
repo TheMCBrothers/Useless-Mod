@@ -63,7 +63,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
 
         NonNullList<Ingredient> ingredients = NonNullList.of(Ingredient.EMPTY,
                 planks, planks, planks,
-                slab, slab, slab,
+                slab, Ingredient.EMPTY, slab,
                 planks, planks, planks
         );
 
