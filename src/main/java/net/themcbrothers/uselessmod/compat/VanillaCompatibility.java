@@ -2,7 +2,6 @@ package net.themcbrothers.uselessmod.compat;
 
 import com.google.common.collect.Maps;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
@@ -68,7 +67,7 @@ public class VanillaCompatibility {
         CauldronInteraction.WATER.put(ModItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
             if (stack.hasTag()) {
                 if (!level.isClientSide) {
-                    stack.setTag(new CompoundTag());
+                    stack.getOrCreateTag().remove("Color");
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
 
