@@ -16,7 +16,6 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
-import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 
 import java.util.List;
 import java.util.Map;
@@ -70,20 +69,20 @@ public final class UselessCreativeModeTabs {
 
         // Paint stuff
         if (event.getTab() == PAINT_TAB.get()) {
-            event.accept(() -> ModBlocks.PAINTED_WOOL);
             event.accept(() -> ModBlocks.PAINT_BUCKET);
 
-            // empty paint brush
-            event.accept(() -> ModItems.PAINT_BRUSH);
+            // painted wool
+            for (DyeColor color : DyeColor.values()) {
+                final ItemStack stack = new ItemStack(ModBlocks.PAINTED_WOOL);
+                CompoundTag tag = getTagWithColorFromDyeColor(color);
+                BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.PAINTED_WOOL.get(), tag);
+                event.accept(stack);
+            }
 
-            // colored paint brushes
+            // paint brush
             for (DyeColor color : DyeColor.values()) {
                 final ItemStack stack = new ItemStack(ModItems.PAINT_BRUSH);
-                float[] colors = color.getTextureDiffuseColors();
-                int r = (int) (colors[0] * 255.0F);
-                int g = (int) (colors[1] * 255.0F);
-                int b = (int) (colors[2] * 255.0F);
-                ((PaintBrushItem) ModItems.PAINT_BRUSH.get()).setColor(stack, (r << 16) + (g << 8) + b);
+                stack.setTag(getTagWithColorFromDyeColor(color));
                 stack.setDamageValue(0);
                 event.accept(stack);
             }
@@ -113,6 +112,18 @@ public final class UselessCreativeModeTabs {
                         return stack;
                     }).forEach(event::accept);
         }
+    }
+
+    private static CompoundTag getTagWithColorFromDyeColor(DyeColor color) {
+        float[] colors = color.getTextureDiffuseColors();
+        int r = (int) (colors[0] * 255.0F);
+        int g = (int) (colors[1] * 255.0F);
+        int b = (int) (colors[2] * 255.0F);
+
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("Color", (r << 16) + (g << 8) + b);
+
+        return tag;
     }
 
     /**
