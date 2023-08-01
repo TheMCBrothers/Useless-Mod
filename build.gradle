@@ -231,6 +231,8 @@ if (modrinthToken != null) {
         projectId = modrinthProject
         versionType = artifactType
         uploadFile = jar
+        var changes = file('changelog.md').text
+        changelog = changes.substring(changes.indexOf('\n'), changes.indexOf('\n\n'))
         dependencies {
             required.project 'themcbroslib'
             optional.project 'jei'
