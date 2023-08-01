@@ -78,7 +78,7 @@ public final class ModBlocks {
     public static final ItemObject<Block> USELESS_CARPET = BLOCKS.register("useless_carpet", () -> new WoolCarpetBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), GENERAL_BLOCK_ITEM);
     public static final ItemObject<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, copy(Blocks.WHITE_CARPET)), block -> new UselessBedItem(block, ONE_STACKING_PROPS));
     public static final ItemObject<Block> PAINTED_WOOL = BLOCKS.register("painted_wool", () -> new PaintedWoolBlock(copy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
-    public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(copy(Blocks.LANTERN)), GENERAL_BLOCK_ITEM);
+    public static final ItemObject<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(of(Material.DECORATION).strength(2.5F).sound(SoundType.LANTERN)), GENERAL_BLOCK_ITEM);
 
     // Rails
     public static final ItemObject<Block> USELESS_RAIL = BLOCKS.register("useless_rail", () -> new UselessRailBlock(copy(Blocks.RAIL)), GENERAL_BLOCK_ITEM);
