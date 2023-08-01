@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-01T14:02:20.1118213	Recipes
+// 1.20.1	2023-08-01T17:09:03.6690563	Recipes
 49135e34a528178cde367ad68ed5c48659519e26 data/uselessmod/advancements/recipes/building_blocks/stripped_useless_oak_wood.json
 edcbbd9b91a76a60d40f7a8553c6d828c9f216e6 data/uselessmod/advancements/recipes/building_blocks/useless_oak_planks.json
 683b0239a882da3ed3e195814b35e07caefa42e9 data/uselessmod/advancements/recipes/building_blocks/useless_oak_slab.json
@@ -35,6 +35,7 @@ e210edd7455f5b5da72e25027dd0a68811820286 data/uselessmod/advancements/recipes/de
 46ae7260920bc6318345b23eaea43c3a422d4a70 data/uselessmod/advancements/recipes/decorations/lime_lamp.json
 404ba89d9a911229013ee24eaa48193ff6021080 data/uselessmod/advancements/recipes/decorations/magenta_lamp.json
 5e6fcb30304f1cdc0ff4c80c55fee7429a88957e data/uselessmod/advancements/recipes/decorations/orange_lamp.json
+b40aad2818bb1e3536693ba4430745ad2479f115 data/uselessmod/advancements/recipes/decorations/paint_bucket.json
 b50ae8773494ea3d52cdb670c2cf5453da937a21 data/uselessmod/advancements/recipes/decorations/pink_lamp.json
 645417882775f8f1bed94f96bca15e8bbc1f7e70 data/uselessmod/advancements/recipes/decorations/purple_lamp.json
 e548aefdfa6d4194191d219e925a8486349aece4 data/uselessmod/advancements/recipes/decorations/red_dye_from_rose.json
@@ -121,6 +122,7 @@ b1ad8759fb39a1de0cbd7fe325dcaee6ac8cf9a9 data/uselessmod/recipes/light_gray_lamp
 3d270f803ba80d19ff81563434289ee3c6cf6e5a data/uselessmod/recipes/magenta_lamp.json
 32f1d29085281399148cbca5d3f73ff7eb7f2bb6 data/uselessmod/recipes/orange_lamp.json
 c9268d8c5e59771b7ef48b52d111f9518bfd37a4 data/uselessmod/recipes/paint_brush_dye.json
+bfefb5d0531c0f81da6fe9f4c1cff90b041b3cd8 data/uselessmod/recipes/paint_bucket.json
 3ef9371c863c93d3af3f7b73f42431dc3de60d66 data/uselessmod/recipes/pink_lamp.json
 067401b0593b4bf78e6f708fce01b7eda4fad31d data/uselessmod/recipes/purple_lamp.json
 25ae12174a6e5a0d0809c9b161aeedb92a8e1b8e data/uselessmod/recipes/raw_super_useless.json
