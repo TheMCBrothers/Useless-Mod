@@ -133,6 +133,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.addItem(ModItems.USELESS_LEATHER, "Useless Leather");
         this.addItem(ModItems.USELESS_FEATHER, "Useless Feather");
         this.addItem(ModItems.PAINT_BRUSH, "Paint Brush");
+        this.addItem(ModItems.BUCKET_PAINT, "Bucket with Paint");
         this.add("item.uselessmod.useless_sheep_spawn_egg", "Useless Sheep Spawn Egg");
         this.add("item.uselessmod.useless_pig_spawn_egg", "Useless Pig Spawn Egg");
         this.add("item.uselessmod.useless_chicken_spawn_egg", "Useless Chicken Spawn Egg");

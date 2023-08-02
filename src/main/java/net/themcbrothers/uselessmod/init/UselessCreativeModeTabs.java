@@ -16,9 +16,9 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
+import org.apache.commons.lang3.tuple.Triple;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,7 +58,7 @@ public final class UselessCreativeModeTabs {
             Registration.ITEMS.getEntries().stream().map(RegistryObject::get).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
 
             // remove some items
-            List<ItemLike> ignoredByMainTab = Stream.of(ModBlocks.PAINTED_WOOL, ModBlocks.PAINT_BUCKET, ModItems.PAINT_BRUSH,
+            List<ItemLike> ignoredByMainTab = Stream.of(ModBlocks.PAINTED_WOOL, ModBlocks.PAINT_BUCKET, ModItems.PAINT_BRUSH, ModItems.BUCKET_PAINT,
                     ModItems.COFFEE_BEANS, ModItems.COFFEE_SEEDS, ModBlocks.COFFEE_MACHINE, ModBlocks.CUP, ModBlocks.CUP_COFFEE,
                     ModBlocks.WALL_CLOSET).map(ItemLike::asItem).collect(Collectors.toList());
             itemStacks.removeIf(stack -> ignoredByMainTab.contains(stack.getItem()));
@@ -71,21 +71,30 @@ public final class UselessCreativeModeTabs {
         if (event.getTab() == PAINT_TAB.get()) {
             event.accept(() -> ModBlocks.PAINT_BUCKET);
 
-            // painted wool
+            List<Triple<ItemStack, ItemStack, ItemStack>> coloredItems = new ArrayList<>();
+
             for (DyeColor color : DyeColor.values()) {
-                final ItemStack stack = new ItemStack(ModBlocks.PAINTED_WOOL);
+                // painted wool
+                final ItemStack stackWool = new ItemStack(ModBlocks.PAINTED_WOOL);
                 CompoundTag tag = getTagWithColorFromDyeColor(color);
-                BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.PAINTED_WOOL.get(), tag);
-                event.accept(stack);
+                BlockItem.setBlockEntityData(stackWool, ModBlockEntityTypes.PAINTED_WOOL.get(), tag);
+
+                // paint brush
+                final ItemStack stackBrush = new ItemStack(ModItems.PAINT_BRUSH);
+                stackBrush.setTag(getTagWithColorFromDyeColor(color));
+                stackBrush.setDamageValue(0);
+
+                // bucket with paint
+                final ItemStack stackBucket = new ItemStack(ModItems.BUCKET_PAINT);
+                stackBucket.setTag(getTagWithColorFromDyeColor(color));
+
+                coloredItems.add(Triple.of(stackWool, stackBrush, stackBucket));
             }
 
-            // paint brush
-            for (DyeColor color : DyeColor.values()) {
-                final ItemStack stack = new ItemStack(ModItems.PAINT_BRUSH);
-                stack.setTag(getTagWithColorFromDyeColor(color));
-                stack.setDamageValue(0);
-                event.accept(stack);
-            }
+            coloredItems.stream().map(Triple::getLeft).forEach(event::accept);
+            coloredItems.stream().map(Triple::getMiddle).forEach(event::accept);
+            coloredItems.stream().map(Triple::getRight).forEach(event::accept);
+            coloredItems.clear();
         }
 
         // Coffee stuff

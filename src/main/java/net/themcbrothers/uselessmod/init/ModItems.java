@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.init;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.*;
 import net.themcbrothers.lib.registration.object.ItemObject;
+import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 import net.themcbrothers.uselessmod.world.item.UselessShieldItem;
@@ -64,5 +65,6 @@ public final class ModItems {
     public static final ItemObject<Item> USELESS_FEATHER = ITEMS.register("useless_feather", GENERAL_PROPS);
 
     // Color
-    public static final ItemObject<Item> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintBrushItem(GENERAL_PROPS.durability(16)));
+    public static final ItemObject<Item> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintBrushItem(new Item.Properties().durability(16)));
+    public static final ItemObject<Item> BUCKET_PAINT = ITEMS.register("bucket_paint", () -> new BucketWithPaintItem(UselessFluids.PAINT, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 }

@@ -7,11 +7,13 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.init.UselessFluids;
 
 public class UselessItemModelProvider extends ItemModelProvider {
     public UselessItemModelProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
@@ -72,6 +74,10 @@ public class UselessItemModelProvider extends ItemModelProvider {
         this.withExistingParent("useless_chicken_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_cow_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_skeleton_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
+
+        this.withExistingParent("bucket_paint", new ResourceLocation("forge", "item/bucket"))
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
+                .fluid(UselessFluids.PAINT.get()).end();
 
         // Items with special renderer
         final ModelFile builtInEntityModel = new ModelFile.UncheckedModelFile("builtin/entity");

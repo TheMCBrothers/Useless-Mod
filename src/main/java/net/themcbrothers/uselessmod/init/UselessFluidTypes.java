@@ -43,8 +43,7 @@ public final class UselessFluidTypes {
 
                 @Override
                 public ItemStack getBucket(FluidStack stack) {
-                    // TODO: implement bucket of paint
-                    return super.getBucket(stack);
+                    return new ItemStack(ModItems.BUCKET_PAINT, 1, stack.getTag());
                 }
             });
 }

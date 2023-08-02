@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.model.DynamicFluidContainerModel;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -148,6 +149,8 @@ public class ClientSetup extends CommonSetup {
             }
             return -1;
         }, ModBlocks.MACHINE_SUPPLIER);
+
+        event.register(new DynamicFluidContainerModel.Colors(), ModItems.BUCKET_PAINT);
     }
 
     private void entityRegisterRenders(final EntityRenderersEvent.RegisterRenderers event) {

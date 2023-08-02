@@ -1,0 +1,5 @@
+{
+  "parent": "forge:item/bucket",
+  "fluid": "uselessmod:paint",
+  "loader": "forge:fluid_container"
+}
