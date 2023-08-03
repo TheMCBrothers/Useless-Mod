@@ -2,6 +2,8 @@ package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.*;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import net.themcbrothers.lib.registration.object.ItemObject;
 import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
@@ -67,4 +69,11 @@ public final class ModItems {
     // Color
     public static final ItemObject<Item> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintBrushItem(new Item.Properties().durability(16)));
     public static final ItemObject<Item> BUCKET_PAINT = ITEMS.register("bucket_paint", () -> new BucketWithPaintItem(UselessFluids.PAINT, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    // Spawn Eggs (registered via Entity Type Deferred Register)
+    public static final RegistryObject<Item> USELESS_SKELETON_SPAWN_EGG = RegistryObject.create(ModEntityTypes.USELESS_SKELETON.getId().withSuffix("_spawn_egg"), ForgeRegistries.ITEMS);
+    public static final RegistryObject<Item> USELESS_CHICKEN_SPAWN_EGG = RegistryObject.create(ModEntityTypes.USELESS_CHICKEN.getId().withSuffix("_spawn_egg"), ForgeRegistries.ITEMS);
+    public static final RegistryObject<Item> USELESS_COW_SPAWN_EGG = RegistryObject.create(ModEntityTypes.USELESS_COW.getId().withSuffix("_spawn_egg"), ForgeRegistries.ITEMS);
+    public static final RegistryObject<Item> USELESS_PIG_SPAWN_EGG = RegistryObject.create(ModEntityTypes.USELESS_PIG.getId().withSuffix("_spawn_egg"), ForgeRegistries.ITEMS);
+    public static final RegistryObject<Item> USELESS_SHEEP_SPAWN_EGG = RegistryObject.create(ModEntityTypes.USELESS_SHEEP.getId().withSuffix("_spawn_egg"), ForgeRegistries.ITEMS);
 }

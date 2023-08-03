@@ -18,7 +18,9 @@ import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
 import org.apache.commons.lang3.tuple.Triple;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -120,6 +122,15 @@ public final class UselessCreativeModeTabs {
                         BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
                         return stack;
                     }).forEach(event::accept);
+        }
+
+        // Add Spawn Eggs
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(ModItems.USELESS_SKELETON_SPAWN_EGG);
+            event.accept(ModItems.USELESS_CHICKEN_SPAWN_EGG);
+            event.accept(ModItems.USELESS_COW_SPAWN_EGG);
+            event.accept(ModItems.USELESS_PIG_SPAWN_EGG);
+            event.accept(ModItems.USELESS_SHEEP_SPAWN_EGG);
         }
     }
 
