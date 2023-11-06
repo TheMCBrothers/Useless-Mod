@@ -1,3 +1,7 @@
+## Useless Mod 7.2.0 ##
+- Added Bucket with Paint
+- Added Spawn Eggs to the corresponding Creative Tab
+
 ## Useless Mod 7.1.0 ##
 - Added Paint Bucket functionality
 - Added Slot Icons in Coffee Machine GUI
