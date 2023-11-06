@@ -3,8 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id 'com.modrinth.minotaur' version '2.+'
+    id 'me.modmuss50.mod-publish-plugin' version '0.4.+'
 }
 
 base {
@@ -164,22 +163,6 @@ jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 // publish.dependsOn('reobfJar')
 
-private String getSecret(String key) {
-    def secret = System.getenv(key)
-    if (secret != null) {
-        return secret.trim()
-    }
-
-    File secretFile = file('secrets.properties')
-    if (secretFile.canRead()) {
-        Properties secretProps = new Properties()
-        secretProps.load(new FileInputStream(secretFile))
-        return secretProps.getProperty(key).toString()
-    }
-
-    return null
-}
-
 // Publish on Nexus
 publishing {
     publications { PublicationContainer publicationContainer ->
@@ -192,8 +175,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username = getSecret('nexus_uname')
-                password = getSecret('nexus_pwd')
+                username = System.getenv('nexus_uname')
+                password = System.getenv('nexus_pwd')
             }
 
             url 'https://nexus.themcbrothers.net/repository/maven-releases/'
@@ -201,41 +184,56 @@ publishing {
     }
 }
 
-var curseForgeKey = getSecret('cf_key')
-var modrinthToken = getSecret('modrinth_token')
+var curseForgeKey = providers.environmentVariable('cf_key')
+var modrinthToken = providers.environmentVariable('modrinth_token')
 
-// Publish on CurseForge
-if (curseForgeKey != null) {
-    curseforge {
-        apiKey = curseForgeKey
+publishMods {
+    file = tasks.jar.archiveFile
+    type = artifactType == 'release' ? STABLE : artifactType == 'beta' ? BETA : ALPHA
 
-        project {
-            id = curseProjectId
-            changelogType = 'markdown'
-            changelog = file('changelog.md')
-            releaseType = artifactType
-            addGameVersion(minecraftVersion)
-            mainArtifact jar
-            relations {
-                requiredDependency 'themcbroslib'
-                optionalDependency 'jei'
+    var changes = file('changelog.md').text
+
+    modLoaders.add("forge")
+    modLoaders.add("neoforge")
+
+    // Publish to CurseForge
+    if (curseForgeKey.isPresent()) {
+        curseforge {
+            accessToken = curseForgeKey
+            projectId = curseProjectId
+            changelog = changes
+            minecraftVersions.add(minecraftVersion)
+
+            requires {
+                slug = "themcbroslib"
+            }
+
+            optional {
+                slug = "jei"
+            }
+        }
+    }
+
+    // Publish to Modrinth
+    if (modrinthToken.isPresent()) {
+        modrinth {
+            accessToken = modrinthToken
+            projectId = modrinthProject
+            displayName = version
+            changelog = changes.substring(changes.indexOf('\n'), changes.indexOf('\n\n'))
+            minecraftVersions.add(minecraftVersion)
+
+            requires {
+                slug = "themcbroslib"
+            }
+
+            optional {
+                slug = "jei"
             }
         }
     }
 }
 
-// Publish on Modrinth
-if (modrinthToken != null) {
-    modrinth {
-        token = modrinthToken
-        projectId = modrinthProject
-        versionType = artifactType
-        uploadFile = jar
-        var changes = file('changelog.md').text
-        changelog = changes.substring(changes.indexOf('\n'), changes.indexOf('\n\n'))
-        dependencies {
-            required.project 'themcbroslib'
-            optional.project 'jei'
-        }
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
