@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   publish:
-    uses: TheMCBrothers/.github/.github/workflows/mod_publish.yml@main
+    uses: TheMCBrothers/.github/.github/workflows/mod_publish.yml@neo
     secrets:
       CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
       MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
