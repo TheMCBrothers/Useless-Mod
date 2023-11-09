@@ -6,8 +6,11 @@ plugins {
     id 'me.modmuss50.mod-publish-plugin' version '0.4.+'
 }
 
+version = mod_version
+group = mod_group_id
+
 base {
-    archivesName = archivesBase
+    archivesName = mod_id
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -15,7 +18,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: mappingsChannel, version: mappingsVersion
+    mappings channel: mapping_channel, version: mapping_version
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -42,7 +45,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                "${modId}" {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -50,17 +53,17 @@ minecraft {
 
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', modId
+            property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         server {
-            property 'forge.enabledGameTestNamespaces', modId
+            property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
         }
 
         data {
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
@@ -78,59 +81,39 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:$minecraftVersion-$forgeVersion"
+    minecraft "net.minecraftforge:forge:$minecraft_version-$forge_version"
 
     // TheMCBrosLib
-    implementation fg.deobf("net.themcbrothers:TheMCBrosLib:$minecraftVersion-$libraryVersion")
+    implementation fg.deobf("net.themcbrothers:TheMCBrosLib:$minecraft_version-$lib_version")
 
     // JEI
-    compileOnly fg.deobf("mezz.jei:jei-$minecraftVersion-common-api:$jeiVersion")
-    compileOnly fg.deobf("mezz.jei:jei-$minecraftVersion-forge-api:$jeiVersion")
-    runtimeOnly fg.deobf("mezz.jei:jei-$minecraftVersion-forge:$jeiVersion")
+    compileOnly fg.deobf("mezz.jei:jei-$minecraft_version-common-api:$jei_version")
+    compileOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge-api:$jei_version")
+    runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge:$jei_version")
 
     // Optional: Configured and Catalogue
-    if (!catalogueFileId.isEmpty()) runtimeOnly fg.deobf("curse.maven:catalogue-459701:$catalogueFileId")
-    if (!configuredFileId.isEmpty()) runtimeOnly fg.deobf("curse.maven:configured-457570:$configuredFileId")
+    if (!catalogue_file_id.isEmpty()) runtimeOnly fg.deobf("curse.maven:catalogue-459701:$catalogue_file_id")
+    if (!configured_file_id.isEmpty()) runtimeOnly fg.deobf("curse.maven:configured-457570:$configured_file_id")
 }
 
 tasks.named('processResources', ProcessResources).configure {
-    var replaceProperties = [
-            file: [jarVersion: version],
-            modName: modName,
-            modId: modId,
-            modAuthors: modAuthors,
-            modCredits: modCredits,
-            modDescription: modDescription,
-            modLicense: modLicense,
-            modUpdateJSON: modUpdateJSON,
-            modURL: modURL,
-            modIssues: modIssues,
-            catalogueItemIcon: catalogueItemIcon,
-            configuredBackground: configuredBackground,
-            loaderVersionRange: loaderVersionRange,
-            minecraftVersionRange: minecraftVersionRange,
-            forgeVersionRange: forgeVersionRange,
-            libraryVersionRange: libraryVersionRange
-    ]
-    inputs.properties replaceProperties
-
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
+        expand project: project
     }
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
 tasks.named('jar', Jar).configure {
     exclude 'net/themcbrothers/uselessmod/data/**'
-    archiveAppendix = minecraftVersion
+    archiveAppendix = minecraft_version
     manifest {
         attributes([
-                "Specification-Title"     : modId,
-                "Specification-Vendor"    : modAuthors,
+                "Specification-Title"     : mod_id,
+                "Specification-Vendor"    : mod_authors,
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : jar.archiveVersion,
-                "Implementation-Vendor"   : modAuthors,
+                "Implementation-Vendor"   : mod_authors,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
@@ -143,8 +126,8 @@ publishing {
     publications { PublicationContainer publicationContainer ->
         publicationContainer.register("maven", MavenPublication) { MavenPublication publication ->
             publication.artifacts = [jar]
-            publication.version = "$project.minecraftVersion-$project.version"
-            publication.artifactId = project.mavenName
+            publication.version = "$project.minecraft_version-$project.version"
+            publication.artifactId = project.maven_name
         }
     }
     repositories {
@@ -164,7 +147,7 @@ publishing {
 
 publishMods {
     file = tasks.jar.archiveFile
-    type = artifactType == 'release' ? STABLE : artifactType == 'beta' ? BETA : ALPHA
+    type = artifact_type == 'release' ? STABLE : artifact_type == 'beta' ? BETA : ALPHA
 
     var changes = file('changelog.md').text
 
@@ -175,9 +158,9 @@ publishMods {
     if (curseForgeKey.isPresent()) {
         curseforge {
             accessToken = curseForgeKey
-            projectId = curseProjectId
+            projectId = curse_project_id
             changelog = changes
-            minecraftVersions.add(minecraftVersion)
+            minecraftVersions.add(minecraft_version)
 
             requires {
                 slug = "themcbroslib"
@@ -193,10 +176,10 @@ publishMods {
     if (modrinthToken.isPresent()) {
         modrinth {
             accessToken = modrinthToken
-            projectId = modrinthProject
+            projectId = modrinth_project_id
             displayName = version
             changelog = changes.substring(changes.indexOf('\n'), changes.indexOf('\n\n'))
-            minecraftVersions.add(minecraftVersion)
+            minecraftVersions.add(minecraft_version)
 
             requires {
                 slug = "themcbroslib"
