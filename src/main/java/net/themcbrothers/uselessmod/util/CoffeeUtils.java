@@ -21,7 +21,7 @@ public class CoffeeUtils {
         final CompoundTag tag = stack.getTag();
         if (tag != null && tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
             final ResourceLocation registryName = ResourceLocation.tryParse(tag.getString(TAG_COFFEE));
-            return Optional.ofNullable(UselessRegistries.coffeeRegistry.get().getValue(registryName));
+            return Optional.ofNullable(UselessRegistries.coffeeRegistry.get(registryName));
         }
 
         return Optional.empty();
@@ -35,7 +35,7 @@ public class CoffeeUtils {
     @NotNull
     public static ItemStack createCoffeeStack(final CoffeeType type) {
         final ItemStack stack = new ItemStack(ModBlocks.CUP_COFFEE);
-        stack.getOrCreateTag().putString(TAG_COFFEE, String.valueOf(UselessRegistries.coffeeRegistry.get().getKey(type)));
+        stack.getOrCreateTag().putString(TAG_COFFEE, String.valueOf(UselessRegistries.coffeeRegistry.getKey(type)));
         return stack;
     }
 }

@@ -2,8 +2,8 @@ package net.themcbrothers.uselessmod.util;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -14,11 +14,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
@@ -26,7 +25,6 @@ import net.themcbrothers.uselessmod.init.ModBlocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Objects;
 
 public class WallClosetRecipeManager implements ResourceManagerReloadListener {
@@ -40,17 +38,16 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
 
     @Override
     public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
-        ForgeRegistries.BLOCKS.getEntries().stream()
+        BuiltInRegistries.BLOCK.stream()
                 .filter(WallClosetRecipeManager::isValidMaterial)
-                .map(Map.Entry::getValue)
                 .map(WallClosetRecipeManager::createWallClosetRecipe)
                 .filter(Objects::nonNull)
                 .forEach(RecipeHelper::addRecipe);
     }
 
-    public static boolean isValidMaterial(Map.Entry<ResourceKey<Block>, Block> entry) {
+    public static boolean isValidMaterial(Block block) {
         Collection<Holder<Block>> wallClosetMaterials = context.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS);
-        return wallClosetMaterials.isEmpty() || wallClosetMaterials.stream().anyMatch(blockHolder -> blockHolder.is(entry.getKey()));
+        return wallClosetMaterials.isEmpty() || wallClosetMaterials.stream().anyMatch(blockHolder -> blockHolder.is(BuiltInRegistries.BLOCK.getKey(block)));
     }
 
     private static ShapedRecipe createWallClosetRecipe(Block material) {
@@ -69,18 +66,18 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
 
         ItemStack output = new ItemStack(ModBlocks.WALL_CLOSET);
         CompoundTag tag = new CompoundTag();
-        String reg = String.valueOf(ForgeRegistries.BLOCKS.getKey(material));
+        String reg = String.valueOf(BuiltInRegistries.BLOCK.getKey(material));
         tag.putString("Material", reg);
         BlockItem.setBlockEntityData(output, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
         ResourceLocation name = UselessMod.rl("closet." + reg.replace(':', '.'));
-        return new ShapedRecipe(name, "uselessmod:closets", CraftingBookCategory.MISC, 3, 3, ingredients, output);
+        return new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, 3, 3, ingredients, output);
     }
 
     @NotNull
     public static Block getSlab(Block block) {
-        ResourceLocation blockReg = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
-        Block result;
+        ResourceLocation blockReg = BuiltInRegistries.BLOCK.getKey(block);
+        Block result = Blocks.AIR;
 
         String namespace = blockReg.getNamespace();
         String path = blockReg.getPath();
@@ -89,25 +86,19 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
             String newPath = path.substring(0, path.length() - "_planks".length()) + "_slab";
             ResourceLocation newReg = new ResourceLocation(namespace, newPath);
 
-            result = ForgeRegistries.BLOCKS.getValue(newReg);
-
-            if (result != null) {
-                return result;
-            }
+            result = BuiltInRegistries.BLOCK.get(newReg);
         } else if (path.endsWith("s")) {
             String newPath = path.substring(0, path.length() - 1) + "_slab";
             ResourceLocation newReg = new ResourceLocation(namespace, newPath);
 
-            result = ForgeRegistries.BLOCKS.getValue(newReg);
+            result = BuiltInRegistries.BLOCK.get(newReg);
+        }
 
-            if (result != null) {
-                return result;
-            }
+        if (result != Blocks.AIR) {
+            return result;
         }
 
         ResourceLocation newReg = new ResourceLocation(namespace, path + "_slab");
-
-        result = ForgeRegistries.BLOCKS.getValue(newReg);
-        return result != null ? result : Blocks.AIR;
+        return BuiltInRegistries.BLOCK.get(newReg);
     }
 }

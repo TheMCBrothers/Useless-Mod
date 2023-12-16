@@ -2,7 +2,6 @@ package net.themcbrothers.uselessmod.world.item.crafting;
 
 import com.google.common.collect.Lists;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -16,8 +15,8 @@ import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 import java.util.List;
 
 public class PaintBrushDyeRecipe extends CustomRecipe {
-    public PaintBrushDyeRecipe(ResourceLocation id, CraftingBookCategory category) {
-        super(id, category);
+    public PaintBrushDyeRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

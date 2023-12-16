@@ -25,20 +25,20 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidActionResult;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
@@ -142,7 +142,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 int freeEnergySpace = coffeeMachine.energyStorage.getMaxEnergyStored() - coffeeMachine.energyStorage.getEnergyStored();
                 int maxReceive = coffeeMachine.energyStorage.getMaxReceive();
                 if (freeEnergySpace > 0) {
-                    energySlotStack.getCapability(ForgeCapabilities.ENERGY).ifPresent(itemEnergyStorage -> {
+                    energySlotStack.getCapability(Capabilities.ENERGY).ifPresent(itemEnergyStorage -> {
                         if (itemEnergyStorage.canExtract()) {
                             int extracted = itemEnergyStorage.extractEnergy(Math.min(freeEnergySpace, maxReceive), false);
                             coffeeMachine.energyStorage.growEnergy(extracted);
@@ -452,11 +452,11 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER && side != null) {
+        if (cap == Capabilities.ITEM_HANDLER && side != null) {
             return this.itemHandlers[side.ordinal()].cast();
-        } else if (cap == ForgeCapabilities.ENERGY) {
+        } else if (cap == Capabilities.ENERGY) {
             return this.energyHolder.cast();
-        } else if (cap == ForgeCapabilities.FLUID_HANDLER) {
+        } else if (cap == Capabilities.FLUID_HANDLER) {
             return this.fluidHolder.cast();
         } else {
             return super.getCapability(cap, side);

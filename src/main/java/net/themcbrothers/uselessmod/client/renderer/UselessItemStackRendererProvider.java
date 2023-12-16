@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.client.renderer;
 
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 public class UselessItemStackRendererProvider {
     private static UselessBlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer;

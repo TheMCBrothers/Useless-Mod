@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.data.loot;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
@@ -15,14 +16,12 @@ import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
 import net.themcbrothers.uselessmod.world.level.storage.loot.UselessLootTables;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
 public class UselessEntityLoot extends EntityLootSubProvider {
@@ -42,8 +41,7 @@ public class UselessEntityLoot extends EntityLootSubProvider {
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-        return ForgeRegistries.ENTITY_TYPES.getEntries().stream()
-                .filter(entry -> entry.getKey().location().getNamespace().equals(UselessMod.MOD_ID))
-                .map(Map.Entry::getValue);
+        return BuiltInRegistries.ENTITY_TYPE.stream()
+                .filter(entry -> EntityType.getKey(entry).getNamespace().equals(UselessMod.MOD_ID));
     }
 }

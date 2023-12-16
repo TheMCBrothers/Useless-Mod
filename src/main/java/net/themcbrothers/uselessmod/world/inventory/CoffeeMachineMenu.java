@@ -9,11 +9,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.themcbrothers.lib.energy.EnergyProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
@@ -155,7 +155,7 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isFluidItem(ItemStack stack) {
-        return stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+        return stack.getCapability(Capabilities.FLUID_HANDLER_ITEM)
                 .map(fluidHandlerItem -> {
                     for (int i = 0; i < fluidHandlerItem.getTanks(); i++) {
                         FluidStack fluidStack = fluidHandlerItem.getFluidInTank(i);
@@ -167,7 +167,7 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isEnergyItem(ItemStack stack) {
-        return stack.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::canExtract).orElse(false);
+        return stack.getCapability(Capabilities.ENERGY).map(IEnergyStorage::canExtract).orElse(false);
     }
 
     @Override

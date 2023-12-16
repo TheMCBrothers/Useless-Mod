@@ -20,6 +20,7 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
@@ -33,14 +34,13 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.ChunkRenderTypeSet;
-import net.minecraftforge.client.model.IDynamicBakedModel;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.geometry.BlockGeometryBakingContext;
-import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
-import net.minecraftforge.client.model.geometry.IGeometryLoader;
-import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.ChunkRenderTypeSet;
+import net.neoforged.neoforge.client.model.IDynamicBakedModel;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.geometry.BlockGeometryBakingContext;
+import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
+import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
+import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.apache.commons.compress.utils.Lists;
@@ -75,7 +75,7 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     private BakedModel getCustomModel(Block material, Direction facing) {
         BakedModel customModel;
-        String key = ForgeRegistries.BLOCKS.getKey(material) + ";" + facing.getName();
+        String key = BuiltInRegistries.BLOCK.getKey(material) + ";" + facing.getName();
         BakedModel possibleModel = this.cache.get(key);
 
         if (possibleModel != null) {
@@ -185,7 +185,7 @@ public class WallClosetModel implements IDynamicBakedModel {
                 CompoundTag tag = BlockItem.getBlockEntityData(stack);
                 if (tag != null && tag.contains("Material", Tag.TAG_STRING)) {
                     final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-                    final Block material = ForgeRegistries.BLOCKS.containsKey(key) ? ForgeRegistries.BLOCKS.getValue(key) : Blocks.OAK_PLANKS;
+                    final Block material = BuiltInRegistries.BLOCK.containsKey(key) ? BuiltInRegistries.BLOCK.get(key) : Blocks.OAK_PLANKS;
                     return wallClosetModel.getCustomModel(Objects.requireNonNull(material), Direction.NORTH);
                 }
             }

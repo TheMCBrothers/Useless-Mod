@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.item.crafting;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,7 +23,6 @@ import net.themcbrothers.uselessmod.init.ModRecipeTypes;
 import org.jetbrains.annotations.Nullable;
 
 public class CoffeeRecipe implements CommonRecipe<Container> {
-    private final ResourceLocation id;
     private final String group;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
@@ -32,11 +32,10 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
     private final ItemStack result;
     private final int cookingTime;
 
-    public CoffeeRecipe(ResourceLocation id, String group,
+    public CoffeeRecipe(String group,
                         Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
                         FluidIngredient waterIngredient, FluidIngredient milkIngredient,
                         ItemStack result, int cookingTime) {
-        this.id = id;
         this.group = group;
         this.cupIngredient = cupIngredient;
         this.beanIngredient = beanIngredient;
@@ -97,11 +96,6 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.COFFEE.get();
     }
@@ -116,36 +110,36 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
         public CoffeeRecipe fromJson(ResourceLocation id, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
             JsonElement jsonCup = GsonHelper.isArrayNode(json, "cup") ? GsonHelper.getAsJsonArray(json, "cup") : GsonHelper.getAsJsonObject(json, "cup");
-            Ingredient cupIngredient = Ingredient.fromJson(jsonCup);
+            Ingredient cupIngredient = Ingredient.fromJson(jsonCup, true);
             JsonElement jsonBean = GsonHelper.isArrayNode(json, "bean") ? GsonHelper.getAsJsonArray(json, "bean") : GsonHelper.getAsJsonObject(json, "bean");
-            Ingredient beanIngredient = Ingredient.fromJson(jsonBean);
+            Ingredient beanIngredient = Ingredient.fromJson(jsonBean, true);
             Ingredient extraIngredient = Ingredient.EMPTY;
             if (json.has("extra")) {
                 JsonElement jsonExtra = GsonHelper.isArrayNode(json, "extra") ? GsonHelper.getAsJsonArray(json, "extra") : GsonHelper.getAsJsonObject(json, "extra");
-                extraIngredient = Ingredient.fromJson(jsonExtra);
+                extraIngredient = Ingredient.fromJson(jsonExtra, false);
             }
             FluidIngredient waterIngredient = FluidIngredient.deserialize(json, "water");
             FluidIngredient milkIngredient = json.has("milk") ? FluidIngredient.deserialize(json, "milk") : FluidIngredient.EMPTY;
             ItemStack recipeOutput = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
             int cookingTime = GsonHelper.getAsInt(json, "cookingtime", 150);
 
-            return new CoffeeRecipe(id, group, cupIngredient, beanIngredient, extraIngredient,
+            return new CoffeeRecipe(group, cupIngredient, beanIngredient, extraIngredient,
                     waterIngredient, milkIngredient, recipeOutput, cookingTime);
         }
 
         @Nullable
         @Override
-        public CoffeeRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        public CoffeeRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
             Ingredient cupIngredient = Ingredient.fromNetwork(buffer);
             Ingredient beanIngredient = Ingredient.fromNetwork(buffer);
             Ingredient extraIngredient = Ingredient.fromNetwork(buffer);
-            FluidIngredient waterIngredient = FluidIngredient.read(buffer);
-            FluidIngredient milkIngredient = FluidIngredient.read(buffer);
+            FluidIngredient waterIngredient = FluidIngredient.fromNetwork(buffer);
+            FluidIngredient milkIngredient = FluidIngredient.fromNetwork(buffer);
             ItemStack recipeOutput = buffer.readItem();
             int cookingTime = buffer.readInt();
 
-            return new CoffeeRecipe(id, group, cupIngredient, beanIngredient, extraIngredient,
+            return new CoffeeRecipe(group, cupIngredient, beanIngredient, extraIngredient,
                     waterIngredient, milkIngredient, recipeOutput, cookingTime);
         }
 
@@ -155,8 +149,8 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
             recipe.cupIngredient.toNetwork(buffer);
             recipe.beanIngredient.toNetwork(buffer);
             recipe.extraIngredient.toNetwork(buffer);
-            recipe.waterIngredient.write(buffer);
-            recipe.milkIngredient.write(buffer);
+            recipe.waterIngredient.toNetwork(buffer);
+            recipe.milkIngredient.toNetwork(buffer);
             buffer.writeItem(recipe.result);
             buffer.writeInt(recipe.cookingTime);
         }

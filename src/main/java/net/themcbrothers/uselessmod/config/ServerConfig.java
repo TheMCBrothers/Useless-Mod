@@ -1,23 +1,23 @@
 package net.themcbrothers.uselessmod.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public final class ServerConfig {
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec SPEC;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
 
     // World Generation
-    public static final ForgeConfigSpec.BooleanValue ORE_GEN_OVERWORLD;
-    public static final ForgeConfigSpec.BooleanValue ORE_GEN_NETHER;
-    public static final ForgeConfigSpec.BooleanValue ORE_GEN_END;
+    public static final ModConfigSpec.BooleanValue ORE_GEN_OVERWORLD;
+    public static final ModConfigSpec.BooleanValue ORE_GEN_NETHER;
+    public static final ModConfigSpec.BooleanValue ORE_GEN_END;
 
     // Coffee Machine
-    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_ENERGY_CAPACITY;
-    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_ENERGY_TRANSFER;
-    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_ENERGY_PER_TICK;
-    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_WATER_CAPACITY;
-    public static final ForgeConfigSpec.IntValue COFFEE_MACHINE_MILK_CAPACITY;
+    public static final ModConfigSpec.IntValue COFFEE_MACHINE_ENERGY_CAPACITY;
+    public static final ModConfigSpec.IntValue COFFEE_MACHINE_ENERGY_TRANSFER;
+    public static final ModConfigSpec.IntValue COFFEE_MACHINE_ENERGY_PER_TICK;
+    public static final ModConfigSpec.IntValue COFFEE_MACHINE_WATER_CAPACITY;
+    public static final ModConfigSpec.IntValue COFFEE_MACHINE_MILK_CAPACITY;
 
     static {
         BUILDER.push("oregen");

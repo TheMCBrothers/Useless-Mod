@@ -1,12 +1,13 @@
 package net.themcbrothers.uselessmod.data;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
@@ -18,17 +19,17 @@ import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 import static net.themcbrothers.uselessmod.UselessMod.rl;
 
 public class UselessRecipeProvider extends RecipeProvider {
-    public UselessRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public UselessRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         // WOOD
         planksFromLogs(consumer, ModBlocks.USELESS_OAK_PLANKS, UselessTags.Items.USELESS_OAK_LOGS, 4);
         woodFromLogs(consumer, ModBlocks.USELESS_OAK_WOOD, ModBlocks.USELESS_OAK_LOG);
@@ -119,22 +120,22 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PAINT_BUCKET).define('#', UselessTags.Items.INGOTS_USELESS).define('X', Tags.Items.RODS_WOODEN).pattern("#X#").pattern(" # ").unlockedBy(getHasName(ModItems.USELESS_INGOT), has(UselessTags.Items.INGOTS_USELESS)).save(consumer);
 
         // Lamps
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.WHITE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_WHITE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.ORANGE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_ORANGE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.MAGENTA_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_MAGENTA).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.LIGHT_BLUE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_LIGHT_BLUE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.YELLOW_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_YELLOW).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.LIME_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_LIME).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.PINK_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_PINK).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.GRAY_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_GRAY).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.LIGHT_GRAY_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_LIGHT_GRAY).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.CYAN_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_CYAN).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.PURPLE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_PURPLE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BLUE_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_BLUE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BROWN_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_BROWN).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.GREEN_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_GREEN).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.RED_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_RED).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BLACK_LAMP).requires(Ingredient.merge(List.of(Ingredient.of(Items.REDSTONE_LAMP), Ingredient.of(UselessTags.Items.LAMPS)))).requires(Tags.Items.DYES_BLACK).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.WHITE_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_WHITE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.ORANGE_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_ORANGE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.MAGENTA_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_MAGENTA).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.LIGHT_BLUE_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_LIGHT_BLUE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.YELLOW_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_YELLOW).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.LIME_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_LIME).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.PINK_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_PINK).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.GRAY_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_GRAY).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.LIGHT_GRAY_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_LIGHT_GRAY).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.CYAN_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_CYAN).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.PURPLE_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_PURPLE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BLUE_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_BLUE).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BROWN_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_BROWN).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.GREEN_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_GREEN).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.RED_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_RED).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BLACK_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_BLACK).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
 
         // Coffee
         CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.BLACK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_black"));

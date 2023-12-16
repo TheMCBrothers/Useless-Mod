@@ -2,19 +2,19 @@ package net.themcbrothers.uselessmod.init;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.themcbrothers.uselessmod.UselessMod;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class UselessFluidTypes {
     static void register() {
     }
 
-    public static final RegistryObject<FluidType> PAINT = Registration.FLUID_TYPES.register("paint", () ->
+    public static final Supplier<FluidType> PAINT = Registration.FLUID_TYPES.register("paint", () ->
             new FluidType(FluidType.Properties.create()
                     .density(2048)
                     .viscosity(2048)) {
