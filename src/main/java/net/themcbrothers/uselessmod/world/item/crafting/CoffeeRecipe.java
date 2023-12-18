@@ -1,26 +1,23 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.lib.crafting.CommonRecipe;
 import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
-import org.jetbrains.annotations.Nullable;
 
 public class CoffeeRecipe implements CommonRecipe<Container> {
     private final String group;
@@ -106,28 +103,23 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<CoffeeRecipe> {
-        @Override
-        public CoffeeRecipe fromJson(ResourceLocation id, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            JsonElement jsonCup = GsonHelper.isArrayNode(json, "cup") ? GsonHelper.getAsJsonArray(json, "cup") : GsonHelper.getAsJsonObject(json, "cup");
-            Ingredient cupIngredient = Ingredient.fromJson(jsonCup, true);
-            JsonElement jsonBean = GsonHelper.isArrayNode(json, "bean") ? GsonHelper.getAsJsonArray(json, "bean") : GsonHelper.getAsJsonObject(json, "bean");
-            Ingredient beanIngredient = Ingredient.fromJson(jsonBean, true);
-            Ingredient extraIngredient = Ingredient.EMPTY;
-            if (json.has("extra")) {
-                JsonElement jsonExtra = GsonHelper.isArrayNode(json, "extra") ? GsonHelper.getAsJsonArray(json, "extra") : GsonHelper.getAsJsonObject(json, "extra");
-                extraIngredient = Ingredient.fromJson(jsonExtra, false);
-            }
-            FluidIngredient waterIngredient = FluidIngredient.deserialize(json, "water");
-            FluidIngredient milkIngredient = json.has("milk") ? FluidIngredient.deserialize(json, "milk") : FluidIngredient.EMPTY;
-            ItemStack recipeOutput = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-            int cookingTime = GsonHelper.getAsInt(json, "cookingtime", 150);
+        private static final Codec<CoffeeRecipe> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(
+                        ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+                        Ingredient.CODEC_NONEMPTY.fieldOf("cup").forGetter(recipe -> recipe.cupIngredient),
+                        Ingredient.CODEC_NONEMPTY.fieldOf("bean").forGetter(recipe -> recipe.beanIngredient),
+                        Ingredient.CODEC.fieldOf("extra").orElse(Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
+                        FluidIngredient.CODEC_NONEMPTY.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
+                        FluidIngredient.CODEC.fieldOf("milk").orElse(FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
+                        CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                        Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
+                ).apply(instance, CoffeeRecipe::new));
 
-            return new CoffeeRecipe(group, cupIngredient, beanIngredient, extraIngredient,
-                    waterIngredient, milkIngredient, recipeOutput, cookingTime);
+        @Override
+        public Codec<CoffeeRecipe> codec() {
+            return CODEC;
         }
 
-        @Nullable
         @Override
         public CoffeeRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();

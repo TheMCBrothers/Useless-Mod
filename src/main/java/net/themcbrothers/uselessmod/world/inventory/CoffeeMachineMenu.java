@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -45,7 +46,7 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     public final CoffeeMachineBlockEntity blockEntity;
     private final ContainerData data;
     private final ContainerLevelAccess levelAccess;
-    private final List<CoffeeRecipe> recipes;
+    private final List<RecipeHolder<CoffeeRecipe>> recipes;
 
     public CoffeeMachineMenu(int id, Inventory inventory, CoffeeMachineBlockEntity coffeeMachine, ContainerData data) {
         super(ModMenuTypes.COFFEE_MACHINE.get(), id);
@@ -143,15 +144,15 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isCup(ItemStack stack) {
-        return this.recipes.stream().anyMatch(recipe -> recipe.getCupIngredient().test(stack));
+        return this.recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> recipe.getCupIngredient().test(stack));
     }
 
     private boolean isBean(ItemStack stack) {
-        return this.recipes.stream().anyMatch(recipe -> recipe.getBeanIngredient().test(stack));
+        return this.recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> recipe.getBeanIngredient().test(stack));
     }
 
     private boolean isExtra(ItemStack stack) {
-        return this.recipes.stream().anyMatch(recipe -> recipe.getExtraIngredient().test(stack));
+        return this.recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> recipe.getExtraIngredient().test(stack));
     }
 
     private boolean isFluidItem(ItemStack stack) {

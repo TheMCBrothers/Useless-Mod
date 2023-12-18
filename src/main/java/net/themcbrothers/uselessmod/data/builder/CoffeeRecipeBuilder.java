@@ -1,15 +1,17 @@
 package net.themcbrothers.uselessmod.data.builder;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriterionTriggerInstance;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.Util;
+import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.themcbrothers.lib.crafting.FluidIngredient;
@@ -17,8 +19,8 @@ import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
-import java.util.function.Consumer;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CoffeeRecipeBuilder implements RecipeBuilder {
     private final ItemStack result;
@@ -28,7 +30,7 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     private final FluidIngredient waterIngredient;
     private final FluidIngredient milkIngredient;
     private final int cookingTime;
-    private final Advancement.Builder advancement = Advancement.Builder.advancement();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
 
@@ -49,8 +51,8 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public @NotNull CoffeeRecipeBuilder unlockedBy(@NotNull String criteriaName, @NotNull CriterionTriggerInstance triggerInstance) {
-        this.advancement.addCriterion(criteriaName, triggerInstance);
+    public @NotNull CoffeeRecipeBuilder unlockedBy(@NotNull String criteriaName, @NotNull Criterion<?> criterion) {
+        this.criteria.put(criteriaName, criterion);
         return this;
     }
 
@@ -66,95 +68,61 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
+    public void save(RecipeOutput consumer, @NotNull ResourceLocation id) {
         this.ensureValid(id);
-        this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
+        Advancement.Builder advancement = consumer.advancement()
+                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
+                .rewards(AdvancementRewards.Builder.recipe(id))
+                .requirements(AdvancementRequirements.Strategy.OR);
+
+        this.criteria.forEach(advancement::addCriterion);
+
         consumer.accept(new Result(id, this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
-                this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime, this.advancement,
-                new ResourceLocation(id.getNamespace(), "recipes/coffee/" + id.getPath())));
+                this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime,
+                advancement.build(id.withPath("recipes/coffee/"))));
     }
 
     private void ensureValid(ResourceLocation id) {
-        if (this.advancement.getCriteria().isEmpty()) {
+        if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }
     }
 
-    public static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final String group;
-        private final Ingredient cupIngredient;
-        private final Ingredient beanIngredient;
-        private final Ingredient extraIngredient;
-        private final FluidIngredient waterIngredient;
-        private final FluidIngredient milkIngredient;
-        private final ItemStack result;
-        private final int cookingTime;
-        private final Advancement.Builder advancement;
-        private final ResourceLocation advancementId;
-
-        public Result(ResourceLocation id, String group, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
-                      FluidIngredient waterIngredient, FluidIngredient milkIngredient, ItemStack result, int cookingTime,
-                      Advancement.Builder advancement, ResourceLocation advancementId) {
-            this.id = id;
-            this.group = group;
-            this.cupIngredient = cupIngredient;
-            this.beanIngredient = beanIngredient;
-            this.extraIngredient = extraIngredient;
-            this.waterIngredient = waterIngredient;
-            this.milkIngredient = milkIngredient;
-            this.result = result;
-            this.cookingTime = cookingTime;
-            this.advancement = advancement;
-            this.advancementId = advancementId;
-        }
-
+    public record Result(
+            ResourceLocation id,
+            String group,
+            Ingredient cupIngredient,
+            Ingredient beanIngredient,
+            Ingredient extraIngredient,
+            FluidIngredient waterIngredient,
+            FluidIngredient milkIngredient,
+            ItemStack result,
+            int cookingTime,
+            AdvancementHolder advancement
+    ) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(@NotNull JsonObject json) {
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);
             }
 
-            json.add("cup", this.cupIngredient.toJson());
-            json.add("bean", this.beanIngredient.toJson());
+            json.add("cup", this.cupIngredient.toJson(false));
+            json.add("bean", this.beanIngredient.toJson(false));
             if (!this.extraIngredient.isEmpty()) {
-                json.add("extra", this.extraIngredient.toJson());
+                json.add("extra", this.extraIngredient.toJson(true));
             }
-            json.add("water", this.waterIngredient.serialize());
-            if (!Objects.equals(this.milkIngredient, FluidIngredient.EMPTY)) {
-                json.add("milk", this.milkIngredient.serialize());
-            }
-
-            JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", String.valueOf(ForgeRegistries.ITEMS.getKey(this.result.getItem())));
-            if (this.result.hasTag() && this.result.getTag() != null) {
-                resultObject.addProperty("nbt", this.result.getTag().toString());
+            json.add("water", this.waterIngredient.toJson(false));
+            if (!this.milkIngredient.isEmpty()) {
+                json.add("milk", this.milkIngredient.toJson(true));
             }
 
-            json.add("result", resultObject);
+            json.add("result", Util.getOrThrow(CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.encodeStart(JsonOps.INSTANCE, this.result), IllegalStateException::new));
             json.addProperty("cookingtime", this.cookingTime);
         }
 
         @Override
-        public @NotNull ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public @NotNull RecipeSerializer<?> getType() {
+        public @NotNull RecipeSerializer<?> type() {
             return ModRecipeSerializers.COFFEE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return this.advancement.serializeToJson();
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return this.advancementId;
         }
     }
 }

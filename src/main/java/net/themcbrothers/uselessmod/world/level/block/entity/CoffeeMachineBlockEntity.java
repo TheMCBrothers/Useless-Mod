@@ -22,6 +22,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -228,7 +229,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     @Nullable
     private CoffeeRecipe getCurrentRecipe() {
         if (this.level == null) return null;
-        for (CoffeeRecipe recipe : this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())) {
+        for (RecipeHolder<CoffeeRecipe> recipeHolder : this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())) {
+            CoffeeRecipe recipe = recipeHolder.value();
             boolean flag = recipe.getCupIngredient().test(getItem(0))
                     && recipe.getBeanIngredient().test(getItem(1))
                     && recipe.getWaterIngredient().test(this.tankHandler.getFluidInTank(0));
