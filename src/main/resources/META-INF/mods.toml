@@ -3,6 +3,9 @@ loaderVersion = "${project.loader_version_range}"
 license = "${project.mod_license}"
 issueTrackerURL = "https://github.com/${project.github_repo}/issues"
 
+[[accessTransformers]]
+    file="META-INF/accesstransformer.cfg"
+
 [[mods]]
     modId = "${project.mod_id}"
     version = "${project.version}"
