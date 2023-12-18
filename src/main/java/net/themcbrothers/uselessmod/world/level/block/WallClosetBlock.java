@@ -3,7 +3,9 @@ package net.themcbrothers.uselessmod.world.level.block;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
@@ -63,12 +64,10 @@ public class WallClosetBlock extends BaseEntityBlock {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag) {
         CompoundTag tag = BlockItem.getBlockEntityData(stack);
-        if (tag != null) {
+        if (tag != null && tag.contains("Material", Tag.TAG_STRING)) {
             final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-            Block block = ForgeRegistries.BLOCKS.getValue(key);
-            if (block != null) {
-                hoverText.add(block.getName().withStyle(ChatFormatting.GRAY));
-            }
+            Block block = BuiltInRegistries.BLOCK.get(key);
+            hoverText.add(block.getName().withStyle(ChatFormatting.GRAY));
         }
     }
 
@@ -78,7 +77,7 @@ public class WallClosetBlock extends BaseEntityBlock {
             final ItemStack stack = new ItemStack(this);
             final CompoundTag tag = new CompoundTag();
 
-            tag.putString("Material", String.valueOf(ForgeRegistries.BLOCKS.getKey(wallCloset.getMaterial())));
+            tag.putString("Material", String.valueOf(BuiltInRegistries.BLOCK.getKey(wallCloset.getMaterial())));
             BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
             return stack;

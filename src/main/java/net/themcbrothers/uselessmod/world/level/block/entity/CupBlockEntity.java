@@ -7,6 +7,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -16,6 +17,7 @@ import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class CupBlockEntity extends BlockEntity {
@@ -29,7 +31,7 @@ public class CupBlockEntity extends BlockEntity {
     }
 
     public void setType(@Nullable CoffeeType type) {
-        this.type = UselessRegistries.coffeeRegistry.get().getHolder(type).orElse(null);
+        this.type = type != null ? UselessRegistries.coffeeRegistry.wrapAsHolder(type) : null;
         this.setChanged();
 
         if (this.level != null) {
@@ -42,7 +44,7 @@ public class CupBlockEntity extends BlockEntity {
             return Optional.empty();
         }
 
-        return Optional.of(this.type.get());
+        return Optional.of(this.type.value());
     }
 
     private void writeCoffeeNbt(CompoundTag tag) {
@@ -55,7 +57,8 @@ public class CupBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         if (tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
-            this.type = UselessRegistries.coffeeRegistry.get().getHolder(ResourceLocation.tryParse(tag.getString(TAG_COFFEE))).orElse(null);
+            var key = ResourceKey.create(UselessRegistries.COFFEE_KEY, Objects.requireNonNull(ResourceLocation.tryParse(tag.getString(TAG_COFFEE))));
+            this.type = UselessRegistries.coffeeRegistry.getHolder(key).orElse(null);
         }
     }
 

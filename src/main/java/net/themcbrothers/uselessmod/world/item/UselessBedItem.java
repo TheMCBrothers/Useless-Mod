@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.world.item;
 
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.themcbrothers.uselessmod.client.renderer.UselessItemStackRendererProvider;
 
 import java.util.function.Consumer;

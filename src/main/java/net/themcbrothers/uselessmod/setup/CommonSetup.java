@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.setup;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.animal.Chicken;
@@ -12,15 +13,14 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.common.BiomeManager;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.config.ClientConfig;
@@ -45,8 +45,8 @@ public class CommonSetup {
         bus.addListener(this::setup);
         bus.addListener(this::entityAttributes);
 
-        MinecraftForge.EVENT_BUS.register(new RecipeHelper());
-        MinecraftForge.EVENT_BUS.register(new WallClosetRecipeManager());
+        NeoForge.EVENT_BUS.register(new RecipeHelper());
+        NeoForge.EVENT_BUS.register(new WallClosetRecipeManager());
 
         Messages.init();
     }
@@ -94,7 +94,7 @@ public class CommonSetup {
         });
 
         // make sure the stats appear in the menu
-        event.enqueueWork(() -> Registration.CUSTOM_STATS.getEntries().stream().map(RegistryObject::get).forEach(Stats.CUSTOM::get));
+        event.enqueueWork(() -> Registration.CUSTOM_STATS.getEntries().stream().map(Holder::value).forEach(Stats.CUSTOM::get));
 
         // Vanilla Compatibility: Flammable, Strippable, Compostable, Cauldron
         event.enqueueWork(VanillaCompatibility::register);

@@ -1,21 +1,21 @@
 package net.themcbrothers.uselessmod.data;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.RailShape;
-import net.minecraftforge.client.model.generators.*;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.*;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.UselessCropBlock;
 
 import java.util.Objects;
 
-import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOLDER;
+import static net.neoforged.neoforge.client.model.generators.ModelProvider.BLOCK_FOLDER;
 import static net.themcbrothers.uselessmod.init.ModBlocks.*;
 
 public class UselessBlockStateProvider extends BlockStateProvider {
@@ -128,7 +128,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
         final ModelFile machineSupplierModelBase = models().cubeAll("machine_supplier_base", modLoc(BLOCK_FOLDER + "/machine_supplier"));
         final ModelFile machineSupplierModel = models().getBuilder("machine_supplier")
                 .parent(machineSupplierModelBase).customLoader((blockModelBuilder, existingFileHelper) ->
-                        new CustomLoaderBuilder<BlockModelBuilder>(UselessMod.rl("machine_supplier"), blockModelBuilder, existingFileHelper) {
+                        new CustomLoaderBuilder<BlockModelBuilder>(UselessMod.rl("machine_supplier"), blockModelBuilder, existingFileHelper, false) {
                         }).end();
         simpleBlock(MACHINE_SUPPLIER.get(), machineSupplierModel);
         simpleBlockItem(MACHINE_SUPPLIER.get());
@@ -176,7 +176,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     }
 
     private ResourceLocation key(Block block) {
-        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     private String name(Block block) {
@@ -188,18 +188,18 @@ public class UselessBlockStateProvider extends BlockStateProvider {
     }
 
     private void simpleItem(Block block) {
-        final ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
+        final ResourceLocation id = key(block);
         this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", blockTexture(block));
     }
 
     private void crossPlant(Block block) {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
+        ResourceLocation id = key(block);
         simpleItem(block);
         simpleBlock(block, this.models().cross(id.getPath(), blockTexture(block)).renderType(mcLoc("cutout")));
     }
 
     private void pottedPlant(Block block, Block plant) {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
+        ResourceLocation id = key(block);
         simpleBlock(block, this.models().withExistingParent(id.getPath(), mcLoc("block/flower_pot_cross")).texture("plant", blockTexture(plant)).renderType(mcLoc("cutout")));
     }
 
@@ -229,7 +229,7 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                     .build();
         });
 
-        itemModels().withExistingParent(String.valueOf(ForgeRegistries.BLOCKS.getKey(block)), blockLoc);
+        itemModels().withExistingParent(String.valueOf(key(block)), blockLoc);
     }
 
     private void lampBlock(Block block) {
@@ -241,11 +241,11 @@ public class UselessBlockStateProvider extends BlockStateProvider {
                 .partialState().with(BlockStateProperties.LIT, Boolean.TRUE).modelForState().modelFile(modelOn).addModel()
                 .partialState().with(BlockStateProperties.LIT, Boolean.FALSE).modelForState().modelFile(modelOff).addModel();
 
-        itemModels().withExistingParent(String.valueOf(ForgeRegistries.BLOCKS.getKey(block)), blockLoc);
+        itemModels().withExistingParent(String.valueOf(key(block)), blockLoc);
     }
 
     private void simpleItemItem(Block block) {
-        final ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
+        final ResourceLocation id = key(block);
         this.itemModels().singleTexture(id.getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + id.getPath()));
     }
 

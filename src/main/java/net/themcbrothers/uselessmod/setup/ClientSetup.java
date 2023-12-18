@@ -25,13 +25,13 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.model.DynamicFluidContainerModel;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
@@ -162,7 +162,7 @@ public class ClientSetup extends CommonSetup {
     }
 
     private void entityAddLayers(final EntityRenderersEvent.AddLayers event) {
-        for (String skin : event.getSkins()) {
+        for (var skin : event.getSkins()) {
             LivingEntityRenderer<Player, EntityModel<Player>> renderer = event.getSkin(skin);
 
             if (renderer != null) {
@@ -177,8 +177,8 @@ public class ClientSetup extends CommonSetup {
     }
 
     private void modelRegistry(final ModelEvent.RegisterGeometryLoaders event) {
-        event.register("machine_supplier", MachineSupplierModel.Loader.INSTANCE);
-        event.register("wall_closet", WallClosetModel.Loader.INSTANCE);
+        event.register(UselessMod.rl("machine_supplier"), MachineSupplierModel.Loader.INSTANCE);
+        event.register(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
     }
 
     @Override

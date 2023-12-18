@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.network.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.NetworkEvent;
 import net.themcbrothers.lib.network.PacketMessage;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;

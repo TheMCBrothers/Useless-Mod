@@ -1,9 +1,9 @@
 package net.themcbrothers.uselessmod.util;
 
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 import java.util.HashMap;
 
@@ -24,7 +24,7 @@ public class RecipeHelper {
         return recipeManager;
     }
 
-    public static void addRecipe(Recipe<?> recipe) {
-        getRecipeManager().recipes.computeIfAbsent(recipe.getType(), t -> new HashMap<>()).put(recipe.getId(), recipe);
+    public static void addRecipe(RecipeHolder<?> recipe) {
+        getRecipeManager().recipes.computeIfAbsent(recipe.value().getType(), t -> new HashMap<>()).put(recipe.id(), recipe);
     }
 }

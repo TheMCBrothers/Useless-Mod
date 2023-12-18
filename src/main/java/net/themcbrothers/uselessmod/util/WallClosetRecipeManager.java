@@ -11,6 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -50,7 +51,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
         return wallClosetMaterials.isEmpty() || wallClosetMaterials.stream().anyMatch(blockHolder -> blockHolder.is(BuiltInRegistries.BLOCK.getKey(block)));
     }
 
-    private static ShapedRecipe createWallClosetRecipe(Block material) {
+    private static RecipeHolder<ShapedRecipe> createWallClosetRecipe(Block material) {
         Ingredient planks = Ingredient.of(material);
         Ingredient slab = Ingredient.of(getSlab(material));
 
@@ -70,8 +71,10 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
         tag.putString("Material", reg);
         BlockItem.setBlockEntityData(output, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
-        ResourceLocation name = UselessMod.rl("closet." + reg.replace(':', '.'));
-        return new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, 3, 3, ingredients, output);
+        ResourceLocation id = UselessMod.rl("closet." + reg.replace(':', '.'));
+        ShapedRecipe recipe = new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, 3, 3, ingredients, output);
+
+        return new RecipeHolder<>(id, recipe);
     }
 
     @NotNull

@@ -10,14 +10,14 @@ import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.data.loot.UselessLootTableProvider;
 import net.themcbrothers.uselessmod.data.worldgen.biome.UselessBiomeData;
@@ -53,12 +53,12 @@ public class UselessDataGen {
                     UselessOrePlacements.bootstrap(context);
                 })
                 .add(Registries.BIOME, UselessBiomeData::bootstrap)
-                .add(ForgeRegistries.Keys.BIOME_MODIFIERS, UselessBiomeModifiers::bootstrap);
+                .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, UselessBiomeModifiers::bootstrap);
 
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(UselessMod.MOD_ID)));
-        generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput));
+        generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new UselessLanguageProvider(packOutput));
-        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new UselessAdvancementProvider())));
+        generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new UselessAdvancementProvider())));
         generator.addProvider(event.includeServer(), UselessLootTableProvider.create(packOutput));
         final BlockTagsProvider blockTagsProvider = new UselessTagsProvider.Blocks(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
@@ -68,7 +68,7 @@ public class UselessDataGen {
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Paintings(packOutput, lookupProvider, existingFileHelper));
 
         // Resources
-        generator.addProvider(event.includeClient(), new UselessSpriteSourceProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new UselessSpriteSourceProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeClient(), new UselessBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new UselessItemModelProvider(packOutput, existingFileHelper));
 

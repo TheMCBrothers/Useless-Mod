@@ -3,7 +3,7 @@ package net.themcbrothers.uselessmod.world.item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.themcbrothers.uselessmod.client.renderer.UselessItemStackRendererProvider;
 
 import java.util.function.Consumer;

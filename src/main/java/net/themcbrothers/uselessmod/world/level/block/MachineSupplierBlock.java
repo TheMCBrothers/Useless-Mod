@@ -30,7 +30,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.IPlantable;
+import net.neoforged.neoforge.common.IPlantable;
 import net.themcbrothers.lib.wrench.Wrench;
 import net.themcbrothers.lib.wrench.WrenchUtils;
 import net.themcbrothers.lib.wrench.WrenchableBlock;

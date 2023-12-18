@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -24,9 +25,8 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.NotNull;
@@ -92,7 +92,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         ContainerHelper.saveAllItems(tag, this.items);
-        tag.putString("Material", String.valueOf(ForgeRegistries.BLOCKS.getKey(this.material)));
+        tag.putString("Material", String.valueOf(BuiltInRegistries.BLOCK.getKey(this.material)));
     }
 
     @Override
@@ -101,12 +101,16 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, this.items);
         final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-        material = ForgeRegistries.BLOCKS.containsKey(key) ? Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(key)) : Blocks.AIR;
+        if (key != null) {
+            material = BuiltInRegistries.BLOCK.containsKey(key) ? Objects.requireNonNull(BuiltInRegistries.BLOCK.get(key)) : Blocks.AIR;
+        }
     }
 
     public void parseMaterial(String registryName) {
         final ResourceLocation key = ResourceLocation.tryParse(registryName);
-        setMaterial(ForgeRegistries.BLOCKS.containsKey(key) ? Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(key)) : Blocks.AIR);
+        if (key != null) {
+            setMaterial(BuiltInRegistries.BLOCK.containsKey(key) ? Objects.requireNonNull(BuiltInRegistries.BLOCK.get(key)) : Blocks.AIR);
+        }
     }
 
     public void setMaterial(Block material) {

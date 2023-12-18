@@ -31,13 +31,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
@@ -136,7 +136,7 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
                         return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 } else if (stack.is(Items.BRUSH)) {
-                    ItemStack newStack = new ItemStack(ModItems.PAINT_BRUSH);
+                    ItemStack newStack = new ItemStack(ModItems.PAINT_BRUSH.value());
                     newStack.getOrCreateTag().putInt("Color", blockEntity.getColor());
                     newStack.setDamageValue(0);
                     player.setItemInHand(hand, newStack);

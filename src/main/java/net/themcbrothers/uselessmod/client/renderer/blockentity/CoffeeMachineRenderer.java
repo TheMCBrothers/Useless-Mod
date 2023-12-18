@@ -12,7 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.fluids.IFluidTank;
+import net.neoforged.neoforge.fluids.IFluidTank;
 import net.themcbrothers.lib.client.model.fluid.FluidCuboid;
 import net.themcbrothers.lib.util.RenderUtils;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
