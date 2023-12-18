@@ -25,9 +25,9 @@ public class UpdateMilkCoffeeMachinePacket implements PacketMessage {
     }
 
     @Override
-    public void process(Supplier<NetworkEvent.Context> context) {
-        ServerPlayer serverPlayerEntity = context.get().getSender();
-        context.get().enqueueWork(() -> {
+    public void process(NetworkEvent.Context context) {
+        ServerPlayer serverPlayerEntity = context.getSender();
+        context.enqueueWork(() -> {
             if (serverPlayerEntity != null) {
                 if (serverPlayerEntity.containerMenu instanceof CoffeeMachineMenu) {
                     CoffeeMachineBlockEntity coffeeMachine = ((CoffeeMachineMenu) serverPlayerEntity.containerMenu).blockEntity;

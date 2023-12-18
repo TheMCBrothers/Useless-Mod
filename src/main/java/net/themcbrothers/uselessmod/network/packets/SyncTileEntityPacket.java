@@ -5,15 +5,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
 import net.neoforged.fml.LogicalSide;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.NetworkEvent;
 import net.themcbrothers.lib.network.PacketMessage;
 import net.themcbrothers.uselessmod.network.MessageProxy;
 import net.themcbrothers.uselessmod.world.level.block.entity.SyncableBlockEntity;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 public class SyncTileEntityPacket implements PacketMessage {
     private final BlockPos pos;
@@ -36,11 +35,10 @@ public class SyncTileEntityPacket implements PacketMessage {
     }
 
     @Override
-    public void process(Supplier<NetworkEvent.Context> context) {
-        NetworkEvent.Context ctx = context.get();
-        if (ctx.getDirection().getReceptionSide() == LogicalSide.SERVER) {
-            ctx.enqueueWork(() -> {
-                ServerLevel level = Objects.requireNonNull(ctx.getSender()).serverLevel();
+    public void process(NetworkEvent.Context context) {
+        if (context.getDirection().getReceptionSide() == LogicalSide.SERVER) {
+            context.enqueueWork(() -> {
+                ServerLevel level = Objects.requireNonNull(context.getSender()).serverLevel();
                 if (level.isAreaLoaded(this.pos, 1)) {
                     if (level.getBlockEntity(this.pos) instanceof SyncableBlockEntity blockEntity) {
                         blockEntity.receiveMessageFromClient(this.tag);
@@ -49,7 +47,11 @@ public class SyncTileEntityPacket implements PacketMessage {
 
             });
         } else {
-            ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> MessageProxy.receiveServerUpdates(this.pos, this.tag)));
+            context.enqueueWork(() -> {
+                if (FMLEnvironment.dist == Dist.CLIENT) {
+                    MessageProxy.receiveServerUpdates(this.pos, this.tag).run();
+                }
+            });
         }
     }
 }
