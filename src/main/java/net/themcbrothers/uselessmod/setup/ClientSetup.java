@@ -27,7 +27,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -52,10 +51,9 @@ import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEnt
 import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup extends CommonSetup {
-    public ClientSetup() {
-        super();
+    public ClientSetup(IEventBus bus) {
+        super(bus);
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::clientSetup);
         bus.addListener(this::blockColors);
         bus.addListener(this::itemColors);

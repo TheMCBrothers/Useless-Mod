@@ -3,8 +3,10 @@ package net.themcbrothers.uselessmod;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.fml.DistExecutor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.themcbrothers.uselessmod.setup.ClientSetup;
 import net.themcbrothers.uselessmod.setup.CommonSetup;
 import net.themcbrothers.uselessmod.setup.ServerSetup;
@@ -15,8 +17,12 @@ public class UselessMod {
 
     public static CommonSetup setup;
 
-    public UselessMod() {
-        setup = DistExecutor.unsafeRunForDist(() -> ClientSetup::new, () -> ServerSetup::new);
+    public UselessMod(IEventBus bus) {
+        if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) {
+            setup = new ServerSetup(bus);
+        } else {
+            setup = new ClientSetup(bus);
+        }
     }
 
     public static ResourceLocation rl(String path) {

@@ -35,11 +35,9 @@ import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 import org.jetbrains.annotations.Nullable;
 
 public class CommonSetup {
-    public CommonSetup() {
+    public CommonSetup(IEventBus bus) {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
-
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         Registration.register(bus);
         bus.addListener(this::setup);
