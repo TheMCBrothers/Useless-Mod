@@ -10,7 +10,7 @@ issueTrackerURL = "https://github.com/${project.github_repo}/issues"
     modId = "${project.mod_id}"
     version = "${project.version}"
     displayName = "${project.mod_name}"
-    updateJSONURL = "https://forge.curseupdate.com/${project.curse_project_id}/${project.mod_id}"
+    updateJSONURL = "https://neoforge.curseupdate.com/${project.curse_project_id}/${project.mod_id}"
     displayURL = "https://themcbrothers.net/mods"
     logoFile = "logo.png"
     logoBlur = false
@@ -19,9 +19,9 @@ issueTrackerURL = "https://github.com/${project.github_repo}/issues"
     description = '''${project.mod_description}'''
 
 [[dependencies.${project.mod_id}]]
-    modId = "forge"
+    modId = "neoforge"
     mandatory = true
-    versionRange = "${project.forge_version_range}"
+    versionRange = "${project.neo_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
