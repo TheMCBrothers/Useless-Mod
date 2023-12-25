@@ -143,7 +143,7 @@ public class CupBlockItem extends BlockItem {
     @Override
     public String getCreatorModId(ItemStack itemStack) {
         return CoffeeUtils.getCoffeeType(itemStack)
-                .map(UselessRegistries.coffeeRegistry::getKey)
+                .map(UselessRegistries.COFFEE_REGISTRY::getKey)
                 .map(ResourceLocation::getNamespace)
                 .orElse(super.getCreatorModId(itemStack));
     }

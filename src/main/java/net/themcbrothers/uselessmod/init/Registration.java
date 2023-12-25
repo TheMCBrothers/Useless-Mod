@@ -11,7 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.neoforged.neoforge.registries.RegistryBuilder;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.themcbrothers.lib.registration.deferred.BlockEntityTypeDeferredRegister;
 import net.themcbrothers.lib.registration.deferred.EntityTypeDeferredRegister;
 import net.themcbrothers.lib.registration.deferred.MenuTypeDeferredRegister;
@@ -37,7 +37,7 @@ public final class Registration {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, UselessMod.MOD_ID);
 
     public static void register(IEventBus bus) {
-        UselessRegistries.coffeeRegistry = COFFEE_TYPES.makeRegistry(RegistryBuilder::create);
+        bus.addListener(NewRegistryEvent.class, event -> event.register(UselessRegistries.COFFEE_REGISTRY));
 
         ModBlocks.register();
         ModItems.register();

@@ -31,7 +31,7 @@ public class CupBlockEntity extends BlockEntity {
     }
 
     public void setType(@Nullable CoffeeType type) {
-        this.type = type != null ? UselessRegistries.coffeeRegistry.wrapAsHolder(type) : null;
+        this.type = type != null ? UselessRegistries.COFFEE_REGISTRY.wrapAsHolder(type) : null;
         this.setChanged();
 
         if (this.level != null) {
@@ -58,7 +58,7 @@ public class CupBlockEntity extends BlockEntity {
         super.load(tag);
         if (tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
             var key = ResourceKey.create(UselessRegistries.COFFEE_KEY, Objects.requireNonNull(ResourceLocation.tryParse(tag.getString(TAG_COFFEE))));
-            this.type = UselessRegistries.coffeeRegistry.getHolder(key).orElse(null);
+            this.type = UselessRegistries.COFFEE_REGISTRY.getHolder(key).orElse(null);
         }
     }
 

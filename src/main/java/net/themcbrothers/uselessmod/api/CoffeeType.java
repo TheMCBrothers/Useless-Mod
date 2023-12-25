@@ -33,7 +33,7 @@ public class CoffeeType {
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {
-            this.descriptionId = Util.makeDescriptionId("coffee", UselessRegistries.coffeeRegistry.getKey(this));
+            this.descriptionId = Util.makeDescriptionId("coffee", UselessRegistries.COFFEE_REGISTRY.getKey(this));
         }
 
         return this.descriptionId;

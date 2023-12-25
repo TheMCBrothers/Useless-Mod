@@ -104,7 +104,7 @@ public final class UselessCreativeModeTabs {
             event.accept(ModItems.COFFEE_SEEDS);
             event.accept(ModItems.COFFEE_BEANS);
             event.accept(ModBlocks.CUP);
-            event.acceptAll(UselessRegistries.coffeeRegistry.stream().map(CoffeeUtils::createCoffeeStack).collect(Collectors.toList()));
+            event.acceptAll(UselessRegistries.COFFEE_REGISTRY.stream().map(CoffeeUtils::createCoffeeStack).collect(Collectors.toList()));
         }
 
         // Wall Closets
