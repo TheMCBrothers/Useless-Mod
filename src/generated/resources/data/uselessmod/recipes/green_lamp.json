@@ -3,14 +3,9 @@
   "category": "misc",
   "group": "uselessmod:lamps",
   "ingredients": [
-    [
-      {
-        "item": "minecraft:redstone_lamp"
-      },
-      {
-        "tag": "uselessmod:lamps"
-      }
-    ],
+    {
+      "tag": "uselessmod:lamps"
+    },
     {
       "tag": "forge:dyes/green"
     }
