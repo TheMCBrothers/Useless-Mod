@@ -10,8 +10,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
 import static net.themcbrothers.lib.util.ContainerHelper.getBlockEntity;
@@ -156,7 +157,7 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isFluidItem(ItemStack stack) {
-        return stack.getCapability(Capabilities.FLUID_HANDLER_ITEM)
+        return Optional.ofNullable(stack.getCapability(Capabilities.FluidHandler.ITEM))
                 .map(fluidHandlerItem -> {
                     for (int i = 0; i < fluidHandlerItem.getTanks(); i++) {
                         FluidStack fluidStack = fluidHandlerItem.getFluidInTank(i);
@@ -168,7 +169,8 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isEnergyItem(ItemStack stack) {
-        return stack.getCapability(Capabilities.ENERGY).map(IEnergyStorage::canExtract).orElse(false);
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
+                .map(IEnergyStorage::canExtract).orElse(false);
     }
 
     @Override

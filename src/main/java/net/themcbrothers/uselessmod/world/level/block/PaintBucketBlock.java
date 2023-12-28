@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -32,7 +33,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -44,10 +44,12 @@ import net.themcbrothers.uselessmod.init.ModItems;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintBucketBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
 public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, WrenchableBlock {
+    public static final MapCodec<PaintBucketBlock> CODEC = simpleCodec(PaintBucketBlock::new);
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private final VoxelShape SHAPE;
 
@@ -55,6 +57,11 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.TRUE));
         SHAPE = makeShape();
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -100,9 +107,9 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
             }
 
             // Interaction with bucket or fluid container
-            LazyOptional<IFluidHandlerItem> fluidHandler = FluidUtil.getFluidHandler(stack);
+            Optional<IFluidHandlerItem> fluidHandler = FluidUtil.getFluidHandler(stack);
             if (fluidHandler.isPresent()) {
-                fluidHandler.invalidate();
+                // TODO: invalidate
                 if (FluidUtil.interactWithFluidHandler(player, hand, level, pos, null)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }

@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,11 +34,18 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 @SuppressWarnings("deprecation")
 public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, WrenchableBlock {
+    public static final MapCodec<CoffeeMachineBlock> CODEC = simpleCodec(CoffeeMachineBlock::new);
+
     private final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 13, 13);
 
     public CoffeeMachineBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -37,6 +38,7 @@ import java.util.Map;
  * Definition of the Light Switch (can be placed on the floor, walls and ceiling)
  */
 public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock implements EntityBlock {
+    public static final MapCodec<LightSwitchBlock> CODEC = simpleCodec(LightSwitchBlock::new);
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     private final Map<BlockState, VoxelShape> shapesCache;
@@ -46,6 +48,11 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
                 .setValue(FACE, AttachFace.WALL).setValue(POWERED, Boolean.FALSE));
         this.shapesCache = this.getShapeForEachState(LightSwitchBlock::calculateShape);
+    }
+
+    @Override
+    protected MapCodec<? extends FaceAttachedHorizontalDirectionalBlock> codec() {
+        return CODEC;
     }
 
     private static VoxelShape calculateShape(BlockState state) {

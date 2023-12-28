@@ -3,22 +3,17 @@ package net.themcbrothers.uselessmod.data;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
-import net.themcbrothers.uselessmod.data.builder.CoffeeRecipeBuilder;
 import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModCoffeeTypes;
 import net.themcbrothers.uselessmod.init.ModItems;
-import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
-import net.themcbrothers.uselessmod.util.CoffeeUtils;
+import net.themcbrothers.uselessmod.world.item.crafting.LightSwitchConvertRecipe;
+import net.themcbrothers.uselessmod.world.item.crafting.PaintBrushDyeRecipe;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static net.themcbrothers.uselessmod.UselessMod.rl;
@@ -144,8 +139,8 @@ public class UselessRecipeProvider extends RecipeProvider {
 //        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
 
         // Special Recipes
-        SpecialRecipeBuilder.special(ModRecipeSerializers.LIGHT_SWITCH_CONVERT.get()).save(consumer, UselessMod.rl("light_switch_convert").toString());
-        SpecialRecipeBuilder.special(ModRecipeSerializers.PAINT_BRUSH_DYE.get()).save(consumer, UselessMod.rl("paint_brush_dye").toString());
+        SpecialRecipeBuilder.special(LightSwitchConvertRecipe::new).save(consumer, UselessMod.rl("light_switch_convert").toString());
+        SpecialRecipeBuilder.special(PaintBrushDyeRecipe::new).save(consumer, UselessMod.rl("paint_brush_dye").toString());
 
         // Usages of Items
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, Items.RED_DYE).requires(ModBlocks.RED_ROSE).group("red_dye").unlockedBy("has_red_flower", has(ModBlocks.RED_ROSE)).save(consumer, rl("red_dye_from_rose"));

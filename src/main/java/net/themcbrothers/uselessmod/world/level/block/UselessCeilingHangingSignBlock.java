@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 
 public class UselessCeilingHangingSignBlock extends CeilingHangingSignBlock {
-    public UselessCeilingHangingSignBlock(Properties properties, WoodType type) {
-        super(properties, type);
+    public UselessCeilingHangingSignBlock(WoodType type, Properties properties) {
+        super(type, properties);
     }
 
     @Override

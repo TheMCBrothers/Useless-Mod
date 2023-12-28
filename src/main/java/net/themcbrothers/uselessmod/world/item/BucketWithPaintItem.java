@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
@@ -37,12 +36,7 @@ public class BucketWithPaintItem extends BucketItem {
         }
     }
 
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        return new PaintFluidBucketWrapper(stack);
-    }
-
-    private static class PaintFluidBucketWrapper extends FluidBucketWrapper {
+    public static class PaintFluidBucketWrapper extends FluidBucketWrapper {
         public PaintFluidBucketWrapper(@NotNull ItemStack container) {
             super(container);
         }

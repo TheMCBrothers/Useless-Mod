@@ -20,21 +20,21 @@ issueTrackerURL = "https://github.com/${project.github_repo}/issues"
 
 [[dependencies.${project.mod_id}]]
     modId = "neoforge"
-    mandatory = true
+    type = "required"
     versionRange = "${project.neo_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${project.mod_id}]]
     modId = "minecraft"
-    mandatory = true
+    type = "required"
     versionRange = "${project.minecraft_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${project.mod_id}]]
     modId = "tmcb_lib"
-    mandatory = true
+    type = "required"
     versionRange = "${project.lib_version_range}"
     ordering = "NONE"
     side = "BOTH"

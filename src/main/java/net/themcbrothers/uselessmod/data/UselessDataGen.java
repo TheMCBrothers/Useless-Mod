@@ -1,15 +1,10 @@
 package net.themcbrothers.uselessmod.data;
 
-import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.metadata.PackMetadataGenerator;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -24,12 +19,9 @@ import net.themcbrothers.uselessmod.data.worldgen.biome.UselessBiomeData;
 import net.themcbrothers.uselessmod.data.worldgen.biome.UselessBiomeModifiers;
 import net.themcbrothers.uselessmod.world.worldgen.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
 public class UselessDataGen {
@@ -71,12 +63,5 @@ public class UselessDataGen {
         generator.addProvider(event.includeClient(), new UselessSpriteSourceProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeClient(), new UselessBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new UselessItemModelProvider(packOutput, existingFileHelper));
-
-        // pack.mcmeta
-        generator.addProvider(true, new PackMetadataGenerator(packOutput))
-                .add(PackMetadataSection.TYPE,
-                        new PackMetadataSection(Component.literal("Useless Mod resources"),
-                                DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES),
-                                Arrays.stream(PackType.values()).collect(Collectors.toMap(Function.identity(), DetectedVersion.BUILT_IN::getPackVersion))));
     }
 }

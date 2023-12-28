@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -43,8 +44,14 @@ import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableBlock {
+    public static final MapCodec<MachineSupplierBlock> CODEC = simpleCodec(MachineSupplierBlock::new);
     public MachineSupplierBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override

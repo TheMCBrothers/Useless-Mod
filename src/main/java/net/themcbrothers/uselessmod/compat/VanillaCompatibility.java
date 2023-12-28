@@ -42,7 +42,7 @@ public class VanillaCompatibility {
         registerCompostable(0.65F, ModItems.COFFEE_BEANS.get());
 
         // Cauldron
-        CauldronInteraction.WATER.put(ModBlocks.PAINTED_WOOL.asItem(), (state, level, pos, player, hand, stack) -> {
+        CauldronInteraction.WATER.map().put(ModBlocks.PAINTED_WOOL.asItem(), (state, level, pos, player, hand, stack) -> {
             if (!level.isClientSide) {
                 ItemStack itemStack = new ItemStack(Blocks.WHITE_WOOL);
 
@@ -64,7 +64,7 @@ public class VanillaCompatibility {
             return InteractionResult.sidedSuccess(level.isClientSide);
         });
 
-        CauldronInteraction.WATER.put(ModItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
+        CauldronInteraction.WATER.map().put(ModItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
             if (stack.hasTag()) {
                 if (!level.isClientSide) {
                     stack.getOrCreateTag().remove("Color");

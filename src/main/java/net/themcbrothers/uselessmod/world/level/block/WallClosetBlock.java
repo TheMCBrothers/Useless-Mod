@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,6 +49,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 @SuppressWarnings("deprecation")
 public class WallClosetBlock extends BaseEntityBlock {
+    public static final MapCodec<WallClosetBlock> CODEC = simpleCodec(WallClosetBlock::new);
     private static final VoxelShape SHAPE_NORTH = Block.box(1, 1, 9, 15, 15, 16);
     private static final VoxelShape SHAPE_EAST = Block.box(0, 1, 1, 7, 15, 15);
     private static final VoxelShape SHAPE_SOUTH = Block.box(1, 1, 0, 15, 15, 7);
@@ -62,6 +64,11 @@ public class WallClosetBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag) {
         CompoundTag tag = BlockItem.getBlockEntityData(stack);
         if (tag != null && tag.contains("Material", Tag.TAG_STRING)) {
@@ -72,7 +79,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallCloset) {
             final ItemStack stack = new ItemStack(this);
             final CompoundTag tag = new CompoundTag();

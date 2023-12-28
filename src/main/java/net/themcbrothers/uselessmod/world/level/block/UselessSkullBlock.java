@@ -6,6 +6,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 
+import java.util.Locale;
+
 public class UselessSkullBlock extends SkullBlock {
     public UselessSkullBlock(Type type, Properties properties) {
         super(type, properties);
@@ -17,6 +19,11 @@ public class UselessSkullBlock extends SkullBlock {
     }
 
     public enum Types implements Type {
-        USELESS_SKELETON
+        USELESS_SKELETON;
+
+        @Override
+        public String getSerializedName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
     }
 }

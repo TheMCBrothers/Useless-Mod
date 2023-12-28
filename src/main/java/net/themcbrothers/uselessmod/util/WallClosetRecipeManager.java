@@ -9,10 +9,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
@@ -27,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 public class WallClosetRecipeManager implements ResourceManagerReloadListener {
     private static ICondition.IContext context;
@@ -71,8 +69,9 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
         tag.putString("Material", reg);
         BlockItem.setBlockEntityData(output, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
 
+        ShapedRecipePattern pattern = new ShapedRecipePattern(3, 3, ingredients, Optional.empty());
         ResourceLocation id = UselessMod.rl("closet." + reg.replace(':', '.'));
-        ShapedRecipe recipe = new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, 3, 3, ingredients, output);
+        ShapedRecipe recipe = new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, pattern, output);
 
         return new RecipeHolder<>(id, recipe);
     }

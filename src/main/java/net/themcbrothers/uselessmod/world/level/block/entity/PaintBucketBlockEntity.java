@@ -1,21 +1,15 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
@@ -89,34 +83,5 @@ public class PaintBucketBlockEntity extends BlockEntity {
         super.load(tag);
         this.colorTank.readFromNBT(tag.getCompound("Tank"));
         this.stackHandler.deserializeNBT(tag.getCompound("Slots"));
-    }
-
-    private LazyOptional<IFluidHandler> tankHolder = LazyOptional.of(() -> this.colorTank);
-
-    private LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> this.stackHandler);
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == Capabilities.FLUID_HANDLER && (side == null || side.getAxis().isVertical())) {
-            return this.tankHolder.cast();
-        } else if (cap == Capabilities.ITEM_HANDLER) {
-            return itemHandler.cast();
-        }
-
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.tankHolder.invalidate();
-        this.itemHandler.invalidate();
-    }
-
-    @Override
-    public void reviveCaps() {
-        super.reviveCaps();
-        this.tankHolder = LazyOptional.of(() -> this.colorTank);
-        this.itemHandler = LazyOptional.of(() -> this.stackHandler);
     }
 }

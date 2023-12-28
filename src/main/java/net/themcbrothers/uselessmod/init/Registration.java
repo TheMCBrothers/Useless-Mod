@@ -12,21 +12,17 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
-import net.themcbrothers.lib.registration.deferred.BlockEntityTypeDeferredRegister;
-import net.themcbrothers.lib.registration.deferred.EntityTypeDeferredRegister;
-import net.themcbrothers.lib.registration.deferred.MenuTypeDeferredRegister;
-import net.themcbrothers.lib.registries.BlockDeferredRegister;
-import net.themcbrothers.lib.registries.ItemDeferredRegister;
+import net.themcbrothers.lib.registries.*;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 
 public final class Registration {
-    public static final BlockDeferredRegister BLOCKS = BlockDeferredRegister.create(UselessMod.MOD_ID);
     public static final ItemDeferredRegister ITEMS = ItemDeferredRegister.create(UselessMod.MOD_ID);
-    public static final BlockEntityTypeDeferredRegister BLOCK_ENTITIES = new BlockEntityTypeDeferredRegister(UselessMod.MOD_ID);
-    public static final MenuTypeDeferredRegister MENU_TYPES = new MenuTypeDeferredRegister(UselessMod.MOD_ID);
-    public static final EntityTypeDeferredRegister ENTITIES = new EntityTypeDeferredRegister(UselessMod.MOD_ID);
+    public static final BlockDeferredRegister BLOCKS = BlockDeferredRegister.create(UselessMod.MOD_ID, ITEMS);
+    public static final BlockEntityTypeDeferredRegister BLOCK_ENTITIES = BlockEntityTypeDeferredRegister.create(UselessMod.MOD_ID);
+    public static final MenuTypeDeferredRegister MENU_TYPES = MenuTypeDeferredRegister.create(UselessMod.MOD_ID);
+    public static final EntityTypeDeferredRegister ENTITY_TYPES = EntityTypeDeferredRegister.create(UselessMod.MOD_ID, ITEMS);
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, UselessMod.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, UselessMod.MOD_ID);
     public static final DeferredRegister<CoffeeType> COFFEE_TYPES = DeferredRegister.create(UselessRegistries.COFFEE_KEY, UselessMod.MOD_ID);
@@ -57,7 +53,7 @@ public final class Registration {
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
         MENU_TYPES.register(bus);
-        ENTITIES.register(bus);
+        ENTITY_TYPES.register(bus);
         RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
         COFFEE_TYPES.register(bus);

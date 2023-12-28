@@ -1,21 +1,18 @@
 package net.themcbrothers.uselessmod.data.builder;
 
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import net.minecraft.Util;
-import net.minecraft.advancements.*;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.themcbrothers.lib.crafting.FluidIngredient;
-import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
+import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -77,52 +74,15 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
 
         this.criteria.forEach(advancement::addCriterion);
 
-        consumer.accept(new Result(id, this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
-                this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime,
-                advancement.build(id.withPath("recipes/coffee/"))));
+        consumer.accept(id,
+                new CoffeeRecipe(this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
+                        this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime),
+                advancement.build(id.withPath("recipes/coffee/")));
     }
 
     private void ensureValid(ResourceLocation id) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
-    }
-
-    public record Result(
-            ResourceLocation id,
-            String group,
-            Ingredient cupIngredient,
-            Ingredient beanIngredient,
-            Ingredient extraIngredient,
-            FluidIngredient waterIngredient,
-            FluidIngredient milkIngredient,
-            ItemStack result,
-            int cookingTime,
-            AdvancementHolder advancement
-    ) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(@NotNull JsonObject json) {
-            if (!this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-
-            json.add("cup", this.cupIngredient.toJson(false));
-            json.add("bean", this.beanIngredient.toJson(false));
-            if (!this.extraIngredient.isEmpty()) {
-                json.add("extra", this.extraIngredient.toJson(true));
-            }
-            json.add("water", this.waterIngredient.toJson(false));
-            if (!this.milkIngredient.isEmpty()) {
-                json.add("milk", this.milkIngredient.toJson(true));
-            }
-
-            json.add("result", Util.getOrThrow(CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.encodeStart(JsonOps.INSTANCE, this.result), IllegalStateException::new));
-            json.addProperty("cookingtime", this.cookingTime);
-        }
-
-        @Override
-        public @NotNull RecipeSerializer<?> type() {
-            return ModRecipeSerializers.COFFEE.get();
         }
     }
 }

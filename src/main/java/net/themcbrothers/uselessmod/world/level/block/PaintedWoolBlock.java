@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -31,11 +33,17 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class PaintedWoolBlock extends BaseEntityBlock {
+    public static final MapCodec<PaintedWoolBlock> CODEC = simpleCodec(PaintedWoolBlock::new);
     public static final BooleanProperty PAINTED = BooleanProperty.create("painted");
 
     public PaintedWoolBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(PAINTED, Boolean.FALSE));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -64,7 +72,7 @@ public class PaintedWoolBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         final ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
 
         if (level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity paintedWool) {

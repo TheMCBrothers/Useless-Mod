@@ -8,7 +8,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -111,7 +110,7 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
                         Ingredient.CODEC.fieldOf("extra").orElse(Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
                         FluidIngredient.CODEC_NONEMPTY.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
                         FluidIngredient.CODEC.fieldOf("milk").orElse(FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
-                        CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                        ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
                 ).apply(instance, CoffeeRecipe::new));
 

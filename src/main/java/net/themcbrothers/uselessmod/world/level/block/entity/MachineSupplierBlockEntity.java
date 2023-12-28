@@ -1,7 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -13,8 +12,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,23 +26,6 @@ public class MachineSupplierBlockEntity extends BlockEntity {
 
     public MachineSupplierBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypes.MACHINE_SUPPLIER.get(), pos, state);
-    }
-
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @org.jetbrains.annotations.Nullable Direction side) {
-        if (this.level != null) {
-            BlockState state = this.level.getBlockState(this.getBlockPos().above());
-
-            if (state.hasBlockEntity()) {
-                BlockEntity blockEntity = this.level.getBlockEntity(this.getBlockPos().above());
-                if (blockEntity != null) {
-                    return blockEntity.getCapability(cap, side);
-                }
-            }
-        }
-
-        return super.getCapability(cap, side);
     }
 
     @Nullable
