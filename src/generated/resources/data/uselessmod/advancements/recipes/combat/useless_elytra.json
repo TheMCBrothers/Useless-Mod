@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:useless_elytra"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

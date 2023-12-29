@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.uselessmod.mine_ore.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "uselessmod:useless_ore"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.uselessmod.mine_ore.title"
     }

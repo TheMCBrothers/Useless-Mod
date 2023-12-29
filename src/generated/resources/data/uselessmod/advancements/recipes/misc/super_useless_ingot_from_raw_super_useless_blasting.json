@@ -28,6 +28,5 @@
     "recipes": [
       "uselessmod:super_useless_ingot_from_raw_super_useless_blasting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

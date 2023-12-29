@@ -41,6 +41,5 @@
     "recipes": [
       "uselessmod:pink_lamp"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

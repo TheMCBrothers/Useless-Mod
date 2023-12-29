@@ -28,6 +28,5 @@
     "recipes": [
       "uselessmod:useless_oak_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

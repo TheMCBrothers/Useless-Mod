@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:useless_ingot_from_nuggets"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

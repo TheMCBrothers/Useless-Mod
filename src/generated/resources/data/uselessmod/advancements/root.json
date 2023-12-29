@@ -19,8 +19,6 @@
     "description": {
       "translate": "advancement.uselessmod.root.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "uselessmod:useless_ingot"
     },

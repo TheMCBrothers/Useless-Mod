@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:light_switch"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:cup"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

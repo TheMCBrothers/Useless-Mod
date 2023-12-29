@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:super_useless_ingot_from_super_useless_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

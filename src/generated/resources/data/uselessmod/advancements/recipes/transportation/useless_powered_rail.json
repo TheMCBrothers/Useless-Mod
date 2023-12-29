@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:useless_powered_rail"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

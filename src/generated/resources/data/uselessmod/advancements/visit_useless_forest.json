@@ -19,16 +19,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.uselessmod.visit_useless_forest.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "uselessmod:useless_oak_sapling"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.uselessmod.visit_useless_forest.title"
     }

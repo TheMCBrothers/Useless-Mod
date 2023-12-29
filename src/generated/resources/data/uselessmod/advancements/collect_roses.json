@@ -25,16 +25,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.uselessmod.collect_roses.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "uselessmod:useless_rose"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.uselessmod.collect_roses.title"
     }

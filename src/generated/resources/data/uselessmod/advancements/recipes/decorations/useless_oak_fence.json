@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:useless_oak_fence"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

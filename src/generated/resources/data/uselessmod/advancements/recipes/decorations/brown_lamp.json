@@ -41,6 +41,5 @@
     "recipes": [
       "uselessmod:brown_lamp"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

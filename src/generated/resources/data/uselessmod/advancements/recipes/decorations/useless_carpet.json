@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:useless_carpet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

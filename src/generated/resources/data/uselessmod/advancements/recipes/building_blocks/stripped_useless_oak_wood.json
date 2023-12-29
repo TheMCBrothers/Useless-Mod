@@ -30,6 +30,5 @@
     "recipes": [
       "uselessmod:stripped_useless_oak_wood"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

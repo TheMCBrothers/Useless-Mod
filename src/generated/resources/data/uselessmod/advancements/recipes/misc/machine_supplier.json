@@ -28,6 +28,5 @@
     "recipes": [
       "uselessmod:machine_supplier"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

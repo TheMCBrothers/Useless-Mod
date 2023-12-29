@@ -28,6 +28,5 @@
     "recipes": [
       "uselessmod:useless_ingot_from_useless_dust_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

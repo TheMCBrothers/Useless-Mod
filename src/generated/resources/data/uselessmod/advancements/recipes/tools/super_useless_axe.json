@@ -28,6 +28,5 @@
     "recipes": [
       "uselessmod:super_useless_axe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

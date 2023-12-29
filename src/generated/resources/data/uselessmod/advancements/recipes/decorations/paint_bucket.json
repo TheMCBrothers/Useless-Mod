@@ -28,6 +28,5 @@
     "recipes": [
       "uselessmod:paint_bucket"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
