@@ -107,9 +107,9 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
                         ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
                         Ingredient.CODEC_NONEMPTY.fieldOf("cup").forGetter(recipe -> recipe.cupIngredient),
                         Ingredient.CODEC_NONEMPTY.fieldOf("bean").forGetter(recipe -> recipe.beanIngredient),
-                        Ingredient.CODEC.fieldOf("extra").orElse(Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
+                        ExtraCodecs.strictOptionalField(Ingredient.CODEC, "extra", Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
                         FluidIngredient.CODEC_NONEMPTY.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
-                        FluidIngredient.CODEC.fieldOf("milk").orElse(FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
+                        ExtraCodecs.strictOptionalField(FluidIngredient.CODEC, "milk", FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
                         ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
                 ).apply(instance, CoffeeRecipe::new));
