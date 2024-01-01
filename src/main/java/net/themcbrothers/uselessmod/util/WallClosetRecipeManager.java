@@ -1,6 +1,5 @@
 package net.themcbrothers.uselessmod.util;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -14,27 +13,25 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
+import net.minecraftforge.registries.tags.ITagManager;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
 public class WallClosetRecipeManager implements ResourceManagerReloadListener {
-    private static ICondition.IContext context;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void addReloadListeners(final AddReloadListenerEvent event) {
-        context = event.getConditionContext();
         event.addListener(this);
     }
 
@@ -49,8 +46,10 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
     }
 
     public static boolean isValidMaterial(Map.Entry<ResourceKey<Block>, Block> entry) {
-        Collection<Holder<Block>> wallClosetMaterials = context.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS);
-        return wallClosetMaterials.isEmpty() || wallClosetMaterials.stream().anyMatch(blockHolder -> blockHolder.is(entry.getKey()));
+        ITagManager<Block> tags = ForgeRegistries.BLOCKS.tags();
+        assert tags != null;
+        ITag<Block> wallClosetMaterials = tags.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS);
+        return wallClosetMaterials.isEmpty() || wallClosetMaterials.contains(entry.getValue());
     }
 
     private static ShapedRecipe createWallClosetRecipe(Block material) {
