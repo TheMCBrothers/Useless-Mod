@@ -1,3 +1,6 @@
+## Useless Mod 7.2.1 ##
+- Fix crash on going into creative on server
+
 ## Useless Mod 7.2.0 ##
 - Added Bucket with Paint
 - Added Spawn Eggs to the corresponding Creative Tab
