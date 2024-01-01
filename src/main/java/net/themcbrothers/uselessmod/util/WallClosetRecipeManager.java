@@ -1,6 +1,6 @@
 package net.themcbrothers.uselessmod.util;
 
-import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
@@ -25,15 +24,12 @@ import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.Objects;
 
 public class WallClosetRecipeManager implements ResourceManagerReloadListener {
-    private static ICondition.IContext context;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void addReloadListeners(final AddReloadListenerEvent event) {
-        context = event.getConditionContext();
         event.addListener(this);
     }
 
@@ -47,8 +43,11 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
     }
 
     public static boolean isValidMaterial(Block block) {
-        Collection<Holder<Block>> wallClosetMaterials = context.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS);
-        return wallClosetMaterials.isEmpty() || wallClosetMaterials.stream().anyMatch(blockHolder -> blockHolder.is(BuiltInRegistries.BLOCK.getKey(block)));
+        return BuiltInRegistries.BLOCK.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS)
+                .map(HolderSet.Named::unwrap)
+                .flatMap(tag -> tag.right())
+                .map(holders -> holders.isEmpty() || holders.stream().anyMatch(blockHolder -> blockHolder.is(BuiltInRegistries.BLOCK.getKey(block))))
+                .orElse(true);
     }
 
     private static RecipeHolder<ShapedRecipe> createWallClosetRecipe(Block material) {
