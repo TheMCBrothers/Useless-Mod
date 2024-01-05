@@ -17,10 +17,10 @@ import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.themcbrothers.lib.client.screen.widgets.EnergyBar;
 import net.themcbrothers.lib.client.screen.widgets.FluidTank;
+import net.themcbrothers.lib.network.PacketUtils;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.network.Messages;
-import net.themcbrothers.uselessmod.network.packets.StartCoffeeMachinePacket;
-import net.themcbrothers.uselessmod.network.packets.UpdateMilkCoffeeMachinePacket;
+import net.themcbrothers.uselessmod.network.packets.CoffeeMachineMilkUpdatePacket;
+import net.themcbrothers.uselessmod.network.packets.CoffeeMachineStartPacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -123,7 +123,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
         @Override
         public void onPress() {
-            Messages.INSTANCE.sendToServer(new StartCoffeeMachinePacket(this.start));
+            PacketUtils.sendToServer(new CoffeeMachineStartPacket(this.start));
         }
 
         @Override
@@ -174,7 +174,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         @Override
         public void onPress() {
             this.checked = !this.checked;
-            Messages.INSTANCE.sendToServer(new UpdateMilkCoffeeMachinePacket(this.isChecked()));
+            PacketUtils.sendToServer(new CoffeeMachineMilkUpdatePacket(this.isChecked()));
         }
 
         public boolean isChecked() {

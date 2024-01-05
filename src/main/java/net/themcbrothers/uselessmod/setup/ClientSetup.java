@@ -26,6 +26,7 @@ import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -51,8 +52,8 @@ import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEnt
 import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup extends CommonSetup {
-    public ClientSetup(IEventBus bus) {
-        super(bus);
+    public ClientSetup(IEventBus bus, ModContainer modContainer) {
+        super(bus, modContainer);
 
         bus.addListener(this::clientSetup);
         bus.addListener(this::blockColors);

@@ -14,12 +14,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.BiomeManager;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.themcbrothers.lib.util.Version;
+import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.config.ClientConfig;
@@ -27,14 +30,14 @@ import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModEntityTypes;
 import net.themcbrothers.uselessmod.init.Registration;
-import net.themcbrothers.uselessmod.network.Messages;
+import net.themcbrothers.uselessmod.network.UselessPacketHandler;
 import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
 import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 import org.jetbrains.annotations.Nullable;
 
 public class CommonSetup {
-    public CommonSetup(IEventBus bus) {
+    public CommonSetup(IEventBus bus, ModContainer modContainer) {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
 
@@ -45,7 +48,8 @@ public class CommonSetup {
         NeoForge.EVENT_BUS.register(new RecipeHelper());
         NeoForge.EVENT_BUS.register(new WallClosetRecipeManager());
 
-        Messages.init();
+        // Networking
+        new UselessPacketHandler(bus, UselessMod.MOD_ID, new Version(modContainer));
     }
 
     private void setup(final FMLCommonSetupEvent event) {

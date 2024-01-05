@@ -5,6 +5,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.themcbrothers.uselessmod.setup.ClientSetup;
@@ -17,11 +18,11 @@ public class UselessMod {
 
     public static CommonSetup setup;
 
-    public UselessMod(IEventBus bus) {
+    public UselessMod(IEventBus bus, ModContainer modContainer) {
         if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) {
-            setup = new ServerSetup(bus);
+            setup = new ServerSetup(bus, modContainer);
         } else {
-            setup = new ClientSetup(bus);
+            setup = new ClientSetup(bus, modContainer);
         }
     }
 

@@ -33,15 +33,14 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
+import net.themcbrothers.lib.network.PacketUtils;
 import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
-import net.themcbrothers.uselessmod.network.Messages;
-import net.themcbrothers.uselessmod.network.packets.SyncTileEntityPacket;
+import net.themcbrothers.uselessmod.network.packets.BlockEntitySyncPacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import org.jetbrains.annotations.Nullable;
@@ -285,8 +284,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             nbt.putBoolean("UseMilk", this.useMilk);
         }
 
-        Messages.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(this.worldPosition)),
-                new SyncTileEntityPacket(this, nbt));
+        PacketUtils.sendToAllTracking(new BlockEntitySyncPacket(this, nbt), this.level, this.worldPosition);
     }
 
     @Override

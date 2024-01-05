@@ -9,8 +9,9 @@ public class MessageProxy {
         return () -> {
             net.minecraft.client.multiplayer.ClientLevel level = net.minecraft.client.Minecraft.getInstance().level;
             if (level != null) {
-                if (level.getBlockEntity(pos) instanceof SyncableBlockEntity blockEntity)
+                if (level.getBlockEntity(pos) instanceof SyncableBlockEntity blockEntity) {
                     blockEntity.receiveMessageFromServer(nbt);
+                }
             }
         };
     }

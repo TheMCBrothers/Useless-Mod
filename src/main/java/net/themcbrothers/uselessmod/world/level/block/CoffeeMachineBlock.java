@@ -22,7 +22,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.NetworkHooks;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModStats;
@@ -85,7 +84,7 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
         }
 
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
-            NetworkHooks.openScreen(serverPlayer, coffeeMachine, pos);
+            serverPlayer.openMenu(coffeeMachine, pos);
             player.awardStat(ModStats.INTERACT_WITH_COFFEE_MACHINE.get());
         }
 
