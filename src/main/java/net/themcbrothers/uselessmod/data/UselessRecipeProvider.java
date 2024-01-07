@@ -7,6 +7,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.Tags;
 import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -138,10 +140,10 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BLACK_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_BLACK).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
 
         // Coffee
-//        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.BLACK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_black"));
-//        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_milk"));
-//        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_sugar"));
-//        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(FluidTags.WATER, 250), FluidIngredient.of(Tags.Fluids.MILK, 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.BLACK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_black"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_milk"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_sugar"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(ModCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(ModBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
 
         // Special Recipes
         SpecialRecipeBuilder.special(ModRecipeSerializers.LIGHT_SWITCH_CONVERT.get()).save(consumer, UselessMod.rl("light_switch_convert").toString());

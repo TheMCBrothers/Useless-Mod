@@ -79,7 +79,7 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
 
         consumer.accept(new Result(id, this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
                 this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime,
-                advancement.build(id.withPath("recipes/coffee/"))));
+                advancement.build(id.withPrefix("recipes/coffee/"))));
     }
 
     private void ensureValid(ResourceLocation id) {
