@@ -1,3 +1,6 @@
+## Useless Mod 8.1.0 ##
+- Re-added Coffee Recipes
+
 ## Useless Mod 8.0.1 ##
 - Fix crash on going into creative on server
 
