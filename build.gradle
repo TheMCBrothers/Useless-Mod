@@ -72,7 +72,7 @@ dependencies {
     implementation "net.neoforged:neoforge:$neo_version"
 
     // TheMCBrosLib
-    implementation "net.themcbrothers:TheMCBrosLib:$minecraft_version-$lib_version"
+    implementation "net.themcbrothers:themcbroslib:$minecraft_version-$lib_version"
 }
 
 tasks.named('processResources', ProcessResources).configure {
