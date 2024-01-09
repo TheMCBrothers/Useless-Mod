@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.setup;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
@@ -18,21 +19,23 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.BiomeManager;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.themcbrothers.lib.util.Version;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModEntityTypes;
-import net.themcbrothers.uselessmod.init.Registration;
+import net.themcbrothers.uselessmod.init.*;
 import net.themcbrothers.uselessmod.network.UselessPacketHandler;
 import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
+import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
 import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,6 +47,7 @@ public class CommonSetup {
         Registration.register(bus);
         bus.addListener(this::setup);
         bus.addListener(this::entityAttributes);
+        bus.addListener(this::registerCapabilities);
 
         NeoForge.EVENT_BUS.register(new RecipeHelper());
         NeoForge.EVENT_BUS.register(new WallClosetRecipeManager());
@@ -107,6 +111,23 @@ public class CommonSetup {
         event.put(ModEntityTypes.USELESS_CHICKEN.get(), Chicken.createAttributes().build());
         event.put(ModEntityTypes.USELESS_COW.get(), Cow.createAttributes().build());
         event.put(ModEntityTypes.USELESS_SKELETON.get(), AbstractSkeleton.createAttributes().build());
+    }
+
+    private void registerCapabilities(final RegisterCapabilitiesEvent event) {
+        // Blocks
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.COFFEE_MACHINE.get(), SidedInvWrapper::new);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.tankHandler);
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.energyStorage);
+
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> blockEntity.stackHandler);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> side == null || side == Direction.UP ? blockEntity.colorTank : null);
+
+        event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.ItemHandler.BLOCK, pos.above(), context), ModBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.FluidHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.FluidHandler.BLOCK, pos.above(), context), ModBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.EnergyStorage.BLOCK, pos.above(), context), ModBlocks.MACHINE_SUPPLIER.get());
+
+        // Items
+        event.registerItem(Capabilities.FluidHandler.ITEM, (container, context) -> new BucketWithPaintItem.PaintFluidBucketWrapper(container), ModItems.BUCKET_PAINT);
     }
 
     public @Nullable Player getLocalPlayer() {
