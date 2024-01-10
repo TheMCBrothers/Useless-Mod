@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: "[MC-VERSION] Suggestion: Title"
-labels: ''
+labels: 'enhancement'
 assignees: ''
 
 ---
