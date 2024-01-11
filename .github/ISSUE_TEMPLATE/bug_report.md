@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: "[MC-VERSION] BUG: Title"
-labels: ''
+labels: 'bug'
 assignees: ''
 
 ---
@@ -24,9 +24,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Runtime environment (please complete the following information):**
- - Minecraft Version: [e.g. 1.19.2]
- - Forge Version [e.g. 43.2.0]
- - Mod Version [e.g. 6.0.0]
+ - Minecraft Version: [e.g. 1.20.2]
+ - NeoForge Version [e.g. 20.4.86]
+ - Mod Version [e.g. 8.1.0]
 
 **Additional context**
 Add any other context about the problem here.
