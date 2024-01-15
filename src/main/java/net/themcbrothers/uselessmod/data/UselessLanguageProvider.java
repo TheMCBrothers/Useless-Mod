@@ -185,6 +185,12 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add("tooltip.uselessmod.light_switch.clear", "Sneak and right click to clear Configuration");
         this.add("tooltip.uselessmod.hold_shift", "<Hold Shift>");
 
+        // Jade Plugin
+        this.add("config.jade.plugin_uselessmod", "Useless Mod");
+        this.add("config.jade.plugin_uselessmod.coffee_cup", "Coffee Cup");
+        this.add("config.jade.plugin_uselessmod.coffee_machine", "Coffee Machine");
+        this.add("config.jade.plugin_uselessmod.painted_wool", "Painted Wool");
+
         this.add("itemGroup.uselessmod", "Useless Mod");
         this.add("itemGroup.uselessmod.paint", "Useless Mod: Paint");
         this.add("itemGroup.uselessmod.coffee", "Useless Mod: Coffee");

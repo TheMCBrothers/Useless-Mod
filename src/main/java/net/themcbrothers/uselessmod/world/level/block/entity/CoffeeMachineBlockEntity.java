@@ -465,6 +465,14 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         }
     }
 
+    public int getCookingProgress() {
+        return this.cookingProgress;
+    }
+
+    public int getCookingTotalTime() {
+        return this.cookingTotalTime;
+    }
+
     public class CoffeeMachineTank implements IFluidHandler {
         final FluidTank waterTank = new FluidTank(ServerConfig.COFFEE_MACHINE_WATER_CAPACITY.get()) {
             @Override

@@ -73,6 +73,9 @@ dependencies {
 
     // TheMCBrosLib
     implementation "net.themcbrothers:themcbroslib:$minecraft_version-$lib_version"
+
+    // Jade
+    implementation "curse.maven:jade-324717:$jade_id"
 }
 
 tasks.named('processResources', ProcessResources).configure {
