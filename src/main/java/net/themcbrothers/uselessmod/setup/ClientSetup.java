@@ -3,12 +3,10 @@ package net.themcbrothers.uselessmod.setup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
@@ -33,6 +31,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
@@ -58,6 +57,7 @@ public class ClientSetup extends CommonSetup {
         super(bus, modContainer);
 
         bus.addListener(this::clientSetup);
+        bus.addListener(this::menuScreens);
         bus.addListener(this::blockColors);
         bus.addListener(this::itemColors);
         bus.addListener(this::entityRegisterRenders);
@@ -78,9 +78,6 @@ public class ClientSetup extends CommonSetup {
             BlockEntityRenderers.register(ModBlockEntityTypes.PAINT_BUCKET.get(), PaintBucketRenderer::new);
         });
 
-        // Screen
-        event.enqueueWork(() -> MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new));
-
         // Wood Type
         event.enqueueWork(() -> Sheets.addWoodType(UselessWoodTypes.USELESS_OAK));
 
@@ -95,6 +92,10 @@ public class ClientSetup extends CommonSetup {
             ItemProperties.register(ModItems.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
         });
+    }
+
+    private void menuScreens(final RegisterMenuScreensEvent event) {
+        event.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
     }
 
     private void blockColors(final RegisterColorHandlersEvent.Block event) {
