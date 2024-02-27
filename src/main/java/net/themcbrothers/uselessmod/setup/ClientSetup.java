@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.registries.Registries;
@@ -165,9 +166,7 @@ public class ClientSetup extends CommonSetup {
 
     private void entityAddLayers(final EntityRenderersEvent.AddLayers event) {
         for (PlayerSkin.Model skin : event.getSkins()) {
-            LivingEntityRenderer<Player, EntityModel<Player>> renderer = event.getSkin(skin);
-
-            if (renderer != null) {
+            if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
                 renderer.addLayer(new UselessElytraLayer<>(renderer, event.getEntityModels()));
             }
         }
