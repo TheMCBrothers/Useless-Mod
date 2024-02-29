@@ -4,12 +4,12 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -18,16 +18,20 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidType;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.lib.util.RecipeHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.init.ModRecipeTypes;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 
-public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
+import java.util.List;
+
+public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<CoffeeRecipe>> {
     private static final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/container/coffee_machine.png");
-    static final RecipeType<CoffeeRecipe> TYPE = new RecipeType<>(UselessMod.rl("coffee"), CoffeeRecipe.class);
+    static final RecipeType<RecipeHolder<CoffeeRecipe>> TYPE = RecipeType.createFromVanilla(ModRecipeTypes.COFFEE.get());
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -49,37 +53,39 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
                 });
     }
 
-    private IDrawableAnimated getArrow(CoffeeRecipe recipe) {
-        return this.cachedArrows.getUnchecked(recipe.getCookingTime());
+    private IDrawableAnimated getArrow(RecipeHolder<CoffeeRecipe> recipe) {
+        return this.cachedArrows.getUnchecked(recipe.value().getCookingTime());
     }
 
     @Override
-    public void draw(CoffeeRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<CoffeeRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         IDrawableAnimated arrow = this.getArrow(recipe);
         arrow.draw(guiGraphics, 56, 24);
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, CoffeeRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 51, 1).addIngredients(recipe.getCupIngredient());
-        builder.addSlot(RecipeIngredientRole.INPUT, 69, 1).addIngredients(recipe.getBeanIngredient());
-        builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(recipe.getExtraIngredient());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(RecipeHelper.getResultItem(recipe));
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CoffeeRecipe> recipe, IFocusGroup focuses) {
+        final CoffeeRecipe recipeValue = recipe.value();
 
-        FluidIngredient waterIngredient = recipe.getWaterIngredient();
-        FluidIngredient milkIngredient = recipe.getMilkIngredient();
+        builder.addSlot(RecipeIngredientRole.INPUT, 51, 1).addIngredients(recipeValue.getCupIngredient());
+        builder.addSlot(RecipeIngredientRole.INPUT, 69, 1).addIngredients(recipeValue.getBeanIngredient());
+        builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(recipeValue.getExtraIngredient());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(RecipeHelper.getResultItem(recipeValue));
 
-        int waterAmount = waterIngredient.getFluids().isEmpty() ? FluidType.BUCKET_VOLUME :
-                waterIngredient.getAmount(waterIngredient.getFluids().get(0).getFluid());
-        int milkAmount = milkIngredient.getFluids().isEmpty() ? FluidType.BUCKET_VOLUME :
-                milkIngredient.getAmount(milkIngredient.getFluids().get(0).getFluid());
+        FluidIngredient waterIngredient = recipeValue.getWaterIngredient();
+        FluidIngredient milkIngredient = recipeValue.getMilkIngredient();
+
+        final int waterAmount = waterIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
+                waterIngredient.getAmount(waterIngredient.getFluids()[0].getFluid());
+        final int milkAmount = milkIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
+                milkIngredient.getAmount(milkIngredient.getFluids()[0].getFluid());
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 3)
                 .setFluidRenderer(waterAmount, false, 8, 48)
-                .addIngredients(ForgeTypes.FLUID_STACK, waterIngredient.getFluids());
+                .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(waterIngredient.getFluids()));
         builder.addSlot(RecipeIngredientRole.INPUT, 19, 3)
                 .setFluidRenderer(milkAmount, false, 8, 48)
-                .addIngredients(ForgeTypes.FLUID_STACK, milkIngredient.getFluids());
+                .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(milkIngredient.getFluids()));
     }
 
     @Override
@@ -98,7 +104,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<CoffeeRecipe> {
     }
 
     @Override
-    public RecipeType<CoffeeRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<CoffeeRecipe>> getRecipeType() {
         return TYPE;
     }
 }

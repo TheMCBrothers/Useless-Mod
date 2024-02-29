@@ -19,24 +19,24 @@ public class UselessRecipeMaker {
     private static Stream<RepairData> getRepairData() {
         return Stream.of(
                 new RepairData(ModTiers.USELESS.getRepairIngredient(),
-                        new ItemStack(ModItems.USELESS_SWORD),
-                        new ItemStack(ModItems.USELESS_PICKAXE),
-                        new ItemStack(ModItems.USELESS_AXE),
-                        new ItemStack(ModItems.USELESS_SHOVEL),
-                        new ItemStack(ModItems.USELESS_HOE),
-                        new ItemStack(ModItems.USELESS_SHIELD)
+                        new ItemStack(ModItems.USELESS_SWORD.value()),
+                        new ItemStack(ModItems.USELESS_PICKAXE.value()),
+                        new ItemStack(ModItems.USELESS_AXE.value()),
+                        new ItemStack(ModItems.USELESS_SHOVEL.value()),
+                        new ItemStack(ModItems.USELESS_HOE.value()),
+                        new ItemStack(ModItems.USELESS_SHIELD.value())
                 ),
                 new RepairData(ModTiers.SUPER_USELESS.getRepairIngredient(),
-                        new ItemStack(ModItems.SUPER_USELESS_SWORD),
-                        new ItemStack(ModItems.SUPER_USELESS_PICKAXE),
-                        new ItemStack(ModItems.SUPER_USELESS_AXE),
-                        new ItemStack(ModItems.SUPER_USELESS_SHOVEL),
-                        new ItemStack(ModItems.SUPER_USELESS_HOE),
-                        new ItemStack(ModItems.SUPER_USELESS_SHIELD)
+                        new ItemStack(ModItems.SUPER_USELESS_SWORD.value()),
+                        new ItemStack(ModItems.SUPER_USELESS_PICKAXE.value()),
+                        new ItemStack(ModItems.SUPER_USELESS_AXE.value()),
+                        new ItemStack(ModItems.SUPER_USELESS_SHOVEL.value()),
+                        new ItemStack(ModItems.SUPER_USELESS_HOE.value()),
+                        new ItemStack(ModItems.SUPER_USELESS_SHIELD.value())
                 ),
                 new RepairData(Ingredient.of(Items.PHANTOM_MEMBRANE),
-                        new ItemStack(ModItems.USELESS_ELYTRA),
-                        new ItemStack(ModItems.SUPER_USELESS_ELYTRA)
+                        new ItemStack(ModItems.USELESS_ELYTRA.value()),
+                        new ItemStack(ModItems.SUPER_USELESS_ELYTRA.value())
                 )
         );
     }
