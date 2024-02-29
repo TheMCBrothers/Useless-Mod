@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.AirBlock;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
@@ -19,7 +20,6 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,25 +28,31 @@ public final class UselessCreativeModeTabs {
     static void register() {
     }
 
-    public static final Supplier<CreativeModeTab> MAIN_TAB = Registration.CREATIVE_MODE_TABS.register("a_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = Registration.CREATIVE_MODE_TABS.register("a_tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.uselessmod"))
                     .icon(() -> new ItemStack(ModItems.USELESS_INGOT.value()))
+                    .withTabsAfter(UselessCreativeModeTabs.COFFEE_TAB.getKey(), UselessCreativeModeTabs.PAINT_TAB.getKey(), UselessCreativeModeTabs.WALL_CLOSET_TAB.getKey())
                     .build());
-    public static final Supplier<CreativeModeTab> COFFEE_TAB = Registration.CREATIVE_MODE_TABS.register("coffee",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COFFEE_TAB = Registration.CREATIVE_MODE_TABS.register("coffee",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.uselessmod.coffee"))
                     .icon(() -> new ItemStack(ModBlocks.COFFEE_MACHINE))
+                    .withTabsBefore(UselessCreativeModeTabs.MAIN_TAB.getKey())
+                    .withTabsAfter(UselessCreativeModeTabs.PAINT_TAB.getKey(), UselessCreativeModeTabs.WALL_CLOSET_TAB.getKey())
                     .build());
-    public static final Supplier<CreativeModeTab> PAINT_TAB = Registration.CREATIVE_MODE_TABS.register("paint_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> PAINT_TAB = Registration.CREATIVE_MODE_TABS.register("paint_tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.uselessmod.paint"))
                     .icon(() -> new ItemStack(ModItems.PAINT_BRUSH.value()))
+                    .withTabsBefore(UselessCreativeModeTabs.MAIN_TAB.getKey(), UselessCreativeModeTabs.COFFEE_TAB.getKey())
+                    .withTabsAfter(UselessCreativeModeTabs.WALL_CLOSET_TAB.getKey())
                     .build());
-    public static final Supplier<CreativeModeTab> WALL_CLOSET_TAB = Registration.CREATIVE_MODE_TABS.register("wall_closet",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> WALL_CLOSET_TAB = Registration.CREATIVE_MODE_TABS.register("wall_closet",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.uselessmod.wall_closet"))
                     .icon(() -> new ItemStack(ModBlocks.WALL_CLOSET))
+                    .withTabsBefore(UselessCreativeModeTabs.MAIN_TAB.getKey(), UselessCreativeModeTabs.COFFEE_TAB.getKey(), UselessCreativeModeTabs.PAINT_TAB.getKey())
                     .build());
 
 
