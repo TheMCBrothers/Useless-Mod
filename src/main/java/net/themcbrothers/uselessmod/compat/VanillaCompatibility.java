@@ -5,8 +5,10 @@ import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
 
@@ -29,17 +31,6 @@ public class VanillaCompatibility {
         // Strippable logs
         registerStrippable(ModBlocks.USELESS_OAK_LOG.get(), ModBlocks.STRIPPED_USELESS_OAK_LOG.get());
         registerStrippable(ModBlocks.USELESS_OAK_WOOD.get(), ModBlocks.STRIPPED_USELESS_OAK_WOOD.get());
-
-        // Compostable blocks
-        registerCompostable(0.3F, ModBlocks.USELESS_OAK_SAPLING.get());
-        registerCompostable(0.3F, ModBlocks.USELESS_OAK_LEAVES.get());
-        registerCompostable(0.3F, ModItems.USELESS_WHEAT_SEEDS.get());
-        registerCompostable(0.3F, ModItems.COFFEE_SEEDS.get());
-        registerCompostable(0.65F, ModBlocks.RED_ROSE.get());
-        registerCompostable(0.65F, ModBlocks.BLUE_ROSE.get());
-        registerCompostable(0.65F, ModBlocks.USELESS_ROSE.get());
-        registerCompostable(0.65F, ModItems.USELESS_WHEAT.get());
-        registerCompostable(0.65F, ModItems.COFFEE_BEANS.get());
 
         // Cauldron
         CauldronInteraction.WATER.map().put(ModBlocks.PAINTED_WOOL.asItem(), (state, level, pos, player, hand, stack) -> {
@@ -81,10 +72,6 @@ public class VanillaCompatibility {
     private static void registerStrippable(Block log, Block stripped_log) {
         AxeItem.STRIPPABLES = Maps.newHashMap(AxeItem.STRIPPABLES);
         AxeItem.STRIPPABLES.put(log, stripped_log);
-    }
-
-    private static void registerCompostable(float chance, ItemLike itemIn) {
-        ComposterBlock.COMPOSTABLES.put(itemIn.asItem(), chance);
     }
 
     private static void registerFlammable(Block blockIn, int encouragement, int flammability) {

@@ -1,0 +1,28 @@
+{
+  "values": {
+    "uselessmod:blue_rose": {
+      "chance": 0.65
+    },
+    "uselessmod:coffee_beans": {
+      "chance": 0.65
+    },
+    "uselessmod:coffee_seeds": {
+      "chance": 0.3
+    },
+    "uselessmod:red_rose": {
+      "chance": 0.65
+    },
+    "uselessmod:useless_oak_sapling": {
+      "chance": 0.3
+    },
+    "uselessmod:useless_rose": {
+      "chance": 0.65
+    },
+    "uselessmod:useless_wheat": {
+      "chance": 0.65
+    },
+    "uselessmod:useless_wheat_seeds": {
+      "chance": 0.3
+    }
+  }
+}

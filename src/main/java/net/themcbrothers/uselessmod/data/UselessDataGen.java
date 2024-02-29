@@ -58,6 +58,7 @@ public class UselessDataGen {
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Fluids(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Entities(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Paintings(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new UselessDataMapsProvider(packOutput, lookupProvider));
 
         // Resources
         generator.addProvider(event.includeClient(), new UselessSpriteSourceProvider(packOutput, lookupProvider, existingFileHelper));
