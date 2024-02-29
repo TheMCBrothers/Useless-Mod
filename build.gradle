@@ -148,6 +148,7 @@ unifiedPublishing {
 
                 relations {
                     depends "themcbroslib"
+                    optional "jei"
                 }
             }
         }
@@ -160,6 +161,7 @@ unifiedPublishing {
 
                 relations {
                     depends "themcbroslib"
+                    optional "jei"
                 }
             }
         }
