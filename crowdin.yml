@@ -7,8 +7,8 @@
 
 files: [
   {
-    "source": "src/generated/resources/assets/uselessmod/lang/en_us.json",
-    "translation": "src/main/resources/assets/uselessmod/lang/%locale_with_underscore%.json",
+    "source": "src/generated/resources/assets/**/lang/en_us.json",
+    "translation": "src/main/resources/assets/**/lang/%locale_with_underscore%.json",
     "languages_mapping": {
       "locale_with_underscore": {
         "af": "af_za",
