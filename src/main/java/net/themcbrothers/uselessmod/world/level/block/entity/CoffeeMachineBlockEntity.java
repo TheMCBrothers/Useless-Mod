@@ -1,9 +1,7 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -275,25 +273,27 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             return;
         }
 
+        RegistryAccess lookupProvider = this.level.registryAccess();
         CompoundTag nbt = new CompoundTag();
+
         if (type == SYNC_WATER_TANK) {
-            nbt.put("Fluid", this.tankHandler.getWaterTank().writeToNBT(new CompoundTag()));
+            nbt.put("Fluid", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
         } else if (type == SYNC_MILK_TANK) {
-            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(new CompoundTag()));
+            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
         } else if (type == SYNC_USE_MILK) {
             nbt.putBoolean("UseMilk", this.useMilk);
         }
 
-        PacketUtils.sendToAllTracking(new BlockEntitySyncPacket(this, nbt), this.level, this.worldPosition);
+        PacketUtils.sendToAllTracking(new BlockEntitySyncPacket(this.worldPosition, nbt), this.level, this.worldPosition);
     }
 
     @Override
-    public void receiveMessageFromServer(CompoundTag tag) {
+    public void receiveMessageFromServer(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         if (tag.contains("Fluid", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getWaterTank().readFromNBT(tag.getCompound("Fluid"));
+            this.tankHandler.getWaterTank().readFromNBT(lookupProvider, tag.getCompound("Fluid"));
         }
         if (tag.contains("Milk", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getMilkTank().readFromNBT(tag.getCompound("Milk"));
+            this.tankHandler.getMilkTank().readFromNBT(lookupProvider, tag.getCompound("Milk"));
         }
         if (tag.contains("UseMilk", Tag.TAG_BYTE)) {
             this.useMilk = tag.getBoolean("UseMilk");
@@ -301,35 +301,35 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        ContainerHelper.loadAllItems(compound, this.items);
+    public void load(CompoundTag compound, HolderLookup.Provider lookupProvider) {
+        super.load(compound, lookupProvider);
+        ContainerHelper.loadAllItems(compound, this.items, lookupProvider);
         this.litTime = compound.getInt("BurnTime");
         this.cookingProgress = compound.getInt("CookTime");
         this.cookingTotalTime = compound.getInt("CookTimeTotal");
         this.useMilk = compound.getBoolean("UseMilk");
-        this.tankHandler.getWaterTank().readFromNBT(compound.getCompound("Water"));
-        this.tankHandler.getMilkTank().readFromNBT(compound.getCompound("Milk"));
+        this.tankHandler.getWaterTank().readFromNBT(lookupProvider, compound.getCompound("Water"));
+        this.tankHandler.getMilkTank().readFromNBT(lookupProvider, compound.getCompound("Milk"));
         this.energyStorage.setEnergyStored(compound.getInt("EnergyStored"));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        ContainerHelper.saveAllItems(tag, this.items, false);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(tag, lookupProvider);
+        ContainerHelper.saveAllItems(tag, this.items, false, lookupProvider);
         tag.putInt("BurnTime", this.litTime);
         tag.putInt("CookTime", this.cookingProgress);
         tag.putInt("CookTimeTotal", this.cookingTotalTime);
         tag.putBoolean("UseMilk", this.useMilk);
-        tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(new CompoundTag()));
-        tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(new CompoundTag()));
+        tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+        tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
         tag.putInt("EnergyStored", this.energyStorage.getEnergyStored());
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
+        this.saveAdditional(tag, lookupProvider);
         return tag;
     }
 
@@ -436,8 +436,30 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
+    protected NonNullList<ItemStack> getItems() {
+        return this.items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> stacks) {
+        this.items.clear();
+        this.items.addAll(stacks);
+        this.setChanged();
+    }
+
+    @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new CoffeeMachineMenu(id, inventory, this, this.dataAccess);
+    }
+
+    @Override
+    public void applyComponents(DataComponentMap components) {
+        super.applyComponents(components); // TODO components
+    }
+
+    @Override
+    public void collectComponents(DataComponentMap.Builder builder) {
+        super.collectComponents(builder);
     }
 
     public class CoffeeMachineTank implements IFluidHandler {

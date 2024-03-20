@@ -1,7 +1,9 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -29,6 +31,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -78,8 +81,8 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
+        return this.saveWithoutMetadata(lookupProvider);
     }
 
     @Nullable
@@ -89,17 +92,17 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        ContainerHelper.saveAllItems(tag, this.items);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(tag, lookupProvider);
+        ContainerHelper.saveAllItems(tag, this.items, lookupProvider);
         tag.putString("Material", String.valueOf(BuiltInRegistries.BLOCK.getKey(this.material)));
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.load(tag, lookupProvider);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, this.items);
+        ContainerHelper.loadAllItems(tag, this.items, lookupProvider);
         final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
         if (key != null) {
             material = BuiltInRegistries.BLOCK.containsKey(key) ? Objects.requireNonNull(BuiltInRegistries.BLOCK.get(key)) : Blocks.AIR;
@@ -116,7 +119,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     public void setMaterial(Block material) {
         this.material = material;
         //noinspection DataFlowIssue
-        this.level.setBlockAndUpdate(getBlockPos(), getBlockState());
+        this.getLevel().setBlockAndUpdate(this.getBlockPos(), this.getBlockState());
         this.requestModelDataUpdate();
         this.setChanged();
     }
@@ -124,6 +127,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     @Override
     public void startOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {
+            //noinspection DataFlowIssue
             this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
@@ -131,12 +135,14 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     @Override
     public void stopOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {
+            //noinspection DataFlowIssue
             this.openersCounter.decrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
 
     public void recheckOpen() {
         if (!this.remove) {
+            //noinspection DataFlowIssue
             this.openersCounter.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
@@ -144,6 +150,16 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     @Override
     protected Component getDefaultName() {
         return UselessMod.translate("container", "wall_closet");
+    }
+
+    @Override
+    protected NonNullList<ItemStack> getItems() {
+        return this.items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
     }
 
     @Override
@@ -206,17 +222,37 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     private void updateBlockState(BlockState state, boolean isOpen) {
-        this.level.setBlock(this.getBlockPos(), state.setValue(BlockStateProperties.OPEN, isOpen), 3);
+        //noinspection DataFlowIssue
+        this.getLevel().setBlock(this.getBlockPos(), state.setValue(BlockStateProperties.OPEN, isOpen), 3);
     }
 
     private void playSound(SoundEvent soundEvent) {
         double x = (double) this.worldPosition.getX() + 0.5D;
         double y = (double) this.worldPosition.getY() + 0.5D;
         double z = (double) this.worldPosition.getZ() + 0.5D;
-        this.level.playSound(null, x, y, z, soundEvent, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
+        //noinspection DataFlowIssue
+        this.getLevel().playSound(null, x, y, z, soundEvent, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
     }
 
     public Block getMaterial() {
         return this.material;
+    }
+
+    @Override
+    public void applyComponents(DataComponentMap components) {
+        super.applyComponents(components);
+        this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Blocks.AIR));
+    }
+
+    @Override
+    public void collectComponents(DataComponentMap.Builder builder) {
+        super.collectComponents(builder);
+        builder.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), this.getMaterial());
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        super.removeComponentsFromTag(tag);
+        tag.remove("Material");
     }
 }

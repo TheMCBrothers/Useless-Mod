@@ -6,14 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -27,7 +24,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -36,6 +33,7 @@ import net.themcbrothers.lib.wrench.Wrench;
 import net.themcbrothers.lib.wrench.WrenchUtils;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,6 +43,7 @@ import java.util.Objects;
 @SuppressWarnings("deprecation")
 public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableBlock {
     public static final MapCodec<MachineSupplierBlock> CODEC = simpleCodec(MachineSupplierBlock::new);
+
     public MachineSupplierBlock(Properties properties) {
         super(properties);
     }
@@ -66,24 +65,22 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag) {
-        CompoundTag tag = BlockItem.getBlockEntityData(stack);
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag, @Nullable RegistryAccess registryAccess) {
+        BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
         ClientLevel clientLevel = Minecraft.getInstance().level;
 
-        if (clientLevel != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-            BlockState mimic = NbtUtils.readBlockState(clientLevel.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
+        if (mimic != null && clientLevel != null) {
             hoverText.add(mimic.getBlock().getName().withStyle(ChatFormatting.GRAY));
         }
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.tryWrench(state, level, pos, player, hand, hit)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
-            ItemStack stack = player.getItemInHand(hand);
             if (blockEntity.getMimic() == null && stack.getItem() instanceof BlockItem blockItem) {
                 BlockState mimic = blockItem.getBlock().getStateForPlacement(new BlockPlaceContext(level, player, hand, stack, hit));
                 if (mimic != null && !mimic.hasBlockEntity()) {
@@ -93,12 +90,12 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
                         stack.shrink(1);
                     }
 
-                    return InteractionResult.sidedSuccess(level.isClientSide);
+                    return ItemInteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }
 
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -124,15 +121,6 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
         }
 
         return false;
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-        CompoundTag tag = BlockItem.getBlockEntityData(stack);
-        if (tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND) &&
-                level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
-            blockEntity.setMimic(NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic")));
-        }
     }
 
     @Override
@@ -269,7 +257,7 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public @Nullable BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+    public @Nullable PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
         return this.getMimic(level, pos).getBlockPathType(level, pos, mob);
     }
 

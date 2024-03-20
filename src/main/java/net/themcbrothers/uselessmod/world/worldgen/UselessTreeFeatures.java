@@ -1,6 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -39,7 +39,7 @@ public final class UselessTreeFeatures {
         return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_LOG.get()), new FancyTrunkPlacer(3, 11, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).ignoreVines();
     }
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         final BeehiveDecorator beehive0002 = new BeehiveDecorator(0.002F);
         final BeehiveDecorator beehive002 = new BeehiveDecorator(0.02F);
         final BeehiveDecorator beehive005 = new BeehiveDecorator(0.05F);

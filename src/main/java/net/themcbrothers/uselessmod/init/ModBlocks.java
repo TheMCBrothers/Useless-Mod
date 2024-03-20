@@ -50,9 +50,9 @@ public final class ModBlocks {
     public static final DeferredBlock<Block> SUPER_USELESS_TRAPDOOR = BLOCKS.register("super_useless_trapdoor", () -> new TrapDoorBlock(BlockSetType.IRON, ofFullCopy(Blocks.IRON_TRAPDOOR)), GENERAL_BLOCK_ITEM);
 
     // Natural
-    public static final DeferredBlock<Block> RED_ROSE = BLOCKS.register("red_rose", () -> new FlowerBlock(() -> MobEffects.NIGHT_VISION, 5, ofFullCopy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
-    public static final DeferredBlock<Block> BLUE_ROSE = BLOCKS.register("blue_rose", () -> new FlowerBlock(() -> MobEffects.SATURATION, 7, ofFullCopy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
-    public static final DeferredBlock<Block> USELESS_ROSE = BLOCKS.register("useless_rose", () -> new FlowerBlock(() -> MobEffects.LUCK, 2, ofFullCopy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+    public static final DeferredBlock<Block> RED_ROSE = BLOCKS.register("red_rose", () -> new FlowerBlock(MobEffects.NIGHT_VISION, 5, ofFullCopy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+    public static final DeferredBlock<Block> BLUE_ROSE = BLOCKS.register("blue_rose", () -> new FlowerBlock(MobEffects.SATURATION, 7, ofFullCopy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
+    public static final DeferredBlock<Block> USELESS_ROSE = BLOCKS.register("useless_rose", () -> new FlowerBlock(MobEffects.LUCK, 2, ofFullCopy(Blocks.POPPY)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_SAPLING = BLOCKS.register("useless_oak_sapling", () -> new SaplingBlock(UselessOakTreeGrower.USELESS_OAK_TREE_GROWER, ofFullCopy(Blocks.OAK_SAPLING)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_LEAVES = BLOCKS.register("useless_oak_leaves", () -> new LeavesBlock(ofFullCopy(Blocks.OAK_LEAVES)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_LOG = BLOCKS.register("useless_oak_log", () -> new RotatedPillarBlock(ofFullCopy(Blocks.OAK_LOG)), GENERAL_BLOCK_ITEM);

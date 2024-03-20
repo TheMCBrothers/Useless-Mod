@@ -48,8 +48,8 @@ public class CupBlockItem extends BlockItem {
 
         if (!level.isClientSide) {
             for (MobEffectInstance mobeffectinstance : CoffeeUtils.getMobEffects(stack)) {
-                if (mobeffectinstance.getEffect().isInstantenous()) {
-                    mobeffectinstance.getEffect().applyInstantenousEffect(player, player, entity, mobeffectinstance.getAmplifier(), 1.0D);
+                if (mobeffectinstance.getEffect().value().isInstantenous()) {
+                    mobeffectinstance.getEffect().value().applyInstantenousEffect(player, player, entity, mobeffectinstance.getAmplifier(), 1.0D);
                 } else {
                     entity.addEffect(new MobEffectInstance(mobeffectinstance));
                 }

@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -44,8 +45,8 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(tag, lookupProvider);
         this.writeMimic(tag);
     }
 
@@ -56,15 +57,15 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.load(tag, lookupProvider);
         if (tag.contains("Mimic", Tag.TAG_COMPOUND) && this.level != null) {
             this.mimic = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
         }
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
         CompoundTag tag = new CompoundTag();
         this.writeMimic(tag);
         return tag;
@@ -76,9 +77,9 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
         BlockState oldMimic = this.mimic;
-        super.onDataPacket(net, pkt);
+        super.onDataPacket(net, pkt, lookupProvider);
         if (!Objects.equals(oldMimic, this.mimic)) {
             this.requestModelDataUpdate();
             if (this.level != null) {

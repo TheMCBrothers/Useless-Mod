@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
@@ -21,10 +20,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.ModList;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static net.themcbrothers.uselessmod.UselessMod.translate;
@@ -36,12 +35,11 @@ public class LightSwitchBlockItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        CompoundTag tag = getBlockEntityData(stack);
+        List<BlockPos> lights = stack.get(UselessDataComponents.LIGHTS.get());
 
-        if (level != null && tag != null) {
+        if (level != null && lights != null) {
             if (GLFW.glfwGetKey(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
-                for (long packedPos : tag.getLongArray("Lights")) {
-                    final BlockPos pos = BlockPos.of(packedPos);
+                for (BlockPos pos : lights) {
                     final BlockState state = level.getBlockState(pos);
                     final ItemStack cloneStack = state.getCloneItemStack(Minecraft.getInstance().hitResult, level, pos, UselessMod.setup.getLocalPlayer());
                     final String modId = cloneStack.getItem().getCreatorModId(cloneStack);
@@ -68,18 +66,20 @@ public class LightSwitchBlockItem extends BlockItem {
         final ItemStack stack = context.getItemInHand();
 
         if (LampRegistry.isLampRegistered(state)) {
-            // create or get BlockEntityTag from ItemStack
-            CompoundTag blockEntityTag = stack.getOrCreateTagElement("BlockEntityTag");
-            List<Long> positions = Lists.newArrayList(Arrays.stream(blockEntityTag.getLongArray("Lights")).iterator());
+            List<BlockPos> existingLights = stack.get(UselessDataComponents.LIGHTS.get());
+            List<BlockPos> lights = Lists.newArrayList();
 
-            long longPos = pos.asLong();
+            if (existingLights != null) {
+                lights.addAll(existingLights);
+            }
+
             Component statusMessage;
 
-            if (positions.contains(longPos)) {
+            if (lights.contains(pos)) {
                 statusMessage = translate("status", "light_switch.block_already_added").withStyle(ChatFormatting.RED);
             } else {
-                positions.add(longPos);
-                blockEntityTag.putLongArray("Lights", positions);
+                lights.add(pos);
+                stack.set(UselessDataComponents.LIGHTS.get(), lights);
                 statusMessage = translate("status", "light_switch.block_added", pos.toShortString());
             }
 
@@ -98,7 +98,7 @@ public class LightSwitchBlockItem extends BlockItem {
         final ItemStack stack = player.getItemInHand(usedHand);
 
         if (player.isSecondaryUseActive()) {
-            stack.setTag(null);
+            stack.remove(UselessDataComponents.LIGHTS.get());
             player.displayClientMessage(translate("status", "light_switch.cleared"), true);
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
         }

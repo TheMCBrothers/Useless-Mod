@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.world.worldgen;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -18,7 +18,7 @@ public final class UselessVegetationPlacements {
     public static final ResourceKey<PlacedFeature> FLOWER_USELESS = PlacementUtils.createKey(UselessMod.MOD_ID + ":flower_default");
     public static final ResourceKey<PlacedFeature> TREES_USELESS_OAK = PlacementUtils.createKey(UselessMod.MOD_ID + ":trees_useless_oak");
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         PlacementUtils.register(context, FLOWER_USELESS, configuredFeatures.getOrThrow(UselessVegetationFeatures.USELESS_FLOWER_DEFAULT), RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());

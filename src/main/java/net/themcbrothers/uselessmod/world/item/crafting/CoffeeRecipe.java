@@ -4,7 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -110,9 +111,11 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
                         ExtraCodecs.strictOptionalField(Ingredient.CODEC, "extra", Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
                         FluidIngredient.CODEC_NONEMPTY.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
                         ExtraCodecs.strictOptionalField(FluidIngredient.CODEC, "milk", FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
-                        ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                        ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
                 ).apply(instance, CoffeeRecipe::new));
+
+        private static final StreamCodec<RegistryFriendlyByteBuf, CoffeeRecipe> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
 
         @Override
         public Codec<CoffeeRecipe> codec() {
@@ -120,29 +123,32 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
         }
 
         @Override
-        public CoffeeRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, CoffeeRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        private static CoffeeRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String group = buffer.readUtf();
-            Ingredient cupIngredient = Ingredient.fromNetwork(buffer);
-            Ingredient beanIngredient = Ingredient.fromNetwork(buffer);
-            Ingredient extraIngredient = Ingredient.fromNetwork(buffer);
-            FluidIngredient waterIngredient = FluidIngredient.fromNetwork(buffer);
-            FluidIngredient milkIngredient = FluidIngredient.fromNetwork(buffer);
-            ItemStack recipeOutput = buffer.readItem();
+            Ingredient cupIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            Ingredient beanIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            Ingredient extraIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            FluidIngredient waterIngredient = FluidIngredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            FluidIngredient milkIngredient = FluidIngredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            ItemStack recipeOutput = ItemStack.STREAM_CODEC.decode(buffer);
             int cookingTime = buffer.readInt();
 
             return new CoffeeRecipe(group, cupIngredient, beanIngredient, extraIngredient,
                     waterIngredient, milkIngredient, recipeOutput, cookingTime);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, CoffeeRecipe recipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, CoffeeRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            recipe.cupIngredient.toNetwork(buffer);
-            recipe.beanIngredient.toNetwork(buffer);
-            recipe.extraIngredient.toNetwork(buffer);
-            recipe.waterIngredient.toNetwork(buffer);
-            recipe.milkIngredient.toNetwork(buffer);
-            buffer.writeItem(recipe.result);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
+            FluidIngredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.waterIngredient);
+            FluidIngredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.milkIngredient);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
             buffer.writeInt(recipe.cookingTime);
         }
     }

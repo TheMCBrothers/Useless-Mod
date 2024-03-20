@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.compat;
 
 import com.google.common.collect.Maps;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.themcbrothers.uselessmod.init.ModBlocks;
 import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 
 public class VanillaCompatibility {
     public static void register() {
@@ -52,20 +53,20 @@ public class VanillaCompatibility {
                 LayeredCauldronBlock.lowerFillLevel(state, level, pos);
             }
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         });
 
         CauldronInteraction.WATER.map().put(ModItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
-            if (stack.hasTag()) {
+            if (stack.has(UselessDataComponents.COLOR.get())) {
                 if (!level.isClientSide) {
-                    stack.getOrCreateTag().remove("Color");
+                    stack.remove(UselessDataComponents.COLOR.get());
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
 
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
 
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         });
     }
 

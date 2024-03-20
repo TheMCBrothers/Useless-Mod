@@ -61,7 +61,7 @@ public final class UselessCreativeModeTabs {
         if (event.getTab() == MAIN_TAB.get()) {
             NonNullList<ItemStack> itemStacks = NonNullList.create();
 
-            Registration.BLOCKS.getEntries().stream().map(Holder::value).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
+//            Registration.BLOCKS.getEntries().stream().map(Holder::value).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
             Registration.ITEMS.getEntries().stream().map(Holder::value).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
 
             // remove some items
@@ -83,17 +83,16 @@ public final class UselessCreativeModeTabs {
             for (DyeColor color : DyeColor.values()) {
                 // painted wool
                 final ItemStack stackWool = new ItemStack(ModBlocks.PAINTED_WOOL);
-                CompoundTag tag = getTagWithColorFromDyeColor(color);
-                BlockItem.setBlockEntityData(stackWool, ModBlockEntityTypes.PAINTED_WOOL.get(), tag);
+                applyColorComponentToStack(stackWool, color);
 
                 // paint brush
                 final ItemStack stackBrush = new ItemStack(ModItems.PAINT_BRUSH.value());
-                stackBrush.setTag(getTagWithColorFromDyeColor(color));
+                applyColorComponentToStack(stackBrush, color);
                 stackBrush.setDamageValue(0);
 
                 // bucket with paint
                 final ItemStack stackBucket = new ItemStack(ModItems.BUCKET_PAINT.value());
-                stackBucket.setTag(getTagWithColorFromDyeColor(color));
+                applyColorComponentToStack(stackBucket, color);
 
                 coloredItems.add(Triple.of(stackWool, stackBrush, stackBucket));
             }
@@ -138,16 +137,13 @@ public final class UselessCreativeModeTabs {
         }
     }
 
-    private static CompoundTag getTagWithColorFromDyeColor(DyeColor color) {
+    private static void applyColorComponentToStack(ItemStack stack, DyeColor color) {
         float[] colors = color.getTextureDiffuseColors();
         int r = (int) (colors[0] * 255.0F);
         int g = (int) (colors[1] * 255.0F);
         int b = (int) (colors[2] * 255.0F);
 
-        CompoundTag tag = new CompoundTag();
-        tag.putInt("Color", (r << 16) + (g << 8) + b);
-
-        return tag;
+        stack.set(UselessDataComponents.COLOR.get(), (r << 16) + (g << 8) + b);
     }
 
     /**

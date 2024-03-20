@@ -4,23 +4,17 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -40,6 +34,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModStats;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,12 +64,11 @@ public class WallClosetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag) {
-        CompoundTag tag = BlockItem.getBlockEntityData(stack);
-        if (tag != null && tag.contains("Material", Tag.TAG_STRING)) {
-            final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-            Block block = BuiltInRegistries.BLOCK.get(key);
-            hoverText.add(block.getName().withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag, @Nullable RegistryAccess registryAccess) {
+        Block material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
+
+        if (material != null) {
+            hoverText.add(material.getName().withStyle(ChatFormatting.GRAY));
         }
     }
 
@@ -82,11 +76,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallCloset) {
             final ItemStack stack = new ItemStack(this);
-            final CompoundTag tag = new CompoundTag();
-
-            tag.putString("Material", String.valueOf(BuiltInRegistries.BLOCK.getKey(wallCloset.getMaterial())));
-            BlockItem.setBlockEntityData(stack, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
-
+            stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), wallCloset.getMaterial());
             return stack;
         }
 
@@ -104,7 +94,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
@@ -174,20 +164,7 @@ public class WallClosetBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
             return wallClosetBlockEntity.getMaterial().getSoundType(state, level, pos, entity);
         }
+
         return super.getSoundType(state, level, pos, entity);
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity livingEntity, ItemStack stack) {
-        if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
-            if (stack.hasCustomHoverName()) {
-                wallClosetBlockEntity.setCustomName(stack.getHoverName());
-            }
-
-            CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            if (tag != null) {
-                wallClosetBlockEntity.parseMaterial(tag.getString("Material"));
-            }
-        }
     }
 }

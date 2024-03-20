@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.world.worldgen;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -30,7 +30,7 @@ public final class UselessVegetationFeatures {
         return FeatureUtils.simpleRandomPatchConfiguration(tries, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(toPlace)));
     }
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
         FeatureUtils.register(context, USELESS_FLOWER_DEFAULT, Feature.FLOWER, grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(ModBlocks.RED_ROSE.get().defaultBlockState(), 2).add(ModBlocks.BLUE_ROSE.get().defaultBlockState(), 2).add(ModBlocks.USELESS_ROSE.get().defaultBlockState(), 1)), 64));

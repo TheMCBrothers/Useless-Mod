@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.api;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.Util;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
@@ -7,6 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Set;
 
 public class CoffeeType {
+    public static final Codec<CoffeeType> CODEC = UselessRegistries.COFFEE_REGISTRY.byNameCodec();
+
     private final Set<MobEffectInstance> effects;
     private final int color;
     private final boolean foil;

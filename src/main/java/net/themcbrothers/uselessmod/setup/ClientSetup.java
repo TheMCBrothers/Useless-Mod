@@ -3,26 +3,18 @@ package net.themcbrothers.uselessmod.setup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -131,26 +123,18 @@ public class ClientSetup extends CommonSetup {
         final ItemColors colors = event.getItemColors();
 
         event.register(((stack, layer) -> {
-            final CompoundTag tag = stack.getTag();
-            return layer == 1 && tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
+            Integer color = stack.get(UselessDataComponents.COLOR.get());
+            return layer == 1 && color != null ? color : -1;
         }), ModItems.PAINT_BRUSH);
 
-        event.register(((stack, layer) -> {
-            final CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
-        }), ModBlocks.PAINTED_WOOL);
+        event.register(((stack, layer) -> stack.getOrDefault(UselessDataComponents.COLOR.get(), -1)), ModBlocks.PAINTED_WOOL);
 
         event.register((stack, layer) ->
                 CoffeeUtils.getCoffeeType(stack).map(CoffeeType::getColor).orElse(-1), ModBlocks.CUP_COFFEE);
 
         event.register((stack, layer) -> {
-            final CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            final ClientLevel level = Minecraft.getInstance().level;
-            if (level != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-                final BlockState mimic = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
-                return colors.getColor(new ItemStack(mimic.getBlock().asItem()), layer);
-            }
-            return -1;
+            BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
+            return mimic != null ? colors.getColor(new ItemStack(mimic.getBlock().asItem()), layer) : -1;
         }, ModBlocks.MACHINE_SUPPLIER);
 
         event.register(new DynamicFluidContainerModel.Colors(), ModItems.BUCKET_PAINT);

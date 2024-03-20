@@ -2,8 +2,6 @@ package net.themcbrothers.uselessmod.world.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -18,6 +16,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,10 +34,9 @@ public class PaintBrushItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> hoverText, TooltipFlag tooltipFlag) {
-        CompoundTag tag = stack.getTag();
+        Integer color = stack.get(UselessDataComponents.COLOR.get());
 
-        if (tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC)) {
-            int color = tag.getInt("Color");
+        if (color != null) {
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
             hoverText.add(UselessMod.translate("misc", "color", hexColor).withStyle(ChatFormatting.GRAY));
         }
@@ -62,7 +60,8 @@ public class PaintBrushItem extends Item {
                 level.scheduleTick(pos, paintedWool.getBlockState().getBlock(), 2);
 
                 if (player == null || !player.getAbilities().instabuild) {
-                    stack.hurt(1, level.getRandom(), player instanceof ServerPlayer ? (ServerPlayer) player : null);
+                    stack.hurtAndBreak(1, level.getRandom(), player instanceof ServerPlayer ? (ServerPlayer) player : null, () -> {
+                    });
                 }
 
                 return InteractionResult.sidedSuccess(level.isClientSide);
@@ -76,7 +75,7 @@ public class PaintBrushItem extends Item {
         super.setDamage(stack, damage);
 
         if (damage >= this.getMaxDamage(stack)) {
-            stack.getOrCreateTag().remove("Color");
+            stack.remove(UselessDataComponents.COLOR.get());
         }
     }
 
@@ -91,17 +90,15 @@ public class PaintBrushItem extends Item {
     }
 
     public boolean hasCustomColor(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag != null && tag.contains("Color", 99);
+        return stack.has(UselessDataComponents.COLOR.get());
     }
 
     public int getColor(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag != null && tag.contains("Color", 99) ? tag.getInt("Color") : -1;
+        return stack.getOrDefault(UselessDataComponents.COLOR.get(), -1);
     }
 
     public void setColor(ItemStack stack, int color) {
-        stack.getOrCreateTag().putInt("Color", color);
+        stack.set(UselessDataComponents.COLOR.get(), color);
     }
 
     public static ItemStack dye(ItemStack stack, List<DyeColor> dyes) {

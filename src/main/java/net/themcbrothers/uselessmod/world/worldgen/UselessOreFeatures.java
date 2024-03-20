@@ -1,6 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
@@ -21,7 +21,7 @@ public final class UselessOreFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_USELESS = FeatureUtils.createKey(UselessMod.MOD_ID + ":ore_useless");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SUPER_USELESS = FeatureUtils.createKey(UselessMod.MOD_ID + ":ore_super_useless");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest ruleTestStone = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest ruleTestDeepslate = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
         RuleTest ruleTestNetherrack = new BlockMatchTest(Blocks.NETHERRACK);

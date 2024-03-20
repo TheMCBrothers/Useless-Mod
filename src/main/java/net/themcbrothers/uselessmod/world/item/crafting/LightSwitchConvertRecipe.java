@@ -47,7 +47,7 @@ public class LightSwitchConvertRecipe extends CustomRecipe {
         }
 
         ItemStack returnStack = new ItemStack(isBlock ? ModBlocks.LIGHT_SWITCH : ModBlocks.LIGHT_SWITCH_BLOCK);
-        returnStack.setTag(stack.getTag());
+        returnStack.applyComponents(stack.getComponents());
         return returnStack;
     }
 

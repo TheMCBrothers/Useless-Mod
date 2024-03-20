@@ -2,6 +2,8 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.LightSwitchBlock;
 
 import java.util.Arrays;
@@ -27,18 +30,28 @@ public class LightSwitchBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    public void collectComponents(DataComponentMap.Builder builder) {
+        builder.set(UselessDataComponents.LIGHTS.get(), this.getBlockPositions());
+    }
 
-        if (this.blockPositions.size() > 0) {
+    @Override
+    public void applyComponents(DataComponentMap components) {
+        this.setBlockPositions(components.getOrDefault(UselessDataComponents.LIGHTS.get(), List.of()));
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(tag, lookupProvider);
+
+        if (!this.blockPositions.isEmpty()) {
             List<Long> packedPositions = this.blockPositions.stream().map(BlockPos::asLong).toList();
             tag.putLongArray("Lights", packedPositions);
         }
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.load(tag, lookupProvider);
 
         this.blockPositions.clear();
         Arrays.stream(tag.getLongArray("Lights")).mapToObj(BlockPos::of).forEach(this.blockPositions::add);
@@ -84,6 +97,10 @@ public class LightSwitchBlockEntity extends BlockEntity {
 
     private void playSound(LevelAccessor worldIn, BlockPos pos, SoundEvent sound, boolean isOn) {
         worldIn.playSound(null, pos, sound, SoundSource.BLOCKS, 0.3F, isOn ? 0.6F : 0.5F);
+    }
+
+    public List<BlockPos> getBlockPositions() {
+        return this.blockPositions;
     }
 
     public void setBlockPositions(Collection<BlockPos> blockPositions) {

@@ -29,29 +29,29 @@ public final class ModItems {
     // Weapons and Tools
     public static final DeferredItem<Item> USELESS_SHEARS = ITEMS.register("useless_shears", () -> new ShearsItem(new Item.Properties().durability(320)));
     public static final DeferredItem<Item> USELESS_SHIELD = ITEMS.register("useless_shield", () -> new UselessShieldItem(ModTiers.USELESS, new Item.Properties().durability(420)));
-    public static final DeferredItem<Item> USELESS_SWORD = ITEMS.register("useless_sword", () -> new SwordItem(ModTiers.USELESS, 3, -2.4F, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_SHOVEL = ITEMS.register("useless_shovel", () -> new ShovelItem(ModTiers.USELESS, 1.5F, -3.0F, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_PICKAXE = ITEMS.register("useless_pickaxe", () -> new PickaxeItem(ModTiers.USELESS, 1, -2.8F, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_AXE = ITEMS.register("useless_axe", () -> new AxeItem(ModTiers.USELESS, 6.0F, -3.1F, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_HOE = ITEMS.register("useless_hoe", () -> new HoeItem(ModTiers.USELESS, -2, -1.0F, new Item.Properties()));
+    public static final DeferredItem<Item> USELESS_SWORD = ITEMS.register("useless_sword", () -> new SwordItem(ModTiers.USELESS, new Item.Properties().attributes(SwordItem.createAttributes(ModTiers.USELESS, 3, -2.4F))));
+    public static final DeferredItem<Item> USELESS_SHOVEL = ITEMS.register("useless_shovel", () -> new ShovelItem(ModTiers.USELESS, new Item.Properties().attributes(ShovelItem.createAttributes(ModTiers.USELESS, 1.5F, -3.0F))));
+    public static final DeferredItem<Item> USELESS_PICKAXE = ITEMS.register("useless_pickaxe", () -> new PickaxeItem(ModTiers.USELESS, new Item.Properties().attributes(PickaxeItem.createAttributes(ModTiers.USELESS, 1, -2.8F))));
+    public static final DeferredItem<Item> USELESS_AXE = ITEMS.register("useless_axe", () -> new AxeItem(ModTiers.USELESS, new Item.Properties().attributes(AxeItem.createAttributes(ModTiers.USELESS, 6.0F, -3.1F))));
+    public static final DeferredItem<Item> USELESS_HOE = ITEMS.register("useless_hoe", () -> new HoeItem(ModTiers.USELESS, new Item.Properties().attributes(HoeItem.createAttributes(ModTiers.USELESS, -2, -1.0F))));
     public static final DeferredItem<Item> SUPER_USELESS_SHIELD = ITEMS.register("super_useless_shield", () -> new UselessShieldItem(ModTiers.SUPER_USELESS, new Item.Properties().durability(640)));
-    public static final DeferredItem<Item> SUPER_USELESS_SWORD = ITEMS.register("super_useless_sword", () -> new SwordItem(ModTiers.SUPER_USELESS, 3, -2.4F, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_SHOVEL = ITEMS.register("super_useless_shovel", () -> new ShovelItem(ModTiers.SUPER_USELESS, 1.5F, -3.0F, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_PICKAXE = ITEMS.register("super_useless_pickaxe", () -> new PickaxeItem(ModTiers.SUPER_USELESS, 1, -2.8F, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_AXE = ITEMS.register("super_useless_axe", () -> new AxeItem(ModTiers.SUPER_USELESS, 6.0F, -3.1F, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_HOE = ITEMS.register("super_useless_hoe", () -> new HoeItem(ModTiers.SUPER_USELESS, -2, -1.0F, new Item.Properties()));
+    public static final DeferredItem<Item> SUPER_USELESS_SWORD = ITEMS.register("super_useless_sword", () -> new SwordItem(ModTiers.SUPER_USELESS, new Item.Properties().attributes(SwordItem.createAttributes(ModTiers.SUPER_USELESS, 3, -2.4F))));
+    public static final DeferredItem<Item> SUPER_USELESS_SHOVEL = ITEMS.register("super_useless_shovel", () -> new ShovelItem(ModTiers.SUPER_USELESS, new Item.Properties().attributes(ShovelItem.createAttributes(ModTiers.SUPER_USELESS, 1.5F, -3.0F))));
+    public static final DeferredItem<Item> SUPER_USELESS_PICKAXE = ITEMS.register("super_useless_pickaxe", () -> new PickaxeItem(ModTiers.SUPER_USELESS, new Item.Properties().attributes(PickaxeItem.createAttributes(ModTiers.SUPER_USELESS, 1, -2.8F))));
+    public static final DeferredItem<Item> SUPER_USELESS_AXE = ITEMS.register("super_useless_axe", () -> new AxeItem(ModTiers.SUPER_USELESS, new Item.Properties().attributes(AxeItem.createAttributes(ModTiers.SUPER_USELESS, 6.0F, -3.1F))));
+    public static final DeferredItem<Item> SUPER_USELESS_HOE = ITEMS.register("super_useless_hoe", () -> new HoeItem(ModTiers.SUPER_USELESS, new Item.Properties().attributes(HoeItem.createAttributes(ModTiers.SUPER_USELESS, -2, -1.0F))));
 
     // Armor
     public static final DeferredItem<Item> USELESS_ELYTRA = ITEMS.register("useless_elytra", () -> new UselessElytraItem(new Item.Properties().durability(540).rarity(Rarity.UNCOMMON)));
-    public static final DeferredItem<Item> USELESS_HELMET = ITEMS.register("useless_helmet", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.HELMET, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_CHESTPLATE = ITEMS.register("useless_chestplate", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_LEGGINGS = ITEMS.register("useless_leggings", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-    public static final DeferredItem<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(ModArmorMaterials.USELESS, ArmorItem.Type.BOOTS, new Item.Properties()));
+    public static final DeferredItem<Item> USELESS_HELMET = ITEMS.register("useless_helmet", () -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorItem.Type.HELMET, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(20))));
+    public static final DeferredItem<Item> USELESS_CHESTPLATE = ITEMS.register("useless_chestplate", () -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorItem.Type.CHESTPLATE, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(20))));
+    public static final DeferredItem<Item> USELESS_LEGGINGS = ITEMS.register("useless_leggings", () -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorItem.Type.LEGGINGS, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(20))));
+    public static final DeferredItem<Item> USELESS_BOOTS = ITEMS.register("useless_boots", () -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorItem.Type.BOOTS, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(20))));
     public static final DeferredItem<Item> SUPER_USELESS_ELYTRA = ITEMS.register("super_useless_elytra", () -> new UselessElytraItem(new Item.Properties().durability(864).rarity(Rarity.UNCOMMON)));
-    public static final DeferredItem<Item> SUPER_USELESS_HELMET = ITEMS.register("super_useless_helmet", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.HELMET, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_CHESTPLATE = ITEMS.register("super_useless_chestplate", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_LEGGINGS = ITEMS.register("super_useless_leggings", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-    public static final DeferredItem<Item> SUPER_USELESS_BOOTS = ITEMS.register("super_useless_boots", () -> new ArmorItem(ModArmorMaterials.SUPER_USELESS, ArmorItem.Type.BOOTS, new Item.Properties()));
+    public static final DeferredItem<Item> SUPER_USELESS_HELMET = ITEMS.register("super_useless_helmet", () -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorItem.Type.HELMET, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(22))));
+    public static final DeferredItem<Item> SUPER_USELESS_CHESTPLATE = ITEMS.register("super_useless_chestplate", () -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorItem.Type.CHESTPLATE, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(22))));
+    public static final DeferredItem<Item> SUPER_USELESS_LEGGINGS = ITEMS.register("super_useless_leggings", () -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorItem.Type.LEGGINGS, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(22))));
+    public static final DeferredItem<Item> SUPER_USELESS_BOOTS = ITEMS.register("super_useless_boots", () -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorItem.Type.BOOTS, new Item.Properties().defaultDurability(ArmorItem.Type.CHESTPLATE.getDurability(22))));
 
     public static final DeferredItem<Item> USELESS_SKELETON_SKULL = ITEMS.register("useless_skeleton_skull", () -> new StandingAndWallBlockItem(ModBlocks.USELESS_SKELETON_SKULL.get(), ModBlocks.USELESS_SKELETON_WALL_SKULL.get(), new Item.Properties().rarity(Rarity.UNCOMMON), Direction.DOWN));
 

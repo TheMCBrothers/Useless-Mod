@@ -48,10 +48,10 @@ public class UselessDataGen {
                 .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, UselessBiomeModifiers::bootstrap);
 
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(UselessMod.MOD_ID)));
-        generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput));
+        generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new UselessLanguageProvider(packOutput));
         generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new UselessAdvancementProvider())));
-        generator.addProvider(event.includeServer(), UselessLootTableProvider.create(packOutput));
+        generator.addProvider(event.includeServer(), UselessLootTableProvider.create(packOutput, lookupProvider));
         final BlockTagsProvider blockTagsProvider = new UselessTagsProvider.Blocks(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new UselessTagsProvider.Items(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));

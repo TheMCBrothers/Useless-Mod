@@ -3,7 +3,7 @@ package net.themcbrothers.uselessmod.data.worldgen.biome;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -14,7 +14,7 @@ import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 import net.themcbrothers.uselessmod.world.worldgen.UselessVegetationPlacements;
 
 public final class UselessBiomeData {
-    public static void bootstrap(BootstapContext<Biome> context) {
+    public static void bootstrap(BootstrapContext<Biome> context) {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
 

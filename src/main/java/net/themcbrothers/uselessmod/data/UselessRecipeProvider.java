@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.data;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Items;
@@ -19,11 +20,13 @@ import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.item.crafting.LightSwitchConvertRecipe;
 import net.themcbrothers.uselessmod.world.item.crafting.PaintBrushDyeRecipe;
 
+import java.util.concurrent.CompletableFuture;
+
 import static net.themcbrothers.uselessmod.UselessMod.rl;
 
 public class UselessRecipeProvider extends RecipeProvider {
-    public UselessRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public UselessRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override

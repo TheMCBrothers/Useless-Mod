@@ -36,14 +36,14 @@ public final class UselessFluidTypes {
 
                         @Override
                         public int getTintColor(FluidStack stack) {
-                            return stack.hasTag() ? stack.getTag().getInt("Color") : 0xFFFFFFFF;
+                            return stack.getOrDefault(UselessDataComponents.COLOR.get(), 0xFFFFFFFF);
                         }
                     });
                 }
 
                 @Override
                 public ItemStack getBucket(FluidStack stack) {
-                    return new ItemStack(ModItems.BUCKET_PAINT, 1, stack.getTag());
+                    return new ItemStack(ModItems.BUCKET_PAINT, 1, stack.getComponentsPatch());
                 }
             });
 }

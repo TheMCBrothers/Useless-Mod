@@ -16,14 +16,9 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,6 +30,7 @@ import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -128,13 +124,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
         @Nullable
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
-            CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            BlockState mimic = null;
-
-            if (level != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-                mimic = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
-            }
-
+            BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
             return ((MachineSupplierModel) model).getMimicModel(mimic);
         }
     }

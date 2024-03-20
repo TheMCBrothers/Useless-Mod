@@ -1,7 +1,8 @@
 package net.themcbrothers.uselessmod.network.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.themcbrothers.lib.network.PacketMessage;
 import net.themcbrothers.lib.network.PacketUtils;
@@ -10,20 +11,22 @@ import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 
 public record CoffeeMachineStartPacket(boolean start) implements PacketMessage<PlayPayloadContext> {
-    public static final ResourceLocation ID = UselessMod.rl("coffee_machine_start");
+    public static final Type<CoffeeMachineStartPacket> TYPE = new Type<>(UselessMod.rl("coffee_machine_start"));
+    public static final StreamCodec<FriendlyByteBuf, CoffeeMachineStartPacket> STREAM_CODEC = new StreamCodec<>() {
+        @Override
+        public CoffeeMachineStartPacket decode(FriendlyByteBuf buf) {
+            return new CoffeeMachineStartPacket(buf.readBoolean());
+        }
 
-    public CoffeeMachineStartPacket(FriendlyByteBuf buffer) {
-        this(buffer.readBoolean());
-    }
+        @Override
+        public void encode(FriendlyByteBuf buf, CoffeeMachineStartPacket packet) {
+            buf.writeBoolean(packet.start);
+        }
+    };
 
     @Override
-    public ResourceLocation id() {
-        return ID;
-    }
-
-    @Override
-    public void write(FriendlyByteBuf buffer) {
-        buffer.writeBoolean(this.start);
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
     @Override

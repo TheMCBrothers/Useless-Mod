@@ -3,7 +3,7 @@ package net.themcbrothers.uselessmod.data.worldgen.biome;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.themcbrothers.uselessmod.world.worldgen.UselessOrePlacements;
 
 public final class UselessBiomeModifiers {
-    public static void bootstrap(BootstapContext<BiomeModifier> context) {
+    public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         HolderSet<Biome> overworldBiomes = biomeGetter.getOrThrow(BiomeTags.IS_OVERWORLD);
@@ -32,7 +32,7 @@ public final class UselessBiomeModifiers {
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_END, endBiomes);
     }
 
-    private static void registerOreModifier(BootstapContext<BiomeModifier> context, HolderGetter<PlacedFeature> placedFeatures, ResourceKey<PlacedFeature> key, HolderSet<Biome> biomes) {
+    private static void registerOreModifier(BootstrapContext<BiomeModifier> context, HolderGetter<PlacedFeature> placedFeatures, ResourceKey<PlacedFeature> key, HolderSet<Biome> biomes) {
         BiomeModifiers.AddFeaturesBiomeModifier modifier = new BiomeModifiers.AddFeaturesBiomeModifier(biomes, HolderSet.direct(placedFeatures.getOrThrow(key)), GenerationStep.Decoration.UNDERGROUND_ORES);
         context.register(ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(key.location() + "_generation")), modifier);
     }

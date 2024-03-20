@@ -6,7 +6,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -78,11 +80,16 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.tryWrench(state, level, pos, player, hand, hit)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
             serverPlayer.openMenu(coffeeMachine, pos);
             player.awardStat(ModStats.INTERACT_WITH_COFFEE_MACHINE.get());
