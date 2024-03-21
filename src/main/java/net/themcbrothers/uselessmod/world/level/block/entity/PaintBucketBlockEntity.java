@@ -56,7 +56,7 @@ public class PaintBucketBlockEntity extends BlockEntity {
     }
 
     /**
-     * @param color
+     * @param color Color
      */
     public void setColor(int color) {
         this.colorTank.setFluid(new FluidStack(UselessFluids.PAINT.get(), FluidType.BUCKET_VOLUME));
@@ -65,7 +65,10 @@ public class PaintBucketBlockEntity extends BlockEntity {
     }
 
     private void saveColorAndItem(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        tag.put("Tank", this.colorTank.writeToNBT(lookupProvider, new CompoundTag()));
+        if (!this.colorTank.isEmpty()) {
+            tag.put("Tank", this.colorTank.writeToNBT(lookupProvider, new CompoundTag()));
+        }
+
         tag.put("Slots", this.stackHandler.serializeNBT(lookupProvider));
     }
 
@@ -103,5 +106,11 @@ public class PaintBucketBlockEntity extends BlockEntity {
     @Override
     public void applyComponents(DataComponentMap components) {
         this.colorTank.setFluid(FluidStack.of(components.getOrDefault(NeoForgeMod.FLUID_STACK_COMPONENT.get(), FluidStack.EMPTY.immutable())));
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        tag.remove("Tank");
     }
 }

@@ -1,15 +1,21 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -38,6 +44,7 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
 import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import net.themcbrothers.uselessmod.network.packets.BlockEntitySyncPacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
@@ -308,9 +315,9 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         this.cookingProgress = compound.getInt("CookTime");
         this.cookingTotalTime = compound.getInt("CookTimeTotal");
         this.useMilk = compound.getBoolean("UseMilk");
+        this.energyStorage.setEnergyStored(compound.getInt("EnergyStored"));
         this.tankHandler.getWaterTank().readFromNBT(lookupProvider, compound.getCompound("Water"));
         this.tankHandler.getMilkTank().readFromNBT(lookupProvider, compound.getCompound("Milk"));
-        this.energyStorage.setEnergyStored(compound.getInt("EnergyStored"));
     }
 
     @Override
@@ -321,9 +328,15 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         tag.putInt("CookTime", this.cookingProgress);
         tag.putInt("CookTimeTotal", this.cookingTotalTime);
         tag.putBoolean("UseMilk", this.useMilk);
-        tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
-        tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
         tag.putInt("EnergyStored", this.energyStorage.getEnergyStored());
+
+        if (!this.tankHandler.getWaterTank().isEmpty()) {
+            tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+        }
+
+        if (!this.tankHandler.getMilkTank().isEmpty()) {
+            tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
+        }
     }
 
     @Override
@@ -454,12 +467,47 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public void applyComponents(DataComponentMap components) {
-        super.applyComponents(components); // TODO components
+        super.applyComponents(components);
+
+        Contents contents = components.get(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get());
+        if (contents != null) {
+            this.tankHandler.getWaterTank().setFluid(contents.water());
+            this.tankHandler.getMilkTank().setFluid(contents.milk());
+            this.energyStorage.setEnergyStored(contents.energy());
+            this.litTime = contents.burnTime();
+            this.cookingProgress = contents.cookTime();
+            this.cookingTotalTime = contents.cookTimeTotal();
+            this.useMilk = contents.useMilk();
+        }
     }
 
     @Override
     public void collectComponents(DataComponentMap.Builder builder) {
         super.collectComponents(builder);
+
+        builder.set(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(),
+                new Contents(
+                        this.tankHandler.getWaterTank().getFluid(),
+                        this.tankHandler.getMilkTank().getFluid(),
+                        this.energyStorage.getEnergyStored(),
+                        this.litTime,
+                        this.cookingProgress,
+                        this.cookingTotalTime,
+                        this.useMilk
+                ));
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        super.removeComponentsFromTag(tag);
+
+        tag.remove("EnergyStored");
+        tag.remove("Water");
+        tag.remove("Milk");
+        tag.remove("BurnTime");
+        tag.remove("CookTime");
+        tag.remove("CookTimeTotal");
+        tag.remove("UseMilk");
     }
 
     public class CoffeeMachineTank implements IFluidHandler {
@@ -531,5 +579,51 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         public FluidTank getMilkTank() {
             return milkTank;
         }
+    }
+
+    public record Contents(
+            FluidStack water,
+            FluidStack milk,
+            int energy,
+            int burnTime,
+            int cookTime,
+            int cookTimeTotal,
+            boolean useMilk
+    ) {
+        public static final Codec<Contents> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(
+                        ExtraCodecs.strictOptionalField(FluidStack.CODEC, "water", FluidStack.EMPTY).forGetter(Contents::water),
+                        ExtraCodecs.strictOptionalField(FluidStack.CODEC, "milk", FluidStack.EMPTY).forGetter(Contents::milk),
+                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "energy", 0).forGetter(Contents::energy),
+                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "burn_time", 0).forGetter(Contents::burnTime),
+                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "cook_time", 0).forGetter(Contents::cookTime),
+                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "cook_time_total", 0).forGetter(Contents::cookTimeTotal),
+                        ExtraCodecs.strictOptionalField(Codec.BOOL, "use_milk", false).forGetter(Contents::useMilk)
+                ).apply(instance, Contents::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, Contents> STREAM_CODEC = new StreamCodec<>() {
+            @Override
+            public Contents decode(RegistryFriendlyByteBuf buf) {
+                FluidStack water = FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
+                FluidStack milk = FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
+                int energy = ByteBufCodecs.VAR_INT.decode(buf);
+                int burnTime = ByteBufCodecs.VAR_INT.decode(buf);
+                int cookTime = ByteBufCodecs.VAR_INT.decode(buf);
+                int cookTimeTotal = ByteBufCodecs.VAR_INT.decode(buf);
+                boolean useMilk = ByteBufCodecs.BOOL.decode(buf);
+                return new Contents(water, milk, energy, burnTime, cookTime, cookTimeTotal, useMilk);
+            }
+
+            @Override
+            public void encode(RegistryFriendlyByteBuf buf, Contents contents) {
+                FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, contents.water());
+                FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, contents.milk());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.energy());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.burnTime());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.cookTime());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.cookTimeTotal());
+                ByteBufCodecs.BOOL.encode(buf, contents.useMilk());
+            }
+        };
     }
 }

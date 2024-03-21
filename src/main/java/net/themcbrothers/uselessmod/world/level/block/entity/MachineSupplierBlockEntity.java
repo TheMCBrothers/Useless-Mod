@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.init.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -92,5 +94,21 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     @Override
     public ModelData getModelData() {
         return ModelData.builder().with(MIMIC_PROPERTY, this.mimic).build();
+    }
+
+    @Override
+    public void applyComponents(DataComponentMap components) {
+        this.setMimic(components.get(UselessDataComponents.MIMIC.get()));
+    }
+
+    @Override
+    public void collectComponents(DataComponentMap.Builder builder) {
+        builder.set(UselessDataComponents.MIMIC.get(), this.getMimic());
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        tag.remove("Mimic");
     }
 }

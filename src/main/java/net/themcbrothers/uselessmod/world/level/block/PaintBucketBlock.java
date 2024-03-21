@@ -4,10 +4,10 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -160,7 +160,7 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof PaintBucketBlockEntity blockEntity) {
+        if (level instanceof ServerLevel && !state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof PaintBucketBlockEntity blockEntity) {
             Containers.dropContents(level, pos, NonNullList.of(blockEntity.stackHandler.getStackInSlot(0)));
         }
 

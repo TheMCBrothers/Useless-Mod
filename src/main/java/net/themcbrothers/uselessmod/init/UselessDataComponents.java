@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.themcbrothers.uselessmod.api.CoffeeType;
+import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 
 import java.util.List;
 
@@ -31,7 +32,11 @@ public final class UselessDataComponents {
             () -> DataComponentType.<BlockState>builder()
                     .persistent(BlockState.CODEC)
                     .build());
-
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CoffeeMachineBlockEntity.Contents>> COFFEE_MACHINE_CONTENTS = Registration.DATA_COMPONENT_TYPES.register("coffee_machine_contents",
+            () -> DataComponentType.<CoffeeMachineBlockEntity.Contents>builder()
+                    .persistent(CoffeeMachineBlockEntity.Contents.CODEC)
+                    .networkSynchronized(CoffeeMachineBlockEntity.Contents.STREAM_CODEC)
+                    .build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CoffeeType>> COFFEE_TYPE = Registration.DATA_COMPONENT_TYPES.register("coffee_type",
             () -> DataComponentType.<CoffeeType>builder()
                     .persistent(CoffeeType.CODEC)
