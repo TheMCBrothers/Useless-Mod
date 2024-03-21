@@ -100,12 +100,12 @@ public class PaintBucketBlockEntity extends BlockEntity {
 
     @Override
     public void collectComponents(DataComponentMap.Builder builder) {
-        builder.set(NeoForgeMod.FLUID_STACK_COMPONENT.get(), this.colorTank.getFluid().immutable());
+        builder.set(NeoForgeMod.FLUID_STACK_COMPONENT.get(), this.colorTank.getFluid());
     }
 
     @Override
     public void applyComponents(DataComponentMap components) {
-        this.colorTank.setFluid(FluidStack.of(components.getOrDefault(NeoForgeMod.FLUID_STACK_COMPONENT.get(), FluidStack.EMPTY.immutable())));
+        this.colorTank.setFluid(components.getOrDefault(NeoForgeMod.FLUID_STACK_COMPONENT.get(), FluidStack.EMPTY));
     }
 
     @SuppressWarnings("deprecation")

@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
 import com.google.common.collect.Lists;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +48,7 @@ public class PaintBrushDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer container, HolderLookup.Provider lookupProvider) {
         ItemStack brushStack = ItemStack.EMPTY;
         List<DyeColor> dyes = Lists.newArrayList();
 

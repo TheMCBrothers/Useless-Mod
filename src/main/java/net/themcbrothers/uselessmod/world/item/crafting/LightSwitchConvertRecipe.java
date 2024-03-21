@@ -1,6 +1,6 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -33,7 +33,7 @@ public class LightSwitchConvertRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer container, HolderLookup.Provider lookupProvider) {
         ItemStack stack = ItemStack.EMPTY;
         boolean isBlock = false;
 
