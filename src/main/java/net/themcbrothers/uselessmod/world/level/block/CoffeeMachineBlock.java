@@ -7,10 +7,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -96,6 +98,25 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && player.isCreative() && level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+            if (level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity blockEntity) {
+                if (!blockEntity.isEmpty() ||
+                        !blockEntity.tankHandler.getWaterTank().isEmpty() ||
+                        !blockEntity.tankHandler.getMilkTank().isEmpty()) {
+                    ItemStack stack = new ItemStack(this);
+                    stack.applyComponents(blockEntity.collectComponents());
+                    ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    itemEntity.setDefaultPickUpDelay();
+                    level.addFreshEntity(itemEntity);
+                }
+            }
+        }
+
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
