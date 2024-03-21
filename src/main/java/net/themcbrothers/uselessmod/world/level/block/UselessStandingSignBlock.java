@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 
 public class UselessStandingSignBlock extends StandingSignBlock {
     public UselessStandingSignBlock(WoodType type, Properties properties) {
@@ -14,6 +14,6 @@ public class UselessStandingSignBlock extends StandingSignBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.SIGN.get().create(pos, state);
+        return UselessBlockEntityTypes.SIGN.get().create(pos, state);
     }
 }

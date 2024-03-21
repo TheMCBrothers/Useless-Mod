@@ -39,7 +39,7 @@ import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;

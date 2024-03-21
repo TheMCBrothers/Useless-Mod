@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.LightSwitchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,6 +72,6 @@ public class LightSwitchBlockBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
+        return UselessBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
     }
 }

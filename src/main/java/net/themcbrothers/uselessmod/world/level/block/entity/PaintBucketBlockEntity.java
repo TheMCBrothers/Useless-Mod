@@ -15,9 +15,9 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.themcbrothers.uselessmod.UselessTags;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
-import net.themcbrothers.uselessmod.init.UselessFluids;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessFluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,7 +36,7 @@ public class PaintBucketBlockEntity extends BlockEntity {
     };
 
     public PaintBucketBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.PAINT_BUCKET.get(), pos, state);
+        super(UselessBlockEntityTypes.PAINT_BUCKET.get(), pos, state);
     }
 
     public boolean hasColor() {

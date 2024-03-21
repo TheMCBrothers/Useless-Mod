@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.Level;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 import org.jetbrains.annotations.Nullable;
 
 public class UselessSkeleton extends AbstractSkeleton {
@@ -23,7 +23,7 @@ public class UselessSkeleton extends AbstractSkeleton {
         if (entity instanceof Creeper creeper) {
             if (creeper.canDropMobsSkull()) {
                 creeper.increaseDroppedSkulls();
-                this.spawnAtLocation(ModBlocks.USELESS_SKELETON_SKULL.get());
+                this.spawnAtLocation(UselessBlocks.USELESS_SKELETON_SKULL.get());
             }
         }
     }

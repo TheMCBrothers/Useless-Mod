@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.core.UselessItems;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 
 import javax.annotation.Nonnull;
@@ -29,6 +29,6 @@ public class UselessElytraLayer<T extends LivingEntity, M extends EntityModel<T>
     @Nonnull
     @Override
     public ResourceLocation getElytraTexture(@Nonnull ItemStack stack, @Nonnull T entity) {
-        return stack.getItem() == ModItems.USELESS_ELYTRA.get() ? WINGS_USELESS_LOCATION : WINGS_SUPER_USELESS_LOCATION;
+        return stack.getItem() == UselessItems.USELESS_ELYTRA.get() ? WINGS_USELESS_LOCATION : WINGS_SUPER_USELESS_LOCATION;
     }
 }

@@ -31,7 +31,7 @@ import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.init.*;
+import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.network.UselessPacketHandler;
 import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
@@ -58,35 +58,35 @@ public class CommonSetup {
 
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.RED_ROSE.getId(), ModBlocks.POTTED_RED_ROSE);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_ROSE.getId(), ModBlocks.POTTED_BLUE_ROSE);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_ROSE.getId(), ModBlocks.POTTED_USELESS_ROSE);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.USELESS_OAK_SAPLING.getId(), ModBlocks.POTTED_USELESS_OAK_SAPLING);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(UselessBlocks.RED_ROSE.getId(), UselessBlocks.POTTED_RED_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(UselessBlocks.BLUE_ROSE.getId(), UselessBlocks.POTTED_BLUE_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(UselessBlocks.USELESS_ROSE.getId(), UselessBlocks.POTTED_USELESS_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(UselessBlocks.USELESS_OAK_SAPLING.getId(), UselessBlocks.POTTED_USELESS_OAK_SAPLING);
         });
 
         event.enqueueWork(() -> {
             LampRegistry.registerLampState(Blocks.REDSTONE_LAMP);
-            LampRegistry.registerLampState(ModBlocks.WHITE_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.ORANGE_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.MAGENTA_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.LIGHT_BLUE_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.YELLOW_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.LIME_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.PINK_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.GRAY_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.LIGHT_GRAY_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.CYAN_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.PURPLE_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.BLUE_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.BROWN_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.GREEN_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.RED_LAMP.get());
-            LampRegistry.registerLampState(ModBlocks.BLACK_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.WHITE_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.ORANGE_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.MAGENTA_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.LIGHT_BLUE_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.YELLOW_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.LIME_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.PINK_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.GRAY_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.LIGHT_GRAY_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.CYAN_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.PURPLE_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.BLUE_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.BROWN_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.GREEN_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.RED_LAMP.get());
+            LampRegistry.registerLampState(UselessBlocks.BLACK_LAMP.get());
             LampRegistry.registerLampState(Blocks.LANTERN, state -> state,
-                    state -> ModBlocks.LANTERN.get().defaultBlockState()
+                    state -> UselessBlocks.LANTERN.get().defaultBlockState()
                             .setValue(BlockStateProperties.HANGING, state.getValue(BlockStateProperties.HANGING))
                             .setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)));
-            LampRegistry.registerLampState(ModBlocks.LANTERN.get(),
+            LampRegistry.registerLampState(UselessBlocks.LANTERN.get(),
                     state -> Blocks.LANTERN.defaultBlockState()
                             .setValue(BlockStateProperties.HANGING, state.getValue(BlockStateProperties.HANGING))
                             .setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)), state -> state);
@@ -106,28 +106,28 @@ public class CommonSetup {
     }
 
     private void entityAttributes(final EntityAttributeCreationEvent event) {
-        event.put(ModEntityTypes.USELESS_SHEEP.get(), Sheep.createAttributes().build());
-        event.put(ModEntityTypes.USELESS_PIG.get(), Pig.createAttributes().build());
-        event.put(ModEntityTypes.USELESS_CHICKEN.get(), Chicken.createAttributes().build());
-        event.put(ModEntityTypes.USELESS_COW.get(), Cow.createAttributes().build());
-        event.put(ModEntityTypes.USELESS_SKELETON.get(), AbstractSkeleton.createAttributes().build());
+        event.put(UselessEntityTypes.USELESS_SHEEP.get(), Sheep.createAttributes().build());
+        event.put(UselessEntityTypes.USELESS_PIG.get(), Pig.createAttributes().build());
+        event.put(UselessEntityTypes.USELESS_CHICKEN.get(), Chicken.createAttributes().build());
+        event.put(UselessEntityTypes.USELESS_COW.get(), Cow.createAttributes().build());
+        event.put(UselessEntityTypes.USELESS_SKELETON.get(), AbstractSkeleton.createAttributes().build());
     }
 
     private void registerCapabilities(final RegisterCapabilitiesEvent event) {
         // Blocks
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.COFFEE_MACHINE.get(), SidedInvWrapper::new);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.tankHandler);
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.energyStorage);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), SidedInvWrapper::new);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.tankHandler);
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.energyStorage);
 
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> blockEntity.stackHandler);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> side == null || side == Direction.UP ? blockEntity.colorTank : null);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, UselessBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> blockEntity.stackHandler);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, UselessBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> side == null || side == Direction.UP ? blockEntity.colorTank : null);
 
-        event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.ItemHandler.BLOCK, pos.above(), context), ModBlocks.MACHINE_SUPPLIER.get());
-        event.registerBlock(Capabilities.FluidHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.FluidHandler.BLOCK, pos.above(), context), ModBlocks.MACHINE_SUPPLIER.get());
-        event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.EnergyStorage.BLOCK, pos.above(), context), ModBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.ItemHandler.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.FluidHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.FluidHandler.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.EnergyStorage.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
 
         // Items
-        event.registerItem(Capabilities.FluidHandler.ITEM, (container, context) -> new BucketWithPaintItem.PaintFluidBucketWrapper(container), ModItems.BUCKET_PAINT);
+        event.registerItem(Capabilities.FluidHandler.ITEM, (container, context) -> new BucketWithPaintItem.PaintFluidBucketWrapper(container), UselessItems.BUCKET_PAINT);
     }
 
     public @Nullable Player getLocalPlayer() {

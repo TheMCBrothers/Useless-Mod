@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -28,7 +28,7 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     private BlockState mimic;
 
     public MachineSupplierBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.MACHINE_SUPPLIER.get(), pos, state);
+        super(UselessBlockEntityTypes.MACHINE_SUPPLIER.get(), pos, state);
     }
 
     @Nullable

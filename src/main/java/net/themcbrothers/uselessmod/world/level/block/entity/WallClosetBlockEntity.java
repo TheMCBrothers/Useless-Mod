@@ -30,8 +30,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -71,7 +71,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     };
 
     public WallClosetBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.WALL_CLOSET.get(), pos, state);
+        super(UselessBlockEntityTypes.WALL_CLOSET.get(), pos, state);
     }
 
     @NotNull

@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -30,7 +30,7 @@ public class CupBlockEntity extends BlockEntity {
     private Holder<CoffeeType> type;
 
     public CupBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.CUP.get(), pos, state);
+        super(UselessBlockEntityTypes.CUP.get(), pos, state);
     }
 
     public void setType(@Nullable CoffeeType type) {

@@ -40,9 +40,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModItems;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessItems;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintBucketBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,7 +134,7 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
 
             if (blockEntity.hasColor()) {
                 // Interaction with Paint Brush
-                if (stack.is(ModItems.PAINT_BRUSH.get()) && !stack.isDamaged()) {
+                if (stack.is(UselessItems.PAINT_BRUSH.get()) && !stack.isDamaged()) {
                     int bucketColor = blockEntity.getColor();
                     int brushColor = stack.getOrDefault(UselessDataComponents.COLOR.get(), -1);
 
@@ -145,7 +145,7 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
                         return ItemInteractionResult.sidedSuccess(level.isClientSide);
                     }
                 } else if (stack.is(Items.BRUSH)) {
-                    ItemStack newStack = new ItemStack(ModItems.PAINT_BRUSH.value());
+                    ItemStack newStack = new ItemStack(UselessItems.PAINT_BRUSH.value());
                     int brushColor = newStack.getOrDefault(UselessDataComponents.COLOR.get(), -1);
                     newStack.setDamageValue(0);
                     player.setItemInHand(hand, newStack);
@@ -206,6 +206,6 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.PAINT_BUCKET.get().create(pos, state);
+        return UselessBlockEntityTypes.PAINT_BUCKET.get().create(pos, state);
     }
 }

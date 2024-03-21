@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModItems;
+import net.themcbrothers.uselessmod.core.UselessItems;
 import net.themcbrothers.uselessmod.world.item.UselessShieldItem;
 
 public class UselessShieldItemRenderer extends UselessBlockEntityWithoutLevelRenderer {
@@ -30,7 +30,7 @@ public class UselessShieldItemRenderer extends UselessBlockEntityWithoutLevelRen
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext type, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (stack.getItem() instanceof UselessShieldItem) {
-            boolean isUseless = stack.is(ModItems.USELESS_SHIELD.get());
+            boolean isUseless = stack.is(UselessItems.USELESS_SHIELD.get());
 
             poseStack.pushPose();
             poseStack.scale(1.0F, -1.0F, -1.0F);

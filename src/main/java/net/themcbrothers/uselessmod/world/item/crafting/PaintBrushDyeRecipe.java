@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
+import net.themcbrothers.uselessmod.core.UselessRecipeSerializers;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 
 import java.util.List;
@@ -82,6 +82,6 @@ public class PaintBrushDyeRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.PAINT_BRUSH_DYE.get();
+        return UselessRecipeSerializers.PAINT_BRUSH_DYE.get();
     }
 }

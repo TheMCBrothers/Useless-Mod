@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 
 public class UselessWallHangingSignBlock extends WallHangingSignBlock {
     public UselessWallHangingSignBlock(WoodType type, Properties properties) {
@@ -14,6 +14,6 @@ public class UselessWallHangingSignBlock extends WallHangingSignBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.HANGING_SIGN.get().create(pos, state);
+        return UselessBlockEntityTypes.HANGING_SIGN.get().create(pos, state);
     }
 }

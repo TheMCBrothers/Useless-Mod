@@ -15,8 +15,8 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +51,7 @@ public class PaintBrushItem extends Item {
 
         if (stack.getDamageValue() < stack.getMaxDamage()) {
             if (level.getBlockState(pos).is(BlockTags.WOOL)) {
-                level.setBlockAndUpdate(pos, ModBlocks.PAINTED_WOOL.get().defaultBlockState());
+                level.setBlockAndUpdate(pos, UselessBlocks.PAINTED_WOOL.get().defaultBlockState());
             }
 
             if (level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity paintedWool

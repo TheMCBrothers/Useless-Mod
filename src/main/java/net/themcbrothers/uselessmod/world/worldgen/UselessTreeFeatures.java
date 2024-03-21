@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorato
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -32,11 +32,11 @@ public final class UselessTreeFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES = FeatureUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees");
 
     private static TreeConfiguration.TreeConfigurationBuilder createUselessOak() {
-        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_LOG.get()), new StraightTrunkPlacer(5, 1, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines();
+        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(UselessBlocks.USELESS_OAK_LOG.get()), new StraightTrunkPlacer(5, 1, 0), BlockStateProvider.simple(UselessBlocks.USELESS_OAK_LEAVES.get()), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines();
     }
 
     private static TreeConfiguration.TreeConfigurationBuilder createFancyUselessOak() {
-        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(ModBlocks.USELESS_OAK_LOG.get()), new FancyTrunkPlacer(3, 11, 0), BlockStateProvider.simple(ModBlocks.USELESS_OAK_LEAVES.get()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).ignoreVines();
+        return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(UselessBlocks.USELESS_OAK_LOG.get()), new FancyTrunkPlacer(3, 11, 0), BlockStateProvider.simple(UselessBlocks.USELESS_OAK_LEAVES.get()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).ignoreVines();
     }
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {

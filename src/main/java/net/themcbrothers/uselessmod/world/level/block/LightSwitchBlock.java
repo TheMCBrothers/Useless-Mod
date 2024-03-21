@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.LightSwitchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -83,6 +83,6 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
+        return UselessBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
     }
 }

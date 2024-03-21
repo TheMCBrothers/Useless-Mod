@@ -2,7 +2,6 @@ package net.themcbrothers.uselessmod.world.entity.animal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessEntityTypes;
 import net.themcbrothers.uselessmod.world.level.storage.loot.UselessLootTables;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,7 +39,7 @@ public class UselessSheep extends Sheep {
 
     @Override
     public Sheep getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-        return ModEntityTypes.USELESS_SHEEP.get().create(level);
+        return UselessEntityTypes.USELESS_SHEEP.get().create(level);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class UselessSheep extends Sheep {
         int i = 1 + this.random.nextInt(3);
 
         for (int j = 0; j < i; ++j) {
-            ItemEntity itementity = this.spawnAtLocation(ModBlocks.USELESS_WOOL, 1);
+            ItemEntity itementity = this.spawnAtLocation(UselessBlocks.USELESS_WOOL, 1);
             if (itementity != null) {
                 itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
             }
@@ -68,7 +67,7 @@ public class UselessSheep extends Sheep {
 
             java.util.List<ItemStack> items = new java.util.ArrayList<>();
             for (int j = 0; j < i; ++j) {
-                items.add(new ItemStack(ModBlocks.USELESS_WOOL));
+                items.add(new ItemStack(UselessBlocks.USELESS_WOOL));
             }
             return items;
         }

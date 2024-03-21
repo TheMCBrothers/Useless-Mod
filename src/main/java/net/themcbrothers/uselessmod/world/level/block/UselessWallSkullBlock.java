@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.WallSkullBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 
 public class UselessWallSkullBlock extends WallSkullBlock {
     public UselessWallSkullBlock(SkullBlock.Type type, Properties properties) {
@@ -14,6 +14,6 @@ public class UselessWallSkullBlock extends WallSkullBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.SKULL.get().create(pos, state);
+        return UselessBlockEntityTypes.SKULL.get().create(pos, state);
     }
 }

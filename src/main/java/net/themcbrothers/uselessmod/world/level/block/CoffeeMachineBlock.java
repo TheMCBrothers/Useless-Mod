@@ -27,8 +27,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModStats;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -94,7 +94,7 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
             serverPlayer.openMenu(coffeeMachine, pos);
-            player.awardStat(ModStats.INTERACT_WITH_COFFEE_MACHINE.get());
+            player.awardStat(UselessStats.INTERACT_WITH_COFFEE_MACHINE.get());
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -131,11 +131,11 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.COFFEE_MACHINE.get().create(pos, state);
+        return UselessBlockEntityTypes.COFFEE_MACHINE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineBlockEntity::serverTick);
+        return level.isClientSide ? null : createTickerHelper(type, UselessBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineBlockEntity::serverTick);
     }
 }

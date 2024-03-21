@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.themcbrothers.uselessmod.api.LampRegistry;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.LightSwitchBlock;
 
 import java.util.Arrays;
@@ -26,7 +26,7 @@ public class LightSwitchBlockEntity extends BlockEntity {
     private final List<BlockPos> blockPositions = Lists.newArrayList();
 
     public LightSwitchBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.LIGHT_SWITCH.get(), pos, state);
+        super(UselessBlockEntityTypes.LIGHT_SWITCH.get(), pos, state);
     }
 
     @Override

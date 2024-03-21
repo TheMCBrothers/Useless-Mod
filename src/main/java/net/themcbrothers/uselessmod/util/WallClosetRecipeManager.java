@@ -17,8 +17,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -62,11 +62,11 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
                 planks, planks, planks
         );
 
-        ItemStack output = new ItemStack(ModBlocks.WALL_CLOSET);
+        ItemStack output = new ItemStack(UselessBlocks.WALL_CLOSET);
         CompoundTag tag = new CompoundTag();
         String reg = String.valueOf(BuiltInRegistries.BLOCK.getKey(material));
         tag.putString("Material", reg);
-        BlockItem.setBlockEntityData(output, ModBlockEntityTypes.WALL_CLOSET.get(), tag);
+        BlockItem.setBlockEntityData(output, UselessBlockEntityTypes.WALL_CLOSET.get(), tag);
 
         ShapedRecipePattern pattern = new ShapedRecipePattern(3, 3, ingredients, Optional.empty());
         ResourceLocation id = UselessMod.rl("closet." + reg.replace(':', '.'));

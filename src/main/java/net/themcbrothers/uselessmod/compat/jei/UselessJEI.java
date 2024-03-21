@@ -10,10 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModItems;
-import net.themcbrothers.uselessmod.init.ModMenuTypes;
-import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessItems;
+import net.themcbrothers.uselessmod.core.UselessMenuTypes;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,7 @@ public class UselessJEI implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.useNbtForSubtypes(ModBlocks.WALL_CLOSET.asItem(), ModBlocks.CUP_COFFEE.asItem(), ModBlocks.PAINTED_WOOL.asItem(), ModItems.PAINT_BRUSH.asItem());
+        registration.useNbtForSubtypes(UselessBlocks.WALL_CLOSET.asItem(), UselessBlocks.CUP_COFFEE.asItem(), UselessBlocks.PAINTED_WOOL.asItem(), UselessItems.PAINT_BRUSH.asItem());
     }
 
     @Override
@@ -42,17 +42,17 @@ public class UselessJEI implements IModPlugin {
         IVanillaRecipeFactory vanillaRecipeFactory = registration.getVanillaRecipeFactory();
 
         registration.addRecipes(RecipeTypes.ANVIL, UselessRecipeMaker.getAnvilRecipes(vanillaRecipeFactory));
-        registration.addRecipes(CoffeeRecipeCategory.TYPE, Minecraft.getInstance().level != null ? Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get()) : List.of());
+        registration.addRecipes(CoffeeRecipeCategory.TYPE, Minecraft.getInstance().level != null ? Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(UselessRecipeTypes.COFFEE.get()) : List.of());
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(CoffeeMachineMenu.class, ModMenuTypes.COFFEE_MACHINE.get(), CoffeeRecipeCategory.TYPE, 0, 3, 7, 36);
+        registration.addRecipeTransferHandler(CoffeeMachineMenu.class, UselessMenuTypes.COFFEE_MACHINE.get(), CoffeeRecipeCategory.TYPE, 0, 3, 7, 36);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.COFFEE_MACHINE), CoffeeRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(UselessBlocks.COFFEE_MACHINE), CoffeeRecipeCategory.TYPE);
     }
 
     @Override

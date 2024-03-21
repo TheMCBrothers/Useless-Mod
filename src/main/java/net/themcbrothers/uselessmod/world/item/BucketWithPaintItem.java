@@ -11,8 +11,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
-import net.themcbrothers.uselessmod.init.UselessFluids;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessFluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

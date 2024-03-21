@@ -29,8 +29,8 @@ import net.neoforged.neoforge.client.model.geometry.BlockGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +51,7 @@ public class MachineSupplierModel implements IDynamicBakedModel {
     @Override
     public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType renderType) {
         BlockState mimic = extraData.get(MachineSupplierBlockEntity.MIMIC_PROPERTY);
-        if (mimic == null || mimic.is(ModBlocks.MACHINE_SUPPLIER.get())) {
+        if (mimic == null || mimic.is(UselessBlocks.MACHINE_SUPPLIER.get())) {
             return this.baseModel.getQuads(mimic, side, rand, ModelData.EMPTY, renderType);
         }
 

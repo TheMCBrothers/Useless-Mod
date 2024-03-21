@@ -32,8 +32,8 @@ import net.neoforged.neoforge.common.IPlantable;
 import net.themcbrothers.lib.wrench.Wrench;
 import net.themcbrothers.lib.wrench.WrenchUtils;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,7 +61,7 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.MACHINE_SUPPLIER.get().create(pos, state);
+        return UselessBlockEntityTypes.MACHINE_SUPPLIER.get().create(pos, state);
     }
 
     @Override

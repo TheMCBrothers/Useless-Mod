@@ -15,9 +15,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.lib.crafting.CommonRecipe;
 import net.themcbrothers.lib.crafting.FluidIngredient;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
-import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessRecipeSerializers;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 
 public class CoffeeRecipe implements CommonRecipe<Container> {
     private final String group;
@@ -69,7 +69,7 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
 
     @Override
     public ItemStack getToastSymbol() {
-        return new ItemStack(ModBlocks.COFFEE_MACHINE);
+        return new ItemStack(UselessBlocks.COFFEE_MACHINE);
     }
 
     @Override
@@ -94,12 +94,12 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.COFFEE.get();
+        return UselessRecipeSerializers.COFFEE.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ModRecipeTypes.COFFEE.get();
+        return UselessRecipeTypes.COFFEE.get();
     }
 
     public static class Serializer implements RecipeSerializer<CoffeeRecipe> {

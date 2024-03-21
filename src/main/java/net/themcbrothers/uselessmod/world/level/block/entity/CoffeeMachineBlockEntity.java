@@ -42,9 +42,9 @@ import net.themcbrothers.lib.network.PacketUtils;
 import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModRecipeTypes;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.network.packets.BlockEntitySyncPacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
@@ -101,7 +101,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     };
 
     public CoffeeMachineBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.COFFEE_MACHINE.get(), pos, state);
+        super(UselessBlockEntityTypes.COFFEE_MACHINE.get(), pos, state);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CoffeeMachineBlockEntity coffeeMachine) {
@@ -227,7 +227,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     @Nullable
     private CoffeeRecipe getCurrentRecipe() {
         if (this.level == null) return null;
-        for (RecipeHolder<CoffeeRecipe> recipeHolder : this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())) {
+        for (RecipeHolder<CoffeeRecipe> recipeHolder : this.level.getRecipeManager().getAllRecipesFor(UselessRecipeTypes.COFFEE.get())) {
             CoffeeRecipe recipe = recipeHolder.value();
             boolean flag = recipe.getCupIngredient().test(getItem(0))
                     && recipe.getBeanIngredient().test(getItem(1))

@@ -32,9 +32,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModStats;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessStats;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -100,7 +100,7 @@ public class WallClosetBlock extends BaseEntityBlock {
         } else {
             if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
                 player.openMenu(wallClosetBlockEntity);
-                player.awardStat(ModStats.OPEN_WALL_CLOSET.get());
+                player.awardStat(UselessStats.OPEN_WALL_CLOSET.get());
                 PiglinAi.angerNearbyPiglins(player, true);
             }
 
@@ -134,7 +134,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.WALL_CLOSET.get().create(pos, state);
+        return UselessBlockEntityTypes.WALL_CLOSET.get().create(pos, state);
     }
 
     @Override

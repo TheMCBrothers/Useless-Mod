@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.neoforged.neoforge.common.Tags;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 
 import java.util.List;
 
@@ -28,16 +28,16 @@ public final class UselessOreFeatures {
         RuleTest ruleTestEndStone = new TagMatchTest(Tags.Blocks.END_STONES);
 
         List<OreConfiguration.TargetBlockState> oreTargetsUseless = List.of(
-                OreConfiguration.target(ruleTestStone, ModBlocks.USELESS_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruleTestDeepslate, ModBlocks.DEEPSLATE_USELESS_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruleTestNetherrack, ModBlocks.NETHER_USELESS_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruleTestEndStone, ModBlocks.END_USELESS_ORE.get().defaultBlockState())
+                OreConfiguration.target(ruleTestStone, UselessBlocks.USELESS_ORE.get().defaultBlockState()),
+                OreConfiguration.target(ruleTestDeepslate, UselessBlocks.DEEPSLATE_USELESS_ORE.get().defaultBlockState()),
+                OreConfiguration.target(ruleTestNetherrack, UselessBlocks.NETHER_USELESS_ORE.get().defaultBlockState()),
+                OreConfiguration.target(ruleTestEndStone, UselessBlocks.END_USELESS_ORE.get().defaultBlockState())
         );
         List<OreConfiguration.TargetBlockState> oreTargetsSuperUseless = List.of(
-                OreConfiguration.target(ruleTestStone, ModBlocks.SUPER_USELESS_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruleTestDeepslate, ModBlocks.DEEPSLATE_SUPER_USELESS_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruleTestNetherrack, ModBlocks.NETHER_SUPER_USELESS_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruleTestEndStone, ModBlocks.END_SUPER_USELESS_ORE.get().defaultBlockState())
+                OreConfiguration.target(ruleTestStone, UselessBlocks.SUPER_USELESS_ORE.get().defaultBlockState()),
+                OreConfiguration.target(ruleTestDeepslate, UselessBlocks.DEEPSLATE_SUPER_USELESS_ORE.get().defaultBlockState()),
+                OreConfiguration.target(ruleTestNetherrack, UselessBlocks.NETHER_SUPER_USELESS_ORE.get().defaultBlockState()),
+                OreConfiguration.target(ruleTestEndStone, UselessBlocks.END_SUPER_USELESS_ORE.get().defaultBlockState())
         );
 
         FeatureUtils.register(context, ORE_USELESS, Feature.ORE, new OreConfiguration(oreTargetsUseless, 9));

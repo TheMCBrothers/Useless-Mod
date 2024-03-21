@@ -3,8 +3,8 @@ package net.themcbrothers.uselessmod.util;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.themcbrothers.uselessmod.api.CoffeeType;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -23,7 +23,7 @@ public class CoffeeUtils {
 
     @NotNull
     public static ItemStack createCoffeeStack(final CoffeeType type) {
-        final ItemStack stack = new ItemStack(ModBlocks.CUP_COFFEE);
+        final ItemStack stack = new ItemStack(UselessBlocks.CUP_COFFEE);
         stack.set(UselessDataComponents.COFFEE_TYPE.get(), type);
         return stack;
     }
