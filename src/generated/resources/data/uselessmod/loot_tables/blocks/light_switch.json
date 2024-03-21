@@ -16,14 +16,10 @@
       ],
       "functions": [
         {
-          "function": "minecraft:copy_nbt",
-          "ops": [
-            {
-              "op": "replace",
-              "source": "Lights",
-              "target": "BlockEntityTag.Lights"
-            }
+          "components": [
+            "uselessmod:lights"
           ],
+          "function": "minecraft:copy_components",
           "source": "block_entity"
         }
       ],

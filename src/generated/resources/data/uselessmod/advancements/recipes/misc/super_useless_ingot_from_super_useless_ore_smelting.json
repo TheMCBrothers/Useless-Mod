@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ores/super_useless"
+            "items": "#forge:ores/super_useless"
           }
         ]
       },

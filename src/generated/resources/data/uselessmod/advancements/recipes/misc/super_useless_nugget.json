@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "uselessmod:super_useless_ingot"
-            ]
+            "items": "uselessmod:super_useless_ingot"
           }
         ]
       },

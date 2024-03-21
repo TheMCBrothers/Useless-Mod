@@ -18,6 +18,7 @@
     "#X#"
   ],
   "result": {
-    "item": "uselessmod:machine_supplier"
+    "count": 1,
+    "id": "uselessmod:machine_supplier"
   }
 }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "uselessmod:lamps"
+            "items": "#uselessmod:lamps"
           }
         ]
       },
@@ -15,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:redstone_lamp"
-            ]
+            "items": "minecraft:redstone_lamp"
           }
         ]
       },

@@ -11,11 +11,13 @@
     "item": "minecraft:sugar"
   },
   "result": {
-    "item": "uselessmod:cup_coffee",
-    "nbt": "{Coffee:\"uselessmod:sugar\"}"
+    "components": {
+      "uselessmod:coffee_type": "uselessmod:sugar"
+    },
+    "id": "uselessmod:cup_coffee"
   },
   "water": {
     "amount": 250,
-    "fluid": "minecraft:water"
+    "id": "minecraft:water"
   }
 }

@@ -9,14 +9,16 @@
   },
   "milk": {
     "amount": 100,
-    "fluid": "minecraft:milk"
+    "id": "minecraft:milk"
   },
   "result": {
-    "item": "uselessmod:cup_coffee",
-    "nbt": "{Coffee:\"uselessmod:milk\"}"
+    "components": {
+      "uselessmod:coffee_type": "uselessmod:milk"
+    },
+    "id": "uselessmod:cup_coffee"
   },
   "water": {
     "amount": 250,
-    "fluid": "minecraft:water"
+    "id": "minecraft:water"
   }
 }

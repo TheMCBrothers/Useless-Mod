@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "uselessmod:useless_oak_logs"
+            "items": "#uselessmod:useless_oak_logs"
           }
         ]
       },

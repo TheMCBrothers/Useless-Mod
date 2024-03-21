@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/super_useless"
+            "items": "#forge:ingots/super_useless"
           }
         ]
       },

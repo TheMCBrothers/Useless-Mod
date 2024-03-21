@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/super_useless"
+            "items": "#forge:dusts/super_useless"
           }
         ]
       },

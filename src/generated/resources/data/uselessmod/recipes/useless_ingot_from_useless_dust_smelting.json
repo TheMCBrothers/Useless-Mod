@@ -7,5 +7,7 @@
   "ingredient": {
     "tag": "forge:dusts/useless"
   },
-  "result": "uselessmod:useless_ingot"
+  "result": {
+    "id": "uselessmod:useless_ingot"
+  }
 }

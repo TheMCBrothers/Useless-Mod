@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/useless"
+            "items": "#forge:dusts/useless"
           }
         ]
       },
