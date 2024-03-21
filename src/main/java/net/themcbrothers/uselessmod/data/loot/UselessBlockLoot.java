@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.data.loot;
 
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -49,7 +50,11 @@ public class UselessBlockLoot extends BlockLootSubProvider {
     private static final LootItemCondition.Builder HAS_NO_SHEARS_OR_SILK_TOUCH = HAS_SHEARS_OR_SILK_TOUCH.invert();
     private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
-    private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(USELESS_SKELETON_SKULL.get()).map(ItemLike::asItem).collect(Collectors.toSet());
+    private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(
+            USELESS_SKELETON_SKULL.get(),
+            COFFEE_MACHINE.get(),
+            CUP_COFFEE.get()
+    ).map(ItemLike::asItem).collect(Collectors.toSet());
 
     protected UselessBlockLoot() {
         super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
@@ -119,7 +124,7 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         this.dropSelf(USELESS_ACTIVATOR_RAIL.get());
         // misc
         this.add(MACHINE_SUPPLIER.get(), this::mimicDrop);
-        this.dropSelf(COFFEE_MACHINE.get());
+        this.add(COFFEE_MACHINE.get(), this::createCoffeeMachineDrop);
         this.dropSelf(CUP.get());
         this.add(CUP_COFFEE.get(), this::copyCoffeeDrop);
         this.add(USELESS_SKELETON_SKULL.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))));
@@ -171,6 +176,17 @@ public class UselessBlockLoot extends BlockLootSubProvider {
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
                         .copy(UselessDataComponents.COFFEE_TYPE.get()))));
+    }
+
+    private LootTable.Builder createCoffeeMachineDrop(ItemLike itemLike) {
+        return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
+                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                        .copy(DataComponents.CUSTOM_NAME)
+                        .copy(DataComponents.CONTAINER)
+                        .copy(DataComponents.LOCK)
+                        .copy(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get())
+                )));
     }
 
     private LootTable.Builder wallClosetDrop(Block block) {
