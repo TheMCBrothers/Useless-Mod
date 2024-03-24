@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.core;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -42,8 +43,8 @@ public final class UselessDataComponents {
                     .persistent(CoffeeType.CODEC)
                     .build());
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Block>> WALL_CLOSET_MATERIAL = Registration.DATA_COMPONENT_TYPES.register("wall_closet_material",
-            () -> DataComponentType.<Block>builder()
-                    .persistent(BuiltInRegistries.BLOCK.byNameCodec())
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<Block>>> WALL_CLOSET_MATERIAL = Registration.DATA_COMPONENT_TYPES.register("wall_closet_material",
+            () -> DataComponentType.<Holder<Block>>builder()
+                    .persistent(BuiltInRegistries.BLOCK.holderByNameCodec())
                     .build());
 }

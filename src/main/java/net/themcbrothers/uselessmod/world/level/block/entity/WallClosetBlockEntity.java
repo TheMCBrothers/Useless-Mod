@@ -1,6 +1,7 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
@@ -109,15 +110,8 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         }
     }
 
-    public void parseMaterial(String registryName) {
-        final ResourceLocation key = ResourceLocation.tryParse(registryName);
-        if (key != null) {
-            setMaterial(BuiltInRegistries.BLOCK.containsKey(key) ? Objects.requireNonNull(BuiltInRegistries.BLOCK.get(key)) : Blocks.AIR);
-        }
-    }
-
-    public void setMaterial(Block material) {
-        this.material = material;
+    public void setMaterial(Holder<Block> material) {
+        this.material = material.value();
         //noinspection DataFlowIssue
         this.getLevel().setBlockAndUpdate(this.getBlockPos(), this.getBlockState());
         this.requestModelDataUpdate();
@@ -241,13 +235,13 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     @Override
     public void applyComponents(DataComponentMap components) {
         super.applyComponents(components);
-        this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Blocks.AIR));
+        this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Blocks.AIR.builtInRegistryHolder()));
     }
 
     @Override
     public void collectComponents(DataComponentMap.Builder builder) {
         super.collectComponents(builder);
-        builder.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), this.getMaterial());
+        builder.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), this.getMaterial().builtInRegistryHolder());
     }
 
     @Override

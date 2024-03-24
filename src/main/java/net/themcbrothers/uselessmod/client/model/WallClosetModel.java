@@ -20,6 +20,7 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -180,13 +181,13 @@ public class WallClosetModel implements IDynamicBakedModel {
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
             if (model instanceof WallClosetModel wallClosetModel && stack.has(UselessDataComponents.WALL_CLOSET_MATERIAL.get())) {
-                Block material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
+                Holder<Block> material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
 
                 if (material == null) {
-                    material = Blocks.OAK_PLANKS;
+                    material = Blocks.OAK_PLANKS.builtInRegistryHolder();
                 }
 
-                return wallClosetModel.getCustomModel(Objects.requireNonNull(material), Direction.NORTH);
+                return wallClosetModel.getCustomModel(Objects.requireNonNull(material.value()), Direction.NORTH);
             }
 
             return model;

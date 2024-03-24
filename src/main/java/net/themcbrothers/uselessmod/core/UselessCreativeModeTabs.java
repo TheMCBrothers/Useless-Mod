@@ -3,11 +3,11 @@ package net.themcbrothers.uselessmod.core;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -61,7 +61,7 @@ public final class UselessCreativeModeTabs {
         if (event.getTab() == MAIN_TAB.get()) {
             NonNullList<ItemStack> itemStacks = NonNullList.create();
 
-//            Registration.BLOCKS.getEntries().stream().map(Holder::value).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
+            // add all items
             Registration.ITEMS.getEntries().stream().map(Holder::value).map(UselessCreativeModeTabs::convert).forEach(itemStacks::addAll);
 
             // remove some items
@@ -117,12 +117,10 @@ public final class UselessCreativeModeTabs {
             BuiltInRegistries.BLOCK.stream()
                     .filter(WallClosetRecipeManager::isValidMaterial)
                     .filter(resourceKeyBlockEntry -> !(WallClosetRecipeManager.getSlab(resourceKeyBlockEntry) instanceof AirBlock))
-                    .map(BuiltInRegistries.BLOCK::getKey)
-                    .map(blockRegistryName -> {
-                        final CompoundTag tag = new CompoundTag();
-                        tag.putString("Material", blockRegistryName.toString());
+                    .map(Block::builtInRegistryHolder)
+                    .map(block -> {
                         final ItemStack stack = new ItemStack(UselessBlocks.WALL_CLOSET);
-                        BlockItem.setBlockEntityData(stack, UselessBlockEntityTypes.WALL_CLOSET.get(), tag);
+                        stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), block);
                         return stack;
                     }).forEach(event::accept);
         }

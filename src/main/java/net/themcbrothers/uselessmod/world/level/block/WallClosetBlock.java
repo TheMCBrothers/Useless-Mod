@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -65,10 +66,10 @@ public class WallClosetBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag, @Nullable RegistryAccess registryAccess) {
-        Block material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
+        Holder<Block> material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
 
         if (material != null) {
-            hoverText.add(material.getName().withStyle(ChatFormatting.GRAY));
+            hoverText.add(material.value().getName().withStyle(ChatFormatting.GRAY));
         }
     }
 
@@ -76,7 +77,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallCloset) {
             final ItemStack stack = new ItemStack(this);
-            stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), wallCloset.getMaterial());
+            stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), wallCloset.getMaterial().builtInRegistryHolder());
             return stack;
         }
 
