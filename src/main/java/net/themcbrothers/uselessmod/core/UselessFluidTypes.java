@@ -6,6 +6,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.util.ColorUtils;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -36,7 +37,8 @@ public final class UselessFluidTypes {
 
                         @Override
                         public int getTintColor(FluidStack stack) {
-                            return stack.getOrDefault(UselessDataComponents.COLOR.get(), 0xFFFFFFFF);
+                            Integer color = stack.get(UselessDataComponents.COLOR.get());
+                            return color != null ? ColorUtils.fullAlpha(color) : -1;
                         }
                     });
                 }

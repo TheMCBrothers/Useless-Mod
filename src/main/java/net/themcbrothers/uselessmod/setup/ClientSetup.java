@@ -13,10 +13,12 @@ import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -39,10 +41,12 @@ import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
 import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
+import net.themcbrothers.uselessmod.util.ColorUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup extends CommonSetup {
@@ -96,14 +100,14 @@ public class ClientSetup extends CommonSetup {
 
         event.register(((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity canvas) {
-                return canvas.getColor();
+                return ColorUtils.fullAlpha(canvas.getColor());
             }
             return -1;
         }), UselessBlocks.PAINTED_WOOL.get());
 
         event.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
-                return cup.getCoffeeType().map(CoffeeType::getColor).orElse(-1);
+                return cup.getCoffeeType().map(CoffeeType::getColor).map(ColorUtils::fullAlpha).orElse(-1);
             }
             return -1;
         }, UselessBlocks.CUP_COFFEE.get());
@@ -117,6 +121,14 @@ public class ClientSetup extends CommonSetup {
             }
             return -1;
         }, UselessBlocks.MACHINE_SUPPLIER.get());
+
+        event.register((state, level, pos, tintIndex) -> {
+            if (level != null && pos != null &&
+                    level.getBlockEntity(pos) instanceof WallClosetBlockEntity blockEntity) {
+                return colors.getColor(blockEntity.getMaterial().defaultBlockState(), level, pos, tintIndex);
+            }
+            return -1;
+        }, UselessBlocks.WALL_CLOSET.get());
     }
 
     private void itemColors(final RegisterColorHandlersEvent.Item event) {
@@ -124,18 +136,29 @@ public class ClientSetup extends CommonSetup {
 
         event.register(((stack, layer) -> {
             Integer color = stack.get(UselessDataComponents.COLOR.get());
-            return layer == 1 && color != null ? color : -1;
+            return layer == 1 && color != null ? ColorUtils.fullAlpha(color) : -1;
         }), UselessItems.PAINT_BRUSH);
 
-        event.register(((stack, layer) -> stack.getOrDefault(UselessDataComponents.COLOR.get(), -1)), UselessBlocks.PAINTED_WOOL);
+        event.register(((stack, layer) -> {
+            Integer color = stack.get(UselessDataComponents.COLOR.get());
+            return color != null ? ColorUtils.fullAlpha(color) : -1;
+        }), UselessBlocks.PAINTED_WOOL);
 
-        event.register((stack, layer) ->
-                CoffeeUtils.getCoffeeType(stack).map(CoffeeType::getColor).orElse(-1), UselessBlocks.CUP_COFFEE);
+        event.register((stack, layer) -> CoffeeUtils.getCoffeeType(stack)
+                        .map(CoffeeType::getColor)
+                        .map(ColorUtils::fullAlpha)
+                        .orElse(-1),
+                UselessBlocks.CUP_COFFEE);
 
         event.register((stack, layer) -> {
             BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
-            return mimic != null ? colors.getColor(new ItemStack(mimic.getBlock().asItem()), layer) : -1;
+            return mimic != null ? colors.getColor(new ItemStack(mimic.getBlock()), layer) : -1;
         }, UselessBlocks.MACHINE_SUPPLIER);
+
+        event.register((stack, layer) -> {
+            Holder<Block> block = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
+            return block != null ? colors.getColor(new ItemStack(block.value()), layer) : -1;
+        });
 
         event.register(new DynamicFluidContainerModel.Colors(), UselessItems.BUCKET_PAINT);
     }
