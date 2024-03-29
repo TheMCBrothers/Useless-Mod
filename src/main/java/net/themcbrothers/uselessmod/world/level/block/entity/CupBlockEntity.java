@@ -57,8 +57,8 @@ public class CupBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.load(tag, lookupProvider);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
         if (tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
             var key = ResourceKey.create(UselessRegistries.COFFEE_KEY, Objects.requireNonNull(ResourceLocation.tryParse(tag.getString(TAG_COFFEE))));
             this.type = UselessRegistries.COFFEE_REGISTRY.getHolder(key).orElse(null);
@@ -85,7 +85,7 @@ public class CupBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
+    protected void applyImplicitComponents(DataComponentInput components) {
         CoffeeType type = components.get(UselessDataComponents.COFFEE_TYPE.get());
 
         if (type != null) {
@@ -94,7 +94,7 @@ public class CupBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
         if (this.type != null) {
             builder.set(UselessDataComponents.COFFEE_TYPE.get(), this.type.value());
         }

@@ -30,12 +30,12 @@ public class LightSwitchBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
         builder.set(UselessDataComponents.LIGHTS.get(), this.getBlockPositions());
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
+    protected void applyImplicitComponents(DataComponentInput components) {
         this.setBlockPositions(components.getOrDefault(UselessDataComponents.LIGHTS.get(), List.of()));
     }
 
@@ -50,8 +50,8 @@ public class LightSwitchBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.load(tag, lookupProvider);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
 
         this.blockPositions.clear();
         Arrays.stream(tag.getLongArray("Lights")).mapToObj(BlockPos::of).forEach(this.blockPositions::add);

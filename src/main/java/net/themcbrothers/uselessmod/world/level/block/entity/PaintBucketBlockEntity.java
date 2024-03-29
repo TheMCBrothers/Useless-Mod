@@ -92,19 +92,19 @@ public class PaintBucketBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.load(tag, lookupProvider);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
         this.colorTank.readFromNBT(lookupProvider, tag.getCompound("Tank"));
         this.stackHandler.deserializeNBT(lookupProvider, tag.getCompound("Slots"));
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
         builder.set(NeoForgeMod.FLUID_STACK_COMPONENT.get(), this.colorTank.getFluid());
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
+    protected void applyImplicitComponents(DataComponentInput components) {
         this.colorTank.setFluid(components.getOrDefault(NeoForgeMod.FLUID_STACK_COMPONENT.get(), FluidStack.EMPTY));
     }
 

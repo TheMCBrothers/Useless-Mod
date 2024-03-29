@@ -154,38 +154,38 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                        .copy(UselessDataComponents.LIGHTS.get()))));
+                        .include(UselessDataComponents.LIGHTS.get()))));
     }
 
     private LootTable.Builder createCopyColorDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                        .copy(UselessDataComponents.COLOR.get()))));
+                        .include(UselessDataComponents.COLOR.get()))));
     }
 
     private LootTable.Builder mimicDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                        .copy(UselessDataComponents.MIMIC.get()))));
+                        .include(UselessDataComponents.MIMIC.get()))));
     }
 
     private LootTable.Builder copyCoffeeDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                        .copy(UselessDataComponents.COFFEE_TYPE.get()))));
+                        .include(UselessDataComponents.COFFEE_TYPE.get()))));
     }
 
     private LootTable.Builder createCoffeeMachineDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                        .copy(DataComponents.CUSTOM_NAME)
-                        .copy(DataComponents.CONTAINER)
-                        .copy(DataComponents.LOCK)
-                        .copy(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get())
+                        .include(DataComponents.CUSTOM_NAME)
+                        .include(DataComponents.CONTAINER)
+                        .include(DataComponents.LOCK)
+                        .include(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get())
                 )));
     }
 
@@ -194,7 +194,7 @@ public class UselessBlockLoot extends BlockLootSubProvider {
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
                         .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                                .copy(UselessDataComponents.WALL_CLOSET_MATERIAL.get())))));
+                                .include(UselessDataComponents.WALL_CLOSET_MATERIAL.get())))));
     }
 
     private LootTable.Builder createUselessLeavesDrop(Block leavesBlock, Block saplingBlock, float... chances) {

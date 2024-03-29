@@ -1,8 +1,10 @@
 package net.themcbrothers.uselessmod.core;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
@@ -12,11 +14,13 @@ import net.themcbrothers.uselessmod.world.item.CupBlockItem;
 import net.themcbrothers.uselessmod.world.item.LightSwitchBlockItem;
 import net.themcbrothers.uselessmod.world.item.UselessBedItem;
 import net.themcbrothers.uselessmod.world.level.block.*;
+import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.grower.UselessOakTreeGrower;
 
 import java.util.function.Function;
 
-import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.*;
+import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.of;
+import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy;
 import static net.themcbrothers.uselessmod.core.Registration.BLOCKS;
 
 public final class UselessBlocks {
@@ -89,7 +93,8 @@ public final class UselessBlocks {
     // Functional Blocks
     public static final DeferredBlock<Block> WALL_CLOSET = BLOCKS.register("wall_closet", () -> new WallClosetBlock(of().strength(.5F)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> MACHINE_SUPPLIER = BLOCKS.register("machine_supplier", () -> new MachineSupplierBlock(of().strength(0.5F).dynamicShape().noOcclusion()), GENERAL_BLOCK_ITEM);
-    public static final DeferredBlock<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)), block -> new CoffeeMachineBlockItem(block, GENERAL_PROPS));
+    public static final DeferredBlock<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)),
+            block -> new CoffeeMachineBlockItem(block, new Item.Properties().component(DataComponents.CONTAINER, ItemContainerContents.EMPTY).component(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(), CoffeeMachineBlockEntity.Contents.EMPTY)));
     public static final DeferredBlock<Block> CUP = BLOCKS.register("cup", () -> new CupBlock(of().strength(0.5F)), block -> new CupBlockItem(block, GENERAL_PROPS, false));
     public static final DeferredBlock<Block> CUP_COFFEE = BLOCKS.register("cup_coffee", () -> new CupCoffeeBlock(of().strength(0.5F)), block -> new CupBlockItem(block, ONE_STACKING_PROPS, true));
 

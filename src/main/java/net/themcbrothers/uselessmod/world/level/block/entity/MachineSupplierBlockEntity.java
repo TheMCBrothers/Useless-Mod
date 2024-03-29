@@ -59,8 +59,8 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.load(tag, lookupProvider);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
         if (tag.contains("Mimic", Tag.TAG_COMPOUND) && this.level != null) {
             this.mimic = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
         }
@@ -97,12 +97,12 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
+    protected void applyImplicitComponents(DataComponentInput components) {
         this.setMimic(components.get(UselessDataComponents.MIMIC.get()));
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
         builder.set(UselessDataComponents.MIMIC.get(), this.getMimic());
     }
 

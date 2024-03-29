@@ -43,8 +43,8 @@ import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
-import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.network.packets.BlockEntitySyncPacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
@@ -308,8 +308,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void load(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-        super.load(compound, lookupProvider);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(compound, lookupProvider);
         ContainerHelper.loadAllItems(compound, this.items, lookupProvider);
         this.litTime = compound.getInt("BurnTime");
         this.cookingProgress = compound.getInt("CookTime");
@@ -466,8 +466,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
-        super.applyComponents(components);
+    protected void applyImplicitComponents(DataComponentInput components) {
+        super.applyImplicitComponents(components);
 
         Contents contents = components.get(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get());
         if (contents != null) {
@@ -482,8 +482,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
-        super.collectComponents(builder);
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
 
         builder.set(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(),
                 new Contents(
@@ -590,15 +590,17 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             int cookTimeTotal,
             boolean useMilk
     ) {
+        public static final Contents EMPTY = new Contents(FluidStack.EMPTY, FluidStack.EMPTY, 0, 0, 0, 0, false);
+
         public static final Codec<Contents> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
-                        ExtraCodecs.strictOptionalField(FluidStack.CODEC, "water", FluidStack.EMPTY).forGetter(Contents::water),
-                        ExtraCodecs.strictOptionalField(FluidStack.CODEC, "milk", FluidStack.EMPTY).forGetter(Contents::milk),
-                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "energy", 0).forGetter(Contents::energy),
-                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "burn_time", 0).forGetter(Contents::burnTime),
-                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "cook_time", 0).forGetter(Contents::cookTime),
-                        ExtraCodecs.strictOptionalField(ExtraCodecs.NON_NEGATIVE_INT, "cook_time_total", 0).forGetter(Contents::cookTimeTotal),
-                        ExtraCodecs.strictOptionalField(Codec.BOOL, "use_milk", false).forGetter(Contents::useMilk)
+                        FluidStack.CODEC.optionalFieldOf("water", FluidStack.EMPTY).forGetter(Contents::water),
+                        FluidStack.CODEC.optionalFieldOf("milk", FluidStack.EMPTY).forGetter(Contents::milk),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("energy", 0).forGetter(Contents::energy),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("burn_time", 0).forGetter(Contents::burnTime),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cook_time", 0).forGetter(Contents::cookTime),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cook_time_total", 0).forGetter(Contents::cookTimeTotal),
+                        Codec.BOOL.optionalFieldOf("use_milk", false).forGetter(Contents::useMilk)
                 ).apply(instance, Contents::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, Contents> STREAM_CODEC = new StreamCodec<>() {

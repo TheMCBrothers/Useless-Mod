@@ -1,12 +1,12 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -103,14 +103,14 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<CoffeeRecipe> {
-        private static final Codec<CoffeeRecipe> CODEC = RecordCodecBuilder.create(instance ->
+        private static final MapCodec<CoffeeRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
-                        ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
                         Ingredient.CODEC_NONEMPTY.fieldOf("cup").forGetter(recipe -> recipe.cupIngredient),
                         Ingredient.CODEC_NONEMPTY.fieldOf("bean").forGetter(recipe -> recipe.beanIngredient),
-                        ExtraCodecs.strictOptionalField(Ingredient.CODEC, "extra", Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
+                        Ingredient.CODEC.optionalFieldOf("extra", Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
                         FluidIngredient.CODEC_NONEMPTY.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
-                        ExtraCodecs.strictOptionalField(FluidIngredient.CODEC, "milk", FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
+                        FluidIngredient.CODEC.optionalFieldOf("milk", FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
                         ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
                 ).apply(instance, CoffeeRecipe::new));
@@ -118,7 +118,7 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
         private static final StreamCodec<RegistryFriendlyByteBuf, CoffeeRecipe> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
 
         @Override
-        public Codec<CoffeeRecipe> codec() {
+        public MapCodec<CoffeeRecipe> codec() {
             return CODEC;
         }
 

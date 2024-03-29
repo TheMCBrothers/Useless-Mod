@@ -100,8 +100,8 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.load(tag, lookupProvider);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, this.items, lookupProvider);
         final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
@@ -233,14 +233,14 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
-        super.applyComponents(components);
+    protected void applyImplicitComponents(DataComponentInput components) {
+        super.applyImplicitComponents(components);
         this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Blocks.AIR.builtInRegistryHolder()));
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
-        super.collectComponents(builder);
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
         builder.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), this.getMaterial().builtInRegistryHolder());
     }
 

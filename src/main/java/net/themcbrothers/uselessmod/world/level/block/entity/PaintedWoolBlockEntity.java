@@ -35,8 +35,8 @@ public class PaintedWoolBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.load(tag, lookupProvider);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
         this.color = tag.getInt("Color");
     }
 
@@ -59,12 +59,12 @@ public class PaintedWoolBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void applyComponents(DataComponentMap components) {
+    protected void applyImplicitComponents(DataComponentInput components) {
         this.color = components.getOrDefault(UselessDataComponents.COLOR.get(), 0xFFFFFFFF);
     }
 
     @Override
-    public void collectComponents(DataComponentMap.Builder builder) {
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
         builder.set(UselessDataComponents.COLOR.get(), this.color);
     }
 
