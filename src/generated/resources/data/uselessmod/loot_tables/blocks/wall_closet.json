@@ -17,10 +17,10 @@
               "source": "block_entity"
             },
             {
-              "components": [
+              "function": "minecraft:copy_components",
+              "include": [
                 "uselessmod:wall_closet_material"
               ],
-              "function": "minecraft:copy_components",
               "source": "block_entity"
             }
           ],
