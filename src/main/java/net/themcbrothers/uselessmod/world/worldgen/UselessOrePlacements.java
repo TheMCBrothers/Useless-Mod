@@ -22,19 +22,19 @@ public final class UselessOrePlacements {
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
-        PlacementUtils.register(context, ORE_USELESS, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))));
-        PlacementUtils.register(context, ORE_USELESS_NETHER, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(5, PlacementUtils.RANGE_10_10));
-        PlacementUtils.register(context, ORE_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(8, PlacementUtils.FULL_RANGE));
-        PlacementUtils.register(context, ORE_SUPER_USELESS, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32))));
-        PlacementUtils.register(context, ORE_SUPER_USELESS_NETHER, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(5, PlacementUtils.RANGE_10_10));
-        PlacementUtils.register(context, ORE_SUPER_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(8, PlacementUtils.FULL_RANGE));
+        PlacementUtils.register(context, ORE_USELESS, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56)), ConfigFeaturePlacement.Type.OVERWORLD));
+        PlacementUtils.register(context, ORE_USELESS_NETHER, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(5, PlacementUtils.RANGE_10_10, ConfigFeaturePlacement.Type.NETHER));
+        PlacementUtils.register(context, ORE_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(8, PlacementUtils.FULL_RANGE, ConfigFeaturePlacement.Type.END));
+        PlacementUtils.register(context, ORE_SUPER_USELESS, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32)), ConfigFeaturePlacement.Type.OVERWORLD));
+        PlacementUtils.register(context, ORE_SUPER_USELESS_NETHER, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(5, PlacementUtils.RANGE_10_10, ConfigFeaturePlacement.Type.NETHER));
+        PlacementUtils.register(context, ORE_SUPER_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(8, PlacementUtils.FULL_RANGE, ConfigFeaturePlacement.Type.END));
     }
 
-    private static List<PlacementModifier> orePlacement(PlacementModifier countModifier, PlacementModifier placementModifier) {
-        return List.of(countModifier, InSquarePlacement.spread(), placementModifier, BiomeFilter.biome());
+    private static List<PlacementModifier> orePlacement(PlacementModifier countModifier, PlacementModifier placementModifier, ConfigFeaturePlacement.Type dimType) {
+        return List.of(countModifier, InSquarePlacement.spread(), placementModifier, BiomeFilter.biome(), new ConfigFeaturePlacement(dimType));
     }
 
-    private static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier placementModifier) {
-        return orePlacement(CountPlacement.of(count), placementModifier);
+    private static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier placementModifier, ConfigFeaturePlacement.Type dimType) {
+        return orePlacement(CountPlacement.of(count), placementModifier, dimType);
     }
 }
