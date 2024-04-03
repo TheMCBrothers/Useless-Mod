@@ -24,10 +24,10 @@ public final class UselessOrePlacements {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
         PlacementUtils.register(context, ORE_USELESS, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))));
         PlacementUtils.register(context, ORE_USELESS_NETHER, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(5, PlacementUtils.RANGE_10_10));
-        PlacementUtils.register(context, ORE_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(10, PlacementUtils.FULL_RANGE));
+        PlacementUtils.register(context, ORE_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_USELESS), commonOrePlacement(8, PlacementUtils.FULL_RANGE));
         PlacementUtils.register(context, ORE_SUPER_USELESS, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32))));
         PlacementUtils.register(context, ORE_SUPER_USELESS_NETHER, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(5, PlacementUtils.RANGE_10_10));
-        PlacementUtils.register(context, ORE_SUPER_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(10, PlacementUtils.FULL_RANGE));
+        PlacementUtils.register(context, ORE_SUPER_USELESS_END, configuredFeatures.getOrThrow(UselessOreFeatures.ORE_SUPER_USELESS), commonOrePlacement(8, PlacementUtils.FULL_RANGE));
     }
 
     private static List<PlacementModifier> orePlacement(PlacementModifier countModifier, PlacementModifier placementModifier) {
