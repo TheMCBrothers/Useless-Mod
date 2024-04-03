@@ -23,11 +23,11 @@ public final class UselessBiomeModifiers {
         HolderSet<Biome> netherBiomes = biomeGetter.getOrThrow(BiomeTags.IS_NETHER);
         HolderSet<Biome> endBiomes = biomeGetter.getOrThrow(BiomeTags.IS_END);
 
-        registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_USELESS_MIDDLE, overworldBiomes);
+        registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_USELESS, overworldBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_USELESS_NETHER, netherBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_USELESS_END, endBiomes);
 
-        registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_LARGE, overworldBiomes);
+        registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS, overworldBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_NETHER, netherBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_END, endBiomes);
     }

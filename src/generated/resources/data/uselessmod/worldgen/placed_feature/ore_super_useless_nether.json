@@ -22,6 +22,10 @@
     },
     {
       "type": "minecraft:biome"
+    },
+    {
+      "type": "uselessmod:config",
+      "dim_type": "nether"
     }
   ]
 }
