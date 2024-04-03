@@ -27,7 +27,7 @@ public final class UselessBiomeModifiers {
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_USELESS_NETHER, netherBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_USELESS_END, endBiomes);
 
-        registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_LARGE, overworldBiomes);
+        registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS, overworldBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_NETHER, netherBiomes);
         registerOreModifier(context, placedFeatures, UselessOrePlacements.ORE_SUPER_USELESS_END, endBiomes);
     }
