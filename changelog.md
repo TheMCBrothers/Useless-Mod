@@ -1,3 +1,12 @@
+## Useless Mod 7.3.0 ##
+- Changes to Useless Ore
+  - Reduced amount in Overworld 
+  - Reduced amount in The End
+- Changes to Super-Useless Ore
+  - Fix ore not generating in Overworld
+  - Reduced amount in The End
+- Ore Generation now respects the server config
+
 ## Useless Mod 7.2.1 ##
 - Fix crash on going into creative on server
 
