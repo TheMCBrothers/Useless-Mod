@@ -5,7 +5,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -16,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -34,8 +34,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
-import net.themcbrothers.uselessmod.core.UselessStats;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,7 +65,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> hoverText, TooltipFlag tooltipFlag, @Nullable RegistryAccess registryAccess) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> hoverText, TooltipFlag tooltipFlag) {
         Holder<Block> material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
 
         if (material != null) {

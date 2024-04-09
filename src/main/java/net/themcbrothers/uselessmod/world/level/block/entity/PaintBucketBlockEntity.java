@@ -9,7 +9,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -100,12 +99,12 @@ public class PaintBucketBlockEntity extends BlockEntity {
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder builder) {
-        builder.set(NeoForgeMod.FLUID_STACK_COMPONENT.get(), this.colorTank.getFluid());
+        builder.set(UselessDataComponents.FLUID_CONTENTS.get(), this.colorTank.getFluid());
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentInput components) {
-        this.colorTank.setFluid(components.getOrDefault(NeoForgeMod.FLUID_STACK_COMPONENT.get(), FluidStack.EMPTY));
+        this.colorTank.setFluid(components.getOrDefault(UselessDataComponents.FLUID_CONTENTS.get(), FluidStack.EMPTY));
     }
 
     @SuppressWarnings("deprecation")

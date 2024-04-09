@@ -18,7 +18,6 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class PaintBrushItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> hoverText, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> hoverText, TooltipFlag tooltipFlag) {
         Integer color = stack.get(UselessDataComponents.COLOR.get());
 
         if (color != null) {
