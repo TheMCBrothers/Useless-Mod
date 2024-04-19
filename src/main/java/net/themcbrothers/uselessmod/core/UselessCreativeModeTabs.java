@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -50,7 +51,11 @@ public final class UselessCreativeModeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> WALL_CLOSET_TAB = Registration.CREATIVE_MODE_TABS.register("wall_closet",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.uselessmod.wall_closet"))
-                    .icon(() -> new ItemStack(UselessBlocks.WALL_CLOSET))
+                    .icon(() -> {
+                        ItemStack stack = new ItemStack(UselessBlocks.WALL_CLOSET);
+                        stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Holder.direct(Blocks.BIRCH_PLANKS));
+                        return stack;
+                    })
                     .withTabsBefore(UselessCreativeModeTabs.MAIN_TAB.getKey(), UselessCreativeModeTabs.COFFEE_TAB.getKey(), UselessCreativeModeTabs.PAINT_TAB.getKey())
                     .build());
 
