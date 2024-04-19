@@ -194,13 +194,10 @@ public class WallClosetModel implements IDynamicBakedModel {
         }
     }
 
-    private static class Geometry implements IUnbakedGeometry<Geometry> {
+    public static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BlockModel ownerModel = ((BlockGeometryBakingContext) context).owner;
-            if (ownerModel == null)
-                throw new RuntimeException("Wall Closet owner model is null");
-            BlockModel blockModel = ownerModel.parent;
+            BlockModel blockModel = ((BlockGeometryBakingContext) context).owner.parent;
             if (blockModel == null)
                 throw new RuntimeException("Wall Closet parent model is null");
             return new WallClosetModel(baker, blockModel, modelTransform, spriteGetter);
