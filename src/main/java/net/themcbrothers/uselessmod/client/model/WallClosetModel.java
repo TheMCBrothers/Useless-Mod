@@ -184,7 +184,7 @@ public class WallClosetModel implements IDynamicBakedModel {
                 Holder<Block> material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
 
                 if (material == null) {
-                    material = Blocks.OAK_PLANKS.builtInRegistryHolder();
+                    material = Holder.direct(Blocks.OAK_PLANKS);
                 }
 
                 return wallClosetModel.getCustomModel(Objects.requireNonNull(material.value()), Direction.NORTH);

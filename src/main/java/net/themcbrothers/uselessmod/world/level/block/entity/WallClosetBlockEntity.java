@@ -235,13 +235,13 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     @Override
     protected void applyImplicitComponents(DataComponentInput components) {
         super.applyImplicitComponents(components);
-        this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Blocks.AIR.builtInRegistryHolder()));
+        this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Holder.direct(Blocks.AIR)));
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder builder) {
         super.collectImplicitComponents(builder);
-        builder.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), this.getMaterial().builtInRegistryHolder());
+        builder.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), BuiltInRegistries.BLOCK.wrapAsHolder(this.getMaterial()));
     }
 
     @Override

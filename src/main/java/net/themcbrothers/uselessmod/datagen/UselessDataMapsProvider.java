@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.datagen;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DataMapProvider;
@@ -17,16 +18,15 @@ public class UselessDataMapsProvider extends DataMapProvider {
 
     @Override
     protected void gather() {
-        //noinspection deprecation
         this.builder(NeoForgeDataMaps.COMPOSTABLES)
-                .add(UselessBlocks.USELESS_OAK_SAPLING.asItem().builtInRegistryHolder(), new Compostable(0.3F), false)
-                .add(UselessItems.USELESS_WHEAT_SEEDS.asItem().builtInRegistryHolder(), new Compostable(0.3F), false)
-                .add(UselessItems.COFFEE_SEEDS.asItem().builtInRegistryHolder(), new Compostable(0.3F), false)
-                .add(UselessBlocks.RED_ROSE.asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
-                .add(UselessBlocks.BLUE_ROSE.asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
-                .add(UselessBlocks.USELESS_ROSE.asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
-                .add(UselessItems.USELESS_WHEAT.asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
-                .add(UselessItems.COFFEE_BEANS.asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
+                .add(Holder.direct(UselessBlocks.USELESS_OAK_SAPLING.asItem()), new Compostable(0.3F), false)
+                .add(Holder.direct(UselessItems.USELESS_WHEAT_SEEDS.asItem()), new Compostable(0.3F), false)
+                .add(Holder.direct(UselessItems.COFFEE_SEEDS.asItem()), new Compostable(0.3F), false)
+                .add(Holder.direct(UselessBlocks.RED_ROSE.asItem()), new Compostable(0.65F), false)
+                .add(Holder.direct(UselessBlocks.BLUE_ROSE.asItem()), new Compostable(0.65F), false)
+                .add(Holder.direct(UselessBlocks.USELESS_ROSE.asItem()), new Compostable(0.65F), false)
+                .add(Holder.direct(UselessItems.USELESS_WHEAT.asItem()), new Compostable(0.65F), false)
+                .add(Holder.direct(UselessItems.COFFEE_BEANS.asItem()), new Compostable(0.65F), false)
         ;
     }
 }

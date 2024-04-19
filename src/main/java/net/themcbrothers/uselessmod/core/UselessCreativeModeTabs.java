@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -117,7 +116,7 @@ public final class UselessCreativeModeTabs {
             BuiltInRegistries.BLOCK.stream()
                     .filter(WallClosetRecipeManager::isValidMaterial)
                     .filter(resourceKeyBlockEntry -> !(WallClosetRecipeManager.getSlab(resourceKeyBlockEntry) instanceof AirBlock))
-                    .map(Block::builtInRegistryHolder)
+                    .map(BuiltInRegistries.BLOCK::wrapAsHolder)
                     .map(block -> {
                         final ItemStack stack = new ItemStack(UselessBlocks.WALL_CLOSET);
                         stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), block);

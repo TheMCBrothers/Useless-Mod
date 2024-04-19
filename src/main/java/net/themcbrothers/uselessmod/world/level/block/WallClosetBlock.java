@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -43,7 +44,6 @@ import java.util.List;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
 
-@SuppressWarnings("deprecation")
 public class WallClosetBlock extends BaseEntityBlock {
     public static final MapCodec<WallClosetBlock> CODEC = simpleCodec(WallClosetBlock::new);
     private static final VoxelShape SHAPE_NORTH = Block.box(1, 1, 9, 15, 15, 16);
@@ -77,7 +77,7 @@ public class WallClosetBlock extends BaseEntityBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallCloset) {
             final ItemStack stack = new ItemStack(this);
-            stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), wallCloset.getMaterial().builtInRegistryHolder());
+            stack.set(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), BuiltInRegistries.BLOCK.wrapAsHolder(wallCloset.getMaterial()));
             return stack;
         }
 
