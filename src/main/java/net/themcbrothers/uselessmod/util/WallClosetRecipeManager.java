@@ -1,13 +1,12 @@
 package net.themcbrothers.uselessmod.util;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.Block;
@@ -17,8 +16,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
-import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -62,14 +61,12 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
                 planks, planks, planks
         );
 
+        Holder<Block> blockHolder = BuiltInRegistries.BLOCK.wrapAsHolder(material);
         ItemStack output = new ItemStack(UselessBlocks.WALL_CLOSET);
-        CompoundTag tag = new CompoundTag();
-        String reg = String.valueOf(BuiltInRegistries.BLOCK.getKey(material));
-        tag.putString("Material", reg);
-        BlockItem.setBlockEntityData(output, UselessBlockEntityTypes.WALL_CLOSET.get(), tag);
+        output.set(UselessDataComponents.WALL_CLOSET_MATERIAL, blockHolder);
 
         ShapedRecipePattern pattern = new ShapedRecipePattern(3, 3, ingredients, Optional.empty());
-        ResourceLocation id = UselessMod.rl("closet." + reg.replace(':', '.'));
+        ResourceLocation id = UselessMod.rl("closet." + blockHolder.getRegisteredName().replace(':', '.'));
         ShapedRecipe recipe = new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, pattern, output);
 
         return new RecipeHolder<>(id, recipe);
