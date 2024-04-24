@@ -132,7 +132,10 @@ public class UselessTagsProvider {
             this.tag(ItemTags.PICKAXES).add(UselessItems.USELESS_PICKAXE.get(), UselessItems.SUPER_USELESS_PICKAXE.get());
             this.tag(ItemTags.AXES).add(UselessItems.USELESS_AXE.get(), UselessItems.SUPER_USELESS_AXE.get());
             this.tag(ItemTags.HOES).add(UselessItems.USELESS_HOE.get(), UselessItems.SUPER_USELESS_HOE.get());
-            this.tag(ItemTags.TRIMMABLE_ARMOR).add(UselessItems.USELESS_HELMET.get(), UselessItems.USELESS_CHESTPLATE.get(), UselessItems.USELESS_LEGGINGS.get(), UselessItems.USELESS_BOOTS.get(), UselessItems.SUPER_USELESS_HELMET.get(), UselessItems.SUPER_USELESS_CHESTPLATE.get(), UselessItems.SUPER_USELESS_LEGGINGS.get(), UselessItems.SUPER_USELESS_BOOTS.get());
+            this.tag(ItemTags.HEAD_ARMOR).add(UselessItems.USELESS_HELMET.get(), UselessItems.SUPER_USELESS_HELMET.get());
+            this.tag(ItemTags.CHEST_ARMOR).add(UselessItems.USELESS_CHESTPLATE.get(), UselessItems.SUPER_USELESS_CHESTPLATE.get());
+            this.tag(ItemTags.LEG_ARMOR).add(UselessItems.USELESS_LEGGINGS.get(), UselessItems.SUPER_USELESS_LEGGINGS.get());
+            this.tag(ItemTags.FOOT_ARMOR).add(UselessItems.USELESS_BOOTS.get(), UselessItems.SUPER_USELESS_BOOTS.get());
 
             // materials
             this.tag(UselessTags.Items.INGOTS_USELESS).add(UselessItems.USELESS_INGOT.get());
@@ -145,13 +148,10 @@ public class UselessTagsProvider {
             this.tag(UselessTags.Items.RAW_MATERIALS_SUPER_USELESS).add(UselessItems.RAW_SUPER_USELESS.get());
             this.tag(Tags.Items.RAW_MATERIALS).addTag(UselessTags.Items.RAW_MATERIALS_USELESS).addTag(UselessTags.Items.RAW_MATERIALS_SUPER_USELESS);
 
-            // other forge tags
-            this.tag(Tags.Items.SHEARS).add(UselessItems.USELESS_SHEARS.get());
+            // other common tags
+            this.tag(Tags.Items.TOOLS_SHEARS).add(UselessItems.USELESS_SHEARS.get());
             this.tag(Tags.Items.TOOLS_SHIELDS).add(UselessItems.USELESS_SHIELD.get(), UselessItems.SUPER_USELESS_SHIELD.get());
-            this.tag(Tags.Items.ARMORS_HELMETS).add(UselessItems.USELESS_HELMET.get(), UselessItems.SUPER_USELESS_HELMET.get());
-            this.tag(Tags.Items.ARMORS_CHESTPLATES).add(UselessItems.USELESS_CHESTPLATE.get(), UselessItems.SUPER_USELESS_CHESTPLATE.get());
-            this.tag(Tags.Items.ARMORS_LEGGINGS).add(UselessItems.USELESS_LEGGINGS.get(), UselessItems.SUPER_USELESS_LEGGINGS.get());
-            this.tag(Tags.Items.ARMORS_BOOTS).add(UselessItems.USELESS_BOOTS.get(), UselessItems.SUPER_USELESS_BOOTS.get());
+
             this.tag(UselessTags.Items.CROPS_USELESS_WHEAT).add(UselessItems.USELESS_WHEAT.get());
             this.tag(UselessTags.Items.CROPS_COFFEEBEAN).add(UselessItems.COFFEE_BEANS.get());
             this.tag(Tags.Items.CROPS).addTag(UselessTags.Items.CROPS_USELESS_WHEAT).addTag(UselessTags.Items.CROPS_COFFEEBEAN);
@@ -159,7 +159,7 @@ public class UselessTagsProvider {
             this.tag(UselessTags.Items.SEEDS_COFFEEBEAN).add(UselessItems.COFFEE_SEEDS.get());
             this.tag(Tags.Items.SEEDS).addTag(UselessTags.Items.SEEDS_USELESS_WHEAT).addTag(UselessTags.Items.SEEDS_COFFEEBEAN);
             this.tag(Tags.Items.BONES).add(UselessItems.USELESS_BONE.get());
-            this.tag(Tags.Items.LEATHER).add(UselessItems.USELESS_LEATHER.get());
+            this.tag(Tags.Items.LEATHERS).add(UselessItems.USELESS_LEATHER.get());
             this.tag(Tags.Items.FEATHERS).add(UselessItems.USELESS_FEATHER.get());
         }
     }

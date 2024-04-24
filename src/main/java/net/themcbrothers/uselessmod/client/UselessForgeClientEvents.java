@@ -4,12 +4,13 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = UselessMod.MOD_ID, value = Dist.CLIENT)
+// TODO: rename class
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = UselessMod.MOD_ID, value = Dist.CLIENT)
 public class UselessForgeClientEvents {
     private static boolean wasCloakVisible;
 

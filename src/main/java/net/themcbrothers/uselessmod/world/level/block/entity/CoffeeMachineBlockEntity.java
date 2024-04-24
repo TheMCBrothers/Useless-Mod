@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,6 +28,7 @@ import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,8 +39,8 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
-import net.themcbrothers.lib.network.PacketUtils;
 import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
@@ -291,7 +293,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             nbt.putBoolean("UseMilk", this.useMilk);
         }
 
-        PacketUtils.sendToAllTracking(new BlockEntitySyncPacket(this.worldPosition, nbt), this.level, this.worldPosition);
+        PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) this.level, new ChunkPos(this.worldPosition), new BlockEntitySyncPacket(this.worldPosition, nbt));
     }
 
     @Override

@@ -9,7 +9,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
 public final class UselessCreativeModeTabs {
     static void register() {
     }
