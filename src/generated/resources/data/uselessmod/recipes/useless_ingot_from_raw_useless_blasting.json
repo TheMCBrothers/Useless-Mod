@@ -5,7 +5,7 @@
   "experience": 0.7,
   "group": "useless_ingot",
   "ingredient": {
-    "tag": "forge:raw_materials/useless"
+    "tag": "c:raw_materials/useless"
   },
   "result": {
     "count": 1,

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#forge:raw_materials/useless"
+            "items": "#c:raw_materials/useless"
           }
         ]
       },

@@ -1,7 +1,7 @@
 {
   "type": "uselessmod:coffee",
   "bean": {
-    "tag": "forge:crops/coffeebean"
+    "tag": "c:crops/coffeebean"
   },
   "cookingtime": 100,
   "cup": {

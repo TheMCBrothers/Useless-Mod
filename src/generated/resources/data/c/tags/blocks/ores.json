@@ -1,6 +1,6 @@
 {
   "values": [
-    "#forge:ores/useless",
-    "#forge:ores/super_useless"
+    "#c:ores/useless",
+    "#c:ores/super_useless"
   ]
 }

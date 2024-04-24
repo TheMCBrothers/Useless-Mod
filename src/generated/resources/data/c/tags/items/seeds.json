@@ -1,6 +1,6 @@
 {
   "values": [
-    "#forge:seeds/useless_wheat",
-    "#forge:seeds/coffeebean"
+    "#c:seeds/useless_wheat",
+    "#c:seeds/coffeebean"
   ]
 }

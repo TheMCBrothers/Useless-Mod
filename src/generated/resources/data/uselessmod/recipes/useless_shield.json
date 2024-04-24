@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "W": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     },
     "o": {
       "item": "minecraft:shield"

@@ -5,7 +5,7 @@
   "experience": 1.0,
   "group": "super_useless_ingot",
   "ingredient": {
-    "tag": "forge:dusts/super_useless"
+    "tag": "c:dusts/super_useless"
   },
   "result": {
     "count": 1,

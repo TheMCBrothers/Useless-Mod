@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     },
     "X": {
       "tag": "c:rods/wooden"

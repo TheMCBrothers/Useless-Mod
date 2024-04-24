@@ -1,6 +1,6 @@
 {
   "values": [
-    "#forge:raw_materials/useless",
-    "#forge:raw_materials/super_useless"
+    "#c:raw_materials/useless",
+    "#c:raw_materials/super_useless"
   ]
 }

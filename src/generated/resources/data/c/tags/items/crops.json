@@ -1,6 +1,6 @@
 {
   "values": [
-    "#forge:crops/useless_wheat",
-    "#forge:crops/coffeebean"
+    "#c:crops/useless_wheat",
+    "#c:crops/coffeebean"
   ]
 }

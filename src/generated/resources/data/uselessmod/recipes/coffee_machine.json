@@ -9,7 +9,7 @@
       "item": "minecraft:redstone_torch"
     },
     "U": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     },
     "X": {
       "item": "uselessmod:machine_supplier"
