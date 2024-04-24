@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:cobblestone/normal"
+      "tag": "c:cobblestones/normal"
     },
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     },
     "X": {
-      "tag": "forge:glass"
+      "tag": "c:glass_blocks"
     }
   },
   "pattern": [

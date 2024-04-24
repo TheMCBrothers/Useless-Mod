@@ -12,7 +12,7 @@
       "tag": "forge:ingots/useless"
     },
     "X": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     }
   },
   "pattern": [
