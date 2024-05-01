@@ -15,11 +15,10 @@ import net.themcbrothers.uselessmod.core.UselessFluids;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class BucketWithPaintItem extends BucketItem {
-    public BucketWithPaintItem(Supplier<? extends Fluid> supplier, Properties builder) {
-        super(supplier, builder);
+    public BucketWithPaintItem(Fluid content, Properties properties) {
+        super(content, properties);
     }
 
     @Override

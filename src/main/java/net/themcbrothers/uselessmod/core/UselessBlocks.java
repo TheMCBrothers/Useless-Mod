@@ -65,7 +65,7 @@ public final class UselessBlocks {
     public static final DeferredBlock<Block> STRIPPED_USELESS_OAK_LOG = BLOCKS.register("stripped_useless_oak_log", () -> new RotatedPillarBlock(ofFullCopy(Blocks.STRIPPED_OAK_LOG)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> STRIPPED_USELESS_OAK_WOOD = BLOCKS.register("stripped_useless_oak_wood", () -> new RotatedPillarBlock(ofFullCopy(Blocks.STRIPPED_OAK_WOOD)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_PLANKS = BLOCKS.register("useless_oak_planks", () -> new Block(ofFullCopy(Blocks.OAK_PLANKS)), GENERAL_BLOCK_ITEM);
-    public static final DeferredBlock<Block> USELESS_OAK_STAIRS = BLOCKS.register("useless_oak_stairs", () -> new StairBlock(() -> USELESS_OAK_PLANKS.get().defaultBlockState(), ofFullCopy(Blocks.OAK_STAIRS)), GENERAL_BLOCK_ITEM);
+    public static final DeferredBlock<Block> USELESS_OAK_STAIRS = BLOCKS.register("useless_oak_stairs", () -> new StairBlock(USELESS_OAK_PLANKS.get().defaultBlockState(), ofFullCopy(Blocks.OAK_STAIRS)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_SLAB = BLOCKS.register("useless_oak_slab", () -> new SlabBlock(ofFullCopy(Blocks.OAK_SLAB)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_FENCE = BLOCKS.register("useless_oak_fence", () -> new FenceBlock(ofFullCopy(Blocks.OAK_FENCE)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_OAK_FENCE_GATE = BLOCKS.register("useless_oak_fence_gate", () -> new FenceGateBlock(UselessWoodTypes.USELESS_OAK, ofFullCopy(Blocks.OAK_FENCE_GATE)), GENERAL_BLOCK_ITEM);

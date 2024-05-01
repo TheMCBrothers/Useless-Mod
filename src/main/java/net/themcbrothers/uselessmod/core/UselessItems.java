@@ -66,7 +66,7 @@ public final class UselessItems {
 
     // Color
     public static final DeferredItem<Item> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintBrushItem(new Item.Properties().durability(16)));
-    public static final DeferredItem<Item> BUCKET_PAINT = ITEMS.register("bucket_paint", () -> new BucketWithPaintItem(UselessFluids.PAINT, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final DeferredItem<Item> BUCKET_PAINT = ITEMS.register("bucket_paint", () -> new BucketWithPaintItem(UselessFluids.PAINT.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     // Spawn Eggs (registered via Entity Type Deferred Register)
     public static final DeferredItem<Item> USELESS_SKELETON_SPAWN_EGG = DeferredItem.createItem(UselessEntityTypes.USELESS_SKELETON.getId().withSuffix("_spawn_egg"));
