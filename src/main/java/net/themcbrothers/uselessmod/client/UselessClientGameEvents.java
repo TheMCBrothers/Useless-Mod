@@ -9,9 +9,8 @@ import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.item.UselessElytraItem;
 
-// TODO: rename class
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = UselessMod.MOD_ID, value = Dist.CLIENT)
-public class UselessForgeClientEvents {
+public class UselessClientGameEvents {
     private static boolean wasCloakVisible;
 
     @SubscribeEvent

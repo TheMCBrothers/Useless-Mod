@@ -7,9 +7,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.animal.UselessSheep;
 
-// TODO: rename class
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = UselessMod.MOD_ID)
-public class UselessForgeEvents {
+public class UselessGameEvents {
     @SubscribeEvent
     static void onEntityInteract(final PlayerInteractEvent.EntityInteract event) {
         if (event.getTarget() instanceof UselessSheep && event.getItemStack().getItem() instanceof DyeItem) {
