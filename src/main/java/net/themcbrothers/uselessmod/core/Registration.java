@@ -8,6 +8,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -33,6 +34,7 @@ public final class Registration {
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, UselessMod.MOD_ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, UselessMod.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, UselessMod.MOD_ID);
+    public static final DeferredRegister<PlacementModifierType<?>> PLACEMENT_MODIFIER_TYPES = DeferredRegister.create(Registries.PLACEMENT_MODIFIER_TYPE, UselessMod.MOD_ID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, UselessMod.MOD_ID);
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, UselessMod.MOD_ID);
 
@@ -52,6 +54,7 @@ public final class Registration {
         UselessFluidTypes.register();
         UselessFluids.register();
         UselessCreativeModeTabs.register();
+        UselessPlacementModifierTypes.register();
         UselessDataComponents.register();
         UselessArmorMaterials.register();
 
@@ -68,6 +71,7 @@ public final class Registration {
         FLUID_TYPES.register(bus);
         FLUIDS.register(bus);
         CREATIVE_MODE_TABS.register(bus);
+        PLACEMENT_MODIFIER_TYPES.register(bus);
         DATA_COMPONENT_TYPES.register(bus);
         ARMOR_MATERIALS.register(bus);
     }

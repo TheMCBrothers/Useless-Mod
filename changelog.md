@@ -1,3 +1,12 @@
+## Useless Mod 9.2.0 ##
+- Changes to Useless Ore
+  - Reduced amount in Overworld
+  - Reduced amount in The End
+- Changes to Super-Useless Ore
+  - Fix ore not generating in Overworld
+  - Reduced amount in The End
+- Ore Generation now respects the server config
+
 ## Useless Mod 9.1.0 ##
 - Re-added JEI integration
 - Fix Coffee Machine screen background being too dark

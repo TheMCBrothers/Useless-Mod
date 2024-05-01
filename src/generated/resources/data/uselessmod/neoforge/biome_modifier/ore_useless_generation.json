@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
   "biomes": "#minecraft:is_overworld",
-  "features": "uselessmod:ore_useless_middle",
+  "features": "uselessmod:ore_useless",
   "step": "underground_ores"
 }
