@@ -1,7 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -10,7 +9,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.init.UselessPlacementModifierTypes;
+import net.themcbrothers.uselessmod.core.UselessPlacementModifierTypes;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
@@ -19,9 +18,7 @@ import java.util.function.Supplier;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ConfigFeaturePlacement extends PlacementFilter {
-    public static final Codec<ConfigFeaturePlacement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Type.CODEC.fieldOf("dim_type").forGetter(o -> o.type)
-    ).apply(instance, ConfigFeaturePlacement::new));
+    public static final MapCodec<ConfigFeaturePlacement> CODEC = Type.CODEC.fieldOf("dim_type").xmap(ConfigFeaturePlacement::new, placement -> placement.type);
 
     private final Type type;
 
