@@ -1,0 +1,33 @@
+{
+  "parent": "uselessmod:root",
+  "criteria": {
+    "has_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "uselessmod:useless_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.uselessmod.mine_ore.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "uselessmod:useless_ore"
+    },
+    "title": {
+      "translate": "advancement.uselessmod.mine_ore.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
