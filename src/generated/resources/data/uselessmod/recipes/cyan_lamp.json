@@ -7,10 +7,11 @@
       "tag": "uselessmod:lamps"
     },
     {
-      "tag": "forge:dyes/cyan"
+      "tag": "c:dyes/cyan"
     }
   ],
   "result": {
-    "item": "uselessmod:cyan_lamp"
+    "count": 1,
+    "id": "uselessmod:cyan_lamp"
   }
 }

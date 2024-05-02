@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.util;
 
+import com.google.common.collect.HashMultimap;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,15 +17,19 @@ public class RecipeHelper {
     }
 
     public static RecipeManager getRecipeManager() {
-        if (!recipeManager.recipes.getClass().equals(HashMap.class)) {
-            recipeManager.recipes = new HashMap<>(recipeManager.recipes);
-            recipeManager.recipes.replaceAll((t, v) -> new HashMap<>(recipeManager.recipes.get(t)));
+        if (!recipeManager.byType.getClass().equals(HashMultimap.class)) {
+            recipeManager.byType = HashMultimap.create(recipeManager.byType);
+        }
+
+        if (!recipeManager.byName.getClass().equals(HashMap.class)) {
+            recipeManager.byName = new HashMap<>(recipeManager.byName);
         }
 
         return recipeManager;
     }
 
     public static void addRecipe(RecipeHolder<?> recipe) {
-        getRecipeManager().recipes.computeIfAbsent(recipe.value().getType(), t -> new HashMap<>()).put(recipe.id(), recipe);
+        getRecipeManager().byType.put(recipe.value().getType(), recipe);
+        getRecipeManager().byName.put(recipe.id(), recipe);
     }
 }

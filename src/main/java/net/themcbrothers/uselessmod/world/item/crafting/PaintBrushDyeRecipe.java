@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
 import com.google.common.collect.Lists;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.themcbrothers.uselessmod.init.ModRecipeSerializers;
+import net.themcbrothers.uselessmod.core.UselessRecipeSerializers;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class PaintBrushDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer container, HolderLookup.Provider lookupProvider) {
         ItemStack brushStack = ItemStack.EMPTY;
         List<DyeColor> dyes = Lists.newArrayList();
 
@@ -82,6 +82,6 @@ public class PaintBrushDyeRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.PAINT_BRUSH_DYE.get();
+        return UselessRecipeSerializers.PAINT_BRUSH_DYE.get();
     }
 }

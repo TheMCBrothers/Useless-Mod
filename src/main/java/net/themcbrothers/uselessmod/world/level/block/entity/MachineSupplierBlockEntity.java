@@ -1,6 +1,8 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -12,7 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -25,7 +28,7 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     private BlockState mimic;
 
     public MachineSupplierBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.MACHINE_SUPPLIER.get(), pos, state);
+        super(UselessBlockEntityTypes.MACHINE_SUPPLIER.get(), pos, state);
     }
 
     @Nullable
@@ -44,8 +47,8 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(tag, lookupProvider);
         this.writeMimic(tag);
     }
 
@@ -56,15 +59,15 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(tag, lookupProvider);
         if (tag.contains("Mimic", Tag.TAG_COMPOUND) && this.level != null) {
             this.mimic = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
         }
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
         CompoundTag tag = new CompoundTag();
         this.writeMimic(tag);
         return tag;
@@ -76,9 +79,9 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
         BlockState oldMimic = this.mimic;
-        super.onDataPacket(net, pkt);
+        super.onDataPacket(net, pkt, lookupProvider);
         if (!Objects.equals(oldMimic, this.mimic)) {
             this.requestModelDataUpdate();
             if (this.level != null) {
@@ -91,5 +94,21 @@ public class MachineSupplierBlockEntity extends BlockEntity {
     @Override
     public ModelData getModelData() {
         return ModelData.builder().with(MIMIC_PROPERTY, this.mimic).build();
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput components) {
+        this.setMimic(components.get(UselessDataComponents.MIMIC.get()));
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        builder.set(UselessDataComponents.MIMIC.get(), this.getMimic());
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        tag.remove("Mimic");
     }
 }

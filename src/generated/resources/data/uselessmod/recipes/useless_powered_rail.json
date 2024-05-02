@@ -9,10 +9,10 @@
       "item": "minecraft:redstone"
     },
     "U": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     },
     "X": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     }
   },
   "pattern": [
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 6,
-    "item": "uselessmod:useless_powered_rail"
+    "id": "uselessmod:useless_powered_rail"
   }
 }

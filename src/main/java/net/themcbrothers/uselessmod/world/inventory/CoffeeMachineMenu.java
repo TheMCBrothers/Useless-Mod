@@ -17,9 +17,9 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.themcbrothers.lib.energy.EnergyProvider;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModMenuTypes;
-import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessMenuTypes;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.jetbrains.annotations.NotNull;
@@ -50,11 +50,11 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     private final List<RecipeHolder<CoffeeRecipe>> recipes;
 
     public CoffeeMachineMenu(int id, Inventory inventory, CoffeeMachineBlockEntity coffeeMachine, ContainerData data) {
-        super(ModMenuTypes.COFFEE_MACHINE.get(), id);
+        super(UselessMenuTypes.COFFEE_MACHINE.get(), id);
         this.blockEntity = coffeeMachine;
         this.data = data;
         this.levelAccess = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
-        this.recipes = coffeeMachine.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get());
+        this.recipes = coffeeMachine.getLevel().getRecipeManager().getAllRecipesFor(UselessRecipeTypes.COFFEE.get());
 
         this.addSlot(new CupSlot(this.blockEntity, 0, 62, 16));
         this.addSlot(new CoffeeBeanSlot(this.blockEntity, 1, 80, 16));
@@ -175,7 +175,7 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
 
     @Override
     public boolean stillValid(@Nonnull Player player) {
-        return stillValid(this.levelAccess, player, ModBlocks.COFFEE_MACHINE.get());
+        return stillValid(this.levelAccess, player, UselessBlocks.COFFEE_MACHINE.get());
     }
 
     public long getEnergyStored() {

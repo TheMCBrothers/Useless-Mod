@@ -20,14 +20,12 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -42,6 +40,7 @@ import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
@@ -181,25 +180,24 @@ public class WallClosetModel implements IDynamicBakedModel {
         @Nullable
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
-            if (model instanceof WallClosetModel wallClosetModel) {
-                CompoundTag tag = BlockItem.getBlockEntityData(stack);
-                if (tag != null && tag.contains("Material", Tag.TAG_STRING)) {
-                    final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-                    final Block material = BuiltInRegistries.BLOCK.containsKey(key) ? BuiltInRegistries.BLOCK.get(key) : Blocks.OAK_PLANKS;
-                    return wallClosetModel.getCustomModel(Objects.requireNonNull(material), Direction.NORTH);
+            if (model instanceof WallClosetModel wallClosetModel && stack.has(UselessDataComponents.WALL_CLOSET_MATERIAL.get())) {
+                Holder<Block> material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
+
+                if (material == null) {
+                    material = Holder.direct(Blocks.OAK_PLANKS);
                 }
+
+                return wallClosetModel.getCustomModel(Objects.requireNonNull(material.value()), Direction.NORTH);
             }
+
             return model;
         }
     }
 
-    private static class Geometry implements IUnbakedGeometry<Geometry> {
+    public static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BlockModel ownerModel = ((BlockGeometryBakingContext) context).owner;
-            if (ownerModel == null)
-                throw new RuntimeException("Wall Closet owner model is null");
-            BlockModel blockModel = ownerModel.parent;
+            BlockModel blockModel = ((BlockGeometryBakingContext) context).owner.parent;
             if (blockModel == null)
                 throw new RuntimeException("Wall Closet parent model is null");
             return new WallClosetModel(baker, blockModel, modelTransform, spriteGetter);

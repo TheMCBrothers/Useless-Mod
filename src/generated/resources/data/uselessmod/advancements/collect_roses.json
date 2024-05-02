@@ -1,23 +1,17 @@
 {
-  "parent": "uselessmod:visit_useless_forest",
+  "parent": "uselessmod:root",
   "criteria": {
     "has_roses": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "uselessmod:red_rose"
-            ]
+            "items": "uselessmod:red_rose"
           },
           {
-            "items": [
-              "uselessmod:blue_rose"
-            ]
+            "items": "uselessmod:blue_rose"
           },
           {
-            "items": [
-              "uselessmod:useless_rose"
-            ]
+            "items": "uselessmod:useless_rose"
           }
         ]
       },
@@ -30,7 +24,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "uselessmod:useless_rose"
+      "count": 1,
+      "id": "uselessmod:useless_rose"
     },
     "title": {
       "translate": "advancement.uselessmod.collect_roses.title"

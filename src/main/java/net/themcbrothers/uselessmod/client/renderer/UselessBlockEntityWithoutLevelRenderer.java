@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.client.model.data.ModelData;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.world.level.block.UselessBedBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.UselessBedBlockEntity;
@@ -20,8 +20,8 @@ import net.themcbrothers.uselessmod.world.level.block.entity.UselessBedBlockEnti
 import java.util.function.Supplier;
 
 public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
-    private final Supplier<UselessBedBlockEntity> bed = () -> new UselessBedBlockEntity(BlockPos.ZERO, ModBlocks.USELESS_BED.get().defaultBlockState());
-    private final Supplier<CoffeeMachineBlockEntity> coffeeMachine = () -> new CoffeeMachineBlockEntity(BlockPos.ZERO, ModBlocks.COFFEE_MACHINE.get().defaultBlockState());
+    private final Supplier<UselessBedBlockEntity> bed = () -> new UselessBedBlockEntity(BlockPos.ZERO, UselessBlocks.USELESS_BED.get().defaultBlockState());
+    private final Supplier<CoffeeMachineBlockEntity> coffeeMachine = () -> new CoffeeMachineBlockEntity(BlockPos.ZERO, UselessBlocks.COFFEE_MACHINE.get().defaultBlockState());
 
     public UselessBlockEntityWithoutLevelRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
@@ -41,7 +41,7 @@ public class UselessBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLe
                 blockEntity = this.bed.get();
             } else {
                 blockEntity = this.coffeeMachine.get();
-                Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ModBlocks.COFFEE_MACHINE.get().defaultBlockState(),
+                Minecraft.getInstance().getBlockRenderer().renderSingleBlock(UselessBlocks.COFFEE_MACHINE.get().defaultBlockState(),
                         poseStack, buffer, combinedLight, combinedOverlay, ModelData.EMPTY, null);
             }
 

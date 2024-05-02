@@ -5,7 +5,10 @@
   "experience": 0.7,
   "group": "useless_ingot",
   "ingredient": {
-    "tag": "forge:ores/useless"
+    "tag": "c:ores/useless"
   },
-  "result": "uselessmod:useless_ingot"
+  "result": {
+    "count": 1,
+    "id": "uselessmod:useless_ingot"
+  }
 }

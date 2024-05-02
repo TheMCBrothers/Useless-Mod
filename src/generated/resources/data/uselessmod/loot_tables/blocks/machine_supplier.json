@@ -16,13 +16,9 @@
       ],
       "functions": [
         {
-          "function": "minecraft:copy_nbt",
-          "ops": [
-            {
-              "op": "replace",
-              "source": "Mimic",
-              "target": "BlockEntityTag.Mimic"
-            }
+          "function": "minecraft:copy_components",
+          "include": [
+            "uselessmod:mimic"
           ],
           "source": "block_entity"
         }

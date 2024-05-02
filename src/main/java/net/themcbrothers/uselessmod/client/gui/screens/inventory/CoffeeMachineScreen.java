@@ -15,9 +15,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.client.screen.widgets.EnergyBar;
 import net.themcbrothers.lib.client.screen.widgets.FluidTank;
-import net.themcbrothers.lib.network.PacketUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.network.packets.CoffeeMachineMilkUpdatePacket;
 import net.themcbrothers.uselessmod.network.packets.CoffeeMachineStartPacket;
@@ -122,7 +122,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
         @Override
         public void onPress() {
-            PacketUtils.sendToServer(new CoffeeMachineStartPacket(this.start));
+            PacketDistributor.sendToServer(new CoffeeMachineStartPacket(this.start));
         }
 
         @Override
@@ -173,7 +173,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         @Override
         public void onPress() {
             this.checked = !this.checked;
-            PacketUtils.sendToServer(new CoffeeMachineMilkUpdatePacket(this.isChecked()));
+            PacketDistributor.sendToServer(new CoffeeMachineMilkUpdatePacket(this.isChecked()));
         }
 
         public boolean isChecked() {

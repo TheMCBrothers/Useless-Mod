@@ -3,28 +3,22 @@ package net.themcbrothers.uselessmod.setup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -45,12 +39,14 @@ import net.themcbrothers.uselessmod.client.renderer.blockentity.PaintBucketRende
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
-import net.themcbrothers.uselessmod.init.*;
+import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
+import net.themcbrothers.uselessmod.util.ColorUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
+import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup extends CommonSetup {
@@ -71,12 +67,12 @@ public class ClientSetup extends CommonSetup {
     private void clientSetup(final FMLClientSetupEvent event) {
         // Block Entity Renderer
         event.enqueueWork(() -> {
-            BlockEntityRenderers.register(ModBlockEntityTypes.BED.get(), UselessBedRenderer::new);
-            BlockEntityRenderers.register(ModBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
-            BlockEntityRenderers.register(ModBlockEntityTypes.SIGN.get(), SignRenderer::new);
-            BlockEntityRenderers.register(ModBlockEntityTypes.HANGING_SIGN.get(), HangingSignRenderer::new);
-            BlockEntityRenderers.register(ModBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineRenderer::new);
-            BlockEntityRenderers.register(ModBlockEntityTypes.PAINT_BUCKET.get(), PaintBucketRenderer::new);
+            BlockEntityRenderers.register(UselessBlockEntityTypes.BED.get(), UselessBedRenderer::new);
+            BlockEntityRenderers.register(UselessBlockEntityTypes.SKULL.get(), SkullBlockRenderer::new);
+            BlockEntityRenderers.register(UselessBlockEntityTypes.SIGN.get(), SignRenderer::new);
+            BlockEntityRenderers.register(UselessBlockEntityTypes.HANGING_SIGN.get(), HangingSignRenderer::new);
+            BlockEntityRenderers.register(UselessBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineRenderer::new);
+            BlockEntityRenderers.register(UselessBlockEntityTypes.PAINT_BUCKET.get(), PaintBucketRenderer::new);
         });
 
         // Wood Type
@@ -84,19 +80,19 @@ public class ClientSetup extends CommonSetup {
 
         // Item Properties
         event.enqueueWork(() -> {
-            ItemProperties.register(ModItems.USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+            ItemProperties.register(UselessItems.USELESS_ELYTRA.get(), new ResourceLocation("broken"),
                     (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
-            ItemProperties.register(ModItems.SUPER_USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+            ItemProperties.register(UselessItems.SUPER_USELESS_ELYTRA.get(), new ResourceLocation("broken"),
                     (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
-            ItemProperties.register(ModItems.USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+            ItemProperties.register(UselessItems.USELESS_SHIELD.get(), new ResourceLocation("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
-            ItemProperties.register(ModItems.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+            ItemProperties.register(UselessItems.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
         });
     }
 
     private void menuScreens(final RegisterMenuScreensEvent event) {
-        event.register(ModMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
+        event.register(UselessMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
     }
 
     private void blockColors(final RegisterColorHandlersEvent.Block event) {
@@ -104,17 +100,17 @@ public class ClientSetup extends CommonSetup {
 
         event.register(((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity canvas) {
-                return canvas.getColor();
+                return ColorUtils.fullAlpha(canvas.getColor());
             }
             return -1;
-        }), ModBlocks.PAINTED_WOOL.get());
+        }), UselessBlocks.PAINTED_WOOL.get());
 
         event.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
-                return cup.getCoffeeType().map(CoffeeType::getColor).orElse(-1);
+                return cup.getCoffeeType().map(CoffeeType::getColor).map(ColorUtils::fullAlpha).orElse(-1);
             }
             return -1;
-        }, ModBlocks.CUP_COFFEE.get());
+        }, UselessBlocks.CUP_COFFEE.get());
 
         event.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
@@ -124,44 +120,55 @@ public class ClientSetup extends CommonSetup {
                 }
             }
             return -1;
-        }, ModBlocks.MACHINE_SUPPLIER.get());
+        }, UselessBlocks.MACHINE_SUPPLIER.get());
+
+        event.register((state, level, pos, tintIndex) -> {
+            if (level != null && pos != null &&
+                    level.getBlockEntity(pos) instanceof WallClosetBlockEntity blockEntity) {
+                return colors.getColor(blockEntity.getMaterial().defaultBlockState(), level, pos, tintIndex);
+            }
+            return -1;
+        }, UselessBlocks.WALL_CLOSET.get());
     }
 
     private void itemColors(final RegisterColorHandlersEvent.Item event) {
         final ItemColors colors = event.getItemColors();
 
         event.register(((stack, layer) -> {
-            final CompoundTag tag = stack.getTag();
-            return layer == 1 && tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
-        }), ModItems.PAINT_BRUSH);
+            Integer color = stack.get(UselessDataComponents.COLOR.get());
+            return layer == 1 && color != null ? ColorUtils.fullAlpha(color) : -1;
+        }), UselessItems.PAINT_BRUSH);
 
         event.register(((stack, layer) -> {
-            final CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            return tag != null && tag.contains("Color", Tag.TAG_ANY_NUMERIC) ? tag.getInt("Color") : -1;
-        }), ModBlocks.PAINTED_WOOL);
+            Integer color = stack.get(UselessDataComponents.COLOR.get());
+            return color != null ? ColorUtils.fullAlpha(color) : -1;
+        }), UselessBlocks.PAINTED_WOOL);
 
-        event.register((stack, layer) ->
-                CoffeeUtils.getCoffeeType(stack).map(CoffeeType::getColor).orElse(-1), ModBlocks.CUP_COFFEE);
+        event.register((stack, layer) -> CoffeeUtils.getCoffeeType(stack)
+                        .map(CoffeeType::getColor)
+                        .map(ColorUtils::fullAlpha)
+                        .orElse(-1),
+                UselessBlocks.CUP_COFFEE);
 
         event.register((stack, layer) -> {
-            final CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            final ClientLevel level = Minecraft.getInstance().level;
-            if (level != null && tag != null && tag.contains("Mimic", Tag.TAG_COMPOUND)) {
-                final BlockState mimic = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), tag.getCompound("Mimic"));
-                return colors.getColor(new ItemStack(mimic.getBlock().asItem()), layer);
-            }
-            return -1;
-        }, ModBlocks.MACHINE_SUPPLIER);
+            BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
+            return mimic != null ? colors.getColor(new ItemStack(mimic.getBlock()), layer) : -1;
+        }, UselessBlocks.MACHINE_SUPPLIER);
 
-        event.register(new DynamicFluidContainerModel.Colors(), ModItems.BUCKET_PAINT);
+        event.register((stack, layer) -> {
+            Holder<Block> block = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
+            return block != null ? colors.getColor(new ItemStack(block.value()), layer) : -1;
+        });
+
+        event.register(new DynamicFluidContainerModel.Colors(), UselessItems.BUCKET_PAINT);
     }
 
     private void entityRegisterRenders(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntityTypes.USELESS_SHEEP.get(), UselessSheepRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.USELESS_PIG.get(), UselessPigRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.USELESS_CHICKEN.get(), UselessChickenRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.USELESS_COW.get(), UselessCowRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.USELESS_SKELETON.get(), UselessSkeletonRenderer::new);
+        event.registerEntityRenderer(UselessEntityTypes.USELESS_SHEEP.get(), UselessSheepRenderer::new);
+        event.registerEntityRenderer(UselessEntityTypes.USELESS_PIG.get(), UselessPigRenderer::new);
+        event.registerEntityRenderer(UselessEntityTypes.USELESS_CHICKEN.get(), UselessChickenRenderer::new);
+        event.registerEntityRenderer(UselessEntityTypes.USELESS_COW.get(), UselessCowRenderer::new);
+        event.registerEntityRenderer(UselessEntityTypes.USELESS_SKELETON.get(), UselessSkeletonRenderer::new);
     }
 
     private void entityAddLayers(final EntityRenderersEvent.AddLayers event) {

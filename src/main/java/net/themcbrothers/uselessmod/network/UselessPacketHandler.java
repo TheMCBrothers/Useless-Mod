@@ -13,13 +13,14 @@ public class UselessPacketHandler extends BasePacketHandler {
     }
 
     @Override
-    protected void registerClientToServer(PacketRegistrar registrar) {
-        registrar.play(CoffeeMachineStartPacket.ID, CoffeeMachineStartPacket::new);
-        registrar.play(CoffeeMachineMilkUpdatePacket.ID, CoffeeMachineMilkUpdatePacket::new);
+    protected void registerPackets(PacketRegistrar registrar) {
+        registrar.playToServer(CoffeeMachineStartPacket.TYPE, CoffeeMachineStartPacket.STREAM_CODEC);
+        registrar.playToServer(CoffeeMachineMilkUpdatePacket.TYPE, CoffeeMachineMilkUpdatePacket.STREAM_CODEC);
+
+        registrar.playBidirectional(BlockEntitySyncPacket.TYPE, BlockEntitySyncPacket.STREAM_CODEC);
     }
 
     @Override
-    protected void registerServerToClient(PacketRegistrar registrar) {
-        registrar.play(BlockEntitySyncPacket.ID, BlockEntitySyncPacket::new);
+    protected void registerPacketsNetworkThread(PacketRegistrar registrar) {
     }
 }

@@ -6,9 +6,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -23,8 +27,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModStats;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -78,17 +82,41 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.tryWrench(state, level, pos, player, hand, hit)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity coffeeMachine) {
             serverPlayer.openMenu(coffeeMachine, pos);
-            player.awardStat(ModStats.INTERACT_WITH_COFFEE_MACHINE.get());
+            player.awardStat(UselessStats.INTERACT_WITH_COFFEE_MACHINE.get());
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && player.isCreative() && level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+            if (level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity blockEntity) {
+                if (!blockEntity.isEmpty() ||
+                        !blockEntity.tankHandler.getWaterTank().isEmpty() ||
+                        !blockEntity.tankHandler.getMilkTank().isEmpty()) {
+                    ItemStack stack = new ItemStack(this);
+                    stack.applyComponents(blockEntity.collectComponents());
+                    ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    itemEntity.setDefaultPickUpDelay();
+                    level.addFreshEntity(itemEntity);
+                }
+            }
+        }
+
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
@@ -103,11 +131,11 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.COFFEE_MACHINE.get().create(pos, state);
+        return UselessBlockEntityTypes.COFFEE_MACHINE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineBlockEntity::serverTick);
+        return level.isClientSide ? null : createTickerHelper(type, UselessBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineBlockEntity::serverTick);
     }
 }

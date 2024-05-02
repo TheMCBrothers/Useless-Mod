@@ -7,10 +7,11 @@
       "tag": "uselessmod:lamps"
     },
     {
-      "tag": "forge:dyes/black"
+      "tag": "c:dyes/black"
     }
   ],
   "result": {
-    "item": "uselessmod:black_lamp"
+    "count": 1,
+    "id": "uselessmod:black_lamp"
   }
 }

@@ -3,11 +3,6 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
@@ -16,13 +11,9 @@
       ],
       "functions": [
         {
-          "function": "minecraft:copy_nbt",
-          "ops": [
-            {
-              "op": "replace",
-              "source": "Coffee",
-              "target": "Coffee"
-            }
+          "function": "minecraft:copy_components",
+          "include": [
+            "uselessmod:coffee_type"
           ],
           "source": "block_entity"
         }

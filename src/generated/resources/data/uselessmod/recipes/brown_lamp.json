@@ -7,10 +7,11 @@
       "tag": "uselessmod:lamps"
     },
     {
-      "tag": "forge:dyes/brown"
+      "tag": "c:dyes/brown"
     }
   ],
   "result": {
-    "item": "uselessmod:brown_lamp"
+    "count": 1,
+    "id": "uselessmod:brown_lamp"
   }
 }

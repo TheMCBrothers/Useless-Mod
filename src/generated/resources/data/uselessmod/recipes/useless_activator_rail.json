@@ -9,7 +9,7 @@
       "item": "minecraft:stick"
     },
     "X": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 6,
-    "item": "uselessmod:useless_activator_rail"
+    "id": "uselessmod:useless_activator_rail"
   }
 }

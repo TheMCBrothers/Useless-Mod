@@ -5,7 +5,7 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.level.Level;
-import net.themcbrothers.uselessmod.init.ModEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessEntityTypes;
 
 public class UselessCow extends Cow {
     public UselessCow(EntityType<? extends Cow> type, Level level) {
@@ -14,6 +14,6 @@ public class UselessCow extends Cow {
 
     @Override
     public UselessCow getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-        return ModEntityTypes.USELESS_COW.get().create(this.level());
+        return UselessEntityTypes.USELESS_COW.get().create(this.level());
     }
 }

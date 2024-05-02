@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "uselessmod:useless_ingot"
-            ]
+            "items": "uselessmod:useless_ingot"
           }
         ]
       },

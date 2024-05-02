@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "uselessmod:blue_rose"
-            ]
+            "items": "uselessmod:blue_rose"
           }
         ]
       },

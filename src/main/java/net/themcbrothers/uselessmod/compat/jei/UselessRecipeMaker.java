@@ -5,8 +5,8 @@ import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.themcbrothers.uselessmod.init.ModItems;
-import net.themcbrothers.uselessmod.init.ModTiers;
+import net.themcbrothers.uselessmod.core.UselessItems;
+import net.themcbrothers.uselessmod.core.UselessTiers;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,25 +18,25 @@ public class UselessRecipeMaker {
 
     private static Stream<RepairData> getRepairData() {
         return Stream.of(
-                new RepairData(ModTiers.USELESS.getRepairIngredient(),
-                        new ItemStack(ModItems.USELESS_SWORD.value()),
-                        new ItemStack(ModItems.USELESS_PICKAXE.value()),
-                        new ItemStack(ModItems.USELESS_AXE.value()),
-                        new ItemStack(ModItems.USELESS_SHOVEL.value()),
-                        new ItemStack(ModItems.USELESS_HOE.value()),
-                        new ItemStack(ModItems.USELESS_SHIELD.value())
+                new RepairData(UselessTiers.USELESS.getRepairIngredient(),
+                        new ItemStack(UselessItems.USELESS_SWORD.value()),
+                        new ItemStack(UselessItems.USELESS_PICKAXE.value()),
+                        new ItemStack(UselessItems.USELESS_AXE.value()),
+                        new ItemStack(UselessItems.USELESS_SHOVEL.value()),
+                        new ItemStack(UselessItems.USELESS_HOE.value()),
+                        new ItemStack(UselessItems.USELESS_SHIELD.value())
                 ),
-                new RepairData(ModTiers.SUPER_USELESS.getRepairIngredient(),
-                        new ItemStack(ModItems.SUPER_USELESS_SWORD.value()),
-                        new ItemStack(ModItems.SUPER_USELESS_PICKAXE.value()),
-                        new ItemStack(ModItems.SUPER_USELESS_AXE.value()),
-                        new ItemStack(ModItems.SUPER_USELESS_SHOVEL.value()),
-                        new ItemStack(ModItems.SUPER_USELESS_HOE.value()),
-                        new ItemStack(ModItems.SUPER_USELESS_SHIELD.value())
+                new RepairData(UselessTiers.SUPER_USELESS.getRepairIngredient(),
+                        new ItemStack(UselessItems.SUPER_USELESS_SWORD.value()),
+                        new ItemStack(UselessItems.SUPER_USELESS_PICKAXE.value()),
+                        new ItemStack(UselessItems.SUPER_USELESS_AXE.value()),
+                        new ItemStack(UselessItems.SUPER_USELESS_SHOVEL.value()),
+                        new ItemStack(UselessItems.SUPER_USELESS_HOE.value()),
+                        new ItemStack(UselessItems.SUPER_USELESS_SHIELD.value())
                 ),
                 new RepairData(Ingredient.of(Items.PHANTOM_MEMBRANE),
-                        new ItemStack(ModItems.USELESS_ELYTRA.value()),
-                        new ItemStack(ModItems.SUPER_USELESS_ELYTRA.value())
+                        new ItemStack(UselessItems.USELESS_ELYTRA.value()),
+                        new ItemStack(UselessItems.SUPER_USELESS_ELYTRA.value())
                 )
         );
     }

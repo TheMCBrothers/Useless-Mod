@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -11,9 +12,9 @@ public interface SyncableBlockEntity {
     default void sendSyncPacket(int type) {
     }
 
-    default void receiveMessageFromServer(CompoundTag tag) {
+    default void receiveMessageFromServer(CompoundTag tag, HolderLookup.Provider lookupProvider) {
     }
 
-    default void receiveMessageFromClient(CompoundTag tag) {
+    default void receiveMessageFromClient(CompoundTag tag, HolderLookup.Provider lookupProvider) {
     }
 }

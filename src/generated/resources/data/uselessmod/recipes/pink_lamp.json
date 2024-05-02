@@ -7,10 +7,11 @@
       "tag": "uselessmod:lamps"
     },
     {
-      "tag": "forge:dyes/pink"
+      "tag": "c:dyes/pink"
     }
   ],
   "result": {
-    "item": "uselessmod:pink_lamp"
+    "count": 1,
+    "id": "uselessmod:pink_lamp"
   }
 }

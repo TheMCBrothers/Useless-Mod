@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 
 import java.util.Locale;
 
@@ -15,7 +15,7 @@ public class UselessSkullBlock extends SkullBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.SKULL.get().create(pos, state);
+        return UselessBlockEntityTypes.SKULL.get().create(pos, state);
     }
 
     public enum Types implements Type {

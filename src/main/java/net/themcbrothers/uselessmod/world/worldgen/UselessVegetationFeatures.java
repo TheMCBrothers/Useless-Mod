@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.world.worldgen;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ public final class UselessVegetationFeatures {
         return FeatureUtils.simpleRandomPatchConfiguration(tries, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(toPlace)));
     }
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
-        FeatureUtils.register(context, USELESS_FLOWER_DEFAULT, Feature.FLOWER, grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(ModBlocks.RED_ROSE.get().defaultBlockState(), 2).add(ModBlocks.BLUE_ROSE.get().defaultBlockState(), 2).add(ModBlocks.USELESS_ROSE.get().defaultBlockState(), 1)), 64));
+        FeatureUtils.register(context, USELESS_FLOWER_DEFAULT, Feature.FLOWER, grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(UselessBlocks.RED_ROSE.get().defaultBlockState(), 2).add(UselessBlocks.BLUE_ROSE.get().defaultBlockState(), 2).add(UselessBlocks.USELESS_ROSE.get().defaultBlockState(), 1)), 64));
         FeatureUtils.register(context, USELESS_FOREST_TREES, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(UselessTreePlacements.FANCY_USELESS_OAK_BEES_0002), 0.1F)), placedFeatures.getOrThrow(UselessTreePlacements.USELESS_OAK_BEES_0002)));
     }
 }

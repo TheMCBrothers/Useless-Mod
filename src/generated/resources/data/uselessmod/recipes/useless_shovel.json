@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     },
     "X": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     }
   },
   "pattern": [
@@ -15,6 +15,7 @@
     "#"
   ],
   "result": {
-    "item": "uselessmod:useless_shovel"
+    "count": 1,
+    "id": "uselessmod:useless_shovel"
   }
 }

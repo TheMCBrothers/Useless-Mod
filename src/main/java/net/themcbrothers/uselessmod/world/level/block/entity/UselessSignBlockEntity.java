@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 
 public class UselessSignBlockEntity extends SignBlockEntity {
     public UselessSignBlockEntity(BlockPos pos, BlockState state) {
@@ -13,6 +13,6 @@ public class UselessSignBlockEntity extends SignBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return ModBlockEntityTypes.SIGN.get();
+        return UselessBlockEntityTypes.SIGN.get();
     }
 }

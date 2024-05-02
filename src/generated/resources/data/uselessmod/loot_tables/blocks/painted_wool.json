@@ -16,13 +16,9 @@
       ],
       "functions": [
         {
-          "function": "minecraft:copy_nbt",
-          "ops": [
-            {
-              "op": "replace",
-              "source": "Color",
-              "target": "BlockEntityTag.Color"
-            }
+          "function": "minecraft:copy_components",
+          "include": [
+            "uselessmod:color"
           ],
           "source": "block_entity"
         }

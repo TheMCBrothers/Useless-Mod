@@ -23,15 +23,15 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.lib.util.RecipeHelper;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.init.ModBlocks;
-import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 
 import java.util.List;
 
 public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<CoffeeRecipe>> {
     private static final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/container/coffee_machine.png");
-    static final RecipeType<RecipeHolder<CoffeeRecipe>> TYPE = RecipeType.createFromVanilla(ModRecipeTypes.COFFEE.get());
+    static final RecipeType<RecipeHolder<CoffeeRecipe>> TYPE = RecipeType.createFromVanilla(UselessRecipeTypes.COFFEE.get());
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -40,7 +40,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
 
     public CoffeeRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 11, 15, 104, 54);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.COFFEE_MACHINE.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(UselessBlocks.COFFEE_MACHINE.get()));
         this.localizedName = UselessMod.translate("container", "coffee_machine");
         this.cachedArrows = CacheBuilder.newBuilder()
                 .maximumSize(43)

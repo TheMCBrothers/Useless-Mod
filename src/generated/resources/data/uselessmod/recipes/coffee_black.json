@@ -1,18 +1,20 @@
 {
   "type": "uselessmod:coffee",
   "bean": {
-    "tag": "forge:crops/coffeebean"
+    "tag": "c:crops/coffeebean"
   },
   "cookingtime": 100,
   "cup": {
     "item": "uselessmod:cup"
   },
   "result": {
-    "item": "uselessmod:cup_coffee",
-    "nbt": "{Coffee:\"uselessmod:black\"}"
+    "components": {
+      "uselessmod:coffee_type": "uselessmod:black"
+    },
+    "id": "uselessmod:cup_coffee"
   },
   "water": {
     "amount": 250,
-    "fluid": "minecraft:water"
+    "id": "minecraft:water"
   }
 }

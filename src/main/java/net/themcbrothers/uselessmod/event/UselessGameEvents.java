@@ -1,0 +1,18 @@
+package net.themcbrothers.uselessmod.event;
+
+import net.minecraft.world.item.DyeItem;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.world.entity.animal.UselessSheep;
+
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = UselessMod.MOD_ID)
+public class UselessGameEvents {
+    @SubscribeEvent
+    static void onEntityInteract(final PlayerInteractEvent.EntityInteract event) {
+        if (event.getTarget() instanceof UselessSheep && event.getItemStack().getItem() instanceof DyeItem) {
+            event.setCanceled(true);
+        }
+    }
+}

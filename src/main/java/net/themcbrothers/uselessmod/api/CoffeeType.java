@@ -1,12 +1,16 @@
 package net.themcbrothers.uselessmod.api;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.Util;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class CoffeeType {
+    public static final Codec<CoffeeType> CODEC = UselessRegistries.COFFEE_REGISTRY.byNameCodec();
+
     private final Set<MobEffectInstance> effects;
     private final int color;
     private final boolean foil;
@@ -37,6 +41,19 @@ public class CoffeeType {
         }
 
         return this.descriptionId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CoffeeType that = (CoffeeType) o;
+        return color == that.color && foil == that.foil && Objects.equals(effects, that.effects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(effects, color, foil);
     }
 
     public static class Properties {

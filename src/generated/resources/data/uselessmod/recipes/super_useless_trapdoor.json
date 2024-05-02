@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:ingots/super_useless"
+      "tag": "c:ingots/super_useless"
     }
   },
   "pattern": [
@@ -11,6 +11,7 @@
     "##"
   ],
   "result": {
-    "item": "uselessmod:super_useless_trapdoor"
+    "count": 1,
+    "id": "uselessmod:super_useless_trapdoor"
   }
 }

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 
 public class UselessHangingSignBlockEntity extends HangingSignBlockEntity {
     public UselessHangingSignBlockEntity(BlockPos pos, BlockState state) {
@@ -13,6 +13,6 @@ public class UselessHangingSignBlockEntity extends HangingSignBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return ModBlockEntityTypes.HANGING_SIGN.get();
+        return UselessBlockEntityTypes.HANGING_SIGN.get();
     }
 }

@@ -3,8 +3,6 @@ package net.themcbrothers.uselessmod.world.level.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -14,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.LightSwitchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,7 +58,6 @@ public class LightSwitchBlockBlock extends Block implements EntityBlock {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(POWERED) && !level.hasNeighborSignal(pos)) {
@@ -72,17 +69,9 @@ public class LightSwitchBlockBlock extends Block implements EntityBlock {
         }
     }
 
-    /**
-     * Called by BlockItem after this block has been placed.
-     */
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        LightSwitchBlock.setPlacedBy(level, pos, stack);
-    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
+        return UselessBlockEntityTypes.LIGHT_SWITCH.get().create(pos, state);
     }
 }

@@ -5,7 +5,10 @@
   "experience": 1.0,
   "group": "super_useless_ingot",
   "ingredient": {
-    "tag": "forge:raw_materials/super_useless"
+    "tag": "c:raw_materials/super_useless"
   },
-  "result": "uselessmod:super_useless_ingot"
+  "result": {
+    "count": 1,
+    "id": "uselessmod:super_useless_ingot"
+  }
 }

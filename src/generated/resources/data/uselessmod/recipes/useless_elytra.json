@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "forge:ingots/useless"
+      "tag": "c:ingots/useless"
     },
     "X": {
       "item": "minecraft:elytra"
@@ -15,6 +15,7 @@
     "###"
   ],
   "result": {
-    "item": "uselessmod:useless_elytra"
+    "count": 1,
+    "id": "uselessmod:useless_elytra"
   }
 }

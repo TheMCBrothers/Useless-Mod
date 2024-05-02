@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
-import net.themcbrothers.uselessmod.init.ModBlocks;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,8 +48,8 @@ public class CupBlockItem extends BlockItem {
 
         if (!level.isClientSide) {
             for (MobEffectInstance mobeffectinstance : CoffeeUtils.getMobEffects(stack)) {
-                if (mobeffectinstance.getEffect().isInstantenous()) {
-                    mobeffectinstance.getEffect().applyInstantenousEffect(player, player, entity, mobeffectinstance.getAmplifier(), 1.0D);
+                if (mobeffectinstance.getEffect().value().isInstantenous()) {
+                    mobeffectinstance.getEffect().value().applyInstantenousEffect(player, player, entity, mobeffectinstance.getAmplifier(), 1.0D);
                 } else {
                     entity.addEffect(new MobEffectInstance(mobeffectinstance));
                 }
@@ -65,11 +65,11 @@ public class CupBlockItem extends BlockItem {
 
         if (player == null || !player.getAbilities().instabuild) {
             if (stack.isEmpty()) {
-                return new ItemStack(ModBlocks.CUP);
+                return new ItemStack(UselessBlocks.CUP);
             }
 
             if (player != null) {
-                player.getInventory().add(new ItemStack(ModBlocks.CUP));
+                player.getInventory().add(new ItemStack(UselessBlocks.CUP));
             }
         }
 
@@ -136,7 +136,7 @@ public class CupBlockItem extends BlockItem {
 
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        return this.drinkable ? new ItemStack(ModBlocks.CUP) : ItemStack.EMPTY;
+        return this.drinkable ? new ItemStack(UselessBlocks.CUP) : ItemStack.EMPTY;
     }
 
     @Nullable

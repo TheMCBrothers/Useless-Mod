@@ -1,17 +1,22 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,6 +28,7 @@ import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,13 +39,14 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
-import net.themcbrothers.lib.network.PacketUtils;
 import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.init.ModBlockEntityTypes;
-import net.themcbrothers.uselessmod.init.ModRecipeTypes;
+import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessDataComponents;
+import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.network.packets.BlockEntitySyncPacket;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
@@ -96,7 +103,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     };
 
     public CoffeeMachineBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.COFFEE_MACHINE.get(), pos, state);
+        super(UselessBlockEntityTypes.COFFEE_MACHINE.get(), pos, state);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CoffeeMachineBlockEntity coffeeMachine) {
@@ -222,7 +229,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     @Nullable
     private CoffeeRecipe getCurrentRecipe() {
         if (this.level == null) return null;
-        for (RecipeHolder<CoffeeRecipe> recipeHolder : this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COFFEE.get())) {
+        for (RecipeHolder<CoffeeRecipe> recipeHolder : this.level.getRecipeManager().getAllRecipesFor(UselessRecipeTypes.COFFEE.get())) {
             CoffeeRecipe recipe = recipeHolder.value();
             boolean flag = recipe.getCupIngredient().test(getItem(0))
                     && recipe.getBeanIngredient().test(getItem(1))
@@ -275,25 +282,27 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             return;
         }
 
+        RegistryAccess lookupProvider = this.level.registryAccess();
         CompoundTag nbt = new CompoundTag();
+
         if (type == SYNC_WATER_TANK) {
-            nbt.put("Fluid", this.tankHandler.getWaterTank().writeToNBT(new CompoundTag()));
+            nbt.put("Fluid", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
         } else if (type == SYNC_MILK_TANK) {
-            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(new CompoundTag()));
+            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
         } else if (type == SYNC_USE_MILK) {
             nbt.putBoolean("UseMilk", this.useMilk);
         }
 
-        PacketUtils.sendToAllTracking(new BlockEntitySyncPacket(this, nbt), this.level, this.worldPosition);
+        PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) this.level, new ChunkPos(this.worldPosition), new BlockEntitySyncPacket(this.worldPosition, nbt));
     }
 
     @Override
-    public void receiveMessageFromServer(CompoundTag tag) {
+    public void receiveMessageFromServer(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         if (tag.contains("Fluid", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getWaterTank().readFromNBT(tag.getCompound("Fluid"));
+            this.tankHandler.getWaterTank().readFromNBT(lookupProvider, tag.getCompound("Fluid"));
         }
         if (tag.contains("Milk", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getMilkTank().readFromNBT(tag.getCompound("Milk"));
+            this.tankHandler.getMilkTank().readFromNBT(lookupProvider, tag.getCompound("Milk"));
         }
         if (tag.contains("UseMilk", Tag.TAG_BYTE)) {
             this.useMilk = tag.getBoolean("UseMilk");
@@ -301,35 +310,41 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        ContainerHelper.loadAllItems(compound, this.items);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
+        super.loadAdditional(compound, lookupProvider);
+        ContainerHelper.loadAllItems(compound, this.items, lookupProvider);
         this.litTime = compound.getInt("BurnTime");
         this.cookingProgress = compound.getInt("CookTime");
         this.cookingTotalTime = compound.getInt("CookTimeTotal");
         this.useMilk = compound.getBoolean("UseMilk");
-        this.tankHandler.getWaterTank().readFromNBT(compound.getCompound("Water"));
-        this.tankHandler.getMilkTank().readFromNBT(compound.getCompound("Milk"));
         this.energyStorage.setEnergyStored(compound.getInt("EnergyStored"));
+        this.tankHandler.getWaterTank().readFromNBT(lookupProvider, compound.getCompound("Water"));
+        this.tankHandler.getMilkTank().readFromNBT(lookupProvider, compound.getCompound("Milk"));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        ContainerHelper.saveAllItems(tag, this.items, false);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(tag, lookupProvider);
+        ContainerHelper.saveAllItems(tag, this.items, false, lookupProvider);
         tag.putInt("BurnTime", this.litTime);
         tag.putInt("CookTime", this.cookingProgress);
         tag.putInt("CookTimeTotal", this.cookingTotalTime);
         tag.putBoolean("UseMilk", this.useMilk);
-        tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(new CompoundTag()));
-        tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(new CompoundTag()));
         tag.putInt("EnergyStored", this.energyStorage.getEnergyStored());
+
+        if (!this.tankHandler.getWaterTank().isEmpty()) {
+            tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+        }
+
+        if (!this.tankHandler.getMilkTank().isEmpty()) {
+            tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
+        }
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
+        this.saveAdditional(tag, lookupProvider);
         return tag;
     }
 
@@ -436,8 +451,65 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
+    protected NonNullList<ItemStack> getItems() {
+        return this.items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> stacks) {
+        this.items.clear();
+        this.items.addAll(stacks);
+        this.setChanged();
+    }
+
+    @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new CoffeeMachineMenu(id, inventory, this, this.dataAccess);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput components) {
+        super.applyImplicitComponents(components);
+
+        Contents contents = components.get(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get());
+        if (contents != null) {
+            this.tankHandler.getWaterTank().setFluid(contents.water());
+            this.tankHandler.getMilkTank().setFluid(contents.milk());
+            this.energyStorage.setEnergyStored(contents.energy());
+            this.litTime = contents.burnTime();
+            this.cookingProgress = contents.cookTime();
+            this.cookingTotalTime = contents.cookTimeTotal();
+            this.useMilk = contents.useMilk();
+        }
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(),
+                new Contents(
+                        this.tankHandler.getWaterTank().getFluid(),
+                        this.tankHandler.getMilkTank().getFluid(),
+                        this.energyStorage.getEnergyStored(),
+                        this.litTime,
+                        this.cookingProgress,
+                        this.cookingTotalTime,
+                        this.useMilk
+                ));
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        super.removeComponentsFromTag(tag);
+
+        tag.remove("EnergyStored");
+        tag.remove("Water");
+        tag.remove("Milk");
+        tag.remove("BurnTime");
+        tag.remove("CookTime");
+        tag.remove("CookTimeTotal");
+        tag.remove("UseMilk");
     }
 
     public class CoffeeMachineTank implements IFluidHandler {
@@ -509,5 +581,53 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         public FluidTank getMilkTank() {
             return milkTank;
         }
+    }
+
+    public record Contents(
+            FluidStack water,
+            FluidStack milk,
+            int energy,
+            int burnTime,
+            int cookTime,
+            int cookTimeTotal,
+            boolean useMilk
+    ) {
+        public static final Contents EMPTY = new Contents(FluidStack.EMPTY, FluidStack.EMPTY, 0, 0, 0, 0, false);
+
+        public static final Codec<Contents> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(
+                        FluidStack.CODEC.optionalFieldOf("water", FluidStack.EMPTY).forGetter(Contents::water),
+                        FluidStack.CODEC.optionalFieldOf("milk", FluidStack.EMPTY).forGetter(Contents::milk),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("energy", 0).forGetter(Contents::energy),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("burn_time", 0).forGetter(Contents::burnTime),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cook_time", 0).forGetter(Contents::cookTime),
+                        ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cook_time_total", 0).forGetter(Contents::cookTimeTotal),
+                        Codec.BOOL.optionalFieldOf("use_milk", false).forGetter(Contents::useMilk)
+                ).apply(instance, Contents::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, Contents> STREAM_CODEC = new StreamCodec<>() {
+            @Override
+            public Contents decode(RegistryFriendlyByteBuf buf) {
+                FluidStack water = FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
+                FluidStack milk = FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
+                int energy = ByteBufCodecs.VAR_INT.decode(buf);
+                int burnTime = ByteBufCodecs.VAR_INT.decode(buf);
+                int cookTime = ByteBufCodecs.VAR_INT.decode(buf);
+                int cookTimeTotal = ByteBufCodecs.VAR_INT.decode(buf);
+                boolean useMilk = ByteBufCodecs.BOOL.decode(buf);
+                return new Contents(water, milk, energy, burnTime, cookTime, cookTimeTotal, useMilk);
+            }
+
+            @Override
+            public void encode(RegistryFriendlyByteBuf buf, Contents contents) {
+                FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, contents.water());
+                FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, contents.milk());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.energy());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.burnTime());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.cookTime());
+                ByteBufCodecs.VAR_INT.encode(buf, contents.cookTimeTotal());
+                ByteBufCodecs.BOOL.encode(buf, contents.useMilk());
+            }
+        };
     }
 }

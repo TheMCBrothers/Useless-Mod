@@ -4,9 +4,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "uselessmod:useless_ingot"
-            ]
+            "items": "uselessmod:useless_ingot"
           }
         ]
       },
@@ -20,7 +18,8 @@
       "translate": "advancement.uselessmod.root.description"
     },
     "icon": {
-      "item": "uselessmod:useless_ingot"
+      "count": 1,
+      "id": "uselessmod:useless_ingot"
     },
     "show_toast": false,
     "title": {

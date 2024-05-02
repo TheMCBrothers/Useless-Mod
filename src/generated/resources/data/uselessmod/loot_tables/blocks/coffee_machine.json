@@ -3,15 +3,22 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "uselessmod:coffee_machine"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "minecraft:custom_name",
+            "minecraft:container",
+            "minecraft:lock",
+            "uselessmod:coffee_machine_contents"
+          ],
+          "source": "block_entity"
         }
       ],
       "rolls": 1.0

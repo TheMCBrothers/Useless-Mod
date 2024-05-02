@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "uselessmod:useless_ingot"
-            ]
+            "items": "uselessmod:useless_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancement.uselessmod.mine_ore.description"
     },
     "icon": {
-      "item": "uselessmod:useless_ore"
+      "count": 1,
+      "id": "uselessmod:useless_ore"
     },
     "title": {
       "translate": "advancement.uselessmod.mine_ore.title"

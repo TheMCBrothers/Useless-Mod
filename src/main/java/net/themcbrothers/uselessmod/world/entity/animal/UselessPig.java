@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.themcbrothers.uselessmod.init.ModEntityTypes;
+import net.themcbrothers.uselessmod.core.UselessEntityTypes;
 
 public class UselessPig extends Pig {
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.POTATO, Items.BEETROOT);
@@ -19,7 +19,7 @@ public class UselessPig extends Pig {
 
     @Override
     public Pig getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-        return ModEntityTypes.USELESS_PIG.get().create(level);
+        return UselessEntityTypes.USELESS_PIG.get().create(level);
     }
 
     @Override

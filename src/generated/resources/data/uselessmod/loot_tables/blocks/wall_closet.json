@@ -17,18 +17,9 @@
               "source": "block_entity"
             },
             {
-              "function": "minecraft:copy_nbt",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "Material",
-                  "target": "BlockEntityTag.Material"
-                },
-                {
-                  "op": "replace",
-                  "source": "id",
-                  "target": "BlockEntityTag.id"
-                }
+              "function": "minecraft:copy_components",
+              "include": [
+                "uselessmod:wall_closet_material"
               ],
               "source": "block_entity"
             }

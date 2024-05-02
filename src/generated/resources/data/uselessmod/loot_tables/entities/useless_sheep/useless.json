@@ -16,7 +16,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "uselessmod:entities/useless_sheep"
+          "value": "uselessmod:entities/useless_sheep"
         }
       ],
       "rolls": 1.0
