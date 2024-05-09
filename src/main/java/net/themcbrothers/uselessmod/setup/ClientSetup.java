@@ -1,6 +1,5 @@
 package net.themcbrothers.uselessmod.setup;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.model.SkullModel;
@@ -15,13 +14,15 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -39,6 +40,7 @@ import net.themcbrothers.uselessmod.client.renderer.blockentity.PaintBucketRende
 import net.themcbrothers.uselessmod.client.renderer.blockentity.UselessBedRenderer;
 import net.themcbrothers.uselessmod.client.renderer.entity.*;
 import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraLayer;
+import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.util.ColorUtils;
@@ -47,11 +49,11 @@ import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
-import org.jetbrains.annotations.Nullable;
 
-public class ClientSetup extends CommonSetup {
+@Mod(value = UselessMod.MOD_ID, dist = Dist.CLIENT)
+public class ClientSetup {
     public ClientSetup(IEventBus bus, ModContainer modContainer) {
-        super(bus, modContainer);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
 
         bus.addListener(this::clientSetup);
         bus.addListener(this::menuScreens);
@@ -187,10 +189,5 @@ public class ClientSetup extends CommonSetup {
     private void modelRegistry(final ModelEvent.RegisterGeometryLoaders event) {
         event.register(UselessMod.rl("machine_supplier"), MachineSupplierModel.Loader.INSTANCE);
         event.register(UselessMod.rl("wall_closet"), WallClosetModel.Loader.INSTANCE);
-    }
-
-    @Override
-    public @Nullable Player getLocalPlayer() {
-        return Minecraft.getInstance().player;
     }
 }

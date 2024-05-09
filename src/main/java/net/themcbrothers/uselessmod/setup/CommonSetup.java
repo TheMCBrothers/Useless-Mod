@@ -9,13 +9,13 @@ import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -28,7 +28,6 @@ import net.themcbrothers.lib.util.Version;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
-import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.network.UselessPacketHandler;
@@ -36,11 +35,10 @@ import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
 import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
 import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
-import org.jetbrains.annotations.Nullable;
 
+@Mod(value = UselessMod.MOD_ID)
 public class CommonSetup {
     public CommonSetup(IEventBus bus, ModContainer modContainer) {
-        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
 
         Registration.register(bus);
@@ -127,9 +125,5 @@ public class CommonSetup {
 
         // Items
         event.registerItem(Capabilities.FluidHandler.ITEM, (container, context) -> new BucketWithPaintItem.PaintFluidBucketWrapper(container), UselessItems.BUCKET_PAINT);
-    }
-
-    public @Nullable Player getLocalPlayer() {
-        return null;
     }
 }

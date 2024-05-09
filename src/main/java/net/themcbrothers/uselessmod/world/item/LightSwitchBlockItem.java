@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.ModList;
-import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.lwjgl.glfw.GLFW;
@@ -41,7 +40,7 @@ public class LightSwitchBlockItem extends BlockItem {
             if (GLFW.glfwGetKey(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
                 for (BlockPos pos : lights) {
                     final BlockState state = level.getBlockState(pos);
-                    final ItemStack cloneStack = state.getCloneItemStack(Minecraft.getInstance().hitResult, level, pos, UselessMod.setup.getLocalPlayer());
+                    final ItemStack cloneStack = state.getCloneItemStack(Minecraft.getInstance().hitResult, level, pos, Minecraft.getInstance().player);
                     final String modId = cloneStack.getItem().getCreatorModId(cloneStack);
                     final MutableComponent displayComponent = Component.literal(pos.toShortString()).append(": ").append(state.getBlock().getName());
 
