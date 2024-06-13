@@ -156,14 +156,11 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         }
 
         @Override
-        public void renderWidget(@NotNull GuiGraphics poseStack, int mouseX, int mouseY, float partialTicks) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-            RenderSystem.setShaderTexture(0, TEXTURE);
+        public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            poseStack.blit(TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
+            guiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
         }
 
         public void renderToolTip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
