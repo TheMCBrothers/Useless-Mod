@@ -13,25 +13,27 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.lib.crafting.CommonRecipe;
-import net.themcbrothers.lib.crafting.FluidIngredient;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessRecipeSerializers;
 import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
+
+import java.util.Optional;
 
 public class CoffeeRecipe implements CommonRecipe<Container> {
     private final String group;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
     private final Ingredient extraIngredient;
-    private final FluidIngredient waterIngredient;
-    private final FluidIngredient milkIngredient;
+    private final SizedFluidIngredient waterIngredient;
+    private final Optional<SizedFluidIngredient> milkIngredient;
     private final ItemStack result;
     private final int cookingTime;
 
     public CoffeeRecipe(String group,
                         Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
-                        FluidIngredient waterIngredient, FluidIngredient milkIngredient,
+                        SizedFluidIngredient waterIngredient, Optional<SizedFluidIngredient> milkIngredient,
                         ItemStack result, int cookingTime) {
         this.group = group;
         this.cupIngredient = cupIngredient;
@@ -55,11 +57,11 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
         return this.extraIngredient;
     }
 
-    public FluidIngredient getWaterIngredient() {
+    public SizedFluidIngredient getWaterIngredient() {
         return this.waterIngredient;
     }
 
-    public FluidIngredient getMilkIngredient() {
+    public Optional<SizedFluidIngredient> getMilkIngredient() {
         return this.milkIngredient;
     }
 
@@ -109,11 +111,11 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
                         Ingredient.CODEC_NONEMPTY.fieldOf("cup").forGetter(recipe -> recipe.cupIngredient),
                         Ingredient.CODEC_NONEMPTY.fieldOf("bean").forGetter(recipe -> recipe.beanIngredient),
                         Ingredient.CODEC.optionalFieldOf("extra", Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
-                        FluidIngredient.CODEC_NONEMPTY.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
-                        FluidIngredient.CODEC.optionalFieldOf("milk", FluidIngredient.EMPTY).forGetter(recipe -> recipe.milkIngredient),
+                        SizedFluidIngredient.FLAT_CODEC.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
+                        SizedFluidIngredient.FLAT_CODEC.optionalFieldOf("milk").forGetter(recipe -> recipe.milkIngredient),
                         ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
-                ).apply(instance, CoffeeRecipe::new));
+                ).apply(instance, (group1, cupIngredient1, beanIngredient1, extraIngredient1, waterIngredient1, milkIngredient1, result1, cookingTime1) -> new CoffeeRecipe(group1, cupIngredient1, beanIngredient1, extraIngredient1, waterIngredient1, milkIngredient1, result1, cookingTime1)));
 
         private static final StreamCodec<RegistryFriendlyByteBuf, CoffeeRecipe> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
 
@@ -132,13 +134,18 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
             Ingredient cupIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             Ingredient beanIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             Ingredient extraIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            FluidIngredient waterIngredient = FluidIngredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            FluidIngredient milkIngredient = FluidIngredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            SizedFluidIngredient waterIngredient = SizedFluidIngredient.STREAM_CODEC.decode(buffer);
+            SizedFluidIngredient milkIngredient = null;
+
+            if (buffer.readBoolean()) {
+                milkIngredient = SizedFluidIngredient.STREAM_CODEC.decode(buffer);
+            }
+
             ItemStack recipeOutput = ItemStack.STREAM_CODEC.decode(buffer);
             int cookingTime = buffer.readInt();
 
             return new CoffeeRecipe(group, cupIngredient, beanIngredient, extraIngredient,
-                    waterIngredient, milkIngredient, recipeOutput, cookingTime);
+                    waterIngredient, Optional.ofNullable(milkIngredient), recipeOutput, cookingTime);
         }
 
         private static void toNetwork(RegistryFriendlyByteBuf buffer, CoffeeRecipe recipe) {
@@ -146,8 +153,15 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
-            FluidIngredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.waterIngredient);
-            FluidIngredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.milkIngredient);
+            SizedFluidIngredient.STREAM_CODEC.encode(buffer, recipe.waterIngredient);
+
+            if (recipe.milkIngredient.isPresent()) {
+                buffer.writeBoolean(true);
+                SizedFluidIngredient.STREAM_CODEC.encode(buffer, recipe.milkIngredient.get());
+            } else {
+                buffer.writeBoolean(false);
+            }
+
             ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
             buffer.writeInt(recipe.cookingTime);
         }

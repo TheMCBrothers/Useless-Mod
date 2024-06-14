@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.Tags;
-import net.themcbrothers.lib.crafting.FluidIngredient;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
@@ -139,10 +139,10 @@ public class UselessRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, UselessBlocks.BLACK_LAMP).requires(Ingredient.of(UselessTags.Items.LAMPS)).requires(Tags.Items.DYES_BLACK).group("uselessmod:lamps").unlockedBy("has_lamp", has(UselessTags.Items.LAMPS)).unlockedBy("has_redstone_lamp", has(Items.REDSTONE_LAMP)).save(consumer);
 
         // Coffee
-        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.BLACK.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_black"));
-        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.MILK.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_milk"));
-        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.SUGAR.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.EMPTY, 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_sugar"));
-        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), FluidIngredient.of(Fluids.WATER, 250), FluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.BLACK.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, SizedFluidIngredient.of(Fluids.WATER, 250), null, 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_black"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.MILK.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.EMPTY, SizedFluidIngredient.of(Fluids.WATER, 250), SizedFluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_coffee_bean", has(UselessTags.Items.CROPS_COFFEEBEAN)).save(consumer, rl("coffee_milk"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.SUGAR.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), SizedFluidIngredient.of(Fluids.WATER, 250), null, 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_sugar"));
+        CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(UselessBlocks.CUP), Ingredient.of(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), SizedFluidIngredient.of(Fluids.WATER, 250), SizedFluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer, rl("coffee_milk_sugar"));
 
         // Special Recipes
         SpecialRecipeBuilder.special(LightSwitchConvertRecipe::new).save(consumer, UselessMod.rl("light_switch_convert").toString());

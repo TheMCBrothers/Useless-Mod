@@ -39,6 +39,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
 import net.themcbrothers.lib.util.EnergyUtils;
@@ -54,6 +55,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 
 public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible, SyncableBlockEntity {
     public static final int DATA_COUNT = 5;
@@ -216,13 +218,23 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 inputExtra.shrink(1);
             }
             FluidStack waterResource = this.tankHandler.getFluidInTank(0).copy();
-            waterResource.setAmount(recipe.getWaterIngredient().getAmount(waterResource.getFluid()));
+
+            // Consume Water
+            int waterConsumption = Optional.of(recipe.getWaterIngredient())
+                    .map(SizedFluidIngredient::amount)
+                    .orElse(0);
+
+            waterResource.setAmount(waterConsumption);
             this.tankHandler.drain(waterResource, IFluidHandler.FluidAction.EXECUTE);
-            if (!recipe.getMilkIngredient().test(FluidStack.EMPTY)) {
-                FluidStack milkResource = this.tankHandler.getFluidInTank(1).copy();
-                milkResource.setAmount(recipe.getMilkIngredient().getAmount(milkResource.getFluid()));
-                this.tankHandler.drain(milkResource, IFluidHandler.FluidAction.EXECUTE);
-            }
+
+            // Consume Milk
+            FluidStack milkResource = this.tankHandler.getFluidInTank(1).copy();
+            int milkConsumption = recipe.getMilkIngredient()
+                    .map(SizedFluidIngredient::amount)
+                    .orElse(0);
+
+            milkResource.setAmount(milkConsumption);
+            this.tankHandler.drain(milkResource, IFluidHandler.FluidAction.EXECUTE);
         }
     }
 
@@ -234,9 +246,9 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             boolean flag = recipe.getCupIngredient().test(getItem(0))
                     && recipe.getBeanIngredient().test(getItem(1))
                     && recipe.getWaterIngredient().test(this.tankHandler.getFluidInTank(0));
-            boolean flag2 = !this.useMilk && recipe.getMilkIngredient().test(FluidStack.EMPTY);
+            boolean flag2 = !this.useMilk && recipe.getMilkIngredient().isEmpty();
             if (this.useMilk) {
-                flag2 = recipe.getMilkIngredient().test(this.tankHandler.getFluidInTank(1));
+                flag2 = recipe.getMilkIngredient().isPresent() && recipe.getMilkIngredient().get().test(this.tankHandler.getFluidInTank(1));
             }
             boolean flag3 = (recipe.getExtraIngredient() == Ingredient.EMPTY && getItem(2).isEmpty())
                     || recipe.getExtraIngredient().test(getItem(2));

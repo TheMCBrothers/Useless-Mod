@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.themcbrothers.lib.crafting.FluidIngredient;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.lib.util.RecipeHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
@@ -72,20 +72,23 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
         builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(recipeValue.getExtraIngredient());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(RecipeHelper.getResultItem(recipeValue));
 
-        FluidIngredient waterIngredient = recipeValue.getWaterIngredient();
-        FluidIngredient milkIngredient = recipeValue.getMilkIngredient();
+        SizedFluidIngredient waterIngredient = recipeValue.getWaterIngredient();
 
         final int waterAmount = waterIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
-                waterIngredient.getAmount(waterIngredient.getFluids()[0].getFluid());
-        final int milkAmount = milkIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
-                milkIngredient.getAmount(milkIngredient.getFluids()[0].getFluid());
+                waterIngredient.getFluids()[0].getAmount();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 3)
                 .setFluidRenderer(waterAmount, false, 8, 48)
                 .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(waterIngredient.getFluids()));
-        builder.addSlot(RecipeIngredientRole.INPUT, 19, 3)
-                .setFluidRenderer(milkAmount, false, 8, 48)
-                .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(milkIngredient.getFluids()));
+
+        recipeValue.getMilkIngredient().ifPresent(milkIngredient -> {
+            final int milkAmount = milkIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
+                    milkIngredient.getFluids()[0].getAmount();
+
+            builder.addSlot(RecipeIngredientRole.INPUT, 19, 3)
+                    .setFluidRenderer(milkAmount, false, 8, 48)
+                    .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(milkIngredient.getFluids()));
+        });
     }
 
     @Override

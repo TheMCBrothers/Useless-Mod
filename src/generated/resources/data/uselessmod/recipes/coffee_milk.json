@@ -9,7 +9,7 @@
   },
   "milk": {
     "amount": 100,
-    "id": "minecraft:milk"
+    "fluid": "minecraft:milk"
   },
   "result": {
     "components": {
@@ -19,6 +19,6 @@
   },
   "water": {
     "amount": 250,
-    "id": "minecraft:water"
+    "fluid": "minecraft:water"
   }
 }

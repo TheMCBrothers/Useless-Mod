@@ -11,28 +11,30 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.themcbrothers.lib.crafting.FluidIngredient;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class CoffeeRecipeBuilder implements RecipeBuilder {
     private final ItemStack result;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
     private final Ingredient extraIngredient;
-    private final FluidIngredient waterIngredient;
-    private final FluidIngredient milkIngredient;
+    private final SizedFluidIngredient waterIngredient;
+    @Nullable
+    private final SizedFluidIngredient milkIngredient;
     private final int cookingTime;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
 
     private CoffeeRecipeBuilder(ItemStack result, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
-                                FluidIngredient waterIngredient, FluidIngredient milkIngredient, int cookingTime) {
+                                SizedFluidIngredient waterIngredient, @Nullable SizedFluidIngredient milkIngredient, int cookingTime) {
         this.result = result;
         this.cupIngredient = cupIngredient;
         this.beanIngredient = beanIngredient;
@@ -43,7 +45,7 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     }
 
     public static CoffeeRecipeBuilder coffee(ItemStack result, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
-                                             FluidIngredient waterIngredient, FluidIngredient milkIngredient, int cookingTime) {
+                                             SizedFluidIngredient waterIngredient, @Nullable SizedFluidIngredient milkIngredient, int cookingTime) {
         return new CoffeeRecipeBuilder(result, cupIngredient, beanIngredient, extraIngredient, waterIngredient, milkIngredient, cookingTime);
     }
 
@@ -76,7 +78,7 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
 
         consumer.accept(id,
                 new CoffeeRecipe(this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
-                        this.extraIngredient, this.waterIngredient, this.milkIngredient, this.result, this.cookingTime),
+                        this.extraIngredient, this.waterIngredient, Optional.ofNullable(this.milkIngredient), this.result, this.cookingTime),
                 advancement.build(id.withPrefix("recipes/coffee/")));
     }
 
