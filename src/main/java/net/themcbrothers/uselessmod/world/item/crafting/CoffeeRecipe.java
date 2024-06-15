@@ -115,7 +115,7 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
                         SizedFluidIngredient.FLAT_CODEC.optionalFieldOf("milk").forGetter(recipe -> recipe.milkIngredient),
                         ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
-                ).apply(instance, (group1, cupIngredient1, beanIngredient1, extraIngredient1, waterIngredient1, milkIngredient1, result1, cookingTime1) -> new CoffeeRecipe(group1, cupIngredient1, beanIngredient1, extraIngredient1, waterIngredient1, milkIngredient1, result1, cookingTime1)));
+                ).apply(instance, CoffeeRecipe::new));
 
         private static final StreamCodec<RegistryFriendlyByteBuf, CoffeeRecipe> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
 
@@ -151,8 +151,8 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
         private static void toNetwork(RegistryFriendlyByteBuf buffer, CoffeeRecipe recipe) {
             buffer.writeUtf(recipe.group);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.beanIngredient);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.extraIngredient);
             SizedFluidIngredient.STREAM_CODEC.encode(buffer, recipe.waterIngredient);
 
             if (recipe.milkIngredient.isPresent()) {
