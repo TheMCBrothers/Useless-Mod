@@ -1,12 +1,12 @@
 package net.themcbrothers.uselessmod.core;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -22,8 +22,8 @@ public final class UselessDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> COLOR = Registration.DATA_COMPONENT_TYPES.register("color",
             () -> DataComponentType.<Integer>builder()
-                    .persistent(ExtraCodecs.NON_NEGATIVE_INT)
-                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.INT)
                     .build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<BlockPos>>> LIGHTS = Registration.DATA_COMPONENT_TYPES.register("lights",
             () -> DataComponentType.<List<BlockPos>>builder()
