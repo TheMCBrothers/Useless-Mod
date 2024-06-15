@@ -1,12 +1,16 @@
 package net.themcbrothers.uselessmod.datagen.loot;
 
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.BedBlock;
@@ -30,7 +34,6 @@ import net.themcbrothers.uselessmod.core.Registration;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.core.UselessItems;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,16 +41,7 @@ import java.util.stream.Stream;
 import static net.themcbrothers.uselessmod.core.UselessBlocks.*;
 
 public class UselessBlockLoot extends BlockLootSubProvider {
-    private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(
-            ItemPredicate.Builder.item()
-                    .withSubPredicate(
-                            ItemSubPredicates.ENCHANTMENTS,
-                            ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))))
-                    )
-    );
     private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.TOOLS_SHEARS));
-    private static final LootItemCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = HAS_SHEARS.or(HAS_SILK_TOUCH);
-    private static final LootItemCondition.Builder HAS_NO_SHEARS_OR_SILK_TOUCH = HAS_SHEARS_OR_SILK_TOUCH.invert();
     private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
     private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(
@@ -56,8 +50,16 @@ public class UselessBlockLoot extends BlockLootSubProvider {
             CUP_COFFEE.get()
     ).map(ItemLike::asItem).collect(Collectors.toSet());
 
-    protected UselessBlockLoot() {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
+    protected UselessBlockLoot(HolderLookup.Provider lookupProvider) {
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), lookupProvider);
+    }
+
+    private LootItemCondition.Builder hasShearsOrSilkTouch() {
+        return HAS_SHEARS.or(this.hasSilkTouch());
+    }
+
+    private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {
+        return this.hasShearsOrSilkTouch().invert();
     }
 
     @Override
@@ -198,24 +200,25 @@ public class UselessBlockLoot extends BlockLootSubProvider {
     }
 
     private LootTable.Builder createUselessLeavesDrop(Block leavesBlock, Block saplingBlock, float... chances) {
+        HolderLookup.RegistryLookup<Enchantment> registryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(leavesBlock)
-                                .when(HAS_SHEARS_OR_SILK_TOUCH)
+                                .when(this.doesNotHaveShearsOrSilkTouch())
                                 .otherwise(applyExplosionCondition(leavesBlock, LootItem.lootTableItem(saplingBlock))
-                                        .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.FORTUNE, chances)))))
+                                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), chances)))))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+                        .when(this.doesNotHaveShearsOrSilkTouch())
                         .add(applyExplosionDecay(leavesBlock, LootItem.lootTableItem(Items.STICK)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+                        .when(this.doesNotHaveShearsOrSilkTouch())
                         .add(applyExplosionCondition(leavesBlock, LootItem.lootTableItem(Items.APPLE))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.FORTUNE, 0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F))));
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), 0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F))));
     }
 
     @Override

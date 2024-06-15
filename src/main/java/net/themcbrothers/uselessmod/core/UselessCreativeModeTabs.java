@@ -140,12 +140,7 @@ public final class UselessCreativeModeTabs {
     }
 
     private static void applyColorComponentToStack(ItemStack stack, DyeColor color) {
-        float[] colors = color.getTextureDiffuseColors();
-        int r = (int) (colors[0] * 255.0F);
-        int g = (int) (colors[1] * 255.0F);
-        int b = (int) (colors[2] * 255.0F);
-
-        stack.set(UselessDataComponents.COLOR.get(), (r << 16) + (g << 8) + b);
+        stack.set(UselessDataComponents.COLOR.get(), color.getTextureDiffuseColor());
     }
 
     /**

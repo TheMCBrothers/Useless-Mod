@@ -82,12 +82,12 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
 
         if (path.endsWith("_planks")) {
             String newPath = path.substring(0, path.length() - "_planks".length()) + "_slab";
-            ResourceLocation newReg = new ResourceLocation(namespace, newPath);
+            ResourceLocation newReg = ResourceLocation.fromNamespaceAndPath(namespace, newPath);
 
             result = BuiltInRegistries.BLOCK.get(newReg);
         } else if (path.endsWith("s")) {
             String newPath = path.substring(0, path.length() - 1) + "_slab";
-            ResourceLocation newReg = new ResourceLocation(namespace, newPath);
+            ResourceLocation newReg = ResourceLocation.fromNamespaceAndPath(namespace, newPath);
 
             result = BuiltInRegistries.BLOCK.get(newReg);
         }
@@ -96,7 +96,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
             return result;
         }
 
-        ResourceLocation newReg = new ResourceLocation(namespace, path + "_slab");
+        ResourceLocation newReg = ResourceLocation.fromNamespaceAndPath(namespace, path + "_slab");
         return BuiltInRegistries.BLOCK.get(newReg);
     }
 }

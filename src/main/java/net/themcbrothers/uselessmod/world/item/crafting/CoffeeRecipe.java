@@ -7,9 +7,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -21,7 +21,7 @@ import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 
 import java.util.Optional;
 
-public class CoffeeRecipe implements CommonRecipe<Container> {
+public class CoffeeRecipe implements CommonRecipe<RecipeInput> {
     private final String group;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
@@ -85,7 +85,7 @@ public class CoffeeRecipe implements CommonRecipe<Container> {
     }
 
     @Override
-    public boolean matches(Container container, Level level) {
+    public boolean matches(RecipeInput container, Level level) {
         return false;
     }
 

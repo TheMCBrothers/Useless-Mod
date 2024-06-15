@@ -1,12 +1,12 @@
 package net.themcbrothers.uselessmod.core;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.util.ColorUtils;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -38,7 +38,7 @@ public final class UselessFluidTypes {
                         @Override
                         public int getTintColor(FluidStack stack) {
                             Integer color = stack.get(UselessDataComponents.COLOR.get());
-                            return color != null ? ColorUtils.fullAlpha(color) : -1;
+                            return color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
                         }
                     });
                 }

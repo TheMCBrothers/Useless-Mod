@@ -2,14 +2,12 @@ package net.themcbrothers.uselessmod.setup;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,7 +18,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.common.BiomeManager;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
@@ -34,7 +31,6 @@ import net.themcbrothers.uselessmod.network.UselessPacketHandler;
 import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
 import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
-import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 
 @Mod(value = UselessMod.MOD_ID)
 public class CommonSetup {
@@ -87,12 +83,6 @@ public class CommonSetup {
                     state -> Blocks.LANTERN.defaultBlockState()
                             .setValue(BlockStateProperties.HANGING, state.getValue(BlockStateProperties.HANGING))
                             .setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)), state -> state);
-        });
-
-        // Biome Manager
-        event.enqueueWork(() -> {
-            ResourceKey<Biome> key = UselessBiomes.USELESS_FOREST;
-            BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(key, 10));
         });
 
         // make sure the stats appear in the menu

@@ -27,16 +27,13 @@ public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlock
     }
 
     private void add(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int color) {
-        int red = FastColor.ARGB32.red(color);
-        int green = FastColor.ARGB32.green(color);
-        int blue = FastColor.ARGB32.blue(color);
+        int renderColor = FastColor.ARGB32.color(0xFF, color);
 
-        renderer.vertex(stack.last().pose(), x, y, z)
-                .color(red, green, blue, 255)
-                .uv(u, v)
-                .uv2(0, 240)
-                .normal(1, 0, 0)
-                .endVertex();
+        renderer.addVertex(stack.last().pose(), x, y, z)
+                .setColor(renderColor)
+                .setUv(u, v)
+                .setUv2(0, 240)
+                .setNormal(1, 0, 0);
     }
 
     @Override

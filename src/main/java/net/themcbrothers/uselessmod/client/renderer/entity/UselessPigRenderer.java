@@ -14,7 +14,7 @@ public class UselessPigRenderer extends MobRenderer<UselessPig, PigModel<Useless
 
     public UselessPigRenderer(EntityRendererProvider.Context context) {
         super(context, new PigModel<>(context.bakeLayer(ModelLayers.PIG)), 0.7F);
-        this.addLayer(new SaddleLayer<>(this, new PigModel<>(context.bakeLayer(ModelLayers.PIG_SADDLE)), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
+        this.addLayer(new SaddleLayer<>(this, new PigModel<>(context.bakeLayer(ModelLayers.PIG_SADDLE)), ResourceLocation.withDefaultNamespace("textures/entity/pig/pig_saddle.png")));
     }
 
     @Override

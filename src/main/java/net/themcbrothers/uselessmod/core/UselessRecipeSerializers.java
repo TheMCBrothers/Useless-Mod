@@ -4,7 +4,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import net.themcbrothers.uselessmod.world.item.crafting.LightSwitchConvertRecipe;
-import net.themcbrothers.uselessmod.world.item.crafting.PaintBrushDyeRecipe;
 
 import java.util.function.Supplier;
 
@@ -18,6 +17,4 @@ public final class UselessRecipeSerializers {
             RECIPE_SERIALIZERS.register("coffee", CoffeeRecipe.Serializer::new);
     public static final Supplier<SimpleCraftingRecipeSerializer<LightSwitchConvertRecipe>> LIGHT_SWITCH_CONVERT =
             RECIPE_SERIALIZERS.register("light_switch_convert", () -> new SimpleCraftingRecipeSerializer<>(LightSwitchConvertRecipe::new));
-    public static final Supplier<SimpleCraftingRecipeSerializer<PaintBrushDyeRecipe>> PAINT_BRUSH_DYE =
-            RECIPE_SERIALIZERS.register("paint_brush_dye", () -> new SimpleCraftingRecipeSerializer<>(PaintBrushDyeRecipe::new));
 }

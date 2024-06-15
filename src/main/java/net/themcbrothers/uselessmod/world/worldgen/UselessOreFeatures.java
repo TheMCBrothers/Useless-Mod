@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
@@ -18,8 +19,8 @@ import net.themcbrothers.uselessmod.core.UselessBlocks;
 import java.util.List;
 
 public final class UselessOreFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_USELESS = FeatureUtils.createKey(UselessMod.MOD_ID + ":ore_useless");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SUPER_USELESS = FeatureUtils.createKey(UselessMod.MOD_ID + ":ore_super_useless");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_USELESS = createKey("ore_useless");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SUPER_USELESS = createKey("ore_super_useless");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest ruleTestStone = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -42,5 +43,9 @@ public final class UselessOreFeatures {
 
         FeatureUtils.register(context, ORE_USELESS, Feature.ORE, new OreConfiguration(oreTargetsUseless, 9));
         FeatureUtils.register(context, ORE_SUPER_USELESS, Feature.ORE, new OreConfiguration(oreTargetsSuperUseless, 4));
+    }
+
+    private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, UselessMod.rl(name));
     }
 }

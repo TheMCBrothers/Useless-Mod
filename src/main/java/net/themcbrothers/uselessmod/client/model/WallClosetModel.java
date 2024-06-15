@@ -22,7 +22,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -39,7 +38,6 @@ import net.neoforged.neoforge.client.model.geometry.BlockGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
-import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.apache.commons.compress.utils.Lists;
@@ -67,7 +65,7 @@ public class WallClosetModel implements IDynamicBakedModel {
     public WallClosetModel(ModelBaker modelBakery, BlockModel model, ModelState modelTransform, Function<Material, TextureAtlasSprite> spriteGetter) {
         this.modelBakery = modelBakery;
         this.model = model;
-        this.bakedModel = model.bake(modelBakery, model, spriteGetter, modelTransform, UselessMod.rl("closet"), true);
+        this.bakedModel = model.bake(modelBakery, model, spriteGetter, modelTransform, true);
         this.modelTransform = modelTransform;
         this.spriteGetter = spriteGetter;
     }
@@ -96,8 +94,7 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.textureMap.put("planks", Either.left(renderMaterial));
             newModel.textureMap.put("particle", Either.left(renderMaterial));
 
-            customModel = newModel.bake(this.modelBakery, newModel, this.spriteGetter,
-                    this.modelTransform, UselessMod.rl("closet_overriding"), true);
+            customModel = newModel.bake(this.modelBakery, newModel, this.spriteGetter, this.modelTransform, true);
 
             this.cache.put(key, customModel);
         }
@@ -196,7 +193,7 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     public static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides) {
             BlockModel blockModel = ((BlockGeometryBakingContext) context).owner.parent;
             if (blockModel == null)
                 throw new RuntimeException("Wall Closet parent model is null");

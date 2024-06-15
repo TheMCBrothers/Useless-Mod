@@ -16,7 +16,6 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -131,14 +130,14 @@ public class MachineSupplierModel implements IDynamicBakedModel {
 
     private static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
             BlockModel baseModel = ((BlockGeometryBakingContext) context).owner.parent;
 
             if (baseModel == null) {
-                throw new NullPointerException("Expected model parent model " + modelLocation);
+                throw new NullPointerException("Expected model parent model: " + context.getModelName());
             }
 
-            BakedModel bakedModel = baseModel.bake(baker, baseModel, spriteGetter, modelState, modelLocation, context.useBlockLight());
+            BakedModel bakedModel = baseModel.bake(baker, baseModel, spriteGetter, modelState, context.useBlockLight());
             return new MachineSupplierModel(bakedModel);
         }
     }

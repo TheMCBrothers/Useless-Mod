@@ -11,11 +11,11 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 
 public final class UselessTreePlacements {
-    public static final ResourceKey<PlacedFeature> USELESS_OAK_BEES_0002 = PlacementUtils.createKey(UselessMod.MOD_ID + ":useless_oak_bees_0002");
-    public static final ResourceKey<PlacedFeature> USELESS_OAK_BEES_002 = PlacementUtils.createKey(UselessMod.MOD_ID + ":useless_oak_bees_002");
-    public static final ResourceKey<PlacedFeature> FANCY_USELESS_OAK_BEES_0002 = PlacementUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees_0002");
-    public static final ResourceKey<PlacedFeature> FANCY_USELESS_OAK_BEES_002 = PlacementUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees_002");
-    public static final ResourceKey<PlacedFeature> FANCY_USELESS_OAK_BEES = PlacementUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees");
+    public static final ResourceKey<PlacedFeature> USELESS_OAK_BEES_0002 = createKey("useless_oak_bees_0002");
+    public static final ResourceKey<PlacedFeature> USELESS_OAK_BEES_002 = createKey("useless_oak_bees_002");
+    public static final ResourceKey<PlacedFeature> FANCY_USELESS_OAK_BEES_0002 = createKey("fancy_useless_oak_bees_0002");
+    public static final ResourceKey<PlacedFeature> FANCY_USELESS_OAK_BEES_002 = createKey("fancy_useless_oak_bees_002");
+    public static final ResourceKey<PlacedFeature> FANCY_USELESS_OAK_BEES = createKey("fancy_useless_oak_bees");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -25,5 +25,9 @@ public final class UselessTreePlacements {
         PlacementUtils.register(context, FANCY_USELESS_OAK_BEES_0002, configuredFeatures.getOrThrow(UselessTreeFeatures.FANCY_USELESS_OAK_BEES_0002), PlacementUtils.filteredByBlockSurvival(UselessBlocks.USELESS_OAK_SAPLING.get()));
         PlacementUtils.register(context, FANCY_USELESS_OAK_BEES_002, configuredFeatures.getOrThrow(UselessTreeFeatures.FANCY_USELESS_OAK_BEES_002), PlacementUtils.filteredByBlockSurvival(UselessBlocks.USELESS_OAK_SAPLING.get()));
         PlacementUtils.register(context, FANCY_USELESS_OAK_BEES, configuredFeatures.getOrThrow(UselessTreeFeatures.FANCY_USELESS_OAK_BEES), PlacementUtils.filteredByBlockSurvival(UselessBlocks.USELESS_OAK_SAPLING.get()));
+    }
+
+    private static ResourceKey<PlacedFeature> createKey(String name) {
+        return ResourceKey.create(Registries.PLACED_FEATURE, UselessMod.rl(name));
     }
 }

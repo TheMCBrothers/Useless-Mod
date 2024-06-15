@@ -18,7 +18,6 @@ import net.themcbrothers.uselessmod.core.UselessItems;
 import net.themcbrothers.uselessmod.datagen.builder.CoffeeRecipeBuilder;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import net.themcbrothers.uselessmod.world.item.crafting.LightSwitchConvertRecipe;
-import net.themcbrothers.uselessmod.world.item.crafting.PaintBrushDyeRecipe;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -146,7 +145,6 @@ public class UselessRecipeProvider extends RecipeProvider {
 
         // Special Recipes
         SpecialRecipeBuilder.special(LightSwitchConvertRecipe::new).save(consumer, UselessMod.rl("light_switch_convert").toString());
-        SpecialRecipeBuilder.special(PaintBrushDyeRecipe::new).save(consumer, UselessMod.rl("paint_brush_dye").toString());
 
         // Usages of Items
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, Items.RED_DYE).requires(UselessBlocks.RED_ROSE).group("red_dye").unlockedBy("has_red_flower", has(UselessBlocks.RED_ROSE)).save(consumer, rl("red_dye_from_rose"));

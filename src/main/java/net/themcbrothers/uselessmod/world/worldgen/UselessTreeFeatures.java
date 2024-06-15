@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
@@ -21,15 +22,15 @@ import java.util.List;
 import java.util.OptionalInt;
 
 public final class UselessTreeFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK = FeatureUtils.createKey(UselessMod.MOD_ID + ":useless_oak");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK = FeatureUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK_BEES_0002 = FeatureUtils.createKey(UselessMod.MOD_ID + ":useless_oak_bees_0002");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK_BEES_002 = FeatureUtils.createKey(UselessMod.MOD_ID + ":useless_oak_bees_002");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK_BEES_005 = FeatureUtils.createKey(UselessMod.MOD_ID + ":useless_oak_bees_005");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES_0002 = FeatureUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees_0002");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES_002 = FeatureUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees_002");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES_005 = FeatureUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees_005");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES = FeatureUtils.createKey(UselessMod.MOD_ID + ":fancy_useless_oak_bees");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK = createKey("useless_oak");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK = createKey("fancy_useless_oak");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK_BEES_0002 = createKey("useless_oak_bees_0002");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK_BEES_002 = createKey("useless_oak_bees_002");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_OAK_BEES_005 = createKey("useless_oak_bees_005");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES_0002 = createKey("fancy_useless_oak_bees_0002");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES_002 = createKey("fancy_useless_oak_bees_002");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES_005 = createKey("fancy_useless_oak_bees_005");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_USELESS_OAK_BEES = createKey("fancy_useless_oak_bees");
 
     private static TreeConfiguration.TreeConfigurationBuilder createUselessOak() {
         return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(UselessBlocks.USELESS_OAK_LOG.get()), new StraightTrunkPlacer(5, 1, 0), BlockStateProvider.simple(UselessBlocks.USELESS_OAK_LEAVES.get()), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines();
@@ -54,5 +55,9 @@ public final class UselessTreeFeatures {
         FeatureUtils.register(context, FANCY_USELESS_OAK_BEES_002, Feature.TREE, createFancyUselessOak().decorators(List.of(beehive002)).build());
         FeatureUtils.register(context, FANCY_USELESS_OAK_BEES_005, Feature.TREE, createFancyUselessOak().decorators(List.of(beehive005)).build());
         FeatureUtils.register(context, FANCY_USELESS_OAK_BEES, Feature.TREE, createFancyUselessOak().decorators(List.of(beehive)).build());
+    }
+
+    private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, UselessMod.rl(name));
     }
 }

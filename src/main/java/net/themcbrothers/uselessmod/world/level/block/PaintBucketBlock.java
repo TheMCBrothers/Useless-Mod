@@ -125,7 +125,7 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
                         && blockEntity.colorTank.getFluidAmount() == FluidType.BUCKET_VOLUME) {
                     DyeColor color = DyeColor.getColor(blockEntity.stackHandler.getStackInSlot(0));
                     if (color != null) {
-                        blockEntity.setColor(color.getTextureDiffuseColors());
+                        blockEntity.setColor(color.getTextureDiffuseColor());
                         blockEntity.stackHandler.setStackInSlot(0, ItemStack.EMPTY);
                         return ItemInteractionResult.sidedSuccess(level.isClientSide);
                     }

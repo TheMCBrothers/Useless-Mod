@@ -11,7 +11,7 @@ public final class UselessMod {
     }
 
     public static ResourceLocation rl(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     public static MutableComponent translate(String prefix, String suffix, Object... args) {

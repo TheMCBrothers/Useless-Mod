@@ -39,8 +39,8 @@ public class UselessShieldItemRenderer extends UselessBlockEntityWithoutLevelRen
             TextureAtlasSprite sprite = material.sprite();
             VertexConsumer vertexConsumer = sprite.wrap(ItemRenderer.getFoilBufferDirect(buffer, this.shieldModel.renderType(material.atlasLocation()), true, stack.hasFoil()));
 
-            this.shieldModel.handle().render(poseStack, vertexConsumer, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-            this.shieldModel.plate().render(poseStack, vertexConsumer, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.shieldModel.handle().render(poseStack, vertexConsumer, combinedLight, combinedOverlay);
+            this.shieldModel.plate().render(poseStack, vertexConsumer, combinedLight, combinedOverlay);
 
             poseStack.popPose();
         }

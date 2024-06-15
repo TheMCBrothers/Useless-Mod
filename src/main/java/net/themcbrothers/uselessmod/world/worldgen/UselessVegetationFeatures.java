@@ -23,8 +23,8 @@ import net.themcbrothers.uselessmod.core.UselessBlocks;
 import java.util.List;
 
 public final class UselessVegetationFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_FLOWER_DEFAULT = FeatureUtils.createKey(UselessMod.MOD_ID + ":flower_default");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_FOREST_TREES = FeatureUtils.createKey(UselessMod.MOD_ID + ":trees_forest");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_FLOWER_DEFAULT = createKey("flower_default");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> USELESS_FOREST_TREES = createKey("trees_forest");
 
     private static RandomPatchConfiguration grassPatch(BlockStateProvider toPlace, int tries) {
         return FeatureUtils.simpleRandomPatchConfiguration(tries, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(toPlace)));
@@ -35,5 +35,9 @@ public final class UselessVegetationFeatures {
 
         FeatureUtils.register(context, USELESS_FLOWER_DEFAULT, Feature.FLOWER, grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(UselessBlocks.RED_ROSE.get().defaultBlockState(), 2).add(UselessBlocks.BLUE_ROSE.get().defaultBlockState(), 2).add(UselessBlocks.USELESS_ROSE.get().defaultBlockState(), 1)), 64));
         FeatureUtils.register(context, USELESS_FOREST_TREES, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(UselessTreePlacements.FANCY_USELESS_OAK_BEES_0002), 0.1F)), placedFeatures.getOrThrow(UselessTreePlacements.USELESS_OAK_BEES_0002)));
+    }
+
+    private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, UselessMod.rl(name));
     }
 }

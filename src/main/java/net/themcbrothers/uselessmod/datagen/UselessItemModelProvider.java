@@ -76,7 +76,7 @@ public class UselessItemModelProvider extends ItemModelProvider {
         this.withExistingParent("useless_cow_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
         this.withExistingParent("useless_skeleton_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
 
-        this.withExistingParent("bucket_paint", new ResourceLocation(NeoForgeVersion.MOD_ID, "item/bucket"))
+        this.withExistingParent("bucket_paint", ResourceLocation.fromNamespaceAndPath(NeoForgeVersion.MOD_ID, "item/bucket"))
                 .customLoader(DynamicFluidContainerModelBuilder::begin)
                 .fluid(UselessFluids.PAINT.get()).end();
 

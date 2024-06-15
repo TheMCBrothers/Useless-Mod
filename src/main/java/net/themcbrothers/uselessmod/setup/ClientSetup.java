@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -43,7 +44,6 @@ import net.themcbrothers.uselessmod.client.renderer.entity.layers.UselessElytraL
 import net.themcbrothers.uselessmod.config.ClientConfig;
 import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.util.CoffeeUtils;
-import net.themcbrothers.uselessmod.util.ColorUtils;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import net.themcbrothers.uselessmod.world.level.block.entity.CupBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
@@ -82,13 +82,13 @@ public class ClientSetup {
 
         // Item Properties
         event.enqueueWork(() -> {
-            ItemProperties.register(UselessItems.USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+            ItemProperties.register(UselessItems.USELESS_ELYTRA.get(), ResourceLocation.withDefaultNamespace("broken"),
                     (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
-            ItemProperties.register(UselessItems.SUPER_USELESS_ELYTRA.get(), new ResourceLocation("broken"),
+            ItemProperties.register(UselessItems.SUPER_USELESS_ELYTRA.get(), ResourceLocation.withDefaultNamespace("broken"),
                     (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
-            ItemProperties.register(UselessItems.USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+            ItemProperties.register(UselessItems.USELESS_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
-            ItemProperties.register(UselessItems.SUPER_USELESS_SHIELD.get(), new ResourceLocation("blocking"),
+            ItemProperties.register(UselessItems.SUPER_USELESS_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
         });
     }
@@ -102,14 +102,14 @@ public class ClientSetup {
 
         event.register(((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity canvas) {
-                return ColorUtils.fullAlpha(canvas.getColor());
+                return FastColor.ARGB32.color(0xFF, canvas.getColor());
             }
             return -1;
         }), UselessBlocks.PAINTED_WOOL.get());
 
         event.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
-                return cup.getCoffeeType().map(CoffeeType::getColor).map(ColorUtils::fullAlpha).orElse(-1);
+                return cup.getCoffeeType().map(CoffeeType::getColor).map(color -> FastColor.ARGB32.color(0xFF, color)).orElse(-1);
             }
             return -1;
         }, UselessBlocks.CUP_COFFEE.get());
@@ -138,17 +138,17 @@ public class ClientSetup {
 
         event.register(((stack, layer) -> {
             Integer color = stack.get(UselessDataComponents.COLOR.get());
-            return layer == 1 && color != null ? ColorUtils.fullAlpha(color) : -1;
+            return layer == 1 && color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
         }), UselessItems.PAINT_BRUSH);
 
         event.register(((stack, layer) -> {
             Integer color = stack.get(UselessDataComponents.COLOR.get());
-            return color != null ? ColorUtils.fullAlpha(color) : -1;
+            return color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
         }), UselessBlocks.PAINTED_WOOL);
 
         event.register((stack, layer) -> CoffeeUtils.getCoffeeType(stack)
                         .map(CoffeeType::getColor)
-                        .map(ColorUtils::fullAlpha)
+                        .map(color -> FastColor.ARGB32.color(0xFF, color))
                         .orElse(-1),
                 UselessBlocks.CUP_COFFEE);
 

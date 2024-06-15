@@ -13,12 +13,12 @@ import net.themcbrothers.uselessmod.UselessMod;
 import java.util.List;
 
 public final class UselessOrePlacements {
-    public static final ResourceKey<PlacedFeature> ORE_USELESS = PlacementUtils.createKey(UselessMod.MOD_ID + ":ore_useless");
-    public static final ResourceKey<PlacedFeature> ORE_USELESS_NETHER = PlacementUtils.createKey(UselessMod.MOD_ID + ":ore_useless_nether");
-    public static final ResourceKey<PlacedFeature> ORE_USELESS_END = PlacementUtils.createKey(UselessMod.MOD_ID + ":ore_useless_end");
-    public static final ResourceKey<PlacedFeature> ORE_SUPER_USELESS = PlacementUtils.createKey(UselessMod.MOD_ID + ":ore_super_useless");
-    public static final ResourceKey<PlacedFeature> ORE_SUPER_USELESS_NETHER = PlacementUtils.createKey(UselessMod.MOD_ID + ":ore_super_useless_nether");
-    public static final ResourceKey<PlacedFeature> ORE_SUPER_USELESS_END = PlacementUtils.createKey(UselessMod.MOD_ID + ":ore_super_useless_end");
+    public static final ResourceKey<PlacedFeature> ORE_USELESS = createKey("ore_useless");
+    public static final ResourceKey<PlacedFeature> ORE_USELESS_NETHER = createKey("ore_useless_nether");
+    public static final ResourceKey<PlacedFeature> ORE_USELESS_END = createKey("ore_useless_end");
+    public static final ResourceKey<PlacedFeature> ORE_SUPER_USELESS = createKey("ore_super_useless");
+    public static final ResourceKey<PlacedFeature> ORE_SUPER_USELESS_NETHER = createKey("ore_super_useless_nether");
+    public static final ResourceKey<PlacedFeature> ORE_SUPER_USELESS_END = createKey("ore_super_useless_end");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -36,5 +36,9 @@ public final class UselessOrePlacements {
 
     private static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier placementModifier, ConfigFeaturePlacement.Type dimType) {
         return orePlacement(CountPlacement.of(count), placementModifier, dimType);
+    }
+
+    private static ResourceKey<PlacedFeature> createKey(String name) {
+        return ResourceKey.create(Registries.PLACED_FEATURE, UselessMod.rl(name));
     }
 }

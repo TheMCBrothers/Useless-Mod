@@ -1,9 +1,9 @@
 package net.themcbrothers.uselessmod.world.item.crafting;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -16,10 +16,10 @@ public class LightSwitchConvertRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
+    public boolean matches(CraftingInput container, Level level) {
         boolean flag = false;
 
-        for (int i = 0; i < container.getContainerSize(); ++i) {
+        for (int i = 0; i < container.size(); ++i) {
             ItemStack stack = container.getItem(i);
 
             if (!stack.isEmpty()) {
@@ -33,11 +33,11 @@ public class LightSwitchConvertRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, HolderLookup.Provider lookupProvider) {
+    public ItemStack assemble(CraftingInput container, HolderLookup.Provider lookupProvider) {
         ItemStack stack = ItemStack.EMPTY;
         boolean isBlock = false;
 
-        for (int i = 0; i < container.getContainerSize(); ++i) {
+        for (int i = 0; i < container.size(); ++i) {
             ItemStack itemStack = container.getItem(i);
             if (!itemStack.isEmpty() && (itemStack.is(UselessBlocks.LIGHT_SWITCH.asItem()) ||
                     (isBlock = itemStack.is(UselessBlocks.LIGHT_SWITCH_BLOCK.asItem())))) {
