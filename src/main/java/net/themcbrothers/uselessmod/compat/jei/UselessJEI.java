@@ -3,17 +3,17 @@ package net.themcbrothers.uselessmod.compat.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
-import net.themcbrothers.uselessmod.core.UselessBlocks;
-import net.themcbrothers.uselessmod.core.UselessItems;
-import net.themcbrothers.uselessmod.core.UselessMenuTypes;
-import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
+import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,13 @@ public class UselessJEI implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.useNbtForSubtypes(UselessBlocks.WALL_CLOSET.asItem(), UselessBlocks.CUP_COFFEE.asItem(), UselessBlocks.PAINTED_WOOL.asItem(), UselessItems.PAINT_BRUSH.asItem());
+        registration.registerSubtypeInterpreter(UselessBlocks.WALL_CLOSET.asItem(), (ingredient, context) -> ingredient.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL, Holder.direct(Blocks.AIR)).getRegisteredName());
+        registration.registerSubtypeInterpreter(UselessBlocks.CUP_COFFEE.asItem(), (ingredient, context) -> ingredient.getOrDefault(UselessDataComponents.COFFEE_TYPE, UselessCoffeeTypes.BLACK.get()).getDescriptionId());
+
+        IIngredientSubtypeInterpreter<ItemStack> colorSubtypeInterpreter = (ingredient, context) -> ingredient.getOrDefault(UselessDataComponents.COLOR, -1).toString();
+        registration.registerSubtypeInterpreter(UselessBlocks.PAINTED_WOOL.asItem(), colorSubtypeInterpreter);
+        registration.registerSubtypeInterpreter(UselessItems.PAINT_BRUSH.asItem(), colorSubtypeInterpreter);
+        registration.registerSubtypeInterpreter(UselessItems.BUCKET_PAINT.asItem(), colorSubtypeInterpreter);
     }
 
     @Override

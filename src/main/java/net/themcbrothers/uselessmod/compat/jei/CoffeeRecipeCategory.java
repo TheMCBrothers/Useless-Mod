@@ -77,7 +77,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
         final int waterAmount = waterIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
                 waterIngredient.getFluids()[0].getAmount();
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 3)
+        builder.addSlot(RecipeIngredientRole.CATALYST, 1, 3)
                 .setFluidRenderer(waterAmount, false, 8, 48)
                 .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(waterIngredient.getFluids()));
 
@@ -85,7 +85,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
             final int milkAmount = milkIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
                     milkIngredient.getFluids()[0].getAmount();
 
-            builder.addSlot(RecipeIngredientRole.INPUT, 19, 3)
+            builder.addSlot(RecipeIngredientRole.CATALYST, 19, 3)
                     .setFluidRenderer(milkAmount, false, 8, 48)
                     .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(milkIngredient.getFluids()));
         });

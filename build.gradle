@@ -84,10 +84,9 @@ dependencies {
     implementation "net.themcbrothers:themcbroslib:$minecraft_version-$lib_version"
 
     // JEI
-    // TODO update JEI mc version
-    compileOnly("mezz.jei:jei-1.20.4-common-api:$jei_version")
-    compileOnly("mezz.jei:jei-1.20.4-neoforge-api:$jei_version")
-//    localRuntime("mezz.jei:jei-1.20.4-neoforge:$jei_version")
+    compileOnly("mezz.jei:jei-$minecraft_version-common-api:$jei_version")
+    compileOnly("mezz.jei:jei-$minecraft_version-neoforge-api:$jei_version")
+    localRuntime("mezz.jei:jei-$minecraft_version-neoforge:$jei_version")
 }
 
 tasks.named('processResources', ProcessResources).configure {
