@@ -193,8 +193,13 @@ public class UselessTagsProvider {
 
         @Override
         protected void addTags(HolderLookup.Provider lookupProvider) {
-            this.tag(PaintingVariantTags.PLACEABLE).add(UselessPaintingVariants.LARGE_LOGO_RED.getKey(), UselessPaintingVariants.LARGE_LOGO_BLUE.getKey(),
-                    UselessPaintingVariants.SMALL_LOGO_RED.getKey(), UselessPaintingVariants.SMALL_LOGO_BLUE.getKey());
+            this.tag(PaintingVariantTags.PLACEABLE)
+                    .add(
+                            UselessPaintingVariants.LARGE_LOGO_RED,
+                            UselessPaintingVariants.LARGE_LOGO_BLUE,
+                            UselessPaintingVariants.SMALL_LOGO_RED,
+                            UselessPaintingVariants.SMALL_LOGO_BLUE
+                    );
         }
     }
 }

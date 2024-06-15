@@ -14,6 +14,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.core.UselessPaintingVariants;
 import net.themcbrothers.uselessmod.datagen.loot.UselessLootTableProvider;
 import net.themcbrothers.uselessmod.datagen.worldgen.biome.UselessBiomeData;
 import net.themcbrothers.uselessmod.datagen.worldgen.biome.UselessBiomeModifiers;
@@ -30,10 +31,10 @@ public class UselessDataGen {
         final DataGenerator generator = event.getGenerator();
         final PackOutput packOutput = generator.getPackOutput();
         final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        final CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        // Data
+        // Data driven registries
         RegistrySetBuilder registrySetBuilder = new RegistrySetBuilder()
+                .add(Registries.PAINTING_VARIANT, UselessPaintingVariants::bootstrap)
                 .add(Registries.CONFIGURED_FEATURE, context -> {
                     UselessTreeFeatures.bootstrap(context);
                     UselessVegetationFeatures.bootstrap(context);
@@ -47,7 +48,12 @@ public class UselessDataGen {
                 .add(Registries.BIOME, UselessBiomeData::bootstrap)
                 .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, UselessBiomeModifiers::bootstrap);
 
-        generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(UselessMod.MOD_ID)));
+        DatapackBuiltinEntriesProvider datapackBuiltinEntriesProvider = new DatapackBuiltinEntriesProvider(packOutput, event.getLookupProvider(), registrySetBuilder, Set.of(UselessMod.MOD_ID));
+        generator.addProvider(event.includeServer(), datapackBuiltinEntriesProvider);
+
+        // Now we can actually use this data
+        final CompletableFuture<HolderLookup.Provider> lookupProvider = datapackBuiltinEntriesProvider.getRegistryProvider();
+
         generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new UselessLanguageProvider(packOutput));
         generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new UselessAdvancementProvider())));
