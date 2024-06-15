@@ -5,6 +5,8 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -17,6 +19,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessItems;
+import net.themcbrothers.uselessmod.world.level.biome.UselessBiomes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -31,9 +34,8 @@ public class UselessAdvancementProvider implements AdvancementProvider.Advanceme
 
         AdvancementHolder root = Advancement.Builder.advancement().display(info(UselessItems.USELESS_INGOT, "root", rl("textures/gui/advancements/backgrounds/uselessmod.png"), AdvancementType.TASK, false, false, false)).addCriterion("what", InventoryChangeTrigger.TriggerInstance.hasItems(UselessItems.USELESS_INGOT)).save(saver, rl("root"), existingFileHelper);
         Advancement.Builder.advancement().display(info(UselessBlocks.USELESS_ORE, "mine_ore", null, AdvancementType.TASK, true, true, false)).parent(root).addCriterion("has_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(UselessItems.USELESS_INGOT)).save(saver, rl("mine_ore"), existingFileHelper);
-        // TODO 1.20.6
-//        AdvancementHolder biome = Advancement.Builder.advancement().display(info(UselessBlocks.USELESS_OAK_SAPLING, "visit_useless_forest", null, AdvancementType.TASK, true, true, false)).parent(root).addCriterion("useless_forest", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(UselessBiomes.USELESS_FOREST)))).save(saver, rl("visit_useless_forest"), existingFileHelper);
-        Advancement.Builder.advancement().display(info(UselessBlocks.USELESS_ROSE, "collect_roses", null, AdvancementType.GOAL, true, true, false)).parent(root).addCriterion("has_roses", InventoryChangeTrigger.TriggerInstance.hasItems(UselessBlocks.RED_ROSE, UselessBlocks.BLUE_ROSE, UselessBlocks.USELESS_ROSE)).save(saver, rl("collect_roses"), existingFileHelper);
+        AdvancementHolder biome = Advancement.Builder.advancement().display(info(UselessBlocks.USELESS_OAK_SAPLING, "visit_useless_forest", null, AdvancementType.TASK, true, true, false)).parent(root).addCriterion("useless_forest", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(UselessBiomes.USELESS_FOREST)))).save(saver, rl("visit_useless_forest"), existingFileHelper);
+        Advancement.Builder.advancement().display(info(UselessBlocks.USELESS_ROSE, "collect_roses", null, AdvancementType.GOAL, true, true, false)).parent(biome).addCriterion("has_roses", InventoryChangeTrigger.TriggerInstance.hasItems(UselessBlocks.RED_ROSE, UselessBlocks.BLUE_ROSE, UselessBlocks.USELESS_ROSE)).save(saver, rl("collect_roses"), existingFileHelper);
     }
 
     private DisplayInfo info(ItemLike icon, String name, @Nullable ResourceLocation background, AdvancementType type, boolean showToast, boolean announceChat, boolean hidden) {

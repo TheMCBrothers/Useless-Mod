@@ -1,5 +1,5 @@
 {
-  "parent": "uselessmod:root",
+  "parent": "uselessmod:visit_useless_forest",
   "criteria": {
     "has_roses": {
       "conditions": {
