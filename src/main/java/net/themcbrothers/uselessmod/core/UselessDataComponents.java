@@ -9,7 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
@@ -49,9 +49,9 @@ public final class UselessDataComponents {
                     .persistent(BuiltInRegistries.BLOCK.holderByNameCodec())
                     .build());
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<FluidStack>> FLUID_CONTENTS = Registration.DATA_COMPONENT_TYPES.register("fluid_contents",
-            () -> DataComponentType.<FluidStack>builder()
-                    .persistent(FluidStack.CODEC)
-                    .networkSynchronized(FluidStack.STREAM_CODEC)
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_CONTENTS = Registration.DATA_COMPONENT_TYPES.register("fluid_contents",
+            () -> DataComponentType.<SimpleFluidContent>builder()
+                    .persistent(SimpleFluidContent.CODEC)
+                    .networkSynchronized(SimpleFluidContent.STREAM_CODEC)
                     .build());
 }
