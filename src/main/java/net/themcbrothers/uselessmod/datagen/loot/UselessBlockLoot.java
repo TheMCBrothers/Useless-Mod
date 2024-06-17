@@ -41,7 +41,7 @@ import java.util.stream.Stream;
 import static net.themcbrothers.uselessmod.core.UselessBlocks.*;
 
 public class UselessBlockLoot extends BlockLootSubProvider {
-    private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.TOOLS_SHEARS));
+    private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.TOOLS_SHEAR));
     private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
     private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(

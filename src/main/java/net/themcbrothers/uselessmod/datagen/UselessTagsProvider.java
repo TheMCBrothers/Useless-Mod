@@ -149,8 +149,8 @@ public class UselessTagsProvider {
             this.tag(Tags.Items.RAW_MATERIALS).addTag(UselessTags.Items.RAW_MATERIALS_USELESS).addTag(UselessTags.Items.RAW_MATERIALS_SUPER_USELESS);
 
             // other common tags
-            this.tag(Tags.Items.TOOLS_SHEARS).add(UselessItems.USELESS_SHEARS.get());
-            this.tag(Tags.Items.TOOLS_SHIELDS).add(UselessItems.USELESS_SHIELD.get(), UselessItems.SUPER_USELESS_SHIELD.get());
+            this.tag(Tags.Items.TOOLS_SHEAR).add(UselessItems.USELESS_SHEARS.get());
+            this.tag(Tags.Items.TOOLS_SHIELD).add(UselessItems.USELESS_SHIELD.get(), UselessItems.SUPER_USELESS_SHIELD.get());
 
             this.tag(UselessTags.Items.CROPS_USELESS_WHEAT).add(UselessItems.USELESS_WHEAT.get());
             this.tag(UselessTags.Items.CROPS_COFFEEBEAN).add(UselessItems.COFFEE_BEANS.get());
