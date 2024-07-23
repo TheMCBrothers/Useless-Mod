@@ -28,7 +28,7 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.util.TriState;
 import net.themcbrothers.lib.wrench.Wrench;
 import net.themcbrothers.lib.wrench.WrenchUtils;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
@@ -237,8 +237,8 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction facing, IPlantable plantable) {
-        return this.getMimic(level, pos).canSustainPlant(level, pos, facing, plantable);
+    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+        return this.getMimic(level, soilPosition).canSustainPlant(level, soilPosition, facing, plant);
     }
 
     @Override
