@@ -29,7 +29,10 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.client.gui.screens.inventory.CoffeeMachineScreen;
@@ -57,6 +60,7 @@ public class ClientSetup {
 
         bus.addListener(this::clientSetup);
         bus.addListener(this::menuScreens);
+        bus.addListener(this::extensions);
         bus.addListener(this::blockColors);
         bus.addListener(this::itemColors);
         bus.addListener(this::entityRegisterRenders);
@@ -95,6 +99,32 @@ public class ClientSetup {
 
     private void menuScreens(final RegisterMenuScreensEvent event) {
         event.register(UselessMenuTypes.COFFEE_MACHINE.get(), CoffeeMachineScreen::new);
+    }
+
+    private void extensions(final RegisterClientExtensionsEvent event) {
+        event.registerItem(UselessItemStackRendererProvider.blockEntity(), UselessBlocks.COFFEE_MACHINE.asItem(), UselessBlocks.USELESS_BED.asItem());
+        event.registerItem(UselessItemStackRendererProvider.shield(), UselessItems.USELESS_SHIELD.asItem(), UselessItems.SUPER_USELESS_SHIELD.asItem());
+
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            private static final ResourceLocation PAINT_STILL = UselessMod.rl("block/paint_still"),
+                    PAINT_FLOW = UselessMod.rl("block/paint_flow");
+
+            @Override
+            public ResourceLocation getStillTexture() {
+                return PAINT_STILL;
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return PAINT_FLOW;
+            }
+
+            @Override
+            public int getTintColor(FluidStack stack) {
+                Integer color = stack.get(UselessDataComponents.COLOR.get());
+                return color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
+            }
+        }, UselessFluidTypes.PAINT.get());
     }
 
     private void blockColors(final RegisterColorHandlersEvent.Block event) {

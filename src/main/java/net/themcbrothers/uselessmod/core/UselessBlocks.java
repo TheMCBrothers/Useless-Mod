@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
-import net.themcbrothers.uselessmod.world.item.CoffeeMachineBlockItem;
 import net.themcbrothers.uselessmod.world.item.CupBlockItem;
 import net.themcbrothers.uselessmod.world.item.LightSwitchBlockItem;
 import net.themcbrothers.uselessmod.world.item.UselessBedItem;
@@ -96,7 +95,7 @@ public final class UselessBlocks {
             block -> new BlockItem(block, new Item.Properties().component(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Holder.direct(Blocks.AIR))));
     public static final DeferredBlock<Block> MACHINE_SUPPLIER = BLOCKS.register("machine_supplier", () -> new MachineSupplierBlock(of().strength(0.5F).dynamicShape().noOcclusion()), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", () -> new CoffeeMachineBlock(of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(3.0F).sound(SoundType.METAL)),
-            block -> new CoffeeMachineBlockItem(block, new Item.Properties().component(DataComponents.CONTAINER, ItemContainerContents.EMPTY).component(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(), CoffeeMachineBlockEntity.Contents.EMPTY)));
+            block -> new BlockItem(block, new Item.Properties().component(DataComponents.CONTAINER, ItemContainerContents.EMPTY).component(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(), CoffeeMachineBlockEntity.Contents.EMPTY)));
     public static final DeferredBlock<Block> CUP = BLOCKS.register("cup", () -> new CupBlock(of().strength(0.5F)), block -> new CupBlockItem(block, GENERAL_PROPS, false));
     public static final DeferredBlock<Block> CUP_COFFEE = BLOCKS.register("cup_coffee", () -> new CupCoffeeBlock(of().strength(0.5F)), block -> new CupBlockItem(block, ONE_STACKING_PROPS, true));
 
