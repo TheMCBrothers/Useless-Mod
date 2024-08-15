@@ -12,7 +12,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.themcbrothers.uselessmod.world.item.CupBlockItem;
 import net.themcbrothers.uselessmod.world.item.LightSwitchBlockItem;
-import net.themcbrothers.uselessmod.world.item.UselessBedItem;
 import net.themcbrothers.uselessmod.world.level.block.*;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import net.themcbrothers.uselessmod.world.level.block.grower.UselessOakTreeGrower;
@@ -80,7 +79,7 @@ public final class UselessBlocks {
     // Colorful Blocks
     public static final DeferredBlock<Block> USELESS_WOOL = BLOCKS.register("useless_wool", () -> new Block(ofFullCopy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> USELESS_CARPET = BLOCKS.register("useless_carpet", () -> new WoolCarpetBlock(DyeColor.LIME, ofFullCopy(Blocks.WHITE_CARPET)), GENERAL_BLOCK_ITEM);
-    public static final DeferredBlock<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, ofFullCopy(Blocks.WHITE_CARPET)), block -> new UselessBedItem(block, ONE_STACKING_PROPS));
+    public static final DeferredBlock<Block> USELESS_BED = BLOCKS.register("useless_bed", () -> new UselessBedBlock(DyeColor.LIME, ofFullCopy(Blocks.WHITE_CARPET)), block -> new BedItem(block, ONE_STACKING_PROPS));
     public static final DeferredBlock<Block> PAINTED_WOOL = BLOCKS.register("painted_wool", () -> new PaintedWoolBlock(ofFullCopy(Blocks.WHITE_WOOL)), GENERAL_BLOCK_ITEM);
     public static final DeferredBlock<Block> PAINT_BUCKET = BLOCKS.register("paint_bucket", () -> new PaintBucketBlock(of().strength(2.5F).sound(SoundType.LANTERN)), GENERAL_BLOCK_ITEM);
 
