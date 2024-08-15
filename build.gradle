@@ -139,7 +139,7 @@ unifiedPublishing {
     project {
         displayName = "[$minecraft_version] v$mod_version"
         releaseType = project.artifact_type
-        gameVersions = [minecraft_version]
+        gameVersions.addAll supported_game_versions.split(", ?")
         gameLoaders = ["neoforge"]
 
         mainPublication tasks.jar
