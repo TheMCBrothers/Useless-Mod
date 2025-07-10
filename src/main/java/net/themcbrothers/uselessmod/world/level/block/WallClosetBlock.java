@@ -8,8 +8,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -36,7 +36,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
-import net.themcbrothers.uselessmod.core.UselessStats;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -96,29 +95,19 @@ public class WallClosetBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            if (level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
-                player.openMenu(wallClosetBlockEntity);
-                player.awardStat(UselessStats.OPEN_WALL_CLOSET.get());
-                PiglinAi.angerNearbyPiglins(player, true);
-            }
-
-            return InteractionResult.CONSUME;
+        if (level instanceof ServerLevel serverlevel && level.getBlockEntity(pos) instanceof WallClosetBlockEntity wallClosetBlockEntity) {
+            player.openMenu(wallClosetBlockEntity);
+            player.awardStat(Stats.OPEN_BARREL);
+            PiglinAi.angerNearbyPiglins(serverlevel, player, true);
         }
+
+        return InteractionResult.SUCCESS;
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())) {
-            if (level.getBlockEntity(pos) instanceof Container container) {
-                Containers.dropContents(level, pos, container);
-                level.updateNeighbourForOutputSignal(pos, this);
-            }
-
-            super.onRemove(state, level, pos, newState, isMoving);
-        }
+        Containers.dropContentsOnDestroy(state, newState, level, pos);
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override

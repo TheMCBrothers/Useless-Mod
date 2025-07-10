@@ -6,9 +6,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -106,7 +108,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         ContainerHelper.loadAllItems(tag, this.items, lookupProvider);
         final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
         if (key != null) {
-            material = BuiltInRegistries.BLOCK.containsKey(key) ? Objects.requireNonNull(BuiltInRegistries.BLOCK.get(key)) : Blocks.AIR;
+            material = BuiltInRegistries.BLOCK.getValue(key);
         }
     }
 

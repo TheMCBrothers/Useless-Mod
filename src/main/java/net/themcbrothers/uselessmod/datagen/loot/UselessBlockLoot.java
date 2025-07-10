@@ -41,7 +41,6 @@ import java.util.stream.Stream;
 import static net.themcbrothers.uselessmod.core.UselessBlocks.*;
 
 public class UselessBlockLoot extends BlockLootSubProvider {
-    private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.TOOLS_SHEAR));
     private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
     private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(
@@ -54,8 +53,13 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), lookupProvider);
     }
 
+    @Override
+    protected LootItemCondition.Builder hasShears() {
+        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(this.registries.lookupOrThrow(Registries.ITEM), Tags.Items.TOOLS_SHEAR));
+    }
+
     private LootItemCondition.Builder hasShearsOrSilkTouch() {
-        return HAS_SHEARS.or(this.hasSilkTouch());
+        return hasShears().or(this.hasSilkTouch());
     }
 
     private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {
@@ -96,7 +100,7 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         LootItemCondition.Builder condition4 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(WILD_COFFEE_BEANS.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         this.add(WILD_COFFEE_BEANS.get(), createCropDrops(COFFEE_BEANS.get(), UselessItems.COFFEE_BEANS.get(), UselessItems.COFFEE_SEEDS.get(), condition4));
         this.dropSelf(USELESS_OAK_SAPLING.get());
-        this.add(USELESS_OAK_LEAVES.get(), (block) -> createUselessLeavesDrop(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        this.add(USELESS_OAK_LEAVES.get(), (block) -> createOakLeavesDrops(block, USELESS_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.dropSelf(USELESS_OAK_PLANKS.get());
         this.dropSelf(USELESS_OAK_STAIRS.get());
         this.add(USELESS_OAK_SLAB.get(), this::createSlabItemTable);
@@ -177,7 +181,8 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
                 .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                        .include(UselessDataComponents.COFFEE_TYPE.get()))));
+                        .include(UselessDataComponents.COFFEE_TYPE.get())
+                        .include(DataComponents.CONSUMABLE))));
     }
 
     private LootTable.Builder createCoffeeMachineDrop(ItemLike itemLike) {
@@ -197,28 +202,6 @@ public class UselessBlockLoot extends BlockLootSubProvider {
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
                         .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
                                 .include(UselessDataComponents.WALL_CLOSET_MATERIAL.get())))));
-    }
-
-    private LootTable.Builder createUselessLeavesDrop(Block leavesBlock, Block saplingBlock, float... chances) {
-        HolderLookup.RegistryLookup<Enchantment> registryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-        return LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(leavesBlock)
-                                .when(this.doesNotHaveShearsOrSilkTouch())
-                                .otherwise(applyExplosionCondition(leavesBlock, LootItem.lootTableItem(saplingBlock))
-                                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), chances)))))
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
-                        .when(this.doesNotHaveShearsOrSilkTouch())
-                        .add(applyExplosionDecay(leavesBlock, LootItem.lootTableItem(Items.STICK)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
-                        .when(this.doesNotHaveShearsOrSilkTouch())
-                        .add(applyExplosionCondition(leavesBlock, LootItem.lootTableItem(Items.APPLE))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), 0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F))));
     }
 
     @Override

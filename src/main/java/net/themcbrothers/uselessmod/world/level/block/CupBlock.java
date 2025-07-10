@@ -2,15 +2,14 @@ package net.themcbrothers.uselessmod.world.level.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -31,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
-@SuppressWarnings("deprecation")
 public class CupBlock extends Block implements SimpleWaterloggedBlock, WrenchableBlock {
     private static final VoxelShape SHAPE_INTERACTION = box(5, 0, 5, 11, 7, 11);
     private static final VoxelShape SHAPE_BASE = Shapes.or(
@@ -58,10 +56,20 @@ public class CupBlock extends Block implements SimpleWaterloggedBlock, Wrenchabl
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader level,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+    ) {
         if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+            scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
+
         return state;
     }
 
@@ -78,8 +86,8 @@ public class CupBlock extends Block implements SimpleWaterloggedBlock, Wrenchabl
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack p_316304_, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return this.tryWrench(state, level, pos, player, hand, hit) ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return this.tryWrench(state, level, pos, player, hand, hit) ? InteractionResult.SUCCESS : super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
 
     @Override

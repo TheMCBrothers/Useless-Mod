@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipePropertySet;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -19,6 +20,7 @@ import net.themcbrothers.lib.energy.EnergyProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessMenuTypes;
+import net.themcbrothers.uselessmod.core.UselessRecipePropertySet;
 import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
@@ -47,14 +49,18 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     public final CoffeeMachineBlockEntity blockEntity;
     private final ContainerData data;
     private final ContainerLevelAccess levelAccess;
-    private final List<RecipeHolder<CoffeeRecipe>> recipes;
+    private final RecipePropertySet acceptedCupInputs;
+    private final RecipePropertySet acceptedBeanInputs;
+    private final RecipePropertySet acceptedExtraInputs;
 
     public CoffeeMachineMenu(int id, Inventory inventory, CoffeeMachineBlockEntity coffeeMachine, ContainerData data) {
         super(UselessMenuTypes.COFFEE_MACHINE.get(), id);
         this.blockEntity = coffeeMachine;
         this.data = data;
         this.levelAccess = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
-        this.recipes = coffeeMachine.getLevel().getRecipeManager().getAllRecipesFor(UselessRecipeTypes.COFFEE.get());
+        this.acceptedCupInputs = this.blockEntity.getLevel().recipeAccess().propertySet(UselessRecipePropertySet.COFFEE_MACHINE_CUP);
+        this.acceptedBeanInputs = this.blockEntity.getLevel().recipeAccess().propertySet(UselessRecipePropertySet.COFFEE_MACHINE_BEAN);
+        this.acceptedExtraInputs = this.blockEntity.getLevel().recipeAccess().propertySet(UselessRecipePropertySet.COFFEE_MACHINE_EXTRA);
 
         this.addSlot(new CupSlot(this.blockEntity, 0, 62, 16));
         this.addSlot(new CoffeeBeanSlot(this.blockEntity, 1, 80, 16));
@@ -145,15 +151,15 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
     }
 
     private boolean isCup(ItemStack stack) {
-        return this.recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> recipe.getCupIngredient().test(stack));
+        return this.acceptedCupInputs.test(stack);
     }
 
     private boolean isBean(ItemStack stack) {
-        return this.recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> recipe.getBeanIngredient().test(stack));
+        return this.acceptedBeanInputs.test(stack);
     }
 
     private boolean isExtra(ItemStack stack) {
-        return this.recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> recipe.getExtraIngredient().test(stack));
+        return this.acceptedExtraInputs.test(stack);
     }
 
     private boolean isFluidItem(ItemStack stack) {

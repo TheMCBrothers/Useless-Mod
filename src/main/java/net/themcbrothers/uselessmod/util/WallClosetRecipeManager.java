@@ -2,8 +2,9 @@ package net.themcbrothers.uselessmod.util;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -20,6 +21,7 @@ import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -40,7 +42,7 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
     }
 
     public static boolean isValidMaterial(Block block) {
-        return BuiltInRegistries.BLOCK.getTag(UselessTags.Blocks.WALL_CLOSET_MATERIALS)
+        return BuiltInRegistries.BLOCK.get(UselessTags.Blocks.WALL_CLOSET_MATERIALS)
                 .map(HolderSet.Named::unwrap)
                 .flatMap(tag -> tag.right())
                 .map(holders -> holders.isEmpty() || holders.stream().anyMatch(blockHolder -> blockHolder.is(BuiltInRegistries.BLOCK.getKey(block))))
@@ -48,17 +50,23 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
     }
 
     private static RecipeHolder<ShapedRecipe> createWallClosetRecipe(Block material) {
-        Ingredient planks = Ingredient.of(material);
-        Ingredient slab = Ingredient.of(getSlab(material));
-
-        if (slab.isEmpty()) {
+        if (material.defaultBlockState().isAir()) {
             return null;
         }
 
-        NonNullList<Ingredient> ingredients = NonNullList.of(Ingredient.EMPTY,
-                planks, planks, planks,
-                slab, Ingredient.EMPTY, slab,
-                planks, planks, planks
+        Block slabBlock = getSlab(material);
+
+        if (slabBlock.defaultBlockState().isAir()) {
+            return null;
+        }
+
+        Ingredient planks = Ingredient.of(material);
+        Ingredient slab = Ingredient.of(slabBlock);
+
+        List<Optional<Ingredient>> ingredients = List.of(
+                Optional.of(planks), Optional.of(planks), Optional.of(planks),
+                Optional.of(slab), Optional.empty(), Optional.of(slab),
+                Optional.of(planks), Optional.of(planks), Optional.of(planks)
         );
 
         Holder<Block> blockHolder = BuiltInRegistries.BLOCK.wrapAsHolder(material);
@@ -67,9 +75,10 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
 
         ShapedRecipePattern pattern = new ShapedRecipePattern(3, 3, ingredients, Optional.empty());
         ResourceLocation id = UselessMod.rl("closet." + blockHolder.getRegisteredName().replace(':', '.'));
+        ResourceKey<Recipe<?>> key = ResourceKey.create(Registries.RECIPE, id);
         ShapedRecipe recipe = new ShapedRecipe("uselessmod:closets", CraftingBookCategory.MISC, pattern, output);
 
-        return new RecipeHolder<>(id, recipe);
+        return new RecipeHolder<>(key, recipe);
     }
 
     @NotNull
@@ -84,12 +93,12 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
             String newPath = path.substring(0, path.length() - "_planks".length()) + "_slab";
             ResourceLocation newReg = ResourceLocation.fromNamespaceAndPath(namespace, newPath);
 
-            result = BuiltInRegistries.BLOCK.get(newReg);
+            result = BuiltInRegistries.BLOCK.getValue(newReg);
         } else if (path.endsWith("s")) {
             String newPath = path.substring(0, path.length() - 1) + "_slab";
             ResourceLocation newReg = ResourceLocation.fromNamespaceAndPath(namespace, newPath);
 
-            result = BuiltInRegistries.BLOCK.get(newReg);
+            result = BuiltInRegistries.BLOCK.getValue(newReg);
         }
 
         if (result != Blocks.AIR) {
@@ -97,6 +106,6 @@ public class WallClosetRecipeManager implements ResourceManagerReloadListener {
         }
 
         ResourceLocation newReg = ResourceLocation.fromNamespaceAndPath(namespace, path + "_slab");
-        return BuiltInRegistries.BLOCK.get(newReg);
+        return BuiltInRegistries.BLOCK.getValue(newReg);
     }
 }

@@ -13,9 +13,9 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
-import net.minecraft.world.item.ElytraItem;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -86,10 +86,6 @@ public class ClientSetup {
 
         // Item Properties
         event.enqueueWork(() -> {
-            ItemProperties.register(UselessItems.USELESS_ELYTRA.get(), ResourceLocation.withDefaultNamespace("broken"),
-                    (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
-            ItemProperties.register(UselessItems.SUPER_USELESS_ELYTRA.get(), ResourceLocation.withDefaultNamespace("broken"),
-                    (stack, level, entity, seed) -> ElytraItem.isFlyEnabled(stack) ? 0.0F : 1.0F);
             ItemProperties.register(UselessItems.USELESS_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
             ItemProperties.register(UselessItems.SUPER_USELESS_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"),
@@ -122,7 +118,7 @@ public class ClientSetup {
             @Override
             public int getTintColor(FluidStack stack) {
                 Integer color = stack.get(UselessDataComponents.COLOR.get());
-                return color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
+                return color != null ? ARGB.color(0xFF, color) : -1;
             }
         }, UselessFluidTypes.PAINT.get());
     }
@@ -132,14 +128,14 @@ public class ClientSetup {
 
         event.register(((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof PaintedWoolBlockEntity canvas) {
-                return FastColor.ARGB32.color(0xFF, canvas.getColor());
+                return ARGB.color(0xFF, canvas.getColor());
             }
             return -1;
         }), UselessBlocks.PAINTED_WOOL.get());
 
         event.register((state, level, pos, tintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CupBlockEntity cup) {
-                return cup.getCoffeeType().map(CoffeeType::getColor).map(color -> FastColor.ARGB32.color(0xFF, color)).orElse(-1);
+                return cup.getCoffeeType().map(CoffeeType::getColor).map(color -> ARGB.color(0xFF, color)).orElse(-1);
             }
             return -1;
         }, UselessBlocks.CUP_COFFEE.get());
@@ -168,17 +164,17 @@ public class ClientSetup {
 
         event.register(((stack, layer) -> {
             Integer color = stack.get(UselessDataComponents.COLOR.get());
-            return layer == 1 && color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
+            return layer == 1 && color != null ? ARGB.color(0xFF, color) : -1;
         }), UselessItems.PAINT_BRUSH);
 
         event.register(((stack, layer) -> {
             Integer color = stack.get(UselessDataComponents.COLOR.get());
-            return color != null ? FastColor.ARGB32.color(0xFF, color) : -1;
+            return color != null ? ARGB.color(0xFF, color) : -1;
         }), UselessBlocks.PAINTED_WOOL);
 
         event.register((stack, layer) -> CoffeeUtils.getCoffeeType(stack)
                         .map(CoffeeType::getColor)
-                        .map(color -> FastColor.ARGB32.color(0xFF, color))
+                        .map(color -> ARGB.color(0xFF, color))
                         .orElse(-1),
                 UselessBlocks.CUP_COFFEE);
 
@@ -206,7 +202,7 @@ public class ClientSetup {
     private void entityAddLayers(final EntityRenderersEvent.AddLayers event) {
         for (PlayerSkin.Model skin : event.getSkins()) {
             if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
-                renderer.addLayer(new UselessElytraLayer<>(renderer, event.getEntityModels()));
+                renderer.addLayer(new UselessElytraLayer<>(renderer, event.getEntityModels(), event.getContext().getEquipmentRenderer()));
             }
         }
     }

@@ -1,13 +1,10 @@
 package net.themcbrothers.uselessmod.client.gui.screens.inventory;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
@@ -68,12 +65,12 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         int yPos = this.topPos;
 
         // Background
-        guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight);
-        guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos - 16, yPos + 10, 0, 166, 23, 64);
+        guiGraphics.blit(RenderType::guiTextured, COFFEE_MACHINE_LOCATION, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        guiGraphics.blit(RenderType::guiTextured, COFFEE_MACHINE_LOCATION, xPos - 16, yPos + 10, 0, 166, 23, 64, 256, 256);
 
         // Progress
         double d = this.menu.getScaledCookTime(42);
-        guiGraphics.blit(COFFEE_MACHINE_LOCATION, xPos + 67, yPos + 39, 176, 0, (int) d, 6);
+        guiGraphics.blit(RenderType::guiTextured, COFFEE_MACHINE_LOCATION, xPos + 67, yPos + 39, 176, 0, (int) d, 6, 256, 256);
     }
 
     @Override
@@ -157,10 +154,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
 
         @Override
         public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
+            guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
         }
 
         public void renderToolTip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {

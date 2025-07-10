@@ -3,10 +3,7 @@ package net.themcbrothers.uselessmod.compat.jei;
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.themcbrothers.uselessmod.core.UselessItems;
-import net.themcbrothers.uselessmod.core.UselessTiers;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,8 +14,10 @@ public class UselessRecipeMaker {
     }
 
     private static Stream<RepairData> getRepairData() {
+        return Stream.of();
+        /* TODO: JEI 1.21.2+
         return Stream.of(
-                new RepairData(UselessTiers.USELESS.getRepairIngredient(),
+                new RepairData(Ingredient.of(UselessToolMaterials.USELESS.repairItems()),
                         new ItemStack(UselessItems.USELESS_SWORD.value()),
                         new ItemStack(UselessItems.USELESS_PICKAXE.value()),
                         new ItemStack(UselessItems.USELESS_AXE.value()),
@@ -26,7 +25,7 @@ public class UselessRecipeMaker {
                         new ItemStack(UselessItems.USELESS_HOE.value()),
                         new ItemStack(UselessItems.USELESS_SHIELD.value())
                 ),
-                new RepairData(UselessTiers.SUPER_USELESS.getRepairIngredient(),
+                new RepairData(UselessToolMaterials.SUPER_USELESS.getRepairIngredient(),
                         new ItemStack(UselessItems.SUPER_USELESS_SWORD.value()),
                         new ItemStack(UselessItems.SUPER_USELESS_PICKAXE.value()),
                         new ItemStack(UselessItems.SUPER_USELESS_AXE.value()),
@@ -38,14 +37,15 @@ public class UselessRecipeMaker {
                         new ItemStack(UselessItems.USELESS_ELYTRA.value()),
                         new ItemStack(UselessItems.SUPER_USELESS_ELYTRA.value())
                 )
-        );
+        );*/
     }
 
     private static Stream<IJeiAnvilRecipe> getRepairRecipes(RepairData repairData, IVanillaRecipeFactory vanillaRecipeFactory) {
         Ingredient repairIngredient = repairData.getRepairIngredient();
         List<ItemStack> repairables = repairData.getRepairables();
 
-        List<ItemStack> repairMaterials = List.of(repairIngredient.getItems());
+        // TODO: JEI 1.21.2+
+        List<ItemStack> repairMaterials = repairIngredient.items().stream().map(ItemStack::new).toList();
 
         return repairables.stream()
                 .mapMulti((itemStack, consumer) -> {

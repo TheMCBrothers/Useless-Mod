@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.core;
 
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import net.themcbrothers.uselessmod.world.item.crafting.LightSwitchConvertRecipe;
 
@@ -15,6 +15,6 @@ public final class UselessRecipeSerializers {
 
     public static final Supplier<RecipeSerializer<CoffeeRecipe>> COFFEE =
             RECIPE_SERIALIZERS.register("coffee", CoffeeRecipe.Serializer::new);
-    public static final Supplier<SimpleCraftingRecipeSerializer<LightSwitchConvertRecipe>> LIGHT_SWITCH_CONVERT =
-            RECIPE_SERIALIZERS.register("light_switch_convert", () -> new SimpleCraftingRecipeSerializer<>(LightSwitchConvertRecipe::new));
+    public static final Supplier<RecipeSerializer<LightSwitchConvertRecipe>> LIGHT_SWITCH_CONVERT =
+            RECIPE_SERIALIZERS.register("light_switch_convert", () -> new CustomRecipe.Serializer<>(LightSwitchConvertRecipe::new));
 }

@@ -15,10 +15,12 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.lib.util.RecipeHelper;
@@ -26,8 +28,6 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
-
-import java.util.List;
 
 public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<CoffeeRecipe>> {
     private static final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/container/coffee_machine.png");
@@ -69,26 +69,19 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
 
         builder.addSlot(RecipeIngredientRole.INPUT, 51, 1).addIngredients(recipeValue.getCupIngredient());
         builder.addSlot(RecipeIngredientRole.INPUT, 69, 1).addIngredients(recipeValue.getBeanIngredient());
-        builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(recipeValue.getExtraIngredient());
+        recipeValue.getExtraIngredient().ifPresent(extraIngredient -> builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(extraIngredient));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(RecipeHelper.getResultItem(recipeValue));
 
         SizedFluidIngredient waterIngredient = recipeValue.getWaterIngredient();
 
-        final int waterAmount = waterIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
-                waterIngredient.getFluids()[0].getAmount();
-
         builder.addSlot(RecipeIngredientRole.CATALYST, 1, 3)
-                .setFluidRenderer(waterAmount, false, 8, 48)
-                .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(waterIngredient.getFluids()));
+                .setFluidRenderer(waterIngredient.amount(), false, 8, 48)
+                .addIngredients(NeoForgeTypes.FLUID_STACK, waterIngredient.ingredient().fluids().stream().map(Holder::value).map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME)).toList());
 
-        recipeValue.getMilkIngredient().ifPresent(milkIngredient -> {
-            final int milkAmount = milkIngredient.getFluids().length == 0 ? FluidType.BUCKET_VOLUME :
-                    milkIngredient.getFluids()[0].getAmount();
-
-            builder.addSlot(RecipeIngredientRole.CATALYST, 19, 3)
-                    .setFluidRenderer(milkAmount, false, 8, 48)
-                    .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(milkIngredient.getFluids()));
-        });
+        recipeValue.getMilkIngredient().ifPresent(milkIngredient ->
+                builder.addSlot(RecipeIngredientRole.CATALYST, 19, 3)
+                        .setFluidRenderer(milkIngredient.amount(), false, 8, 48)
+                        .addIngredients(NeoForgeTypes.FLUID_STACK, milkIngredient.ingredient().fluids().stream().map(Holder::value).map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME)).toList()));
     }
 
     @Override

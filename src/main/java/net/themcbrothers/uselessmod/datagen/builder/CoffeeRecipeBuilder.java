@@ -7,10 +7,11 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,7 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     private final ItemStack result;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
+    @Nullable
     private final Ingredient extraIngredient;
     private final SizedFluidIngredient waterIngredient;
     @Nullable
@@ -33,7 +35,7 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     @Nullable
     private String group;
 
-    private CoffeeRecipeBuilder(ItemStack result, Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
+    private CoffeeRecipeBuilder(ItemStack result, Ingredient cupIngredient, Ingredient beanIngredient, @Nullable Ingredient extraIngredient,
                                 SizedFluidIngredient waterIngredient, @Nullable SizedFluidIngredient milkIngredient, int cookingTime) {
         this.result = result;
         this.cupIngredient = cupIngredient;
@@ -67,24 +69,24 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public void save(RecipeOutput consumer, @NotNull ResourceLocation id) {
-        this.ensureValid(id);
-        Advancement.Builder advancement = consumer.advancement()
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
+    public void save(RecipeOutput output, @NotNull ResourceKey<Recipe<?>> resourceKey) {
+        this.ensureValid(resourceKey);
+        Advancement.Builder advancement = output.advancement()
+                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey))
+                .rewards(AdvancementRewards.Builder.recipe(resourceKey))
                 .requirements(AdvancementRequirements.Strategy.OR);
 
         this.criteria.forEach(advancement::addCriterion);
 
-        consumer.accept(id,
+        output.accept(resourceKey,
                 new CoffeeRecipe(this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
-                        this.extraIngredient, this.waterIngredient, Optional.ofNullable(this.milkIngredient), this.result, this.cookingTime),
-                advancement.build(id.withPrefix("recipes/coffee/")));
+                        Optional.ofNullable(this.extraIngredient), this.waterIngredient, Optional.ofNullable(this.milkIngredient), this.result, this.cookingTime),
+                advancement.build(resourceKey.location().withPrefix("recipes/coffee/")));
     }
 
-    private void ensureValid(ResourceLocation id) {
+    private void ensureValid(ResourceKey<Recipe<?>> id) {
         if (this.criteria.isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id);
+            throw new IllegalStateException("No way of obtaining recipe " + id.location());
         }
     }
 }

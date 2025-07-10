@@ -6,6 +6,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.themcbrothers.uselessmod.UselessMod;
 
+import java.util.Optional;
+
 public final class UselessPaintingVariants {
     public static final ResourceKey<PaintingVariant> LARGE_LOGO_RED = createKey("large_logo_red");
     public static final ResourceKey<PaintingVariant> LARGE_LOGO_BLUE = createKey("large_logo_blue");
@@ -20,7 +22,7 @@ public final class UselessPaintingVariants {
     }
 
     private static void register(BootstrapContext<PaintingVariant> context, ResourceKey<PaintingVariant> key, int width, int height) {
-        context.register(key, new PaintingVariant(width, height, key.location()));
+        context.register(key, new PaintingVariant(width, height, key.location(), Optional.empty(), Optional.empty()));
     }
 
     private static ResourceKey<PaintingVariant> createKey(String name) {

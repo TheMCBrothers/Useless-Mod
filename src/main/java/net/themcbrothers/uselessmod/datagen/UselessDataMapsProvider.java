@@ -17,7 +17,7 @@ public class UselessDataMapsProvider extends DataMapProvider {
     }
 
     @Override
-    protected void gather() {
+    protected void gather(HolderLookup.Provider provider) {
         this.builder(NeoForgeDataMaps.COMPOSTABLES)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UselessBlocks.USELESS_OAK_SAPLING.asItem()), new Compostable(0.3F), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UselessItems.USELESS_WHEAT_SEEDS.asItem()), new Compostable(0.3F), false)

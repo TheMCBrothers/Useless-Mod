@@ -1,61 +1,31 @@
 package net.themcbrothers.uselessmod.core;
 
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.themcbrothers.uselessmod.UselessMod;
-import net.themcbrothers.uselessmod.UselessTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentModels;
 
 import java.util.EnumMap;
-import java.util.List;
-import java.util.function.Supplier;
 
-public final class UselessArmorMaterials {
+public interface UselessArmorMaterials {
     static void register() {
     }
 
-    public static final Holder<ArmorMaterial> USELESS = register("useless",
-            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-                map.put(ArmorItem.Type.BOOTS, 3);
-                map.put(ArmorItem.Type.LEGGINGS, 6);
-                map.put(ArmorItem.Type.CHESTPLATE, 7);
-                map.put(ArmorItem.Type.HELMET, 3);
-            }),
-            11,
-            SoundEvents.ARMOR_EQUIP_IRON,
-            0.25F, 0.01F,
-            () -> Ingredient.of(UselessTags.Items.INGOTS_USELESS)
-    );
+    ArmorMaterial USELESS = new ArmorMaterial(20, Util.make(new EnumMap<>(ArmorType.class), defense -> {
+        defense.put(ArmorType.BOOTS, 3);
+        defense.put(ArmorType.LEGGINGS, 6);
+        defense.put(ArmorType.CHESTPLATE, 7);
+        defense.put(ArmorType.HELMET, 3);
+        defense.put(ArmorType.BODY, 7);
+    }), 11, SoundEvents.ARMOR_EQUIP_IRON, 0.25F, 0.025F, ItemTags.REPAIRS_IRON_ARMOR, EquipmentModels.IRON); // TODO: useless model
 
-    public static final Holder<ArmorMaterial> SUPER_USELESS = register("super_useless",
-            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-                map.put(ArmorItem.Type.BOOTS, 3);
-                map.put(ArmorItem.Type.LEGGINGS, 6);
-                map.put(ArmorItem.Type.CHESTPLATE, 7);
-                map.put(ArmorItem.Type.HELMET, 3);
-            }),
-            11,
-            SoundEvents.ARMOR_EQUIP_IRON,
-            0.25F, 0.025F,
-            () -> Ingredient.of(UselessTags.Items.INGOTS_SUPER_USELESS)
-    );
-
-    @SuppressWarnings("SameParameterValue")
-    private static Holder<ArmorMaterial> register(
-            String name,
-            EnumMap<ArmorItem.Type, Integer> defense,
-            int enchantmentValue,
-            Holder<SoundEvent> equipSound,
-            float toughness,
-            float knockbackResistance,
-            Supplier<Ingredient> repairIngredient
-    ) {
-        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(UselessMod.rl(name)));
-        return Registration.ARMOR_MATERIALS.register(name, () ->
-                new ArmorMaterial(defense, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockbackResistance));
-    }
+    ArmorMaterial SUPER_USELESS = new ArmorMaterial(22, Util.make(new EnumMap<>(ArmorType.class), defense -> {
+        defense.put(ArmorType.BOOTS, 3);
+        defense.put(ArmorType.LEGGINGS, 6);
+        defense.put(ArmorType.CHESTPLATE, 7);
+        defense.put(ArmorType.HELMET, 3);
+        defense.put(ArmorType.BODY, 8);
+    }), 11, SoundEvents.ARMOR_EQUIP_IRON, 0.25F, 0.025F, ItemTags.REPAIRS_IRON_ARMOR, EquipmentModels.IRON); // TODO: super-useless model
 }

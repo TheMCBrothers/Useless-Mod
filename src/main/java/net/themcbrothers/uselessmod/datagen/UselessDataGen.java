@@ -54,7 +54,7 @@ public class UselessDataGen {
         // Now we can actually use this data
         final CompletableFuture<HolderLookup.Provider> lookupProvider = datapackBuiltinEntriesProvider.getRegistryProvider();
 
-        generator.addProvider(event.includeServer(), new UselessRecipeProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new UselessRecipeProvider.Runner(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new UselessLanguageProvider(packOutput));
         generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new UselessAdvancementProvider())));
         generator.addProvider(event.includeServer(), UselessLootTableProvider.create(packOutput, lookupProvider));

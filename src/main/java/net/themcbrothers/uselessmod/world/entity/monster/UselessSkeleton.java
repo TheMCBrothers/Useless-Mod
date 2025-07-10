@@ -21,7 +21,7 @@ public class UselessSkeleton extends AbstractSkeleton {
         super.dropCustomDeathLoot(level, damageSource, flag);
         if (damageSource.getEntity() instanceof Creeper creeper && creeper.canDropMobsSkull()) {
             creeper.increaseDroppedSkulls();
-            this.spawnAtLocation(UselessBlocks.USELESS_SKELETON_SKULL);
+            this.spawnAtLocation(level, UselessBlocks.USELESS_SKELETON_SKULL);
         }
     }
 

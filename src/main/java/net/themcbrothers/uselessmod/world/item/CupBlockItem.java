@@ -1,21 +1,17 @@
 package net.themcbrothers.uselessmod.world.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -26,81 +22,11 @@ import net.themcbrothers.uselessmod.util.CoffeeUtils;
 import org.jetbrains.annotations.Nullable;
 
 public class CupBlockItem extends BlockItem {
-    private static final int DRINK_DURATION = 32;
-
     private final boolean drinkable;
 
     public CupBlockItem(Block block, Properties properties, boolean drinkable) {
         super(block, properties);
         this.drinkable = drinkable;
-    }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if (!this.drinkable) {
-            return stack;
-        }
-
-        Player player = entity instanceof Player ? (Player) entity : null;
-        if (player instanceof ServerPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
-        }
-
-        if (!level.isClientSide) {
-            for (MobEffectInstance mobeffectinstance : CoffeeUtils.getMobEffects(stack)) {
-                if (mobeffectinstance.getEffect().value().isInstantenous()) {
-                    mobeffectinstance.getEffect().value().applyInstantenousEffect(player, player, entity, mobeffectinstance.getAmplifier(), 1.0D);
-                } else {
-                    entity.addEffect(new MobEffectInstance(mobeffectinstance));
-                }
-            }
-        }
-
-        if (player != null) {
-            player.awardStat(Stats.ITEM_USED.get(this));
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-        }
-
-        if (player == null || !player.getAbilities().instabuild) {
-            if (stack.isEmpty()) {
-                return new ItemStack(UselessBlocks.CUP);
-            }
-
-            if (player != null) {
-                player.getInventory().add(new ItemStack(UselessBlocks.CUP));
-            }
-        }
-
-        entity.gameEvent(GameEvent.DRINK);
-        return stack;
-    }
-
-    @Override
-    public int getUseDuration(ItemStack stack, LivingEntity livingEntity) {
-        return this.drinkable ? DRINK_DURATION : 0;
-    }
-
-    @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return this.drinkable ? UseAnim.DRINK : UseAnim.NONE;
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        return this.drinkable ? ItemUtils.startUsingInstantly(level, player, hand) : super.use(level, player, hand);
-    }
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        InteractionResult interactionResult = this.place(new BlockPlaceContext(context));
-        if (!interactionResult.consumesAction() && context.getPlayer() != null) {
-            InteractionResult result = this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
-            return result == InteractionResult.CONSUME ? InteractionResult.CONSUME_PARTIAL : result;
-        } else {
-            return interactionResult;
-        }
     }
 
     @Nullable
@@ -123,20 +49,11 @@ public class CupBlockItem extends BlockItem {
     }
 
     @Override
-    public String getDescriptionId(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         return CoffeeUtils.getCoffeeType(stack)
                 .map(CoffeeType::getDescriptionId)
-                .orElse(super.getDescriptionId(stack));
-    }
-
-    @Override
-    public boolean hasCraftingRemainingItem(ItemStack stack) {
-        return this.drinkable;
-    }
-
-    @Override
-    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        return this.drinkable ? new ItemStack(UselessBlocks.CUP) : ItemStack.EMPTY;
+                .map(Component::translatable)
+                .orElse(Component.translatable(this.descriptionId));
     }
 
     @Nullable

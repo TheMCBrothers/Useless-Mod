@@ -9,10 +9,7 @@ import com.mojang.datafixers.util.Either;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockElement;
-import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
@@ -38,6 +35,7 @@ import net.neoforged.neoforge.client.model.geometry.BlockGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
+import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.WallClosetBlockEntity;
 import org.apache.commons.compress.utils.Lists;
@@ -52,7 +50,7 @@ import java.util.function.Function;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class WallClosetModel implements IDynamicBakedModel {
-    private static final ItemOverrides OVERRIDE = new ItemOverrideHandler();
+    private static final BakedOverrides OVERRIDE = new ItemOverrideHandler();
 
     private final ModelBaker modelBakery;
     private final BlockModel model;
@@ -65,7 +63,7 @@ public class WallClosetModel implements IDynamicBakedModel {
     public WallClosetModel(ModelBaker modelBakery, BlockModel model, ModelState modelTransform, Function<Material, TextureAtlasSprite> spriteGetter) {
         this.modelBakery = modelBakery;
         this.model = model;
-        this.bakedModel = model.bake(modelBakery, model, spriteGetter, modelTransform, true);
+        this.bakedModel = model.bake(modelBakery, spriteGetter, modelTransform);
         this.modelTransform = modelTransform;
         this.spriteGetter = spriteGetter;
     }
@@ -80,7 +78,7 @@ public class WallClosetModel implements IDynamicBakedModel {
         } else {
             List<BlockElement> elements = Lists.newArrayList();
             for (BlockElement part : this.model.getElements()) {
-                elements.add(new BlockElement(part.from, part.to, Maps.newHashMap(part.faces), part.rotation, part.shade));
+                elements.add(new BlockElement(part.from, part.to, Maps.newHashMap(part.faces), part.rotation, part.shade, part.lightEmission));
             }
 
             BlockModel newModel = new BlockModel(this.model.getParentLocation(), elements,
@@ -94,7 +92,7 @@ public class WallClosetModel implements IDynamicBakedModel {
             newModel.textureMap.put("planks", Either.left(renderMaterial));
             newModel.textureMap.put("particle", Either.left(renderMaterial));
 
-            customModel = newModel.bake(this.modelBakery, newModel, this.spriteGetter, this.modelTransform, true);
+            customModel = newModel.bake(this.modelBakery, this.spriteGetter, this.modelTransform);
 
             this.cache.put(key, customModel);
         }
@@ -169,14 +167,15 @@ public class WallClosetModel implements IDynamicBakedModel {
     }
 
     @Override
-    public ItemOverrides getOverrides() {
+    public BakedOverrides overrides() {
         return OVERRIDE;
     }
 
-    private static class ItemOverrideHandler extends ItemOverrides {
-        @Nullable
+    private static class ItemOverrideHandler extends BakedOverrides {
         @Override
-        public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
+        public @Nullable BakedModel findOverride(ItemStack stack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity, int seed) {
+            BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(UselessBlocks.WALL_CLOSET.get().defaultBlockState());
+
             if (model instanceof WallClosetModel wallClosetModel && stack.has(UselessDataComponents.WALL_CLOSET_MATERIAL.get())) {
                 Holder<Block> material = stack.get(UselessDataComponents.WALL_CLOSET_MATERIAL.get());
 
@@ -193,7 +192,7 @@ public class WallClosetModel implements IDynamicBakedModel {
 
     public static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, List<ItemOverride> overrides) {
             BlockModel blockModel = ((BlockGeometryBakingContext) context).owner.parent;
             if (blockModel == null)
                 throw new RuntimeException("Wall Closet parent model is null");

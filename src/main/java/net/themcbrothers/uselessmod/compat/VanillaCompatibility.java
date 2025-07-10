@@ -2,7 +2,7 @@ package net.themcbrothers.uselessmod.compat;
 
 import com.google.common.collect.Maps;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -53,7 +53,7 @@ public class VanillaCompatibility {
                 LayeredCauldronBlock.lowerFillLevel(state, level, pos);
             }
 
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         });
 
         CauldronInteraction.WATER.map().put(UselessItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
@@ -63,10 +63,10 @@ public class VanillaCompatibility {
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
 
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS;
             }
 
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         });
     }
 

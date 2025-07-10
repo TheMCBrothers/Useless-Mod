@@ -57,7 +57,7 @@ public class PaintBrushItem extends Item {
                     });
                 }
 
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;

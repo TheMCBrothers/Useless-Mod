@@ -7,9 +7,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BakedOverrides;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemOverride;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class MachineSupplierModel implements IDynamicBakedModel {
-    private static final ItemOverrides OVERRIDE = new ItemOverrideHandler();
+    private static final BakedOverrides OVERRIDE = new ItemOverrideHandler();
 
     private final BakedModel baseModel;
 
@@ -115,29 +116,34 @@ public class MachineSupplierModel implements IDynamicBakedModel {
     }
 
     @Override
-    public ItemOverrides getOverrides() {
+    public BakedOverrides overrides() {
         return OVERRIDE;
     }
 
-    private static class ItemOverrideHandler extends ItemOverrides {
-        @Nullable
+    private static class ItemOverrideHandler extends BakedOverrides {
         @Override
-        public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
+        public @Nullable BakedModel findOverride(ItemStack stack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity, int i) {
             BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
+
+            if (mimic == null) {
+                return null;
+            }
+
+            BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(UselessBlocks.MACHINE_SUPPLIER.get().defaultBlockState());
             return ((MachineSupplierModel) model).getMimicModel(mimic);
         }
     }
 
     private static class Geometry implements IUnbakedGeometry<Geometry> {
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, List<ItemOverride> overrides) {
             BlockModel baseModel = ((BlockGeometryBakingContext) context).owner.parent;
 
             if (baseModel == null) {
                 throw new NullPointerException("Expected model parent model: " + context.getModelName());
             }
 
-            BakedModel bakedModel = baseModel.bake(baker, baseModel, spriteGetter, modelState, context.useBlockLight());
+            BakedModel bakedModel = baseModel.bake(baker, spriteGetter, modelState);
             return new MachineSupplierModel(bakedModel);
         }
     }

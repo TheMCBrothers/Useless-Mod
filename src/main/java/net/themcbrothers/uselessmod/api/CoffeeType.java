@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.api;
 import com.mojang.serialization.Codec;
 import net.minecraft.Util;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.component.Consumable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.Set;
 public class CoffeeType {
     public static final Codec<CoffeeType> CODEC = UselessRegistries.COFFEE_REGISTRY.byNameCodec();
 
-    private final Set<MobEffectInstance> effects;
+    private final Consumable consumable;
     private final int color;
     private final boolean foil;
     @Nullable
@@ -19,7 +20,7 @@ public class CoffeeType {
 
     public CoffeeType(Properties properties) {
         this.color = properties.color;
-        this.effects = properties.effects;
+        this.consumable = properties.consumable;
         this.foil = properties.foil;
     }
 
@@ -31,8 +32,8 @@ public class CoffeeType {
         return this.color;
     }
 
-    public Set<MobEffectInstance> getEffects() {
-        return this.effects;
+    public Consumable getConsumable() {
+        return this.consumable;
     }
 
     public String getDescriptionId() {
@@ -48,22 +49,22 @@ public class CoffeeType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CoffeeType that = (CoffeeType) o;
-        return color == that.color && foil == that.foil && Objects.equals(effects, that.effects);
+        return color == that.color && foil == that.foil && Objects.equals(consumable, that.consumable);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(effects, color, foil);
+        return Objects.hash(consumable, color, foil);
     }
 
     public static class Properties {
-        private final Set<MobEffectInstance> effects;
+        private final Consumable consumable;
         private final int color;
         private boolean foil;
 
-        public Properties(int color, Set<MobEffectInstance> effects) {
+        public Properties(int color, Consumable consumable) {
             this.color = color;
-            this.effects = effects;
+            this.consumable = consumable;
         }
 
         public Properties foil() {

@@ -8,8 +8,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -75,9 +76,9 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.tryWrench(state, level, pos, player, hand, hit)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
 
         if (level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
@@ -90,12 +91,12 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
                         stack.shrink(1);
                     }
 
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                    return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
                 }
             }
         }
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
@@ -124,14 +125,14 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState state1, LevelAccessor level, BlockPos pos, BlockPos pos1) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos pos1, BlockState state1, RandomSource random) {
         if (level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
             BlockState mimic = blockEntity.getMimic();
             if (mimic != null) {
-                BlockState newMimic = mimic.updateShape(direction, state1, level, pos, pos1);
+                BlockState newMimic = mimic.updateShape(level, scheduledTickAccess, pos, direction, pos1, state1, random);
 
-                if (newMimic.isAir()) {
-                    level.destroyBlock(pos, false);
+                if (newMimic.isAir() && level instanceof LevelWriter levelWriter) {
+                    levelWriter.removeBlock(pos, false);
                 } else if (!Objects.equals(mimic, newMimic)) {
                     blockEntity.setMimic(newMimic);
                 }
@@ -169,11 +170,6 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     @Override
     public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return this.getMimic(level, pos).getVisualShape(level, pos, context);
-    }
-
-    @Override
-    public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
-        return this.getMimic(level, pos).getOcclusionShape(level, pos);
     }
 
     @Override
@@ -264,11 +260,6 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     @Override
     public float getShadeBrightness(BlockState pState, BlockGetter level, BlockPos pos) {
         return this.getMimic(level, pos).getShadeBrightness(level, pos);
-    }
-
-    @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
-        return this.getMimic(level, pos).propagatesSkylightDown(level, pos);
     }
 
     @Override

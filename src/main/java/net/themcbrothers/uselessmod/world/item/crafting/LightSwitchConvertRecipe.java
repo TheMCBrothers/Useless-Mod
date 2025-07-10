@@ -52,12 +52,7 @@ public class LightSwitchConvertRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 1;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return UselessRecipeSerializers.LIGHT_SWITCH_CONVERT.get();
     }
 }

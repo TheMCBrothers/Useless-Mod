@@ -2,29 +2,35 @@ package net.themcbrothers.uselessmod.client.renderer.entity;
 
 import net.minecraft.client.model.ChickenModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.animal.UselessChicken;
 
-public class UselessChickenRenderer extends MobRenderer<UselessChicken, ChickenModel<UselessChicken>> {
+public class UselessChickenRenderer extends AgeableMobRenderer<UselessChicken, ChickenRenderState, ChickenModel> {
     private static final ResourceLocation TEXTURE = UselessMod.rl("textures/entity/useless_chicken.png");
 
     public UselessChickenRenderer(EntityRendererProvider.Context context) {
-        super(context, new ChickenModel<>(context.bakeLayer(ModelLayers.CHICKEN)), 0.7F);
+        super(context, new ChickenModel(context.bakeLayer(ModelLayers.CHICKEN)), new ChickenModel(context.bakeLayer(ModelLayers.CHICKEN_BABY)), 0.3F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(UselessChicken chicken) {
+    public ResourceLocation getTextureLocation(ChickenRenderState renderState) {
         return TEXTURE;
     }
 
     @Override
-    protected float getBob(UselessChicken chicken, float v) {
-        float f = Mth.lerp(v, chicken.oFlap, chicken.flap);
-        float f1 = Mth.lerp(v, chicken.oFlapSpeed, chicken.flapSpeed);
-        return (Mth.sin(f) + 1.0F) * f1;
+    public ChickenRenderState createRenderState() {
+        return new ChickenRenderState();
+    }
+
+    @Override
+    public void extractRenderState(UselessChicken chicken, ChickenRenderState renderState, float partialTick) {
+        super.extractRenderState(chicken, renderState, partialTick);
+        renderState.flap = Mth.lerp(partialTick, chicken.oFlap, chicken.flap);
+        renderState.flapSpeed = Mth.lerp(partialTick, chicken.oFlapSpeed, chicken.flapSpeed);
     }
 }

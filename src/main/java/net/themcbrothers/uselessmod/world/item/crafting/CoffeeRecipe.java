@@ -4,35 +4,31 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.themcbrothers.lib.crafting.CommonRecipe;
-import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessRecipeSerializers;
 import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 
+import java.util.List;
 import java.util.Optional;
 
-public class CoffeeRecipe implements CommonRecipe<RecipeInput> {
+public class CoffeeRecipe implements CommonRecipe<CoffeeRecipeInput> {
     private final String group;
     private final Ingredient cupIngredient;
     private final Ingredient beanIngredient;
-    private final Ingredient extraIngredient;
+    private final Optional<Ingredient> extraIngredient;
     private final SizedFluidIngredient waterIngredient;
     private final Optional<SizedFluidIngredient> milkIngredient;
     private final ItemStack result;
     private final int cookingTime;
 
     public CoffeeRecipe(String group,
-                        Ingredient cupIngredient, Ingredient beanIngredient, Ingredient extraIngredient,
+                        Ingredient cupIngredient, Ingredient beanIngredient, Optional<Ingredient> extraIngredient,
                         SizedFluidIngredient waterIngredient, Optional<SizedFluidIngredient> milkIngredient,
                         ItemStack result, int cookingTime) {
         this.group = group;
@@ -53,7 +49,7 @@ public class CoffeeRecipe implements CommonRecipe<RecipeInput> {
         return this.beanIngredient;
     }
 
-    public Ingredient getExtraIngredient() {
+    public Optional<Ingredient> getExtraIngredient() {
         return this.extraIngredient;
     }
 
@@ -70,49 +66,59 @@ public class CoffeeRecipe implements CommonRecipe<RecipeInput> {
     }
 
     @Override
-    public ItemStack getToastSymbol() {
-        return new ItemStack(UselessBlocks.COFFEE_MACHINE);
+    public boolean matches(CoffeeRecipeInput container, Level level) {
+        return this.cupIngredient.test(container.getCup()) &&
+                this.beanIngredient.test(container.getBean()) &&
+                this.extraIngredient
+                        .map(ingredient -> ingredient.test(container.getExtra()))
+                        .orElseGet(() -> container.getExtra().isEmpty()) &&
+                this.waterIngredient.test(container.getWater()) &&
+                this.milkIngredient
+                        .map(ingredient -> container.useMilk() && ingredient.test(container.getMilk()))
+                        .orElseGet(() -> !container.useMilk());
     }
 
-    @Override
-    public String getGroup() {
-        return this.group;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return NonNullList.of(Ingredient.EMPTY, this.cupIngredient, this.beanIngredient, this.extraIngredient);
-    }
-
-    @Override
-    public boolean matches(RecipeInput container, Level level) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
+    public ItemStack getResultItem() {
         return this.result;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public ItemStack assemble(CoffeeRecipeInput input, HolderLookup.Provider registries) {
+        return this.getResultItem().copy();
+    }
+
+    @Override
+    public RecipeSerializer<CoffeeRecipe> getSerializer() {
         return UselessRecipeSerializers.COFFEE.get();
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<CoffeeRecipe> getType() {
         return UselessRecipeTypes.COFFEE.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return this.extraIngredient
+                .map(ingredient -> PlacementInfo.create(List.of(this.cupIngredient, this.beanIngredient, ingredient)))
+                .orElseGet(() -> PlacementInfo.create(List.of(this.cupIngredient, this.beanIngredient)));
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        // TODO: recipe book
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     public static class Serializer implements RecipeSerializer<CoffeeRecipe> {
         private static final MapCodec<CoffeeRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
                         Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
-                        Ingredient.CODEC_NONEMPTY.fieldOf("cup").forGetter(recipe -> recipe.cupIngredient),
-                        Ingredient.CODEC_NONEMPTY.fieldOf("bean").forGetter(recipe -> recipe.beanIngredient),
-                        Ingredient.CODEC.optionalFieldOf("extra", Ingredient.EMPTY).forGetter(recipe -> recipe.extraIngredient),
-                        SizedFluidIngredient.FLAT_CODEC.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
-                        SizedFluidIngredient.FLAT_CODEC.optionalFieldOf("milk").forGetter(recipe -> recipe.milkIngredient),
+                        Ingredient.CODEC.fieldOf("cup").forGetter(recipe -> recipe.cupIngredient),
+                        Ingredient.CODEC.fieldOf("bean").forGetter(recipe -> recipe.beanIngredient),
+                        Ingredient.CODEC.optionalFieldOf("extra").forGetter(recipe -> recipe.extraIngredient),
+                        SizedFluidIngredient.CODEC.fieldOf("water").forGetter(recipe -> recipe.waterIngredient),
+                        SizedFluidIngredient.CODEC.optionalFieldOf("milk").forGetter(recipe -> recipe.milkIngredient),
                         ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.fieldOf("cookingtime").orElse(150).forGetter(recipe -> recipe.cookingTime)
                 ).apply(instance, CoffeeRecipe::new));
@@ -133,7 +139,7 @@ public class CoffeeRecipe implements CommonRecipe<RecipeInput> {
             String group = buffer.readUtf();
             Ingredient cupIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             Ingredient beanIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            Ingredient extraIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            Optional<Ingredient> extraIngredient = Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC.decode(buffer);
             SizedFluidIngredient waterIngredient = SizedFluidIngredient.STREAM_CODEC.decode(buffer);
             SizedFluidIngredient milkIngredient = null;
 
@@ -152,7 +158,7 @@ public class CoffeeRecipe implements CommonRecipe<RecipeInput> {
             buffer.writeUtf(recipe.group);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.cupIngredient);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.beanIngredient);
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.extraIngredient);
+            Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC.encode(buffer, recipe.extraIngredient);
             SizedFluidIngredient.STREAM_CODEC.encode(buffer, recipe.waterIngredient);
 
             if (recipe.milkIngredient.isPresent()) {

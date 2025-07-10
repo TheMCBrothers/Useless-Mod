@@ -74,7 +74,7 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof LightSwitchBlockEntity blockEntity && blockEntity.switchLights()) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.FAIL;

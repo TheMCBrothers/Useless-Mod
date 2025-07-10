@@ -48,7 +48,7 @@ public class UselessJEI implements IModPlugin {
         IVanillaRecipeFactory vanillaRecipeFactory = registration.getVanillaRecipeFactory();
 
         registration.addRecipes(RecipeTypes.ANVIL, UselessRecipeMaker.getAnvilRecipes(vanillaRecipeFactory));
-        registration.addRecipes(CoffeeRecipeCategory.TYPE, Minecraft.getInstance().level != null ? Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(UselessRecipeTypes.COFFEE.get()) : List.of());
+        registration.addRecipes(CoffeeRecipeCategory.TYPE, List.of()); // TODO: fix JEI
     }
 
     @Override

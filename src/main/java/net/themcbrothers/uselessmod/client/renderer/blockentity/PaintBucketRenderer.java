@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -27,7 +27,7 @@ public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlock
     }
 
     private void add(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int color) {
-        int renderColor = FastColor.ARGB32.color(0xFF, color);
+        int renderColor = ARGB.color(0xFF, color);
 
         renderer.addVertex(stack.last().pose(), x, y, z)
                 .setColor(renderColor)
