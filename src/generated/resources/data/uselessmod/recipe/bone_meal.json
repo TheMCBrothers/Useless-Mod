@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "bonemeal",
   "ingredients": [
-    {
-      "item": "uselessmod:useless_bone"
-    }
+    "uselessmod:useless_bone"
   ],
   "result": {
     "count": 3,

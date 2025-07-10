@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "W": {
-      "tag": "c:ingots/useless"
-    },
-    "o": {
-      "item": "minecraft:shield"
-    }
+    "W": "#c:ingots/useless",
+    "o": "minecraft:shield"
   },
   "pattern": [
     "WoW",

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:ingots/useless"
-    },
-    "X": {
-      "tag": "c:rods/wooden"
-    }
+    "#": "#c:ingots/useless",
+    "X": "#c:rods/wooden"
   },
   "pattern": [
     "#X#",

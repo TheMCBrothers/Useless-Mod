@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "uselessmod:useless_ingot"
-    }
+    "#": "uselessmod:useless_ingot"
   },
   "pattern": [
     "###",

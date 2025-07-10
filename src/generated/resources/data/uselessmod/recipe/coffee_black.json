@@ -1,20 +1,21 @@
 {
   "type": "uselessmod:coffee",
-  "bean": {
-    "tag": "c:crops/coffeebean"
-  },
+  "bean": "#c:crops/coffeebean",
   "cookingtime": 100,
-  "cup": {
-    "item": "uselessmod:cup"
-  },
+  "cup": "uselessmod:cup",
   "result": {
     "components": {
+      "minecraft:consumable": {
+        "animation": "drink",
+        "has_consume_particles": false,
+        "sound": "minecraft:entity.generic.drink"
+      },
       "uselessmod:coffee_type": "uselessmod:black"
     },
     "id": "uselessmod:cup_coffee"
   },
   "water": {
     "amount": 250,
-    "fluid": "minecraft:water"
+    "ingredient": "minecraft:water"
   }
 }

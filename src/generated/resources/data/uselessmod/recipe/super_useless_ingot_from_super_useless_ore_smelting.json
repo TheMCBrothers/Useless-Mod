@@ -4,9 +4,7 @@
   "cookingtime": 200,
   "experience": 1.0,
   "group": "super_useless_ingot",
-  "ingredient": {
-    "tag": "c:ores/super_useless"
-  },
+  "ingredient": "#c:ores/super_useless",
   "result": {
     "count": 1,
     "id": "uselessmod:super_useless_ingot"

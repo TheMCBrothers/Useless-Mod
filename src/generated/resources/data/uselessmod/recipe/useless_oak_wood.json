@@ -3,9 +3,7 @@
   "category": "building",
   "group": "bark",
   "key": {
-    "#": {
-      "item": "uselessmod:useless_oak_log"
-    }
+    "#": "uselessmod:useless_oak_log"
   },
   "pattern": [
     "##",

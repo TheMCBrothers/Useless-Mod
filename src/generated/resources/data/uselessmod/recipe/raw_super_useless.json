@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "uselessmod:raw_super_useless_block"
-    }
+    "uselessmod:raw_super_useless_block"
   ],
   "result": {
     "count": 9,

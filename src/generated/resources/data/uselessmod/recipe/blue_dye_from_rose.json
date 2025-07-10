@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "blue_dye",
   "ingredients": [
-    {
-      "item": "uselessmod:blue_rose"
-    }
+    "uselessmod:blue_rose"
   ],
   "result": {
     "count": 1,

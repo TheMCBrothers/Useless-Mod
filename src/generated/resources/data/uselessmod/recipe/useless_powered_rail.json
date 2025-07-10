@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "U": {
-      "tag": "c:ingots/useless"
-    },
-    "X": {
-      "tag": "c:ingots/gold"
-    }
+    "#": "minecraft:stick",
+    "R": "minecraft:redstone",
+    "U": "#c:ingots/useless",
+    "X": "#c:ingots/gold"
   },
   "pattern": [
     "X X",

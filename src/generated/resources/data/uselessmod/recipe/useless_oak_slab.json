@@ -3,9 +3,7 @@
   "category": "building",
   "group": "wooden_slab",
   "key": {
-    "#": {
-      "item": "uselessmod:useless_oak_planks"
-    }
+    "#": "uselessmod:useless_oak_planks"
   },
   "pattern": [
     "###"

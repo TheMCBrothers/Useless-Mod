@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "wooden_sign",
   "key": {
-    "#": {
-      "item": "uselessmod:useless_oak_planks"
-    },
-    "X": {
-      "item": "minecraft:stick"
-    }
+    "#": "uselessmod:useless_oak_planks",
+    "X": "minecraft:stick"
   },
   "pattern": [
     "###",

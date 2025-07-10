@@ -4,9 +4,7 @@
   "cookingtime": 200,
   "experience": 0.7,
   "group": "useless_ingot",
-  "ingredient": {
-    "tag": "c:raw_materials/useless"
-  },
+  "ingredient": "#c:raw_materials/useless",
   "result": {
     "count": 1,
     "id": "uselessmod:useless_ingot"

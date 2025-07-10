@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "useless_ingot",
   "ingredients": [
-    {
-      "item": "uselessmod:useless_block"
-    }
+    "uselessmod:useless_block"
   ],
   "result": {
     "count": 9,

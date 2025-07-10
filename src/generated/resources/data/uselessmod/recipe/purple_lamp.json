@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "uselessmod:lamps",
   "ingredients": [
-    {
-      "tag": "uselessmod:lamps"
-    },
-    {
-      "tag": "c:dyes/purple"
-    }
+    "#uselessmod:lamps",
+    "#c:dyes/purple"
   ],
   "result": {
     "count": 1,

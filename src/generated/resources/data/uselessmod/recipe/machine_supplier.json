@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:cobblestones/normal"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "X": {
-      "tag": "c:glass_blocks"
-    }
+    "#": "#c:cobblestones/normal",
+    "R": "#c:dusts/redstone",
+    "X": "#c:glass_blocks"
   },
   "pattern": [
     "#X#",

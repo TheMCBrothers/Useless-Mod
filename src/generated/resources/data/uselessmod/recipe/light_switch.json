@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:lever"
-    },
-    {
-      "tag": "c:dyes/white"
-    }
+    "minecraft:lever",
+    "#c:dyes/white"
   ],
   "result": {
     "count": 1,

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "uselessmod:useless_oak_logs"
-    }
+    "#uselessmod:useless_oak_logs"
   ],
   "result": {
     "count": 4,

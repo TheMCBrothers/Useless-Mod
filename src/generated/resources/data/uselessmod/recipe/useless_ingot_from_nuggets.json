@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "useless_ingot",
   "key": {
-    "#": {
-      "item": "uselessmod:useless_nugget"
-    }
+    "#": "uselessmod:useless_nugget"
   },
   "pattern": [
     "###",

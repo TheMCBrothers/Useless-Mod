@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:redstone_torch"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "tag": "c:ingots/useless"
-    }
+    "#": "minecraft:redstone_torch",
+    "S": "minecraft:stick",
+    "X": "#c:ingots/useless"
   },
   "pattern": [
     "XSX",

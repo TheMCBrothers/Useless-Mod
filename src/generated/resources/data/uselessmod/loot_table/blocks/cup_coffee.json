@@ -13,7 +13,8 @@
         {
           "function": "minecraft:copy_components",
           "include": [
-            "uselessmod:coffee_type"
+            "uselessmod:coffee_type",
+            "minecraft:consumable"
           ],
           "source": "block_entity"
         }
