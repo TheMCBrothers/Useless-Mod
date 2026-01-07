@@ -54,7 +54,7 @@ runs {
         argument '--nogui'
     }
 
-    data {
+    clientData {
         // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
         arguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
@@ -84,8 +84,8 @@ dependencies {
     implementation "net.themcbrothers:themcbroslib:$minecraft_version-$lib_version"
 
     // JEI
-    compileOnly("mezz.jei:jei-1.21-common-api:$jei_version")
-    compileOnly("mezz.jei:jei-1.21-neoforge-api:$jei_version")
+    compileOnly("mezz.jei:jei-$minecraft_version-common-api:$jei_version")
+    compileOnly("mezz.jei:jei-$minecraft_version-neoforge-api:$jei_version")
 //    localRuntime("mezz.jei:jei-$minecraft_version-neoforge:$jei_version")
 }
 
