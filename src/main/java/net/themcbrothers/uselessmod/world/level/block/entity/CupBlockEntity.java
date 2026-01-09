@@ -1,36 +1,32 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.DataResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.themcbrothers.uselessmod.api.CoffeeType;
 import net.themcbrothers.uselessmod.api.UselessRegistries;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class CupBlockEntity extends BlockEntity {
-    private static final String TAG_COFFEE = "Coffee";
-    private static final String TAG_CONSUMABLE = "Consumable";
+    private static final String TAG_COFFEE = "coffee";
+    private static final String TAG_CONSUMABLE = "consumable";
 
     @Nullable
     private Holder<CoffeeType> type;
@@ -60,44 +56,30 @@ public class CupBlockEntity extends BlockEntity {
         return Optional.of(this.type.value());
     }
 
-    private void writeCoffeeNbt(CompoundTag tag) {
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+
+        input.read(TAG_COFFEE, UselessRegistries.COFFEE_REGISTRY.holderByNameCodec()).ifPresent(coffeeTypeHolder -> this.type = coffeeTypeHolder);
+        input.read(TAG_CONSUMABLE, Consumable.CODEC).ifPresent(consumable -> this.consumable = consumable);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+
         if (this.type != null) {
-            this.type.unwrapKey().ifPresent(key -> tag.putString(TAG_COFFEE, key.location().toString()));
+            output.store(TAG_COFFEE, UselessRegistries.COFFEE_REGISTRY.holderByNameCodec(), this.type);
         }
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(tag, lookupProvider);
-        if (tag.contains(TAG_COFFEE, Tag.TAG_STRING)) {
-            var key = ResourceKey.create(UselessRegistries.COFFEE_KEY, Objects.requireNonNull(ResourceLocation.tryParse(tag.getString(TAG_COFFEE))));
-            this.type = UselessRegistries.COFFEE_REGISTRY.get(key).orElse(null);
-        }
-
-        if (tag.contains(TAG_CONSUMABLE, Tag.TAG_COMPOUND)) {
-            DataResult<Consumable> dataResult = Consumable.CODEC.parse(NbtOps.INSTANCE, tag.getCompound(TAG_CONSUMABLE));
-
-            if (dataResult.isSuccess()) {
-                this.consumable = dataResult.getOrThrow();
-            }
-        }
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        this.writeCoffeeNbt(tag);
 
         if (this.consumable != null) {
-            tag.put(TAG_CONSUMABLE, Consumable.CODEC.encode(this.consumable, registries.createSerializationContext(NbtOps.INSTANCE), new CompoundTag()).getOrThrow());
+            output.store(TAG_CONSUMABLE, Consumable.CODEC, this.consumable);
         }
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
-        CompoundTag tag = super.getUpdateTag(lookupProvider);
-        this.writeCoffeeNbt(tag);
-        return tag;
+        return this.saveCustomOnly(lookupProvider);
     }
 
     @Nullable
@@ -107,14 +89,14 @@ public class CupBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
-        CoffeeType type = components.get(UselessDataComponents.COFFEE_TYPE.get());
+    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+        CoffeeType type = componentGetter.get(UselessDataComponents.COFFEE_TYPE.get());
 
         if (type != null) {
             this.type = UselessRegistries.COFFEE_REGISTRY.wrapAsHolder(type);
         }
 
-        this.consumable = components.get(DataComponents.CONSUMABLE);
+        this.consumable = componentGetter.get(DataComponents.CONSUMABLE);
     }
 
     @Override
@@ -130,8 +112,8 @@ public class CupBlockEntity extends BlockEntity {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
-        tag.remove(TAG_COFFEE);
-        tag.remove(TAG_CONSUMABLE);
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard(TAG_COFFEE);
+        output.discard(TAG_CONSUMABLE);
     }
 }

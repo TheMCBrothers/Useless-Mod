@@ -5,14 +5,15 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.client.screen.widgets.EnergyBar;
 import net.themcbrothers.lib.client.screen.widgets.FluidTank;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -24,7 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMenu> {
-    private static final ResourceLocation COFFEE_MACHINE_LOCATION = UselessMod.rl("textures/gui/container/coffee_machine.png");
+    private static final Identifier COFFEE_MACHINE_LOCATION = UselessMod.id("textures/gui/container/coffee_machine.png");
+    private static final Identifier SLOT_HIGHLIGHT_FRONT_SPRITE = Identifier.withDefaultNamespace("container/slot_highlight_front");
 
     public CoffeeMachineScreen(CoffeeMachineMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -35,8 +37,9 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
 
-        this.addRenderableOnly(new FluidTank(this.leftPos + 12, this.topPos + 18, 8, 48, this.menu.getWaterTank(), this));
-        this.addRenderableOnly(new FluidTank(this.leftPos + 30, this.topPos + 18, 8, 48, this.menu.getMilkTank(), this));
+        // TODO: tanks in GUI
+//        this.addRenderableOnly(new FluidTank(this.leftPos + 12, this.topPos + 18, 8, 48, this.menu.getWaterTank(), this));
+//        this.addRenderableOnly(new FluidTank(this.leftPos + 30, this.topPos + 18, 8, 48, this.menu.getMilkTank(), this));
         this.addRenderableWidget(new EnergyBar(this.leftPos + 156, this.topPos + 18, EnergyBar.Size._8x48, this.menu, this));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, true));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, false));
@@ -65,12 +68,12 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         int yPos = this.topPos;
 
         // Background
-        guiGraphics.blit(RenderType::guiTextured, COFFEE_MACHINE_LOCATION, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
-        guiGraphics.blit(RenderType::guiTextured, COFFEE_MACHINE_LOCATION, xPos - 16, yPos + 10, 0, 166, 23, 64, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, COFFEE_MACHINE_LOCATION, xPos, yPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, COFFEE_MACHINE_LOCATION, xPos - 16, yPos + 10, 0, 166, 23, 64, 256, 256);
 
         // Progress
         double d = this.menu.getScaledCookTime(42);
-        guiGraphics.blit(RenderType::guiTextured, COFFEE_MACHINE_LOCATION, xPos + 67, yPos + 39, 176, 0, (int) d, 6, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, COFFEE_MACHINE_LOCATION, xPos + 67, yPos + 39, 176, 0, (int) d, 6, 256, 256);
     }
 
     @Override
@@ -89,7 +92,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     }
 
     public static void renderSlotHighlight(GuiGraphics guiGraphics, int x, int y, int width, int height, int offset, int color) {
-        guiGraphics.fillGradient(RenderType.guiOverlay(), x, y, x + width, y + height, color, color, offset);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_FRONT_SPRITE, x, y, x + width, y + height);
     }
 
     @Nullable
@@ -118,8 +121,8 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         }
 
         @Override
-        public void onPress() {
-            PacketDistributor.sendToServer(new CoffeeMachineStartPacket(this.start));
+        public void onPress(InputWithModifiers modifiers) {
+            ClientPacketDistributor.sendToServer(new CoffeeMachineStartPacket(this.start));
         }
 
         @Override
@@ -138,7 +141,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     }
 
     public class MilkCheckboxButton extends AbstractButton {
-        private final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/checkbox.png");
+        private final Identifier TEXTURE = UselessMod.id("textures/gui/checkbox.png");
         private boolean checked;
 
         public MilkCheckboxButton(int x, int y, Component title, boolean checked) {
@@ -153,18 +156,18 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         }
 
         @Override
-        public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-            guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
+        protected void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.checked ? 10.0F : 0.0F, 10, 10, 32, 32);
         }
 
         public void renderToolTip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
-            guiGraphics.renderTooltip(font, this.getMessage(), mouseX, mouseY);
+            guiGraphics.setTooltipForNextFrame(this.getMessage(), mouseX, mouseY); // TODO: verify that this works; refactor
         }
 
         @Override
-        public void onPress() {
+        public void onPress(InputWithModifiers input) {
             this.checked = !this.checked;
-            PacketDistributor.sendToServer(new CoffeeMachineMilkUpdatePacket(this.isChecked()));
+            ClientPacketDistributor.sendToServer(new CoffeeMachineMilkUpdatePacket(this.isChecked()));
         }
 
         public boolean isChecked() {

@@ -24,7 +24,7 @@ import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.world.level.block.entity.LightSwitchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Definition of the Light Switch (can be placed on the floor, walls and ceiling)
@@ -33,7 +33,7 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
     public static final MapCodec<LightSwitchBlock> CODEC = simpleCodec(LightSwitchBlock::new);
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
-    private final Map<BlockState, VoxelShape> shapesCache;
+    private final Function<BlockState, VoxelShape> shapesCache;
 
     public LightSwitchBlock(Properties properties) {
         super(properties);
@@ -68,7 +68,7 @@ public class LightSwitchBlock extends FaceAttachedHorizontalDirectionalBlock imp
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return this.shapesCache.get(state);
+        return this.shapesCache.apply(state);
     }
 
     @Override

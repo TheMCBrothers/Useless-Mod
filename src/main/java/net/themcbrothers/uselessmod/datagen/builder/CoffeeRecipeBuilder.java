@@ -4,7 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
@@ -81,12 +81,12 @@ public class CoffeeRecipeBuilder implements RecipeBuilder {
         output.accept(resourceKey,
                 new CoffeeRecipe(this.group == null ? "" : this.group, this.cupIngredient, this.beanIngredient,
                         Optional.ofNullable(this.extraIngredient), this.waterIngredient, Optional.ofNullable(this.milkIngredient), this.result, this.cookingTime),
-                advancement.build(resourceKey.location().withPrefix("recipes/coffee/")));
+                advancement.build(resourceKey.identifier().withPrefix("recipes/coffee/")));
     }
 
     private void ensureValid(ResourceKey<Recipe<?>> id) {
         if (this.criteria.isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id.location());
+            throw new IllegalStateException("No way of obtaining recipe " + id.identifier());
         }
     }
 }

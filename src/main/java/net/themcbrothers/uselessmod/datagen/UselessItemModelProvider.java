@@ -1,138 +1,101 @@
 package net.themcbrothers.uselessmod.datagen;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessFluids;
 import net.themcbrothers.uselessmod.core.UselessItems;
+import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 
-public class UselessItemModelProvider extends ItemModelProvider {
-    public UselessItemModelProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
-        super(packOutput, UselessMod.MOD_ID, existingFileHelper);
+import java.util.Optional;
+
+public class UselessItemModelProvider extends ModelProvider {
+    public UselessItemModelProvider(PackOutput packOutput) {
+        super(packOutput, UselessMod.MOD_ID);
     }
 
     @Override
-    protected void registerModels() {
-        basicItem(UselessItems.RAW_USELESS.get());
-        basicItem(UselessItems.RAW_SUPER_USELESS.get());
-        basicItem(UselessItems.USELESS_DUST.get());
-        basicItem(UselessItems.SUPER_USELESS_DUST.get());
-        basicItem(UselessItems.USELESS_INGOT.get());
-        basicItem(UselessItems.SUPER_USELESS_INGOT.get());
-        basicItem(UselessItems.USELESS_NUGGET.get());
-        basicItem(UselessItems.SUPER_USELESS_NUGGET.get());
-        basicItem(UselessBlocks.USELESS_OAK_DOOR.asItem());
-        basicItem(UselessItems.USELESS_SHEARS.get());
-        basicTool(UselessItems.USELESS_SWORD.get());
-        basicTool(UselessItems.SUPER_USELESS_SWORD.get());
-        basicTool(UselessItems.USELESS_SHOVEL.get());
-        basicTool(UselessItems.SUPER_USELESS_SHOVEL.get());
-        basicTool(UselessItems.USELESS_PICKAXE.get());
-        basicTool(UselessItems.SUPER_USELESS_PICKAXE.get());
-        basicTool(UselessItems.USELESS_AXE.get());
-        basicTool(UselessItems.SUPER_USELESS_AXE.get());
-        basicTool(UselessItems.USELESS_HOE.get());
-        basicTool(UselessItems.SUPER_USELESS_HOE.get());
-        basicItem(UselessItems.USELESS_HELMET.get());
-        basicItem(UselessItems.SUPER_USELESS_HELMET.get());
-        basicItem(UselessItems.USELESS_CHESTPLATE.get());
-        basicItem(UselessItems.SUPER_USELESS_CHESTPLATE.get());
-        basicItem(UselessItems.USELESS_LEGGINGS.get());
-        basicItem(UselessItems.SUPER_USELESS_LEGGINGS.get());
-        basicItem(UselessItems.USELESS_BOOTS.get());
-        basicItem(UselessItems.SUPER_USELESS_BOOTS.get());
-        basicItem(UselessItems.USELESS_WHEAT_SEEDS.get());
-        basicItem(UselessItems.USELESS_WHEAT.get());
-        basicItem(UselessItems.COFFEE_SEEDS.get());
-        basicItem(UselessItems.COFFEE_BEANS.get());
-        basicItem(UselessItems.USELESS_BONE.get());
-        basicItem(UselessItems.USELESS_LEATHER.get());
-        basicItem(UselessItems.USELESS_FEATHER.get());
+    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        itemModels.generateFlatItem(UselessItems.RAW_USELESS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.RAW_SUPER_USELESS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_DUST.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_DUST.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessBlocks.USELESS_OAK_DOOR.asItem(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_SHEARS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.SUPER_USELESS_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_WHEAT_SEEDS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_WHEAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.COFFEE_SEEDS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.COFFEE_BEANS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_BONE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_LEATHER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_FEATHER.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(UselessItems.USELESS_SHEEP_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(UselessItems.USELESS_PIG_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(UselessItems.USELESS_CHICKEN_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(UselessItems.USELESS_COW_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(UselessItems.USELESS_SKELETON_SKULL.get(), ModelTemplates.FLAT_ITEM);
 
-        final ModelFile brokenUselessElytra = basicItem(UselessMod.rl("broken_useless_elytra"));
-        basicItem(UselessItems.USELESS_ELYTRA.get()).override().predicate(mcLoc("broken"), 1).model(brokenUselessElytra).end();
-        final ModelFile brokenSuperUselessElytra = basicItem(UselessMod.rl("broken_super_useless_elytra"));
-        basicItem(UselessItems.SUPER_USELESS_ELYTRA.get()).override().predicate(mcLoc("broken"), 1).model(brokenSuperUselessElytra).end();
+        this.generatePaintBrush(itemModels, UselessItems.PAINT_BRUSH.value());
 
-        withExistingParent("paint_brush", mcLoc(ITEM_FOLDER + "/handheld"))
-                .texture("layer0", modLoc(ITEM_FOLDER + "/paint_brush_0"))
-                .texture("layer1", modLoc(ITEM_FOLDER + "/paint_brush_1"));
+        itemModels.itemModelOutput.accept(UselessItems.BUCKET_PAINT.value(), new DynamicFluidContainerModel.Unbaked(new DynamicFluidContainerModel.Textures(
+                Optional.of(Identifier.withDefaultNamespace("item/bucket")),
+                Optional.of(Identifier.withDefaultNamespace("item/bucket")),
+                Optional.of(Identifier.fromNamespaceAndPath(NeoForgeMod.MOD_ID, "item/mask/bucket_fluid")),
+                Optional.of(Identifier.fromNamespaceAndPath(NeoForgeMod.MOD_ID, "item/mask/bucket_fluid_cover"))
+        ), UselessFluids.PAINT.get(), false, true, true));
 
-        getBuilder(String.valueOf(UselessItems.USELESS_SKELETON_SKULL.getId())).parent(getExistingFile(mcLoc(ITEM_FOLDER + "/template_skull")));
+        // TODO: special renderers
+        itemModels.generateShield(UselessItems.USELESS_SHIELD.value());
+        itemModels.generateShield(UselessItems.SUPER_USELESS_SHIELD.value());
+        itemModels.generateElytra(UselessItems.USELESS_ELYTRA.value());
+        itemModels.generateElytra(UselessItems.SUPER_USELESS_ELYTRA.value());
 
-        this.withExistingParent("useless_sheep_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
-        this.withExistingParent("useless_pig_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
-        this.withExistingParent("useless_chicken_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
-        this.withExistingParent("useless_cow_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
-        this.withExistingParent("useless_skeleton_spawn_egg", mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
-
-        this.withExistingParent("bucket_paint", ResourceLocation.fromNamespaceAndPath(NeoForgeVersion.MOD_ID, "item/bucket"))
-                .customLoader(DynamicFluidContainerModelBuilder::begin)
-                .fluid(UselessFluids.PAINT.get()).end();
-
-        // Items with special renderer
-        final ModelFile builtInEntityModel = new ModelFile.UncheckedModelFile("builtin/entity");
-
-        final ModelFile uselessShieldBlocking = shieldBlockingModel("useless_shield_blocking", builtInEntityModel, "useless_block");
-        shieldModel("useless_shield", builtInEntityModel, "useless_block", uselessShieldBlocking);
-
-        final ModelFile superUselessShieldBlocking = shieldBlockingModel("super_useless_shield_blocking", builtInEntityModel, "super_useless_block");
-        shieldModel("super_useless_shield", builtInEntityModel, "super_useless_block", superUselessShieldBlocking);
+        Identifier skullParent = ModelLocationUtils.decorateItemModelLocation("template_skull");
+        blockModels.createHead(UselessBlocks.USELESS_SKELETON_SKULL.value(), UselessBlocks.USELESS_SKELETON_WALL_SKULL.value(), UselessSkullBlock.Types.USELESS_SKELETON, skullParent);
     }
 
-    private void basicTool(ItemLike item) {
-        final ResourceLocation id = BuiltInRegistries.ITEM.getKey(item.asItem());
-        this.singleTexture(id.getPath(), mcLoc(ITEM_FOLDER + "/handheld"), "layer0", modLoc(ITEM_FOLDER + "/" + id.getPath()));
-    }
-
-    private void shieldModel(String path, ModelFile parent, String particleTexture, ModelFile blockingModel) {
-        getBuilder(path)
-                .parent(parent).guiLight(BlockModel.GuiLight.FRONT)
-                .texture("particle", modLoc(BLOCK_FOLDER + "/" + particleTexture))
-                .transforms()
-                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
-                .rotation(0, 90, 0).translation(10, 6, -4).scale(1, 1, 1).end()
-                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
-                .rotation(0, 90, 0).translation(10, 6, 12).scale(1, 1, 1).end()
-                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
-                .rotation(0, 180, 5).translation(-10, 2, -10).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
-                .rotation(0, 180, 5).translation(10, 0, -10).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemDisplayContext.GUI)
-                .rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F, 0.65F, 0.65F).end()
-                .transform(ItemDisplayContext.FIXED)
-                .rotation(0, 180, 0).translation(-2, 4, -5).scale(0.5F, 0.5F, 0.5F).end()
-                .transform(ItemDisplayContext.GROUND)
-                .rotation(0, 0, 0).translation(4, 4, 2).scale(0.25F, 0.25F, 0.25F).end()
-                .end()
-                .override().predicate(mcLoc("blocking"), 1).model(blockingModel).end();
-    }
-
-    private ModelFile shieldBlockingModel(String path, ModelFile parent, String particleTexture) {
-        return getBuilder(path)
-                .parent(parent).guiLight(BlockModel.GuiLight.FRONT)
-                .texture("particle", modLoc(BLOCK_FOLDER + "/" + particleTexture))
-                .transforms()
-                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
-                .rotation(45, 135, 0).translation(3.51F, 11, -2).scale(1, 1, 1).end()
-                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
-                .rotation(45, 135, 0).translation(13.51F, 3, 5).scale(1, 1, 1).end()
-                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
-                .rotation(0, 180, -5).translation(-15, 5, -11).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
-                .rotation(0, 180, -5).translation(5, 5, -11).scale(1.25F, 1.25F, 1.25F).end()
-                .transform(ItemDisplayContext.GUI)
-                .rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F, 0.65F, 0.65F).end()
-                .end();
+    private void generatePaintBrush(ItemModelGenerators itemModels, Item item) {
+        itemModels.itemModelOutput.accept(item,
+                ItemModelUtils.tintedModel(
+                        ModelTemplates.FLAT_HANDHELD_ITEM.create(item,
+                                TextureMapping.layered(
+                                        TextureMapping.getItemTexture(item, "_0"),
+                                        TextureMapping.getItemTexture(item, "_1")),
+                                itemModels.modelOutput)
+                        // TODO: tint source
+                ));
     }
 }

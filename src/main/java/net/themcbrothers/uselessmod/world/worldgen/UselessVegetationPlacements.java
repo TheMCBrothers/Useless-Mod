@@ -26,6 +26,6 @@ public final class UselessVegetationPlacements {
     }
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, UselessMod.rl(name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, UselessMod.id(name));
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = UselessMod.MOD_ID)
+@EventBusSubscriber(modid = UselessMod.MOD_ID)
 public final class UselessCreativeModeTabs {
     static void register() {
     }

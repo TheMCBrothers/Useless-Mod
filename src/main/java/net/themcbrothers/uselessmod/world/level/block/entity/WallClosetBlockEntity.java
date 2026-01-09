@@ -4,19 +4,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -30,15 +30,14 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.model.data.ModelData;
+import net.neoforged.neoforge.model.data.ModelProperty;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     public static final ModelProperty<Block> MATERIAL_PROPERTY = new ModelProperty<>();
@@ -63,7 +62,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         }
 
         @Override
-        protected boolean isOwnContainer(Player player) {
+        public boolean isOwnContainer(Player player) {
             if (player.containerMenu instanceof ChestMenu) {
                 Container container = ((ChestMenu) player.containerMenu).getContainer();
                 return container == WallClosetBlockEntity.this;
@@ -77,7 +76,6 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
         super(UselessBlockEntityTypes.WALL_CLOSET.get(), pos, state);
     }
 
-    @NotNull
     @Override
     public ModelData getModelData() {
         return ModelData.builder().with(MATERIAL_PROPERTY, this.material).build();
@@ -95,21 +93,20 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
-        ContainerHelper.saveAllItems(tag, this.items, lookupProvider);
-        tag.putString("Material", String.valueOf(BuiltInRegistries.BLOCK.getKey(this.material)));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        ContainerHelper.saveAllItems(output, this.items);
+        output.putString("material", String.valueOf(BuiltInRegistries.BLOCK.getKey(this.material)));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(tag, lookupProvider);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, this.items, lookupProvider);
-        final ResourceLocation key = ResourceLocation.tryParse(tag.getString("Material"));
-        if (key != null) {
-            material = BuiltInRegistries.BLOCK.getValue(key);
-        }
+        ContainerHelper.loadAllItems(input, this.items);
+        input.getString("material")
+                .map(Identifier::tryParse)
+                .ifPresent(identifier -> this.material = BuiltInRegistries.BLOCK.getValue(identifier));
     }
 
     public void setMaterial(Holder<Block> material) {
@@ -121,18 +118,18 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public void startOpen(Player player) {
-        if (!this.remove && !player.isSpectator()) {
+    public void startOpen(ContainerUser user) {
+        if (!this.remove && !user.getLivingEntity().isSpectator()) {
             //noinspection DataFlowIssue
-            this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.incrementOpeners(user.getLivingEntity(), this.getLevel(), this.getBlockPos(), this.getBlockState(), user.getContainerInteractionRange());
         }
     }
 
     @Override
-    public void stopOpen(Player player) {
-        if (!this.remove && !player.isSpectator()) {
+    public void stopOpen(ContainerUser user) {
+        if (!this.remove && !user.getLivingEntity().isSpectator()) {
             //noinspection DataFlowIssue
-            this.openersCounter.decrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.decrementOpeners(user.getLivingEntity(), this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
 
@@ -219,7 +216,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
 
     private void updateBlockState(BlockState state, boolean isOpen) {
         //noinspection DataFlowIssue
-        this.getLevel().setBlock(this.getBlockPos(), state.setValue(BlockStateProperties.OPEN, isOpen), 3);
+        this.getLevel().setBlock(this.getBlockPos(), state.setValue(BlockStateProperties.OPEN, isOpen), Block.UPDATE_NEIGHBORS | Block.UPDATE_CLIENTS);
     }
 
     private void playSound(SoundEvent soundEvent) {
@@ -235,7 +232,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
+    protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
         this.setMaterial(components.getOrDefault(UselessDataComponents.WALL_CLOSET_MATERIAL.get(), Holder.direct(Blocks.AIR)));
     }
@@ -247,8 +244,7 @@ public class WallClosetBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
-        super.removeComponentsFromTag(tag);
-        tag.remove("Material");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("material");
     }
 }

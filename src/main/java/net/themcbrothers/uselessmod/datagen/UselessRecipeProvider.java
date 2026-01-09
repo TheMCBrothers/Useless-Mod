@@ -145,7 +145,7 @@ public class UselessRecipeProvider extends RecipeProvider {
         CoffeeRecipeBuilder.coffee(CoffeeUtils.createCoffeeStack(UselessCoffeeTypes.MILK_SUGAR.get()), Ingredient.of(UselessBlocks.CUP), this.tag(UselessTags.Items.CROPS_COFFEEBEAN), Ingredient.of(Items.SUGAR), SizedFluidIngredient.of(Fluids.WATER, 250), SizedFluidIngredient.of(NeoForgeMod.MILK.value(), 100), 100).unlockedBy("has_sugar", has(Items.SUGAR)).save(output, key("coffee_milk_sugar"));
 
         // Special Recipes
-        SpecialRecipeBuilder.special(LightSwitchConvertRecipe::new).save(output, UselessMod.rl("light_switch_convert").toString());
+        SpecialRecipeBuilder.special(LightSwitchConvertRecipe::new).save(output, UselessMod.id("light_switch_convert").toString());
 
         // Usages of Items
         shapeless(RecipeCategory.DECORATIONS, Items.RED_DYE).requires(UselessBlocks.RED_ROSE).group("red_dye").unlockedBy("has_red_flower", has(UselessBlocks.RED_ROSE)).save(output, key("red_dye_from_rose"));
@@ -154,7 +154,7 @@ public class UselessRecipeProvider extends RecipeProvider {
     }
 
     private ResourceKey<Recipe<?>> key(String path) {
-        return ResourceKey.create(Registries.RECIPE, UselessMod.rl(path));
+        return ResourceKey.create(Registries.RECIPE, UselessMod.id(path));
     }
 
     static final class Runner extends RecipeProvider.Runner {

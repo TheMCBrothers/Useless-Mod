@@ -1,13 +1,11 @@
 package net.themcbrothers.uselessmod.api;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.Util;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.component.Consumable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.Set;
 
 public class CoffeeType {
     public static final Codec<CoffeeType> CODEC = UselessRegistries.COFFEE_REGISTRY.byNameCodec();

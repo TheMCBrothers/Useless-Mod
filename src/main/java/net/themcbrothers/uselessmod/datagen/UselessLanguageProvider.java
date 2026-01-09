@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.datagen;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.CoffeeType;
@@ -196,7 +196,7 @@ public class UselessLanguageProvider extends LanguageProvider {
         this.add("advancement." + UselessMod.MOD_ID + "." + id + ".description", description);
     }
 
-    private void addStat(Supplier<ResourceLocation> key, String name) {
+    private void addStat(Supplier<Identifier> key, String name) {
         this.add(String.format("stat.%s.%s", key.get().getNamespace(), key.get().getPath()), name);
     }
 

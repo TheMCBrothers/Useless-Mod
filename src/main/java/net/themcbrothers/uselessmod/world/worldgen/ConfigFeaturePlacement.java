@@ -1,7 +1,6 @@
 package net.themcbrothers.uselessmod.world.worldgen;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -11,12 +10,9 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.core.UselessPlacementModifierTypes;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
 public class ConfigFeaturePlacement extends PlacementFilter {
     public static final MapCodec<ConfigFeaturePlacement> CODEC = Type.CODEC.fieldOf("dim_type").xmap(ConfigFeaturePlacement::new, placement -> placement.type);
 

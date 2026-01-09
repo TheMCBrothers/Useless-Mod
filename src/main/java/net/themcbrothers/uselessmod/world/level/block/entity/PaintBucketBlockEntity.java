@@ -2,18 +2,24 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.themcbrothers.lib.LibDataComponents;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
@@ -37,6 +43,13 @@ public class PaintBucketBlockEntity extends BlockEntity {
 
     public PaintBucketBlockEntity(BlockPos pos, BlockState state) {
         super(UselessBlockEntityTypes.PAINT_BUCKET.get(), pos, state);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (this.level != null) {
+            Containers.dropContents(level, pos, NonNullList.of(this.stackHandler.getStackInSlot(0)));
+        }
     }
 
     public boolean hasColor() {
@@ -64,19 +77,9 @@ public class PaintBucketBlockEntity extends BlockEntity {
         this.setChanged();
     }
 
-    private void saveColorAndItem(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        if (!this.colorTank.isEmpty()) {
-            tag.put("Tank", this.colorTank.writeToNBT(lookupProvider, new CompoundTag()));
-        }
-
-        tag.put("Slots", this.stackHandler.serializeNBT(lookupProvider));
-    }
-
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
-        CompoundTag tag = super.getUpdateTag(lookupProvider);
-        this.saveColorAndItem(tag, lookupProvider);
-        return tag;
+        return this.saveCustomOnly(lookupProvider);
     }
 
     @Nullable
@@ -86,31 +89,36 @@ public class PaintBucketBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
-        this.saveColorAndItem(tag, lookupProvider);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+
+        if (!this.colorTank.isEmpty()) {
+            this.colorTank.serialize(output.child("Tank"));
+        }
+
+        this.stackHandler.serialize(output.child("Slots"));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(tag, lookupProvider);
-        this.colorTank.readFromNBT(lookupProvider, tag.getCompound("Tank"));
-        this.stackHandler.deserializeNBT(lookupProvider, tag.getCompound("Slots"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.colorTank.deserialize(input.childOrEmpty("Tank"));
+        this.stackHandler.deserialize(input.childOrEmpty("Slots"));
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder builder) {
-        builder.set(UselessDataComponents.FLUID_CONTENTS.get(), SimpleFluidContent.copyOf(this.colorTank.getFluid()));
+        builder.set(LibDataComponents.FLUID.get(), SimpleFluidContent.copyOf(this.colorTank.getFluid()));
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
-        this.colorTank.setFluid(components.getOrDefault(UselessDataComponents.FLUID_CONTENTS.get(), SimpleFluidContent.EMPTY).copy());
+    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+        this.colorTank.setFluid(componentGetter.getOrDefault(LibDataComponents.FLUID.get(), SimpleFluidContent.EMPTY).copy());
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
-        tag.remove("Tank");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("Tank");
     }
 }

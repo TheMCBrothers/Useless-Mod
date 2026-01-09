@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -109,17 +110,18 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (level instanceof ServerLevel serverLevel && player.isCreative() && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
-            if (level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity blockEntity) {
-                if (!blockEntity.isEmpty() ||
-                        !blockEntity.tankHandler.getWaterTank().isEmpty() ||
-                        !blockEntity.tankHandler.getMilkTank().isEmpty()) {
-                    ItemStack stack = new ItemStack(this);
-                    stack.applyComponents(blockEntity.collectComponents());
-                    ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-                    itemEntity.setDefaultPickUpDelay();
-                    level.addFreshEntity(itemEntity);
-                }
+        if (level instanceof ServerLevel serverLevel
+                && player.preventsBlockDrops()
+                && serverLevel.getGameRules().get(GameRules.BLOCK_DROPS)
+                && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity blockEntity) {
+            if (!blockEntity.isEmpty() ||
+                    !blockEntity.tankHandler.getWaterTank().isEmpty() ||
+                    !blockEntity.tankHandler.getMilkTank().isEmpty()) {
+                ItemStack stack = new ItemStack(this);
+                stack.applyComponents(blockEntity.collectComponents());
+                ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                itemEntity.setDefaultPickUpDelay();
+                level.addFreshEntity(itemEntity);
             }
         }
 
@@ -145,6 +147,6 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, UselessBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineBlockEntity::serverTick);
+        return level.isClientSide() ? null : createTickerHelper(type, UselessBlockEntityTypes.COFFEE_MACHINE.get(), CoffeeMachineBlockEntity::serverTick);
     }
 }

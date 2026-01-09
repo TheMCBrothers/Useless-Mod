@@ -1,16 +1,17 @@
 package net.themcbrothers.uselessmod.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
+import net.minecraft.client.renderer.blockentity.state.BedRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.level.block.entity.UselessBedBlockEntity;
 
-public class UselessBedRenderer implements BlockEntityRenderer<UselessBedBlockEntity> {
+public class UselessBedRenderer implements BlockEntityRenderer<UselessBedBlockEntity, BedRenderState> {
     private final ModelPart headRoot;
     private final ModelPart footRoot;
 
@@ -33,9 +34,8 @@ public class UselessBedRenderer implements BlockEntityRenderer<UselessBedBlockEn
         this.footRoot = context.bakeLayer(ModelLayers.BED_FOOT);
     }
 
-    @Override
     public void render(UselessBedBlockEntity bedBlockEntity, float idk, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        Material material = new Material(Sheets.BED_SHEET, UselessMod.rl("entity/bed/useless"));
+        Material material = new Material(Sheets.BED_SHEET, UselessMod.id("entity/bed/useless"));
         Level level = bedBlockEntity.getLevel();
         if (level != null) {
             BlockState blockstate = bedBlockEntity.getBlockState();
@@ -55,8 +55,18 @@ public class UselessBedRenderer implements BlockEntityRenderer<UselessBedBlockEn
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F + direction.toYRot()));
         poseStack.translate(-0.5D, -0.5D, -0.5D);
-        VertexConsumer vertexconsumer = material.buffer(buffer, RenderType::entitySolid);
-        modelPart.render(poseStack, vertexconsumer, combinedLight, combinedOverlay);
+//        VertexConsumer vertexconsumer = material.buffer(buffer, RenderTypes::entitySolid);
+//        modelPart.render(poseStack, vertexconsumer, combinedLight, combinedOverlay);
         poseStack.popPose();
+    }
+
+    @Override
+    public BedRenderState createRenderState() {
+        return new BedRenderState();
+    }
+
+    @Override
+    public void submit(BedRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+        // TODO: useless bed renderer
     }
 }

@@ -12,12 +12,12 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -30,8 +30,8 @@ import net.themcbrothers.uselessmod.core.UselessRecipeTypes;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 
 public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<CoffeeRecipe>> {
-    private static final ResourceLocation TEXTURE = UselessMod.rl("textures/gui/container/coffee_machine.png");
-    static final RecipeType<RecipeHolder<CoffeeRecipe>> TYPE = RecipeType.createFromVanilla(UselessRecipeTypes.COFFEE.get());
+    private static final Identifier TEXTURE = UselessMod.id("textures/gui/container/coffee_machine.png");
+    static final IRecipeType<RecipeHolder<CoffeeRecipe>> TYPE = IRecipeType.create(UselessRecipeTypes.COFFEE.get());
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -39,7 +39,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
     private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
 
     public CoffeeRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 11, 15, 104, 54);
+        this.background = helper.createDrawable(TEXTURE, 11, 15, 104, 54); // TODO: reduce magic numbers
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(UselessBlocks.COFFEE_MACHINE.get()));
         this.localizedName = UselessMod.translate("container", "coffee_machine");
         this.cachedArrows = CacheBuilder.newBuilder()
@@ -74,12 +74,12 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
 
         SizedFluidIngredient waterIngredient = recipeValue.getWaterIngredient();
 
-        builder.addSlot(RecipeIngredientRole.CATALYST, 1, 3)
+        builder.addSlot(RecipeIngredientRole.CRAFTING_STATION, 1, 3)
                 .setFluidRenderer(waterIngredient.amount(), false, 8, 48)
                 .addIngredients(NeoForgeTypes.FLUID_STACK, waterIngredient.ingredient().fluids().stream().map(Holder::value).map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME)).toList());
 
         recipeValue.getMilkIngredient().ifPresent(milkIngredient ->
-                builder.addSlot(RecipeIngredientRole.CATALYST, 19, 3)
+                builder.addSlot(RecipeIngredientRole.CRAFTING_STATION, 19, 3)
                         .setFluidRenderer(milkIngredient.amount(), false, 8, 48)
                         .addIngredients(NeoForgeTypes.FLUID_STACK, milkIngredient.ingredient().fluids().stream().map(Holder::value).map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME)).toList()));
     }
@@ -90,8 +90,13 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return 104; // TODO: reduce magic numbers
+    }
+
+    @Override
+    public int getHeight() {
+        return 54; // TODO: reduce magic numbers
     }
 
     @Override
@@ -100,7 +105,7 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
     }
 
     @Override
-    public RecipeType<RecipeHolder<CoffeeRecipe>> getRecipeType() {
+    public IRecipeType<RecipeHolder<CoffeeRecipe>> getRecipeType() {
         return TYPE;
     }
 }

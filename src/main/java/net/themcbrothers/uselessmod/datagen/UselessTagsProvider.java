@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.FluidTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.PaintingVariantTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
@@ -12,19 +11,19 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.PaintingVariantTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.BlockTagCopyingItemTagProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.core.*;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class UselessTagsProvider {
     public static class Blocks extends BlockTagsProvider {
-        public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(output, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(output, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
@@ -80,13 +79,13 @@ public class UselessTagsProvider {
         }
     }
 
-    public static class Items extends ItemTagsProvider {
-        public Items(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, blockTags, UselessMod.MOD_ID, existingFileHelper);
+    public static class BlockTagCopyItems extends BlockTagCopyingItemTagProvider {
+        public BlockTagCopyItems(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
+            super(output, lookupProvider, blockTags, UselessMod.MOD_ID);
         }
 
         @Override
-        protected void addTags(HolderLookup.Provider lookupProvider) {
+        protected void addTags(HolderLookup.Provider provider) {
             // ores
             this.copy(UselessTags.Blocks.USELESS_ORES, UselessTags.Items.USELESS_ORES);
             this.copy(UselessTags.Blocks.SUPER_USELESS_ORES, UselessTags.Items.SUPER_USELESS_ORES);
@@ -124,7 +123,16 @@ public class UselessTagsProvider {
             this.copy(BlockTags.BEDS, ItemTags.BEDS);
             this.copy(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS);
             this.copy(UselessTags.Blocks.LAMPS, UselessTags.Items.LAMPS);
+        }
+    }
 
+    public static class Items extends ItemTagsProvider {
+        public Items(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider lookupProvider) {
             // minecraft tags
             this.tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(UselessItems.USELESS_PICKAXE.get(), UselessItems.SUPER_USELESS_PICKAXE.get());
             this.tag(ItemTags.SWORDS).add(UselessItems.USELESS_SWORD.get(), UselessItems.SUPER_USELESS_SWORD.get());
@@ -165,8 +173,8 @@ public class UselessTagsProvider {
     }
 
     public static class Fluids extends FluidTagsProvider {
-        public Fluids(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Fluids(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
@@ -176,8 +184,8 @@ public class UselessTagsProvider {
     }
 
     public static class Entities extends EntityTypeTagsProvider {
-        public Entities(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Entities(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
@@ -187,19 +195,17 @@ public class UselessTagsProvider {
     }
 
     public static class Paintings extends PaintingVariantTagsProvider {
-        public Paintings(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Paintings(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
         protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(PaintingVariantTags.PLACEABLE)
-                    .add(
-                            UselessPaintingVariants.LARGE_LOGO_RED,
-                            UselessPaintingVariants.LARGE_LOGO_BLUE,
-                            UselessPaintingVariants.SMALL_LOGO_RED,
-                            UselessPaintingVariants.SMALL_LOGO_BLUE
-                    );
+                    .add(UselessPaintingVariants.LARGE_LOGO_RED)
+                    .add(UselessPaintingVariants.LARGE_LOGO_BLUE)
+                    .add(UselessPaintingVariants.SMALL_LOGO_RED)
+                    .add(UselessPaintingVariants.SMALL_LOGO_BLUE);
         }
     }
 }

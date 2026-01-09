@@ -18,7 +18,7 @@ import net.themcbrothers.uselessmod.world.level.block.entity.SyncableBlockEntity
 import java.util.Objects;
 
 public record BlockEntitySyncPacket(BlockPos pos, CompoundTag tag) implements PacketMessage {
-    public static final Type<BlockEntitySyncPacket> TYPE = new Type<>(UselessMod.rl("block_entity_sync"));
+    public static final Type<BlockEntitySyncPacket> TYPE = new Type<>(UselessMod.id("block_entity_sync"));
     public static final StreamCodec<FriendlyByteBuf, BlockEntitySyncPacket> STREAM_CODEC = new StreamCodec<>() {
         @Override
         public BlockEntitySyncPacket decode(FriendlyByteBuf buf) {
@@ -48,7 +48,7 @@ public record BlockEntitySyncPacket(BlockPos pos, CompoundTag tag) implements Pa
                 }
             }
         } else {
-            if (FMLEnvironment.dist == Dist.CLIENT) {
+            if (FMLEnvironment.getDist() == Dist.CLIENT) {
                 MessageProxy.receiveServerUpdates(this.pos, this.tag).run();
             }
         }

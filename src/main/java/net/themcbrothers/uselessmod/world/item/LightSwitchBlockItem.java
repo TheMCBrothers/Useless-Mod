@@ -3,6 +3,7 @@ package net.themcbrothers.uselessmod.world.item;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +24,7 @@ import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import static net.themcbrothers.uselessmod.UselessMod.translate;
 
@@ -30,27 +33,29 @@ public class LightSwitchBlockItem extends BlockItem {
         super(block, properties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         List<BlockPos> lights = stack.get(UselessDataComponents.LIGHTS.get());
         Level level = Minecraft.getInstance().level;
+        LocalPlayer player = Minecraft.getInstance().player;
 
-        if (level != null && lights != null) {
-            if (GLFW.glfwGetKey(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
+        if (level != null && lights != null && player != null) {
+            if (GLFW.glfwGetKey(Minecraft.getInstance().getWindow().handle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS) {
                 for (BlockPos pos : lights) {
                     final BlockState state = level.getBlockState(pos);
-                    final ItemStack cloneStack = state.getCloneItemStack(Minecraft.getInstance().hitResult, level, pos, Minecraft.getInstance().player);
-                    final String modId = cloneStack.getItem().getCreatorModId(cloneStack);
+                    final ItemStack cloneStack = state.getCloneItemStack(pos, level, false, player);
+                    final String modId = cloneStack.getItem().getCreatorModId(level.registryAccess(), cloneStack);
                     final MutableComponent displayComponent = Component.literal(pos.toShortString()).append(": ").append(state.getBlock().getName());
 
                     ModList.get().getModContainerById(modId).ifPresent(modContainer ->
                             displayComponent.append(" (").append(modContainer.getModInfo().getDisplayName()).append(")"));
 
-                    tooltip.add(displayComponent.withStyle(ChatFormatting.GRAY));
+                    tooltipAdder.accept(displayComponent.withStyle(ChatFormatting.GRAY));
                 }
-                tooltip.add(translate("tooltip", "light_switch.clear").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                tooltipAdder.accept(translate("tooltip", "light_switch.clear").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             } else {
-                tooltip.add(translate("tooltip", "hold_shift").withStyle(ChatFormatting.GRAY));
+                tooltipAdder.accept(translate("tooltip", "hold_shift").withStyle(ChatFormatting.GRAY));
             }
         }
     }

@@ -3,11 +3,8 @@ package net.themcbrothers.uselessmod.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -167,15 +164,6 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
         }
 
         return InteractionResult.TRY_WITH_EMPTY_HAND;
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (level instanceof ServerLevel && !state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof PaintBucketBlockEntity blockEntity) {
-            Containers.dropContents(level, pos, NonNullList.of(blockEntity.stackHandler.getStackInSlot(0)));
-        }
-
-        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override

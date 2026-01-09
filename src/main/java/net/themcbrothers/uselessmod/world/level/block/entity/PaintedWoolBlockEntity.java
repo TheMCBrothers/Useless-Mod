@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -9,13 +10,18 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.PaintedWoolBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class PaintedWoolBlockEntity extends BlockEntity {
-    private int color = 0xFFFFFFFF;
+    public static final String TAG_COLOR = "color";
+    public static final int DEFAULT_COLOR = 0xFFFFFFFF;
+
+    private int color = DEFAULT_COLOR;
 
     public PaintedWoolBlockEntity(BlockPos pos, BlockState state) {
         super(UselessBlockEntityTypes.PAINTED_WOOL.get(), pos, state);
@@ -24,7 +30,7 @@ public class PaintedWoolBlockEntity extends BlockEntity {
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
         CompoundTag tag = super.getUpdateTag(lookupProvider);
-        tag.putInt("Color", this.color);
+        tag.putInt(TAG_COLOR, this.color);
         return tag;
     }
 
@@ -35,15 +41,15 @@ public class PaintedWoolBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(tag, lookupProvider);
-        this.color = tag.getInt("Color");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.color = input.getIntOr(TAG_COLOR, DEFAULT_COLOR);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
-        tag.putInt("Color", this.color);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt(TAG_COLOR, this.color);
     }
 
     public int getColor() {
@@ -59,8 +65,8 @@ public class PaintedWoolBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
-        this.color = components.getOrDefault(UselessDataComponents.COLOR.get(), 0xFFFFFFFF);
+    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+        this.color = componentGetter.getOrDefault(UselessDataComponents.COLOR.get(), DEFAULT_COLOR);
     }
 
     @Override
@@ -70,7 +76,7 @@ public class PaintedWoolBlockEntity extends BlockEntity {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
-        tag.remove("Color");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("color");
     }
 }

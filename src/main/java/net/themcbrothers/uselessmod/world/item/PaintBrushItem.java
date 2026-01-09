@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -18,20 +19,21 @@ import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintedWoolBlockEntity;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class PaintBrushItem extends Item {
     public PaintBrushItem(Properties properties) {
         super(properties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> hoverText, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         Integer color = stack.get(UselessDataComponents.COLOR.get());
 
         if (color != null) {
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
-            hoverText.add(UselessMod.translate("misc", "color", hexColor).withStyle(ChatFormatting.GRAY));
+            tooltipAdder.accept(UselessMod.translate("misc", "color", hexColor).withStyle(ChatFormatting.GRAY));
         }
     }
 

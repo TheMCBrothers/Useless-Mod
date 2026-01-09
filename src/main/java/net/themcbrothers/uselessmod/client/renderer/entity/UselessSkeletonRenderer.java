@@ -4,15 +4,15 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractSkeletonRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.monster.UselessSkeleton;
 
 public class UselessSkeletonRenderer extends AbstractSkeletonRenderer<UselessSkeleton, SkeletonRenderState> {
-    private static final ResourceLocation SKELETON_LOCATION = UselessMod.rl("textures/entity/useless_skeleton.png");
+    private static final Identifier SKELETON_LOCATION = UselessMod.id("textures/entity/useless_skeleton.png");
 
     public UselessSkeletonRenderer(EntityRendererProvider.Context context) {
-        super(context, ModelLayers.SKELETON, ModelLayers.SKELETON_INNER_ARMOR, ModelLayers.SKELETON_OUTER_ARMOR);
+        super(context, ModelLayers.SKELETON, ModelLayers.SKELETON_ARMOR);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class UselessSkeletonRenderer extends AbstractSkeletonRenderer<UselessSke
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SkeletonRenderState renderState) {
+    public Identifier getTextureLocation(SkeletonRenderState renderState) {
         return SKELETON_LOCATION;
     }
 }

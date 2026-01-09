@@ -2,10 +2,13 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -32,6 +35,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidActionResult;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -43,7 +48,6 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
-import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.config.ServerConfig;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
@@ -79,8 +83,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             ServerConfig.COFFEE_MACHINE_ENERGY_TRANSFER.get(), 0);
     public final CoffeeMachineTank tankHandler = new CoffeeMachineTank();
     private boolean useMilk;
-    private int litTime;
-    private int cookingProgress;
+    private int litTimeRemaining;
+    private int cookingTimer;
     private int cookingTotalTime;
 
     private final RecipeManager.CachedCheck<CoffeeRecipeInput, CoffeeRecipe> quickCheck;
@@ -88,9 +92,9 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> CoffeeMachineBlockEntity.this.energyStorage.getEnergyStored();
-                case 1 -> CoffeeMachineBlockEntity.this.energyStorage.getMaxEnergyStored();
-                case 2 -> CoffeeMachineBlockEntity.this.cookingProgress;
+                case 0 -> CoffeeMachineBlockEntity.this.energyStorage.getAmountAsInt();
+                case 1 -> CoffeeMachineBlockEntity.this.energyStorage.getCapacityAsInt();
+                case 2 -> CoffeeMachineBlockEntity.this.cookingTimer;
                 case 3 -> CoffeeMachineBlockEntity.this.cookingTotalTime;
                 case 4 -> CoffeeMachineBlockEntity.this.getCurrentRecipe() != null ? 1 : 0;
                 default -> 0;
@@ -114,7 +118,7 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CoffeeMachineBlockEntity coffeeMachine) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Fluid Slot
             final ItemStack stackFluidIn = coffeeMachine.getItem(4);
 
@@ -143,38 +147,38 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 }
             }
 
-
+            // TODO: capabilities
             // Energy Slot
             ItemStack energySlotStack = coffeeMachine.items.get(6);
             if (!energySlotStack.isEmpty()) {
-                int freeEnergySpace = coffeeMachine.energyStorage.getMaxEnergyStored() - coffeeMachine.energyStorage.getEnergyStored();
-                int maxReceive = coffeeMachine.energyStorage.getMaxReceive();
+                int freeEnergySpace = coffeeMachine.energyStorage.getCapacityAsInt() - coffeeMachine.energyStorage.getAmountAsInt();
+                int maxReceive = coffeeMachine.energyStorage.getMaxInsert();
                 if (freeEnergySpace > 0) {
-                    EnergyUtils.getEnergy(energySlotStack).ifPresent(itemEnergyStorage -> {
-                        if (itemEnergyStorage.canExtract()) {
-                            int extracted = itemEnergyStorage.extractEnergy(Math.min(freeEnergySpace, maxReceive), false);
-                            coffeeMachine.energyStorage.growEnergy(extracted);
-                        }
-                    });
+//                    EnergyUtils.getEnergy(energySlotStack).ifPresent(itemEnergyStorage -> {
+//                        if (itemEnergyStorage.canExtract()) {
+//                            int extracted = itemEnergyStorage.extractEnergy(Math.min(freeEnergySpace, maxReceive), false);
+//                            coffeeMachine.energyStorage.growEnergy(extracted);
+//                        }
+//                    });
                 }
             }
 
-            if (coffeeMachine.energyStorage.getEnergyStored() > 0 && coffeeMachine.cookingProgress > 0) {
+            if (coffeeMachine.energyStorage.getAmountAsInt() > 0 && coffeeMachine.cookingTimer > 0) {
                 if (coffeeMachine.getCurrentRecipe() != null) {
                     coffeeMachine.energyStorage.consumeEnergy(ServerConfig.COFFEE_MACHINE_ENERGY_PER_TICK.get());
-                    if (coffeeMachine.cookingProgress < coffeeMachine.cookingTotalTime && coffeeMachine.getCurrentRecipe() != null) {
-                        coffeeMachine.cookingProgress++;
+                    if (coffeeMachine.cookingTimer < coffeeMachine.cookingTotalTime && coffeeMachine.getCurrentRecipe() != null) {
+                        coffeeMachine.cookingTimer++;
                     } else {
                         coffeeMachine.process(coffeeMachine.getCurrentRecipe());
-                        coffeeMachine.cookingProgress = 0;
+                        coffeeMachine.cookingTimer = 0;
                         coffeeMachine.cookingTotalTime = 0;
                     }
                 } else {
-                    coffeeMachine.cookingProgress = 0;
+                    coffeeMachine.cookingTimer = 0;
                     coffeeMachine.cookingTotalTime = 0;
                 }
-            } else if (coffeeMachine.litTime > 0) {
-                coffeeMachine.litTime--;
+            } else if (coffeeMachine.litTimeRemaining > 0) {
+                coffeeMachine.litTimeRemaining--;
             }
         }
     }
@@ -267,12 +271,12 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 return;
             }
             this.cookingTotalTime = recipe.getCookingTime();
-            this.cookingProgress = 1;
-            this.litTime = recipe.getCookingTime();
+            this.cookingTimer = 1;
+            this.litTimeRemaining = recipe.getCookingTime();
         } else {
             sound = SoundEvents.HOE_TILL;
-            this.litTime = 0;
-            this.cookingProgress = 0;
+            this.litTimeRemaining = 0;
+            this.cookingTimer = 0;
             this.cookingTotalTime = 0;
         }
         this.setChanged();
@@ -291,19 +295,18 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public void sendSyncPacket(int type) {
-        if (this.level == null || this.level.isClientSide) {
+        if (this.level == null || this.level.isClientSide()) {
             return;
         }
 
-        RegistryAccess lookupProvider = this.level.registryAccess();
         CompoundTag nbt = new CompoundTag();
 
         if (type == SYNC_WATER_TANK) {
-            nbt.put("Fluid", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+            nbt.store("water", FluidStack.CODEC, this.tankHandler.getWaterTank().getFluid());
         } else if (type == SYNC_MILK_TANK) {
-            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
+            nbt.store("milk", FluidStack.CODEC, this.tankHandler.getMilkTank().getFluid());
         } else if (type == SYNC_USE_MILK) {
-            nbt.putBoolean("UseMilk", this.useMilk);
+            nbt.putBoolean("use_milk", this.useMilk);
         }
 
         PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) this.level, new ChunkPos(this.worldPosition), new BlockEntitySyncPacket(this.worldPosition, nbt));
@@ -311,54 +314,46 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public void receiveMessageFromServer(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        if (tag.contains("Fluid", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getWaterTank().readFromNBT(lookupProvider, tag.getCompound("Fluid"));
-        }
-        if (tag.contains("Milk", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getMilkTank().readFromNBT(lookupProvider, tag.getCompound("Milk"));
-        }
-        if (tag.contains("UseMilk", Tag.TAG_BYTE)) {
-            this.useMilk = tag.getBoolean("UseMilk");
-        }
+        tag.read("water", FluidStack.CODEC).ifPresent(fluidStack -> this.tankHandler.getWaterTank().setFluid(fluidStack));
+        tag.read("milk", FluidStack.CODEC).ifPresent(fluidStack -> this.tankHandler.getMilkTank().setFluid(fluidStack));
+        this.useMilk = tag.getBooleanOr("use_milk", this.useMilk);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(compound, lookupProvider);
-        ContainerHelper.loadAllItems(compound, this.items, lookupProvider);
-        this.litTime = compound.getInt("BurnTime");
-        this.cookingProgress = compound.getInt("CookTime");
-        this.cookingTotalTime = compound.getInt("CookTimeTotal");
-        this.useMilk = compound.getBoolean("UseMilk");
-        this.energyStorage.setEnergyStored(compound.getInt("EnergyStored"));
-        this.tankHandler.getWaterTank().readFromNBT(lookupProvider, compound.getCompound("Water"));
-        this.tankHandler.getMilkTank().readFromNBT(lookupProvider, compound.getCompound("Milk"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        ContainerHelper.loadAllItems(input, this.items);
+        this.energyStorage.deserialize(input);
+        this.cookingTimer = input.getIntOr("cooking_time_spent", 0);
+        this.cookingTotalTime = input.getIntOr("cooking_total_time", 0);
+        this.litTimeRemaining = input.getIntOr("lit_time_remaining", 0);
+        this.useMilk = input.getBooleanOr("use_milk", false);
+        this.tankHandler.getWaterTank().setFluid(input.read("water", FluidStack.CODEC).orElse(FluidStack.EMPTY));
+        this.tankHandler.getMilkTank().setFluid(input.read("milk", FluidStack.CODEC).orElse(FluidStack.EMPTY));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
-        ContainerHelper.saveAllItems(tag, this.items, false, lookupProvider);
-        tag.putInt("BurnTime", this.litTime);
-        tag.putInt("CookTime", this.cookingProgress);
-        tag.putInt("CookTimeTotal", this.cookingTotalTime);
-        tag.putBoolean("UseMilk", this.useMilk);
-        tag.putInt("EnergyStored", this.energyStorage.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        ContainerHelper.saveAllItems(output, this.items, false);
+        this.energyStorage.serialize(output);
+        output.putInt("cooking_time_spent", this.cookingTimer);
+        output.putInt("cooking_total_time", this.cookingTotalTime);
+        output.putInt("lit_time_remaining", this.litTimeRemaining);
+        output.putBoolean("use_milk", this.useMilk);
 
         if (!this.tankHandler.getWaterTank().isEmpty()) {
-            tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+            output.store("water", FluidStack.CODEC, this.tankHandler.getWaterTank().getFluid());
         }
 
         if (!this.tankHandler.getMilkTank().isEmpty()) {
-            tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
+            output.store("milk", FluidStack.CODEC, this.tankHandler.getMilkTank().getFluid());
         }
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
-        CompoundTag tag = new CompoundTag();
-        this.saveAdditional(tag, lookupProvider);
-        return tag;
+        return this.saveCustomOnly(lookupProvider);
     }
 
     @Nullable
@@ -481,16 +476,16 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
+    protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
 
         Contents contents = components.get(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get());
         if (contents != null) {
             this.tankHandler.getWaterTank().setFluid(contents.water());
             this.tankHandler.getMilkTank().setFluid(contents.milk());
-            this.energyStorage.setEnergyStored(contents.energy());
-            this.litTime = contents.burnTime();
-            this.cookingProgress = contents.cookTime();
+            this.energyStorage.set(contents.energy());
+            this.litTimeRemaining = contents.burnTime();
+            this.cookingTimer = contents.cookTime();
             this.cookingTotalTime = contents.cookTimeTotal();
             this.useMilk = contents.useMilk();
         }
@@ -504,27 +499,28 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 new Contents(
                         this.tankHandler.getWaterTank().getFluid(),
                         this.tankHandler.getMilkTank().getFluid(),
-                        this.energyStorage.getEnergyStored(),
-                        this.litTime,
-                        this.cookingProgress,
+                        this.energyStorage.getAmountAsInt(),
+                        this.litTimeRemaining,
+                        this.cookingTimer,
                         this.cookingTotalTime,
                         this.useMilk
                 ));
     }
 
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
+    public void removeComponentsFromTag(ValueOutput tag) {
         super.removeComponentsFromTag(tag);
 
-        tag.remove("EnergyStored");
-        tag.remove("Water");
-        tag.remove("Milk");
-        tag.remove("BurnTime");
-        tag.remove("CookTime");
-        tag.remove("CookTimeTotal");
-        tag.remove("UseMilk");
+        tag.discard("EnergyStored");
+        tag.discard("Water");
+        tag.discard("Milk");
+        tag.discard("BurnTime");
+        tag.discard("CookTime");
+        tag.discard("CookTimeTotal");
+        tag.discard("UseMilk");
     }
 
+    // TODO: replace with new ResourceHandler (capabilities)
     public class CoffeeMachineTank implements IFluidHandler {
         final FluidTank waterTank = new FluidTank(ServerConfig.COFFEE_MACHINE_WATER_CAPACITY.get()) {
             @Override
