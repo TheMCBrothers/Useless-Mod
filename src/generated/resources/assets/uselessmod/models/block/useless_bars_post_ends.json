@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/template_bars_post_ends",
+  "render_type": "minecraft:cutout",
   "textures": {
     "bars": "uselessmod:block/useless_bars",
     "edge": "uselessmod:block/useless_bars"

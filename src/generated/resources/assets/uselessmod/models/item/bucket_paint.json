@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "uselessmod:paint",
-  "loader": "neoforge:fluid_container"
-}

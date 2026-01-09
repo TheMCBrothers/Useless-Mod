@@ -15,6 +15,9 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessPaintingVariants;
 import net.themcbrothers.uselessmod.datagen.loot.UselessLootTableProvider;
+import net.themcbrothers.uselessmod.datagen.models.BlockModelProvider;
+import net.themcbrothers.uselessmod.datagen.models.ItemModelProvider;
+import net.themcbrothers.uselessmod.datagen.models.UselessModelProvider;
 import net.themcbrothers.uselessmod.datagen.worldgen.biome.UselessBiomeData;
 import net.themcbrothers.uselessmod.datagen.worldgen.biome.UselessBiomeModifiers;
 import net.themcbrothers.uselessmod.world.worldgen.*;
@@ -66,6 +69,9 @@ public class UselessDataGen {
 
         // Resources
         generator.addProvider(true, new UselessSpriteSourceProvider(packOutput, lookupProvider));
-        generator.addProvider(true, new UselessModelProvider(packOutput));
+        generator.addProvider(true, UselessModelProvider.create(
+                BlockModelProvider::new,
+                ItemModelProvider::new
+        ));
     }
 }
