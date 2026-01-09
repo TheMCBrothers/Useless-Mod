@@ -6,17 +6,8 @@
   ],
   "downfall": 0.8,
   "effects": {
-    "fog_color": 12638463,
-    "grass_color": 4240479,
-    "mood_sound": {
-      "block_search_extent": 8,
-      "offset": 2.0,
-      "sound": "minecraft:ambient.cave",
-      "tick_delay": 6000
-    },
-    "sky_color": 4240479,
-    "water_color": 4623172,
-    "water_fog_color": 4623172
+    "grass_color": "#40b45f",
+    "water_color": "#468b44"
   },
   "features": [
     [],
@@ -75,8 +66,9 @@
       "minecraft:patch_grass_forest",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
-      "minecraft:patch_sugar_cane",
       "minecraft:patch_pumpkin",
+      "minecraft:patch_sugar_cane",
+      "minecraft:patch_firefly_bush_near_water",
       "uselessmod:flower_default",
       "uselessmod:trees_useless_oak"
     ],

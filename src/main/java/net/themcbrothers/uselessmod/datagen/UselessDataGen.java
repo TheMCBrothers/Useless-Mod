@@ -58,8 +58,7 @@ public class UselessDataGen {
         generator.addProvider(true, UselessLootTableProvider.create(packOutput, lookupProvider));
         final BlockTagsProvider blockTagsProvider = new UselessTagsProvider.Blocks(packOutput, lookupProvider);
         generator.addProvider(true, blockTagsProvider);
-        generator.addProvider(true, new UselessTagsProvider.Items(packOutput, lookupProvider));
-        generator.addProvider(true, new UselessTagsProvider.BlockTagCopyItems(packOutput, lookupProvider, blockTagsProvider.contentsGetter()));
+        generator.addProvider(true, new UselessTagsProvider.Items(packOutput, lookupProvider, blockTagsProvider.contentsGetter()));
         generator.addProvider(true, new UselessTagsProvider.Fluids(packOutput, lookupProvider));
         generator.addProvider(true, new UselessTagsProvider.Entities(packOutput, lookupProvider));
         generator.addProvider(true, new UselessTagsProvider.Paintings(packOutput, lookupProvider));
@@ -67,7 +66,6 @@ public class UselessDataGen {
 
         // Resources
         generator.addProvider(true, new UselessSpriteSourceProvider(packOutput, lookupProvider));
-//        generator.addProvider(true, new UselessBlockStateProvider(packOutput)); // TODO: block models generation
-        generator.addProvider(true, new UselessItemModelProvider(packOutput));
+        generator.addProvider(true, new UselessModelProvider(packOutput));
     }
 }

@@ -1,9 +1,7 @@
 {
-  "parent": "minecraft:block/iron_bars_side",
-  "render_type": "minecraft:cutout_mipped",
+  "parent": "minecraft:block/template_bars_side",
   "textures": {
     "bars": "uselessmod:block/super_useless_bars",
-    "edge": "uselessmod:block/super_useless_bars",
-    "particle": "uselessmod:block/super_useless_bars"
+    "edge": "uselessmod:block/super_useless_bars"
   }
 }

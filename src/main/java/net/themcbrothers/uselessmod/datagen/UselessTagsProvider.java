@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagCopyingItemTagProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.core.*;
@@ -79,13 +78,13 @@ public class UselessTagsProvider {
         }
     }
 
-    public static class BlockTagCopyItems extends BlockTagCopyingItemTagProvider {
-        public BlockTagCopyItems(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
+    public static class Items extends BlockTagCopyingItemTagProvider {
+        public Items(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
             super(output, lookupProvider, blockTags, UselessMod.MOD_ID);
         }
 
         @Override
-        protected void addTags(HolderLookup.Provider provider) {
+        protected void addTags(HolderLookup.Provider lookupProvider) {
             // ores
             this.copy(UselessTags.Blocks.USELESS_ORES, UselessTags.Items.USELESS_ORES);
             this.copy(UselessTags.Blocks.SUPER_USELESS_ORES, UselessTags.Items.SUPER_USELESS_ORES);
@@ -123,16 +122,7 @@ public class UselessTagsProvider {
             this.copy(BlockTags.BEDS, ItemTags.BEDS);
             this.copy(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS);
             this.copy(UselessTags.Blocks.LAMPS, UselessTags.Items.LAMPS);
-        }
-    }
 
-    public static class Items extends ItemTagsProvider {
-        public Items(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID);
-        }
-
-        @Override
-        protected void addTags(HolderLookup.Provider lookupProvider) {
             // minecraft tags
             this.tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(UselessItems.USELESS_PICKAXE.get(), UselessItems.SUPER_USELESS_PICKAXE.get());
             this.tag(ItemTags.SWORDS).add(UselessItems.USELESS_SWORD.get(), UselessItems.SUPER_USELESS_SWORD.get());

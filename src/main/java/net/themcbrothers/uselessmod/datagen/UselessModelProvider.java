@@ -7,26 +7,69 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.themcbrothers.uselessmod.UselessMod;
+import net.themcbrothers.uselessmod.client.PaintTintSource;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.core.UselessFluids;
 import net.themcbrothers.uselessmod.core.UselessItems;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
-public class UselessItemModelProvider extends ModelProvider {
-    public UselessItemModelProvider(PackOutput packOutput) {
+public class UselessModelProvider extends ModelProvider {
+    public UselessModelProvider(PackOutput packOutput) {
         super(packOutput, UselessMod.MOD_ID);
     }
 
     @Override
+    protected Stream<? extends Holder<Block>> getKnownBlocks() {
+        return Stream.empty();
+    }
+
+    @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        blockModels.createTrivialCube(UselessBlocks.USELESS_BLOCK.value());
+        blockModels.createTrivialCube(UselessBlocks.SUPER_USELESS_BLOCK.value());
+        blockModels.createTrivialCube(UselessBlocks.RAW_USELESS_BLOCK.value());
+        blockModels.createTrivialCube(UselessBlocks.RAW_SUPER_USELESS_BLOCK.value());
+        blockModels.createTrivialCube(UselessBlocks.USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.DEEPSLATE_USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.NETHER_USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.END_USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.SUPER_USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.DEEPSLATE_SUPER_USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.NETHER_SUPER_USELESS_ORE.value());
+        blockModels.createTrivialCube(UselessBlocks.END_SUPER_USELESS_ORE.value());
+        blockModels.createPassiveRail(UselessBlocks.USELESS_RAIL.value());
+        blockModels.createActiveRail(UselessBlocks.USELESS_POWERED_RAIL.value());
+        blockModels.createActiveRail(UselessBlocks.USELESS_DETECTOR_RAIL.value());
+        blockModels.createActiveRail(UselessBlocks.USELESS_ACTIVATOR_RAIL.value());
+        blockModels.createDoor(UselessBlocks.USELESS_DOOR.value());
+        blockModels.createDoor(UselessBlocks.SUPER_USELESS_DOOR.value());
+        blockModels.createTrapdoor(UselessBlocks.USELESS_TRAPDOOR.value());
+        blockModels.createTrapdoor(UselessBlocks.SUPER_USELESS_TRAPDOOR.value());
+        blockModels.createBarsAndItem(UselessBlocks.USELESS_BARS.value());
+        blockModels.createBarsAndItem(UselessBlocks.SUPER_USELESS_BARS.value());
+        blockModels.family(UselessBlocks.USELESS_OAK_PLANKS.value())
+                .button(UselessBlocks.USELESS_OAK_BUTTON.value())
+                .fence(UselessBlocks.USELESS_OAK_FENCE.value())
+                .fenceGate(UselessBlocks.USELESS_OAK_FENCE_GATE.value())
+                .pressurePlate(UselessBlocks.USELESS_OAK_PRESSURE_PLATE.value())
+//                .sign(UselessBlocks.USELESS_OAK_SIGN.value())
+                .slab(UselessBlocks.USELESS_OAK_SLAB.value())
+                .stairs(UselessBlocks.USELESS_OAK_STAIRS.value())
+                .door(UselessBlocks.USELESS_OAK_DOOR.value())
+                .trapdoor(UselessBlocks.USELESS_OAK_TRAPDOOR.value())
+        ;
+
         itemModels.generateFlatItem(UselessItems.RAW_USELESS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.RAW_SUPER_USELESS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.USELESS_DUST.get(), ModelTemplates.FLAT_ITEM);
@@ -35,7 +78,6 @@ public class UselessItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UselessItems.SUPER_USELESS_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.USELESS_NUGGET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.SUPER_USELESS_NUGGET.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(UselessBlocks.USELESS_OAK_DOOR.asItem(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.USELESS_SHEARS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.USELESS_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UselessItems.SUPER_USELESS_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -62,11 +104,11 @@ public class UselessItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UselessItems.USELESS_BONE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.USELESS_LEATHER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.USELESS_FEATHER.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(UselessItems.USELESS_SHEEP_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(UselessItems.USELESS_PIG_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(UselessItems.USELESS_CHICKEN_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(UselessItems.USELESS_COW_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(UselessItems.USELESS_SKELETON_SKULL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_SHEEP_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_PIG_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_CHICKEN_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_COW_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UselessItems.USELESS_SKELETON_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 
         this.generatePaintBrush(itemModels, UselessItems.PAINT_BRUSH.value());
 
@@ -94,8 +136,8 @@ public class UselessItemModelProvider extends ModelProvider {
                                 TextureMapping.layered(
                                         TextureMapping.getItemTexture(item, "_0"),
                                         TextureMapping.getItemTexture(item, "_1")),
-                                itemModels.modelOutput)
-                        // TODO: tint source
+                                itemModels.modelOutput),
+                        ItemModelGenerators.BLANK_LAYER, PaintTintSource.INSTANCE
                 ));
     }
 }
