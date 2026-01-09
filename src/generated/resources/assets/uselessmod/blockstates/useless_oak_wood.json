@@ -1,7 +1,7 @@
 {
   "variants": {
     "axis=x": {
-      "model": "uselessmod:block/useless_oak_wood_horizontal",
+      "model": "uselessmod:block/useless_oak_wood",
       "x": 90,
       "y": 90
     },
@@ -9,7 +9,7 @@
       "model": "uselessmod:block/useless_oak_wood"
     },
     "axis=z": {
-      "model": "uselessmod:block/useless_oak_wood_horizontal",
+      "model": "uselessmod:block/useless_oak_wood",
       "x": 90
     }
   }

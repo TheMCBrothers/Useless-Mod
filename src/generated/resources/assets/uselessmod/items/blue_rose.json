@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "uselessmod:block/blue_rose"
+    "model": "uselessmod:item/blue_rose"
   }
 }

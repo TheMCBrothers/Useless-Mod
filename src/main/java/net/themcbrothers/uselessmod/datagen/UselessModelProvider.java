@@ -3,15 +3,16 @@ package net.themcbrothers.uselessmod.datagen;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.model.ItemModelUtils;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
-import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.model.*;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -24,7 +25,11 @@ import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static net.minecraft.client.data.models.model.ModelTemplates.createItem;
+
 public class UselessModelProvider extends ModelProvider {
+    public static final ModelTemplate TWO_LAYERED_HANDHELD_ITEM = createItem("handheld", TextureSlot.LAYER0, TextureSlot.LAYER1);
+
     public UselessModelProvider(PackOutput packOutput) {
         super(packOutput, UselessMod.MOD_ID);
     }
@@ -52,12 +57,21 @@ public class UselessModelProvider extends ModelProvider {
         blockModels.createActiveRail(UselessBlocks.USELESS_POWERED_RAIL.value());
         blockModels.createActiveRail(UselessBlocks.USELESS_DETECTOR_RAIL.value());
         blockModels.createActiveRail(UselessBlocks.USELESS_ACTIVATOR_RAIL.value());
+        blockModels.createBarsAndItem(UselessBlocks.USELESS_BARS.value());
+        blockModels.createBarsAndItem(UselessBlocks.SUPER_USELESS_BARS.value());
         blockModels.createDoor(UselessBlocks.USELESS_DOOR.value());
         blockModels.createDoor(UselessBlocks.SUPER_USELESS_DOOR.value());
         blockModels.createTrapdoor(UselessBlocks.USELESS_TRAPDOOR.value());
         blockModels.createTrapdoor(UselessBlocks.SUPER_USELESS_TRAPDOOR.value());
-        blockModels.createBarsAndItem(UselessBlocks.USELESS_BARS.value());
-        blockModels.createBarsAndItem(UselessBlocks.SUPER_USELESS_BARS.value());
+        blockModels.createPlantWithDefaultItem(UselessBlocks.RED_ROSE.value(), UselessBlocks.POTTED_RED_ROSE.value(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlantWithDefaultItem(UselessBlocks.BLUE_ROSE.value(), UselessBlocks.POTTED_BLUE_ROSE.value(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlantWithDefaultItem(UselessBlocks.USELESS_ROSE.value(), UselessBlocks.POTTED_USELESS_ROSE.value(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlantWithDefaultItem(UselessBlocks.USELESS_OAK_SAPLING.value(), UselessBlocks.POTTED_USELESS_OAK_SAPLING.value(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createTrivialCube(UselessBlocks.USELESS_OAK_LEAVES.value());
+        blockModels.woodProvider(UselessBlocks.USELESS_OAK_LOG.value()).logWithHorizontal(UselessBlocks.USELESS_OAK_LOG.value()).wood(UselessBlocks.USELESS_OAK_WOOD.value());
+        blockModels.woodProvider(UselessBlocks.STRIPPED_USELESS_OAK_LOG.value()).logWithHorizontal(UselessBlocks.STRIPPED_USELESS_OAK_LOG.value()).wood(UselessBlocks.STRIPPED_USELESS_OAK_WOOD.value());
+        blockModels.createTrapdoor(UselessBlocks.USELESS_OAK_TRAPDOOR.value());
+        blockModels.createHangingSign(UselessBlocks.STRIPPED_USELESS_OAK_LOG.value(), UselessBlocks.USELESS_OAK_HANGING_SIGN.value(), UselessBlocks.USELESS_OAK_WALL_HANGING_SIGN.value());
         blockModels.family(UselessBlocks.USELESS_OAK_PLANKS.value())
                 .button(UselessBlocks.USELESS_OAK_BUTTON.value())
                 .fence(UselessBlocks.USELESS_OAK_FENCE.value())
@@ -67,8 +81,27 @@ public class UselessModelProvider extends ModelProvider {
                 .slab(UselessBlocks.USELESS_OAK_SLAB.value())
                 .stairs(UselessBlocks.USELESS_OAK_STAIRS.value())
                 .door(UselessBlocks.USELESS_OAK_DOOR.value())
-                .trapdoor(UselessBlocks.USELESS_OAK_TRAPDOOR.value())
         ;
+        blockModels.createFullAndCarpetBlocks(UselessBlocks.USELESS_WOOL.value(), UselessBlocks.USELESS_CARPET.value());
+        blockModels.createBed(UselessBlocks.USELESS_BED.value(), UselessBlocks.USELESS_WOOL.value(), DyeColor.LIME); // TODO: custom bed
+
+        this.createPaintedWool(blockModels);
+        this.createLamp(blockModels, UselessBlocks.WHITE_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.ORANGE_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.MAGENTA_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.LIGHT_BLUE_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.YELLOW_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.LIME_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.PINK_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.GRAY_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.LIGHT_GRAY_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.CYAN_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.PURPLE_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.BLUE_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.BROWN_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.GREEN_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.RED_LAMP.value());
+        this.createLamp(blockModels, UselessBlocks.BLACK_LAMP.value());
 
         itemModels.generateFlatItem(UselessItems.RAW_USELESS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UselessItems.RAW_SUPER_USELESS.get(), ModelTemplates.FLAT_ITEM);
@@ -132,12 +165,28 @@ public class UselessModelProvider extends ModelProvider {
     private void generatePaintBrush(ItemModelGenerators itemModels, Item item) {
         itemModels.itemModelOutput.accept(item,
                 ItemModelUtils.tintedModel(
-                        ModelTemplates.FLAT_HANDHELD_ITEM.create(item,
+                        TWO_LAYERED_HANDHELD_ITEM.create(item,
                                 TextureMapping.layered(
                                         TextureMapping.getItemTexture(item, "_0"),
                                         TextureMapping.getItemTexture(item, "_1")),
                                 itemModels.modelOutput),
                         ItemModelGenerators.BLANK_LAYER, PaintTintSource.INSTANCE
                 ));
+    }
+
+
+    private void createLamp(BlockModelGenerators blockModels, Block lamp) {
+        MultiVariant multivariant = BlockModelGenerators.plainVariant(TexturedModel.CUBE.create(lamp, blockModels.modelOutput));
+        MultiVariant multivariant1 = BlockModelGenerators.plainVariant(blockModels.createSuffixedVariant(lamp, "_on", ModelTemplates.CUBE_ALL, TextureMapping::cube));
+        blockModels.blockStateOutput
+                .accept(
+                        MultiVariantGenerator.dispatch(lamp).with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, multivariant1, multivariant))
+                );
+    }
+
+    private void createPaintedWool(BlockModelGenerators blockModels) {
+        Identifier blockModel = ModelLocationUtils.getModelLocation(UselessBlocks.PAINTED_WOOL.value());
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UselessBlocks.PAINTED_WOOL.value(), BlockModelGenerators.plainVariant(blockModel)));
+        blockModels.itemModelOutput.accept(UselessBlocks.PAINTED_WOOL.asItem(), ItemModelUtils.tintedModel(blockModel, PaintTintSource.INSTANCE));
     }
 }

@@ -42,7 +42,7 @@ public class UselessTagsProvider {
             this.tag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS).add(UselessBlocks.RAW_SUPER_USELESS_BLOCK.get());
             this.tag(Tags.Blocks.STORAGE_BLOCKS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS);
 
-            this.tag(BlockTags.MINEABLE_WITH_AXE).add(UselessBlocks.USELESS_WHEAT.get(), UselessBlocks.WILD_USELESS_WHEAT.get(), UselessBlocks.COFFEE_BEANS.get(), UselessBlocks.WILD_COFFEE_BEANS.get());
+            this.tag(BlockTags.MAINTAINS_FARMLAND).add(UselessBlocks.USELESS_WHEAT.get(), UselessBlocks.WILD_USELESS_WHEAT.get(), UselessBlocks.COFFEE_BEANS.get(), UselessBlocks.WILD_COFFEE_BEANS.get());
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(UselessBlocks.USELESS_ORE.get(), UselessBlocks.DEEPSLATE_USELESS_ORE.get(), UselessBlocks.NETHER_USELESS_ORE.get(), UselessBlocks.END_USELESS_ORE.get(), UselessBlocks.SUPER_USELESS_ORE.get(), UselessBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), UselessBlocks.NETHER_SUPER_USELESS_ORE.get(), UselessBlocks.END_SUPER_USELESS_ORE.get(), UselessBlocks.USELESS_BLOCK.get(), UselessBlocks.SUPER_USELESS_BLOCK.get(), UselessBlocks.RAW_USELESS_BLOCK.get(), UselessBlocks.RAW_SUPER_USELESS_BLOCK.get(), UselessBlocks.USELESS_BARS.get(), UselessBlocks.SUPER_USELESS_BARS.get(), UselessBlocks.USELESS_DOOR.get(), UselessBlocks.SUPER_USELESS_DOOR.get(), UselessBlocks.USELESS_TRAPDOOR.get(), UselessBlocks.SUPER_USELESS_TRAPDOOR.get(), UselessBlocks.PAINT_BUCKET.get(), UselessBlocks.COFFEE_MACHINE.get());
             this.tag(BlockTags.MINEABLE_WITH_HOE).add(UselessBlocks.USELESS_OAK_LEAVES.get());
             this.tag(BlockTags.NEEDS_STONE_TOOL).add(UselessBlocks.USELESS_ORE.get(), UselessBlocks.DEEPSLATE_USELESS_ORE.get(), UselessBlocks.NETHER_USELESS_ORE.get(), UselessBlocks.END_USELESS_ORE.get(), UselessBlocks.USELESS_BLOCK.get());
@@ -181,6 +181,7 @@ public class UselessTagsProvider {
         @Override
         protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(EntityTypeTags.SKELETONS).add(UselessEntityTypes.USELESS_SKELETON.get());
+            this.tag(EntityTypeTags.BURN_IN_DAYLIGHT).add(UselessEntityTypes.USELESS_SKELETON.get());
         }
     }
 

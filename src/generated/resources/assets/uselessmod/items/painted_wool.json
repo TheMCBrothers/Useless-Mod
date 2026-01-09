@@ -1,6 +1,11 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "uselessmod:block/painted_wool"
+    "model": "uselessmod:block/painted_wool",
+    "tints": [
+      {
+        "type": "uselessmod:paint"
+      }
+    ]
   }
 }
