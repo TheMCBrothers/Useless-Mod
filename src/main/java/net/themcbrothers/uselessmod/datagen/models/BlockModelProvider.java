@@ -96,17 +96,35 @@ public class BlockModelProvider extends ModelSubProvider {
         this.createLamp(UselessBlocks.BLACK_LAMP.value());
         this.createLantern(UselessBlocks.LANTERN.value());
 
-        blockModels.createNonTemplateModelBlock(UselessBlocks.PAINT_BUCKET.value());
-        blockModels.createNonTemplateModelBlock(UselessBlocks.WALL_CLOSET.value());
         blockModels.createNonTemplateModelBlock(UselessBlocks.MACHINE_SUPPLIER.value());
-        blockModels.createNonTemplateModelBlock(UselessBlocks.COFFEE_MACHINE.value());
-        blockModels.createNonTemplateModelBlock(UselessBlocks.CUP.value());
-        blockModels.createNonTemplateModelBlock(UselessBlocks.CUP_COFFEE.value());
-        blockModels.createNonTemplateModelBlock(UselessBlocks.LIGHT_SWITCH.value());
-        blockModels.createTrivialCube(UselessBlocks.LIGHT_SWITCH_BLOCK.value());
+
+        blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.COFFEE_MACHINE.value(), plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.COFFEE_MACHINE.value()))).with(ROTATION_HORIZONTAL_FACING));
+        blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.CUP.value(), plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.CUP.value()))).with(ROTATION_HORIZONTAL_FACING));
+        blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.CUP_COFFEE.value(), plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.CUP_COFFEE.value()))).with(ROTATION_HORIZONTAL_FACING));
 
         Identifier skullParent = ModelLocationUtils.decorateItemModelLocation("template_skull");
         blockModels.createHead(UselessBlocks.USELESS_SKELETON_SKULL.value(), UselessBlocks.USELESS_SKELETON_WALL_SKULL.value(), UselessSkullBlock.Types.USELESS_SKELETON, skullParent);
+
+        // Wall Closet
+        this.blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.WALL_CLOSET.value())
+                .with(PropertyDispatch.initial(BlockStateProperties.OPEN)
+                        .select(false, plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.WALL_CLOSET.value())))
+                        .select(true, plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.WALL_CLOSET.value(), "_open"))))
+                .with(ROTATION_HORIZONTAL_FACING));
+
+        // Light Switch
+        MultiVariant lightSwitch = plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.LIGHT_SWITCH.value()));
+        MultiVariant lightSwitchPressed = plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.LIGHT_SWITCH.value(), "_pressed"));
+        blockStateOutput.accept(BlockModelGenerators.createButton(UselessBlocks.LIGHT_SWITCH.value(), lightSwitch, lightSwitchPressed));
+        blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.LIGHT_SWITCH_BLOCK.value())
+                .with(PropertyDispatch.initial(BlockStateProperties.POWERED)
+                        .select(false, plainVariant(TexturedModel.CUBE.create(UselessBlocks.LIGHT_SWITCH.value(), modelOutput)))
+                        .select(true, plainVariant(TexturedModel.CUBE.createWithSuffix(UselessBlocks.LIGHT_SWITCH.value(), "_powered", modelOutput)))));
+
+        // Paint Bucket
+        blockModels.createNonTemplateModelBlock(UselessBlocks.PAINT_BUCKET.value());
+        Identifier paintBucketInventory = ModelLocationUtils.getModelLocation(UselessBlocks.PAINT_BUCKET.value(), "_inventory");
+        blockModels.registerSimpleItemModel(UselessBlocks.PAINT_BUCKET.value(), paintBucketInventory);
     }
 
     private void createLamp(Block lamp) {
