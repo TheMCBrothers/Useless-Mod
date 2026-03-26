@@ -157,7 +157,7 @@ public class ClientSetup {
     }
 
     private void entityCreateSkullModels(final EntityRenderersEvent.CreateSkullModels event) {
-        event.registerSkullModel(UselessSkullBlock.Types.USELESS_SKELETON, ModelLayers.SKELETON_SKULL, UselessMod.id("textures/entity/useless_skeleton.png"));
+        event.registerSkullModel(UselessSkullBlock.Types.USELESS_SKELETON, ModelLayers.SKELETON_SKULL, UselessMod.id("textures/entity/skeleton/useless_skeleton.png"));
     }
 
     private void modelRegistry(final ModelEvent.RegisterLoaders event) {

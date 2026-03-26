@@ -11,7 +11,7 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.animal.UselessChicken;
 
 public class UselessChickenRenderer extends AgeableMobRenderer<UselessChicken, ChickenRenderState, ChickenModel> {
-    private static final Identifier TEXTURE = UselessMod.id("textures/entity/useless_chicken.png");
+    private static final Identifier TEXTURE = UselessMod.id("textures/entity/chicken/chicken_useless.png");
 
     public UselessChickenRenderer(EntityRendererProvider.Context context) {
         super(context, new ChickenModel(context.bakeLayer(ModelLayers.CHICKEN)), new ChickenModel(context.bakeLayer(ModelLayers.CHICKEN_BABY)), 0.3F);

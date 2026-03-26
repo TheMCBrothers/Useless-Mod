@@ -9,7 +9,7 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.monster.UselessSkeleton;
 
 public class UselessSkeletonRenderer extends AbstractSkeletonRenderer<UselessSkeleton, SkeletonRenderState> {
-    private static final Identifier SKELETON_LOCATION = UselessMod.id("textures/entity/useless_skeleton.png");
+    private static final Identifier SKELETON_LOCATION = UselessMod.id("textures/entity/skeleton/useless_skeleton.png");
 
     public UselessSkeletonRenderer(EntityRendererProvider.Context context) {
         super(context, ModelLayers.SKELETON, ModelLayers.SKELETON_ARMOR);

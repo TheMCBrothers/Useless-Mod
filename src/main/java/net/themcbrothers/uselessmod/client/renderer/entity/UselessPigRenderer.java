@@ -13,7 +13,7 @@ import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.animal.UselessPig;
 
 public class UselessPigRenderer extends AgeableMobRenderer<UselessPig, PigRenderState, PigModel> {
-    private static final Identifier TEXTURE = UselessMod.id("textures/entity/useless_pig.png");
+    private static final Identifier TEXTURE = UselessMod.id("textures/entity/pig/pig_useless.png");
 
     public UselessPigRenderer(EntityRendererProvider.Context context) {
         super(context, new PigModel(context.bakeLayer(ModelLayers.PIG)), new PigModel(context.bakeLayer(ModelLayers.PIG_BABY)), 0.7F);
