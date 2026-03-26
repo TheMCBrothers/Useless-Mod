@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.themcbrothers.lib.data.models.ModelSubProvider;
 import net.themcbrothers.uselessmod.client.PaintTintSource;
 import net.themcbrothers.uselessmod.core.UselessFluids;
 import net.themcbrothers.uselessmod.core.UselessItems;
