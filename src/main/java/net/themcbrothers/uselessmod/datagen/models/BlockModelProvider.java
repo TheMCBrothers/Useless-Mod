@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.themcbrothers.lib.data.models.ModelSubProvider;
+import net.themcbrothers.uselessmod.client.CoffeeTintSource;
 import net.themcbrothers.uselessmod.client.PaintTintSource;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
 import net.themcbrothers.uselessmod.world.level.block.UselessSkullBlock;
@@ -102,6 +103,7 @@ public class BlockModelProvider extends ModelSubProvider {
         blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.COFFEE_MACHINE.value(), plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.COFFEE_MACHINE.value()))).with(ROTATION_HORIZONTAL_FACING));
         blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.CUP.value(), plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.CUP.value()))).with(ROTATION_HORIZONTAL_FACING));
         blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.CUP_COFFEE.value(), plainVariant(ModelLocationUtils.getModelLocation(UselessBlocks.CUP_COFFEE.value()))).with(ROTATION_HORIZONTAL_FACING));
+        blockModels.itemModelOutput.accept(UselessBlocks.CUP_COFFEE.asItem(), ItemModelUtils.tintedModel(ModelLocationUtils.getModelLocation(UselessBlocks.CUP_COFFEE.value()), CoffeeTintSource.INSTANCE));
 
         Identifier skullParent = ModelLocationUtils.decorateItemModelLocation("template_skull");
         blockModels.createHead(UselessBlocks.USELESS_SKELETON_SKULL.value(), UselessBlocks.USELESS_SKELETON_WALL_SKULL.value(), UselessSkullBlock.Types.USELESS_SKELETON, skullParent);
@@ -119,8 +121,12 @@ public class BlockModelProvider extends ModelSubProvider {
         blockStateOutput.accept(BlockModelGenerators.createButton(UselessBlocks.LIGHT_SWITCH.value(), lightSwitch, lightSwitchPressed));
         blockStateOutput.accept(MultiVariantGenerator.dispatch(UselessBlocks.LIGHT_SWITCH_BLOCK.value())
                 .with(PropertyDispatch.initial(BlockStateProperties.POWERED)
-                        .select(false, plainVariant(TexturedModel.CUBE.create(UselessBlocks.LIGHT_SWITCH.value(), modelOutput)))
-                        .select(true, plainVariant(TexturedModel.CUBE.createWithSuffix(UselessBlocks.LIGHT_SWITCH.value(), "_powered", modelOutput)))));
+                        .select(false, plainVariant(TexturedModel.CUBE
+                                .updateTexture(textureMapping -> textureMapping.put(TextureSlot.ALL, TextureMapping.getBlockTexture(UselessBlocks.LIGHT_SWITCH.value())))
+                                .create(UselessBlocks.LIGHT_SWITCH_BLOCK.value(), modelOutput)))
+                        .select(true, plainVariant(TexturedModel.CUBE
+                                .updateTexture(textureMapping -> textureMapping.put(TextureSlot.ALL, TextureMapping.getBlockTexture(UselessBlocks.LIGHT_SWITCH.value(), "_powered")))
+                                .createWithSuffix(UselessBlocks.LIGHT_SWITCH_BLOCK.value(), "_powered", modelOutput)))));
 
         // Paint Bucket
         blockModels.createNonTemplateModelBlock(UselessBlocks.PAINT_BUCKET.value());
