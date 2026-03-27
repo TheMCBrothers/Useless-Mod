@@ -131,11 +131,11 @@ public final class UselessCreativeModeTabs {
 
         // Add Spawn Eggs
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            event.accept(UselessItems.USELESS_SKELETON_SPAWN_EGG);
-            event.accept(UselessItems.USELESS_CHICKEN_SPAWN_EGG);
-            event.accept(UselessItems.USELESS_COW_SPAWN_EGG);
-            event.accept(UselessItems.USELESS_PIG_SPAWN_EGG);
-            event.accept(UselessItems.USELESS_SHEEP_SPAWN_EGG);
+            event.insertAfter(new ItemStack(Items.SKELETON_SPAWN_EGG), new ItemStack((ItemLike) UselessItems.USELESS_SKELETON_SPAWN_EGG), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.CHICKEN_SPAWN_EGG), new ItemStack((ItemLike) UselessItems.USELESS_CHICKEN_SPAWN_EGG), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.COW_SPAWN_EGG), new ItemStack((ItemLike) UselessItems.USELESS_COW_SPAWN_EGG), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.PIG_SPAWN_EGG), new ItemStack((ItemLike) UselessItems.USELESS_PIG_SPAWN_EGG), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.SHEEP_SPAWN_EGG), new ItemStack((ItemLike) UselessItems.USELESS_SHEEP_SPAWN_EGG), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 

@@ -115,11 +115,11 @@ public class CoffeeMachineBlock extends BaseEntityBlock implements SimpleWaterlo
                 && serverLevel.getGameRules().get(GameRules.BLOCK_DROPS)
                 && level.getBlockEntity(pos) instanceof CoffeeMachineBlockEntity blockEntity) {
             if (!blockEntity.isEmpty() ||
-                    !blockEntity.tankHandler.getWaterTank().isEmpty() ||
-                    !blockEntity.tankHandler.getMilkTank().isEmpty()) {
+                    !blockEntity.tankHandler.getResource(0).isEmpty() ||
+                    !blockEntity.tankHandler.getResource(1).isEmpty()) {
                 ItemStack stack = new ItemStack(this);
                 stack.applyComponents(blockEntity.collectComponents());
-                ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
                 itemEntity.setDefaultPickUpDelay();
                 level.addFreshEntity(itemEntity);
             }

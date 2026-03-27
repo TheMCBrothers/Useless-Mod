@@ -8,7 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipePropertySet;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.themcbrothers.lib.energy.EnergyProvider;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.core.UselessBlocks;
@@ -23,10 +24,10 @@ import java.util.Objects;
 import static net.themcbrothers.lib.util.ContainerHelper.getBlockEntity;
 
 public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyProvider {
-    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_CUP = UselessMod.id("item/empty_coffee_machine_slot_cup");
-    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_BEANS = UselessMod.id("item/empty_coffee_machine_slot_beans");
-    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_EXTRA = UselessMod.id("item/empty_coffee_machine_slot_extra");
-    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_BUCKET = UselessMod.id("item/empty_coffee_machine_slot_bucket");
+    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_CUP = UselessMod.id("container/slot/cup");
+    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_BEANS = UselessMod.id("container/slot/beans");
+    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_EXTRA = UselessMod.id("container/slot/extra_ingredient");
+    public static final Identifier EMPTY_COFFEE_MACHINE_SLOT_BUCKET = UselessMod.id("container/slot/bucket");
 
     private static final int INV_SLOT_START = 7;
     private static final int INV_SLOT_END = INV_SLOT_START + 27;
@@ -192,12 +193,8 @@ public class CoffeeMachineMenu extends AbstractContainerMenu implements EnergyPr
         return d0 != 0 && d1 != 0 ? d0 / d1 * width : 0;
     }
 
-    public IFluidHandler getWaterTank() {
-        return this.blockEntity.tankHandler.getWaterTank();
-    }
-
-    public IFluidHandler getMilkTank() {
-        return this.blockEntity.tankHandler.getMilkTank();
+    public ResourceHandler<FluidResource> getTankHandler() {
+        return this.blockEntity.tankHandler;
     }
 
     private static class OutputSlot extends Slot {

@@ -1,43 +1,44 @@
 package net.themcbrothers.uselessmod.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.core.BlockPos;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.themcbrothers.lib.client.model.fluid.FluidCuboid;
+import net.themcbrothers.lib.client.render.FluidRenderer;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 import org.joml.Vector3f;
+import org.jspecify.annotations.Nullable;
 
 import static net.themcbrothers.lib.client.model.fluid.FluidCuboid.DEFAULT_FACES;
 
-public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineBlockEntity, BlockEntityRenderState> {
+public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineBlockEntity, CoffeeMachineRenderState> {
     public CoffeeMachineRenderer(BlockEntityRendererProvider.Context context) {
     }
 
-    public void render(CoffeeMachineBlockEntity coffeeMachine, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        Direction facing = Direction.NORTH;
-
-        if (coffeeMachine.getLevel() != null && coffeeMachine.getBlockPos() != BlockPos.ZERO) {
-            facing = coffeeMachine.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-        }
-
-        renderFluidTanks(coffeeMachine, poseStack, buffer, packedLight, facing);
-        renderCupItem(coffeeMachine, poseStack, buffer, packedLight, packedOverlay, facing);
+    @Override
+    public void extractRenderState(CoffeeMachineBlockEntity blockEntity, CoffeeMachineRenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderState.extractBase(blockEntity, renderState, breakProgress);
+        CoffeeMachineRenderState.extract(blockEntity, renderState);
     }
 
-    private static void renderFluidTanks(CoffeeMachineBlockEntity coffeeMachine, PoseStack poseStack, MultiBufferSource buffer, int packedLight, Direction facing) {
-        final IFluidTank waterTank = coffeeMachine.tankHandler.getWaterTank();
-        final IFluidTank milkTank = coffeeMachine.tankHandler.getMilkTank();
+    private static void submitTanks(CoffeeMachineRenderState coffeeMachine, PoseStack.Pose pose, VertexConsumer buffer, int packedLight, Direction facing) {
+        final FluidStack waterTank = coffeeMachine.waterTank;
+        final FluidStack milkTank = coffeeMachine.milkTank;
 
-        if (!waterTank.getFluid().isEmpty()) {
+        if (!waterTank.isEmpty()) {
             final FluidCuboid waterCuboid = switch (facing) {
                 case SOUTH -> new FluidCuboid(new Vector3f(8.01F, 0.01F, 1.01F),
                         new Vector3f(10.99F, 9.99F, 2.99F), DEFAULT_FACES);
@@ -49,9 +50,9 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
                         new Vector3f(7.99F, 9.99F, 14.99F), DEFAULT_FACES);
             };
 
-//            RenderUtils.renderFluidTank(poseStack, buffer, waterCuboid, waterTank, packedLight);
+            FluidRenderer.renderScaledCuboid(pose, buffer, waterCuboid, waterTank, 0F, coffeeMachine.waterCapacity, packedLight, waterTank.getFluidType().isLighterThanAir());
         }
-        if (!milkTank.getFluid().isEmpty()) {
+        if (!milkTank.isEmpty()) {
             final FluidCuboid milkCuboid = switch (facing) {
                 case SOUTH -> new FluidCuboid(new Vector3f(5.01F, 0.01F, 1.01F),
                         new Vector3f(7.99F, 9.99F, 2.99F), DEFAULT_FACES);
@@ -63,7 +64,7 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
                         new Vector3f(10.99F, 9.99F, 14.99F), DEFAULT_FACES);
             };
 
-//            RenderUtils.renderFluidTank(poseStack, buffer, milkCuboid, milkTank, packedLight);
+            FluidRenderer.renderScaledCuboid(pose, buffer, milkCuboid, milkTank, 0F, coffeeMachine.milkCapacity, packedLight, milkTank.getFluidType().isLighterThanAir());
         }
     }
 
@@ -98,12 +99,21 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
     }
 
     @Override
-    public BlockEntityRenderState createRenderState() {
-        return new BlockEntityRenderState();
+    public CoffeeMachineRenderState createRenderState() {
+        return new CoffeeMachineRenderState();
     }
 
     @Override
-    public void submit(BlockEntityRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
-        // TODO: render coffee machine
+    public void submit(CoffeeMachineRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+        Direction facing;
+        if (renderState.blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            facing = renderState.blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        } else {
+            facing = Direction.NORTH;
+        }
+
+        nodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucent(TextureAtlas.LOCATION_BLOCKS), (pose, consumer) -> submitTanks(renderState, pose, consumer, renderState.lightCoords, facing));
+
+        // TODO: render cup
     }
 }

@@ -37,9 +37,8 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
 
-        // TODO: tanks in GUI
-//        this.addRenderableOnly(new FluidTank(this.leftPos + 12, this.topPos + 18, 8, 48, this.menu.getWaterTank(), this));
-//        this.addRenderableOnly(new FluidTank(this.leftPos + 30, this.topPos + 18, 8, 48, this.menu.getMilkTank(), this));
+        this.addRenderableOnly(new FluidTank(this.leftPos + 12, this.topPos + 18, 8, 48, this.menu.getTankHandler(), 0, this));
+        this.addRenderableOnly(new FluidTank(this.leftPos + 30, this.topPos + 18, 8, 48, this.menu.getTankHandler(), 1, this));
         this.addRenderableWidget(new EnergyBar(this.leftPos + 156, this.topPos + 18, EnergyBar.Size._8x48, this.menu, this));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, true));
         this.addRenderableWidget(new StartStopButton(this.leftPos + 61, this.topPos + 50, 32, 20, false));
@@ -57,7 +56,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
     protected void renderLabels(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         this.renderables.stream().filter(widget -> widget instanceof FluidTank tank && tank.isHoveredOrFocused()).forEach(widget -> {
             final FluidTank tank = (FluidTank) widget;
-            renderSlotHighlight(guiGraphics, tank.getX() - this.leftPos, tank.getY() - this.topPos, tank.getWidth(), tank.getHeight(), 0, this.slotColor);
+            renderSlotHighlight(guiGraphics, tank.getX() - this.leftPos - 4, tank.getY() - this.topPos - 4, 8, 42);
         });
         super.renderLabels(guiGraphics, mouseX, mouseY);
     }
@@ -91,7 +90,7 @@ public class CoffeeMachineScreen extends AbstractContainerScreen<CoffeeMachineMe
         super.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    public static void renderSlotHighlight(GuiGraphics guiGraphics, int x, int y, int width, int height, int offset, int color) {
+    public static void renderSlotHighlight(GuiGraphics guiGraphics, int x, int y, int width, int height) {
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_FRONT_SPRITE, x, y, x + width, y + height);
     }
 

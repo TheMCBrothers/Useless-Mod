@@ -32,12 +32,16 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
@@ -45,7 +49,6 @@ import net.themcbrothers.uselessmod.core.UselessItems;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintBucketBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
@@ -110,16 +113,21 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
         if (level.getBlockEntity(pos) instanceof PaintBucketBlockEntity blockEntity) {
             final ItemStack stack = player.getItemInHand(hand);
 
+            // when the player is holding nothing, skip
+            if (stack.isEmpty()) {
+                return InteractionResult.TRY_WITH_EMPTY_HAND;
+            }
+
             // Interaction with Dye Item
             if (DyeColor.getColor(stack) != null) {
-                player.setItemInHand(hand, ItemHandlerHelper.insertItem(blockEntity.stackHandler, stack, false));
-                return InteractionResult.SUCCESS;
+                ItemStack newStack = ItemUtil.insertItemReturnRemaining(blockEntity.stackHandler, stack, false, null);
+                player.setItemInHand(hand, newStack);
+                return ItemStack.matches(stack, newStack) ? InteractionResult.FAIL : InteractionResult.SUCCESS;
             }
 
             // Interaction with bucket or fluid container
-            Optional<IFluidHandlerItem> fluidHandler = FluidUtil.getFluidHandler(stack);
-            if (fluidHandler.isPresent()) {
-                // TODO: invalidate
+            ResourceHandler<FluidResource> fluidHandler = ItemAccess.forStack(stack).oneByOne().getCapability(Capabilities.Fluid.ITEM);
+            if (fluidHandler != null) {
                 if (FluidUtil.interactWithFluidHandler(player, hand, level, pos, null)) {
                     return InteractionResult.SUCCESS;
                 }
@@ -129,12 +137,12 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
 
             // Interaction with Stick
             if (stack.is(Tags.Items.RODS_WOODEN)) {
-                if (blockEntity.colorTank.getFluid().getFluid().is(FluidTags.WATER)
-                        && blockEntity.colorTank.getFluidAmount() == FluidType.BUCKET_VOLUME) {
-                    DyeColor color = DyeColor.getColor(blockEntity.stackHandler.getStackInSlot(0));
+                if (blockEntity.colorTank.getResource(0).is(FluidTags.WATER)
+                        && blockEntity.colorTank.getAmountAsInt(0) == FluidType.BUCKET_VOLUME) {
+                    DyeColor color = DyeColor.getColor(blockEntity.stackHandler.getResource(0).toStack());
                     if (color != null) {
                         blockEntity.setColor(color.getTextureDiffuseColor());
-                        blockEntity.stackHandler.setStackInSlot(0, ItemStack.EMPTY);
+                        blockEntity.stackHandler.set(0, ItemResource.EMPTY, 0);
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -149,15 +157,21 @@ public class PaintBucketBlock extends BaseEntityBlock implements SimpleWaterlogg
                     if (bucketColor != brushColor || stack.isDamaged()) {
                         stack.set(UselessDataComponents.COLOR.get(), bucketColor);
                         stack.setDamageValue(0);
-                        blockEntity.colorTank.drain(100, IFluidHandler.FluidAction.EXECUTE);
+
+                        try (Transaction tx = Transaction.openRoot()) {
+                            blockEntity.colorTank.extract(blockEntity.colorTank.getResource(0), 100, tx);
+                            tx.commit();
+                        }
                         return InteractionResult.SUCCESS;
                     }
                 } else if (stack.is(Items.BRUSH)) {
                     ItemStack newStack = new ItemStack(UselessItems.PAINT_BRUSH.value());
-                    int brushColor = newStack.getOrDefault(UselessDataComponents.COLOR.get(), -1);
                     newStack.setDamageValue(0);
                     player.setItemInHand(hand, newStack);
-                    blockEntity.colorTank.drain(100, IFluidHandler.FluidAction.EXECUTE);
+                    try (Transaction tx = Transaction.openRoot()) {
+                        blockEntity.colorTank.extract(blockEntity.colorTank.getResource(0), 100, tx);
+                        tx.commit();
+                    }
                     return InteractionResult.SUCCESS;
                 }
             }

@@ -67,10 +67,10 @@ public class CoffeeRecipeCategory implements IRecipeCategory<RecipeHolder<Coffee
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CoffeeRecipe> recipe, IFocusGroup focuses) {
         final CoffeeRecipe recipeValue = recipe.value();
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 51, 1).addIngredients(recipeValue.getCupIngredient());
-        builder.addSlot(RecipeIngredientRole.INPUT, 69, 1).addIngredients(recipeValue.getBeanIngredient());
-        recipeValue.getExtraIngredient().ifPresent(extraIngredient -> builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).addIngredients(extraIngredient));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).addItemStack(RecipeHelper.getResultItem(recipeValue));
+        builder.addSlot(RecipeIngredientRole.INPUT, 51, 1).add(recipeValue.getCupIngredient());
+        builder.addSlot(RecipeIngredientRole.INPUT, 69, 1).add(recipeValue.getBeanIngredient());
+        recipeValue.getExtraIngredient().ifPresent(extraIngredient -> builder.addSlot(RecipeIngredientRole.INPUT, 87, 1).add(extraIngredient));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 37).add(recipeValue.getResultItem());
 
         SizedFluidIngredient waterIngredient = recipeValue.getWaterIngredient();
 

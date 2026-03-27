@@ -15,6 +15,7 @@ import net.minecraft.util.ARGB;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import net.themcbrothers.lib.client.render.FluidRenderer;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintBucketBlockEntity;
 
@@ -38,11 +39,11 @@ public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlock
     }
 
     public void render(PaintBucketBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        if (blockEntity.colorTank.isEmpty()) {
+        if (blockEntity.colorTank.getResource(0).isEmpty()) {
             return;
         }
 
-        FluidStack fluidStack = blockEntity.colorTank.getFluid();
+        FluidStack fluidStack = FluidUtil.getStack(blockEntity.colorTank, 0);
 
         TextureAtlasSprite sprite = FluidRenderer.getStillFluidSprite(fluidStack);
         int color = IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor(fluidStack);

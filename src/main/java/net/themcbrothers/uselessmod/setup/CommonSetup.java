@@ -1,5 +1,6 @@
 package net.themcbrothers.uselessmod.setup;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.animal.chicken.Chicken;
@@ -15,19 +16,20 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.compat.VanillaCompatibility;
 import net.themcbrothers.uselessmod.config.ServerConfig;
-import net.themcbrothers.uselessmod.core.Registration;
-import net.themcbrothers.uselessmod.core.UselessBlocks;
-import net.themcbrothers.uselessmod.core.UselessEntityTypes;
+import net.themcbrothers.uselessmod.core.*;
 import net.themcbrothers.uselessmod.network.UselessPacketHandler;
 import net.themcbrothers.uselessmod.util.RecipeHelper;
 import net.themcbrothers.uselessmod.util.WallClosetRecipeManager;
+import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
 
 @Mod(value = UselessMod.MOD_ID)
 public class CommonSetup {
@@ -98,20 +100,19 @@ public class CommonSetup {
     }
 
     private void registerCapabilities(final RegisterCapabilitiesEvent event) {
-        // TODO: capabilities
         // Blocks
-        /*event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), SidedInvWrapper::new);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.tankHandler);
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.energyStorage);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), WorldlyContainerWrapper::new);
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.tankHandler);
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, UselessBlockEntityTypes.COFFEE_MACHINE.get(), (blockEntity, side) -> blockEntity.energyStorage);
 
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, UselessBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> blockEntity.stackHandler);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, UselessBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> side == null || side == Direction.UP ? blockEntity.colorTank : null);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, UselessBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> blockEntity.stackHandler);
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, UselessBlockEntityTypes.PAINT_BUCKET.get(), (blockEntity, side) -> side == null || side == Direction.UP ? blockEntity.colorTank : null);
 
-        event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.ItemHandler.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
-        event.registerBlock(Capabilities.FluidHandler.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.FluidHandler.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
-        event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.EnergyStorage.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.Item.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.Item.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.Fluid.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.Fluid.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
+        event.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, blockEntity, context) -> level.getCapability(Capabilities.Energy.BLOCK, pos.above(), context), UselessBlocks.MACHINE_SUPPLIER.get());
 
         // Items
-        event.registerItem(Capabilities.FluidHandler.ITEM, (container, context) -> new BucketWithPaintItem.PaintFluidBucketWrapper(container), UselessItems.BUCKET_PAINT);*/
+        event.registerItem(Capabilities.Fluid.ITEM, (container, itemAccess) -> new BucketWithPaintItem.PaintFluidBucketWrapper(itemAccess), UselessItems.BUCKET_PAINT);
     }
 }
