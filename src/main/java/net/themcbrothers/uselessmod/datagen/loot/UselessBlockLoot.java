@@ -1,7 +1,7 @@
 package net.themcbrothers.uselessmod.datagen.loot;
 
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -10,8 +10,6 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
@@ -21,14 +19,11 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
-import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.Tags;
 import net.themcbrothers.uselessmod.core.Registration;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
@@ -91,7 +86,7 @@ public class UselessBlockLoot extends BlockLootSubProvider {
         this.dropPottedContents(POTTED_BLUE_ROSE.get());
         this.dropPottedContents(POTTED_USELESS_ROSE.get());
         this.dropPottedContents(POTTED_USELESS_OAK_SAPLING.get());
-        LootItemCondition.Builder condition1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(USELESS_WHEAT.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        LootItemCondition.Builder condition1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(USELESS_WHEAT.get()).setProperties(net.minecraft.advancements.criterion.StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         this.add(USELESS_WHEAT.get(), createCropDrops(USELESS_WHEAT.get(), UselessItems.USELESS_WHEAT.get(), UselessItems.USELESS_WHEAT_SEEDS.get(), condition1));
         LootItemCondition.Builder condition2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(WILD_USELESS_WHEAT.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         this.add(WILD_USELESS_WHEAT.get(), createCropDrops(USELESS_WHEAT.get(), UselessItems.USELESS_WHEAT.get(), UselessItems.USELESS_WHEAT_SEEDS.get(), condition2));
@@ -159,28 +154,28 @@ public class UselessBlockLoot extends BlockLootSubProvider {
     private LootTable.Builder createCopyLightsDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
-                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(UselessDataComponents.LIGHTS.get()))));
     }
 
     private LootTable.Builder createCopyColorDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
-                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(UselessDataComponents.COLOR.get()))));
     }
 
     private LootTable.Builder mimicDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
-                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(UselessDataComponents.MIMIC.get()))));
     }
 
     private LootTable.Builder copyCoffeeDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
-                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(UselessDataComponents.COFFEE_TYPE.get())
                         .include(DataComponents.CONSUMABLE))));
     }
@@ -188,7 +183,7 @@ public class UselessBlockLoot extends BlockLootSubProvider {
     private LootTable.Builder createCoffeeMachineDrop(ItemLike itemLike) {
         return LootTable.lootTable().withPool(applyExplosionCondition(itemLike, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))
-                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(DataComponents.CUSTOM_NAME)
                         .include(DataComponents.CONTAINER)
                         .include(DataComponents.LOCK)
@@ -199,9 +194,10 @@ public class UselessBlockLoot extends BlockLootSubProvider {
     private LootTable.Builder wallClosetDrop(Block block) {
         return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)
-                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                        .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                                .include(UselessDataComponents.WALL_CLOSET_MATERIAL.get())))));
+                        .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
+                                .include(DataComponents.CUSTOM_NAME)
+                                .include(UselessDataComponents.WALL_CLOSET_MATERIAL.get())
+                        ))));
     }
 
     @Override

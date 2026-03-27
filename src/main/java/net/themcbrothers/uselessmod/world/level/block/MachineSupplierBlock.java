@@ -1,12 +1,8 @@
 package net.themcbrothers.uselessmod.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -16,9 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -29,19 +23,15 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.util.TriState;
 import net.themcbrothers.lib.wrench.Wrench;
 import net.themcbrothers.lib.wrench.WrenchUtils;
 import net.themcbrothers.lib.wrench.WrenchableBlock;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
-import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.entity.MachineSupplierBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("deprecation")
 public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableBlock {
     public static final MapCodec<MachineSupplierBlock> CODEC = simpleCodec(MachineSupplierBlock::new);
 
@@ -66,19 +56,9 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> hoverText, TooltipFlag tooltipFlag) {
-        BlockState mimic = stack.get(UselessDataComponents.MIMIC.get());
-        ClientLevel clientLevel = Minecraft.getInstance().level;
-
-        if (mimic != null && clientLevel != null) {
-            hoverText.add(mimic.getBlock().getName().withStyle(ChatFormatting.GRAY));
-        }
-    }
-
-    @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.tryWrench(state, level, pos, player, hand, hit)) {
-            return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
 
         if (level.getBlockEntity(pos) instanceof MachineSupplierBlockEntity blockEntity) {
@@ -91,7 +71,7 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
                         stack.shrink(1);
                     }
 
-                    return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+                    return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
                 }
             }
         }
@@ -208,8 +188,8 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-        return this.getMimic(level, pos).getAnalogOutputSignal(level, pos);
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return this.getMimic(level, pos).getAnalogOutputSignal(level, pos, direction);
     }
 
     @Override
@@ -230,11 +210,6 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
         return this.getMimic(level, pos).canRedstoneConnectTo(level, pos, direction);
-    }
-
-    @Override
-    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
-        return this.getMimic(level, soilPosition).canSustainPlant(level, soilPosition, facing, plant);
     }
 
     @Override
@@ -263,8 +238,8 @@ public class MachineSupplierBlock extends BaseEntityBlock implements WrenchableB
     }
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float distance) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         BlockState mimic = this.getMimic(level, pos);
-        mimic.getBlock().fallOn(level, mimic, pos, entity, distance);
+        mimic.getBlock().fallOn(level, mimic, pos, entity, fallDistance);
     }
 }

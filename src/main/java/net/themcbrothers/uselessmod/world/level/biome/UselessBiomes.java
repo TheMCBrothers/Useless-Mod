@@ -6,5 +6,5 @@ import net.minecraft.world.level.biome.Biome;
 import net.themcbrothers.uselessmod.UselessMod;
 
 public final class UselessBiomes {
-    public static final ResourceKey<Biome> USELESS_FOREST = ResourceKey.create(Registries.BIOME, UselessMod.rl("useless_forest"));
+    public static final ResourceKey<Biome> USELESS_FOREST = ResourceKey.create(Registries.BIOME, UselessMod.id("useless_forest"));
 }

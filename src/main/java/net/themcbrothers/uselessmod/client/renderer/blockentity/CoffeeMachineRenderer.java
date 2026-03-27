@@ -1,47 +1,44 @@
 package net.themcbrothers.uselessmod.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.BlockPos;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.themcbrothers.lib.client.model.fluid.FluidCuboid;
-import net.themcbrothers.lib.util.RenderUtils;
+import net.themcbrothers.lib.client.render.FluidRenderer;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.jspecify.annotations.Nullable;
 
 import static net.themcbrothers.lib.client.model.fluid.FluidCuboid.DEFAULT_FACES;
 
-public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineBlockEntity> {
+public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineBlockEntity, CoffeeMachineRenderState> {
     public CoffeeMachineRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(CoffeeMachineBlockEntity coffeeMachine, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        Direction facing = Direction.NORTH;
-
-        if (coffeeMachine.getLevel() != null && coffeeMachine.getBlockPos() != BlockPos.ZERO) {
-            facing = coffeeMachine.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-        }
-
-        renderFluidTanks(coffeeMachine, poseStack, buffer, packedLight, facing);
-        renderCupItem(coffeeMachine, poseStack, buffer, packedLight, packedOverlay, facing);
+    public void extractRenderState(CoffeeMachineBlockEntity blockEntity, CoffeeMachineRenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderState.extractBase(blockEntity, renderState, breakProgress);
+        CoffeeMachineRenderState.extract(blockEntity, renderState);
     }
 
-    private static void renderFluidTanks(CoffeeMachineBlockEntity coffeeMachine, PoseStack poseStack, MultiBufferSource buffer, int packedLight, Direction facing) {
-        final IFluidTank waterTank = coffeeMachine.tankHandler.getWaterTank();
-        final IFluidTank milkTank = coffeeMachine.tankHandler.getMilkTank();
+    private static void submitTanks(CoffeeMachineRenderState coffeeMachine, PoseStack.Pose pose, VertexConsumer buffer, int packedLight, Direction facing) {
+        final FluidStack waterTank = coffeeMachine.waterTank;
+        final FluidStack milkTank = coffeeMachine.milkTank;
 
-        if (!waterTank.getFluid().isEmpty()) {
+        if (!waterTank.isEmpty()) {
             final FluidCuboid waterCuboid = switch (facing) {
                 case SOUTH -> new FluidCuboid(new Vector3f(8.01F, 0.01F, 1.01F),
                         new Vector3f(10.99F, 9.99F, 2.99F), DEFAULT_FACES);
@@ -53,9 +50,9 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
                         new Vector3f(7.99F, 9.99F, 14.99F), DEFAULT_FACES);
             };
 
-            RenderUtils.renderFluidTank(poseStack, buffer, waterCuboid, waterTank, packedLight);
+            FluidRenderer.renderScaledCuboid(pose, buffer, waterCuboid, waterTank, 0F, coffeeMachine.waterCapacity, packedLight, waterTank.getFluidType().isLighterThanAir());
         }
-        if (!milkTank.getFluid().isEmpty()) {
+        if (!milkTank.isEmpty()) {
             final FluidCuboid milkCuboid = switch (facing) {
                 case SOUTH -> new FluidCuboid(new Vector3f(5.01F, 0.01F, 1.01F),
                         new Vector3f(7.99F, 9.99F, 2.99F), DEFAULT_FACES);
@@ -67,7 +64,7 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
                         new Vector3f(10.99F, 9.99F, 14.99F), DEFAULT_FACES);
             };
 
-            RenderUtils.renderFluidTank(poseStack, buffer, milkCuboid, milkTank, packedLight);
+            FluidRenderer.renderScaledCuboid(pose, buffer, milkCuboid, milkTank, 0F, coffeeMachine.milkCapacity, packedLight, milkTank.getFluidType().isLighterThanAir());
         }
     }
 
@@ -82,16 +79,12 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
             poseStack.scale(.6F, .6F, .6F);
             poseStack.mulPose(facing.getCounterClockWise().getRotation());
 
-            final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-            BakedModel model = itemRenderer.getModel(renderStack, null, null, -1);
-            itemRenderer.render(renderStack, ItemDisplayContext.FIXED, false,
-                    poseStack, buffer, packedLight, packedOverlay, model);
+//            ItemRenderer.renderItem(ItemDisplayContext.FIXED, poseStack, buffer, packedLight, packedOverlay, new int[0], null, RenderTypes.entitySolid(TextureAtlas.LOCATION_BLOCKS), ItemStackRenderState.FoilType.NONE);
 
             poseStack.popPose();
         }
     }
 
-    @NotNull
     private static Vector3f getTranslation(Direction facing) {
         final float yOffset = 1F / 16F;
         final float cupOffset1 = 8F / 16F;
@@ -103,5 +96,24 @@ public class CoffeeMachineRenderer implements BlockEntityRenderer<CoffeeMachineB
             case EAST -> new Vector3f(cupOffset2, yOffset, cupOffset1);
             default -> new Vector3f(cupOffset1, yOffset, 1F - cupOffset2);
         };
+    }
+
+    @Override
+    public CoffeeMachineRenderState createRenderState() {
+        return new CoffeeMachineRenderState();
+    }
+
+    @Override
+    public void submit(CoffeeMachineRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+        Direction facing;
+        if (renderState.blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            facing = renderState.blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        } else {
+            facing = Direction.NORTH;
+        }
+
+        nodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucent(TextureAtlas.LOCATION_BLOCKS), (pose, consumer) -> submitTanks(renderState, pose, consumer, renderState.lightCoords, facing));
+
+        // TODO: render cup
     }
 }

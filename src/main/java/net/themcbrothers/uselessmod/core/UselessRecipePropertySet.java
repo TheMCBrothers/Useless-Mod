@@ -10,6 +10,6 @@ public class UselessRecipePropertySet {
     public static final ResourceKey<RecipePropertySet> COFFEE_MACHINE_EXTRA = register("coffee_machine_extra");
 
     private static ResourceKey<RecipePropertySet> register(String name) {
-        return ResourceKey.create(RecipePropertySet.TYPE_KEY, UselessMod.rl(name));
+        return ResourceKey.create(RecipePropertySet.TYPE_KEY, UselessMod.id(name));
     }
 }

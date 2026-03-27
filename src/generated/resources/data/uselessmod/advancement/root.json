@@ -13,7 +13,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "uselessmod:textures/gui/advancements/backgrounds/uselessmod.png",
+    "background": "uselessmod:gui/advancements/backgrounds/uselessmod",
     "description": {
       "translate": "advancement.uselessmod.root.description"
     },

@@ -33,6 +33,6 @@ public final class UselessBiomeModifiers {
 
     private static void registerOreModifier(BootstrapContext<BiomeModifier> context, HolderGetter<PlacedFeature> placedFeatures, ResourceKey<PlacedFeature> key, HolderSet<Biome> biomes) {
         BiomeModifiers.AddFeaturesBiomeModifier modifier = new BiomeModifiers.AddFeaturesBiomeModifier(biomes, HolderSet.direct(placedFeatures.getOrThrow(key)), GenerationStep.Decoration.UNDERGROUND_ORES);
-        context.register(ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, key.location().withSuffix("_generation")), modifier);
+        context.register(ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, key.identifier().withSuffix("_generation")), modifier);
     }
 }

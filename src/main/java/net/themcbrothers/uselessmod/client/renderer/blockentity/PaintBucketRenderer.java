@@ -2,22 +2,24 @@ package net.themcbrothers.uselessmod.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
+import net.themcbrothers.lib.client.render.FluidRenderer;
 import net.themcbrothers.uselessmod.world.level.block.entity.PaintBucketBlockEntity;
 
-public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlockEntity> {
+public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlockEntity, BlockEntityRenderState> {
     private static final float BOTTOM_OFFSET = 1f / 16f;
     private static final float PAINT_HEIGHT = 6f / 16f;
     private static final float START = 5f / 16f;
@@ -36,19 +38,18 @@ public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlock
                 .setNormal(1, 0, 0);
     }
 
-    @Override
     public void render(PaintBucketBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        if (blockEntity.colorTank.isEmpty()) {
+        if (blockEntity.colorTank.getResource(0).isEmpty()) {
             return;
         }
 
-        FluidStack fluidStack = blockEntity.colorTank.getFluid();
+        FluidStack fluidStack = FluidUtil.getStack(blockEntity.colorTank, 0);
 
-        TextureAtlasSprite sprite = getStillFluidSprite(fluidStack);
+        TextureAtlasSprite sprite = FluidRenderer.getStillFluidSprite(fluidStack);
         int color = IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor(fluidStack);
         float y = BOTTOM_OFFSET + (((float) fluidStack.getAmount() / (float) FluidType.BUCKET_VOLUME) * PAINT_HEIGHT);
 
-        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.translucent());
+        VertexConsumer vertexBuilder = buffer.getBuffer(RenderTypes.entityTranslucent(TextureAtlas.LOCATION_BLOCKS));
 
         poseStack.pushPose();
         add(vertexBuilder, poseStack, START, y, END, sprite.getU0(), sprite.getV1(), color);
@@ -56,12 +57,17 @@ public class PaintBucketRenderer implements BlockEntityRenderer<PaintBucketBlock
         add(vertexBuilder, poseStack, END, y, START, sprite.getU1(), sprite.getV0(), color);
         add(vertexBuilder, poseStack, START, y, START, sprite.getU0(), sprite.getV0(), color);
         poseStack.popPose();
+
+
     }
 
-    private static TextureAtlasSprite getStillFluidSprite(FluidStack fluidStack) {
-        Minecraft minecraft = Minecraft.getInstance();
-        Fluid fluid = fluidStack.getFluid();
-        ResourceLocation fluidStill = IClientFluidTypeExtensions.of(fluid).getStillTexture();
-        return minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStill);
+    @Override
+    public BlockEntityRenderState createRenderState() {
+        return new BlockEntityRenderState();
+    }
+
+    @Override
+    public void submit(BlockEntityRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+        // TODO: render paint bucket
     }
 }

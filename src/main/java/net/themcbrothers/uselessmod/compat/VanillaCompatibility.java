@@ -1,9 +1,7 @@
 package net.themcbrothers.uselessmod.compat;
 
-import com.google.common.collect.Maps;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -29,13 +27,9 @@ public class VanillaCompatibility {
         registerFlammable(UselessBlocks.USELESS_WOOL.get(), 30, 60);
         registerFlammable(UselessBlocks.PAINTED_WOOL.get(), 30, 60);
 
-        // Strippable logs
-        registerStrippable(UselessBlocks.USELESS_OAK_LOG.get(), UselessBlocks.STRIPPED_USELESS_OAK_LOG.get());
-        registerStrippable(UselessBlocks.USELESS_OAK_WOOD.get(), UselessBlocks.STRIPPED_USELESS_OAK_WOOD.get());
-
         // Cauldron
         CauldronInteraction.WATER.map().put(UselessBlocks.PAINTED_WOOL.asItem(), (state, level, pos, player, hand, stack) -> {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 ItemStack itemStack = new ItemStack(Blocks.WHITE_WOOL);
 
                 if (!player.getAbilities().instabuild) {
@@ -58,7 +52,7 @@ public class VanillaCompatibility {
 
         CauldronInteraction.WATER.map().put(UselessItems.PAINT_BRUSH.get(), (state, level, pos, player, hand, stack) -> {
             if (stack.has(UselessDataComponents.COLOR.get())) {
-                if (!level.isClientSide) {
+                if (!level.isClientSide()) {
                     stack.remove(UselessDataComponents.COLOR.get());
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
@@ -68,11 +62,6 @@ public class VanillaCompatibility {
 
             return InteractionResult.PASS;
         });
-    }
-
-    private static void registerStrippable(Block log, Block stripped_log) {
-        AxeItem.STRIPPABLES = Maps.newHashMap(AxeItem.STRIPPABLES);
-        AxeItem.STRIPPABLES.put(log, stripped_log);
     }
 
     private static void registerFlammable(Block blockIn, int encouragement, int flammability) {

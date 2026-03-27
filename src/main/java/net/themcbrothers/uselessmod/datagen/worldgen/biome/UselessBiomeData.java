@@ -5,7 +5,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -34,20 +37,22 @@ public final class UselessBiomeData {
         BiomeDefaultFeatures.addDefaultSoftDisks(biomeGenerationSettings);
         BiomeDefaultFeatures.addForestGrass(biomeGenerationSettings);
         BiomeDefaultFeatures.addDefaultMushrooms(biomeGenerationSettings);
-        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeGenerationSettings);
+        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeGenerationSettings, true);
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, UselessVegetationPlacements.FLOWER_USELESS);
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, UselessVegetationPlacements.TREES_USELESS_OAK);
 
         MobSpawnSettings.Builder mobSpawnSettings = new MobSpawnSettings.Builder();
-        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_SHEEP.get(), 12, 4, 4));
-        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_PIG.get(), 10, 4, 4));
-        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_CHICKEN.get(), 10, 4, 4));
-        mobSpawnSettings.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_COW.get(), 8, 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, 12, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_SHEEP.get(), 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, 10, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_PIG.get(), 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, 10, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_CHICKEN.get(), 4, 4));
+        mobSpawnSettings.addSpawn(MobCategory.CREATURE, 8, new MobSpawnSettings.SpawnerData(UselessEntityTypes.USELESS_COW.get(), 4, 4));
         BiomeDefaultFeatures.commonSpawns(mobSpawnSettings);
+
+        // TODO: environment attributes
         return new Biome.BiomeBuilder()
                 .temperature(0.7F).downfall(0.8F).specialEffects(new BiomeSpecialEffects.Builder()
-                        .waterColor(0x468b44).waterFogColor(0x468b44).fogColor(12638463).skyColor(0x40B45F).grassColorOverride(0x40B45F)
-                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).backgroundMusic(null).build())
+                        .waterColor(0x468b44)/*.waterFogColor(0x468b44).fogColor(12638463).skyColor(0x40B45F)*/.grassColorOverride(0x40B45F)
+                        /*.ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).backgroundMusic(null)*/.build())
                 .generationSettings(biomeGenerationSettings.build())
                 .mobSpawnSettings(mobSpawnSettings.build()).build();
     }

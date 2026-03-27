@@ -11,7 +11,7 @@ import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 
 public record CoffeeMachineStartPacket(boolean start) implements PacketMessage {
-    public static final Type<CoffeeMachineStartPacket> TYPE = new Type<>(UselessMod.rl("coffee_machine_start"));
+    public static final Type<CoffeeMachineStartPacket> TYPE = new Type<>(UselessMod.id("coffee_machine_start"));
     public static final StreamCodec<FriendlyByteBuf, CoffeeMachineStartPacket> STREAM_CODEC = new StreamCodec<>() {
         @Override
         public CoffeeMachineStartPacket decode(FriendlyByteBuf buf) {

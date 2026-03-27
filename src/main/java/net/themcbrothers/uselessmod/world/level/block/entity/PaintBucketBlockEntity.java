@@ -2,35 +2,49 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
+import net.themcbrothers.lib.LibDataComponents;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.core.UselessFluids;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PaintBucketBlockEntity extends BlockEntity {
-    public final FluidTank colorTank = new FluidTank(FluidType.BUCKET_VOLUME, fluidStack -> (fluidStack.getFluid().is(FluidTags.WATER) || fluidStack.getFluid().is(UselessTags.Fluids.PAINT)) && fluidStack.getFluid().isSource(fluidStack.getFluid().defaultFluidState()));
-    public final ItemStackHandler stackHandler = new ItemStackHandler() {
+    public final FluidStacksResourceHandler colorTank = new FluidStacksResourceHandler(1, FluidType.BUCKET_VOLUME) {
         @Override
-        protected int getStackLimit(int slot, @NotNull ItemStack stack) {
+        public boolean isValid(int index, FluidResource resource) {
+            return (resource.is(FluidTags.WATER) || resource.is(UselessTags.Fluids.PAINT)) && resource.getFluid().isSource(resource.getFluid().defaultFluidState());
+        }
+    };
+    public final ItemStacksResourceHandler stackHandler = new ItemStacksResourceHandler(1) {
+        @Override
+        protected int getCapacity(int index, ItemResource resource) {
             return 1;
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             PaintBucketBlockEntity.this.setChanged();
         }
     };
@@ -39,12 +53,19 @@ public class PaintBucketBlockEntity extends BlockEntity {
         super(UselessBlockEntityTypes.PAINT_BUCKET.get(), pos, state);
     }
 
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (this.level != null) {
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), ItemUtil.getStack(this.stackHandler, 0));
+        }
+    }
+
     public boolean hasColor() {
-        return !this.colorTank.isEmpty() && this.colorTank.getFluid().getFluid().is(UselessTags.Fluids.PAINT) && this.colorTank.getFluid().has(UselessDataComponents.COLOR.get());
+        return !this.colorTank.getResource(0).isEmpty() && this.colorTank.getResource(0).is(UselessTags.Fluids.PAINT) && this.colorTank.getResource(0).has(UselessDataComponents.COLOR.get());
     }
 
     public int getColor() {
-        return this.colorTank.getFluid().getOrDefault(UselessDataComponents.COLOR.get(), -1);
+        return this.colorTank.getResource(0).getOrDefault(UselessDataComponents.COLOR.get(), -1);
     }
 
     public void setColor(float[] colorValues) {
@@ -59,24 +80,17 @@ public class PaintBucketBlockEntity extends BlockEntity {
      * @param color Color
      */
     public void setColor(int color) {
-        this.colorTank.setFluid(new FluidStack(UselessFluids.PAINT.get(), FluidType.BUCKET_VOLUME));
-        this.colorTank.getFluid().set(UselessDataComponents.COLOR.get(), color);
+        this.colorTank.set(0, FluidResource.of(UselessFluids.PAINT,
+                        DataComponentPatch.builder()
+                                .set(UselessDataComponents.COLOR.get(), color)
+                                .build()),
+                FluidType.BUCKET_VOLUME);
         this.setChanged();
-    }
-
-    private void saveColorAndItem(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        if (!this.colorTank.isEmpty()) {
-            tag.put("Tank", this.colorTank.writeToNBT(lookupProvider, new CompoundTag()));
-        }
-
-        tag.put("Slots", this.stackHandler.serializeNBT(lookupProvider));
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
-        CompoundTag tag = super.getUpdateTag(lookupProvider);
-        this.saveColorAndItem(tag, lookupProvider);
-        return tag;
+        return this.saveCustomOnly(lookupProvider);
     }
 
     @Nullable
@@ -86,31 +100,37 @@ public class PaintBucketBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
-        this.saveColorAndItem(tag, lookupProvider);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+
+        if (!this.colorTank.getResource(0).isEmpty()) {
+            this.colorTank.serialize(output.child("Tank"));
+        }
+
+        this.stackHandler.serialize(output.child("Slots"));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(tag, lookupProvider);
-        this.colorTank.readFromNBT(lookupProvider, tag.getCompound("Tank"));
-        this.stackHandler.deserializeNBT(lookupProvider, tag.getCompound("Slots"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.colorTank.deserialize(input.childOrEmpty("Tank"));
+        this.stackHandler.deserialize(input.childOrEmpty("Slots"));
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder builder) {
-        builder.set(UselessDataComponents.FLUID_CONTENTS.get(), SimpleFluidContent.copyOf(this.colorTank.getFluid()));
+        builder.set(LibDataComponents.FLUID.get(), SimpleFluidContent.copyOf(FluidUtil.getStack(this.colorTank, 0)));
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
-        this.colorTank.setFluid(components.getOrDefault(UselessDataComponents.FLUID_CONTENTS.get(), SimpleFluidContent.EMPTY).copy());
+    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+        FluidStack stack = componentGetter.getOrDefault(LibDataComponents.FLUID.get(), SimpleFluidContent.EMPTY).copy();
+        this.colorTank.set(0, FluidResource.of(stack), stack.getAmount());
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
-        tag.remove("Tank");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("Tank");
     }
 }

@@ -2,10 +2,13 @@ package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -15,7 +18,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -32,16 +34,23 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.fluids.FluidActionResult;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.CombinedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.themcbrothers.lib.energy.ExtendedEnergyStorage;
 import net.themcbrothers.lib.util.EnergyUtils;
 import net.themcbrothers.uselessmod.UselessMod;
@@ -55,7 +64,6 @@ import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipeInput;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -77,10 +85,33 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     public final ExtendedEnergyStorage energyStorage = new ExtendedEnergyStorage(
             ServerConfig.COFFEE_MACHINE_ENERGY_CAPACITY.get(),
             ServerConfig.COFFEE_MACHINE_ENERGY_TRANSFER.get(), 0);
-    public final CoffeeMachineTank tankHandler = new CoffeeMachineTank();
+    public CombinedResourceHandler<FluidResource> tankHandler = new CombinedResourceHandler<>(
+            new FluidStacksResourceHandler(1, ServerConfig.COFFEE_MACHINE_WATER_CAPACITY.get()) {
+                @Override
+                public boolean isValid(int index, FluidResource resource) {
+                    return resource.is(Tags.Fluids.WATER);
+                }
+
+                @Override
+                protected void onContentsChanged(int index, FluidStack previousContents) {
+                    CoffeeMachineBlockEntity.this.sendSyncPacket(SYNC_WATER_TANK);
+                }
+            },
+            new FluidStacksResourceHandler(1, ServerConfig.COFFEE_MACHINE_MILK_CAPACITY.get()) {
+                @Override
+                public boolean isValid(int index, FluidResource resource) {
+                    return resource.is(Tags.Fluids.MILK);
+                }
+
+                @Override
+                protected void onContentsChanged(int index, FluidStack previousContents) {
+                    CoffeeMachineBlockEntity.this.sendSyncPacket(SYNC_MILK_TANK);
+                }
+            }
+    );
     private boolean useMilk;
-    private int litTime;
-    private int cookingProgress;
+    private int litTimeRemaining;
+    private int cookingTimer;
     private int cookingTotalTime;
 
     private final RecipeManager.CachedCheck<CoffeeRecipeInput, CoffeeRecipe> quickCheck;
@@ -88,9 +119,9 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> CoffeeMachineBlockEntity.this.energyStorage.getEnergyStored();
-                case 1 -> CoffeeMachineBlockEntity.this.energyStorage.getMaxEnergyStored();
-                case 2 -> CoffeeMachineBlockEntity.this.cookingProgress;
+                case 0 -> CoffeeMachineBlockEntity.this.energyStorage.getAmountAsInt();
+                case 1 -> CoffeeMachineBlockEntity.this.energyStorage.getCapacityAsInt();
+                case 2 -> CoffeeMachineBlockEntity.this.cookingTimer;
                 case 3 -> CoffeeMachineBlockEntity.this.cookingTotalTime;
                 case 4 -> CoffeeMachineBlockEntity.this.getCurrentRecipe() != null ? 1 : 0;
                 default -> 0;
@@ -114,67 +145,85 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CoffeeMachineBlockEntity coffeeMachine) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Fluid Slot
             final ItemStack stackFluidIn = coffeeMachine.getItem(4);
 
             if (!stackFluidIn.isEmpty()) {
-                FluidActionResult result = FluidUtil.tryEmptyContainer(stackFluidIn, coffeeMachine.tankHandler, FluidType.BUCKET_VOLUME, null, true);
+                ItemAccess itemAccess = ItemAccess.forStack(stackFluidIn);
+                ResourceHandler<FluidResource> bucketHandler = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
-                if (result.isSuccess()) {
-                    ItemStack stackFluidOut = coffeeMachine.getItem(5);
-                    ItemStack resultStack = result.getResult();
+                if (bucketHandler != null) {
+                    try (Transaction tx = Transaction.openRoot()) {
+                        ResourceHandlerUtil.moveFirst(bucketHandler, coffeeMachine.tankHandler, fluidResource -> true, FluidType.BUCKET_VOLUME, tx);
 
-                    boolean isEmpty = FluidUtil.getFluidHandler(resultStack)
-                            .map(fluidHandler -> fluidHandler.getFluidInTank(0).isEmpty()).orElse(true);
-
-                    if (isEmpty) {
-                        if (ItemStack.isSameItem(resultStack, stackFluidOut) && resultStack.getMaxStackSize() > 1 && stackFluidOut.getCount() <= stackFluidOut.getMaxStackSize() - resultStack.getCount()) {
-                            stackFluidOut.grow(resultStack.getCount());
-                            stackFluidIn.shrink(5);
-                        } else if (stackFluidOut.isEmpty()) {
-                            coffeeMachine.items.set(5, resultStack);
-
-                            stackFluidIn.shrink(5);
+                        if (bucketHandler.getResource(0).isEmpty()) {
+                            // TODO: move bucket away
                         }
-                    } else {
-                        coffeeMachine.items.set(4, resultStack);
+
+                        tx.commit();
                     }
                 }
-            }
 
+//                FluidActionResult result = net.neoforged.neoforge.fluids.FluidUtil.tryEmptyContainer(stackFluidIn, coffeeMachine.tankHandler, FluidType.BUCKET_VOLUME, null, true);
+//
+//                if (result.isSuccess()) {
+//                    ItemStack stackFluidOut = coffeeMachine.getItem(5);
+//                    ItemStack resultStack = result.getResult();
+//
+//                    boolean isEmpty = FluidUtil.getFluidHandler(resultStack)
+//                            .map(fluidHandler -> fluidHandler.getFluidInTank(0).isEmpty()).orElse(true);
+//
+//                    if (isEmpty) {
+//                        if (ItemStack.isSameItem(resultStack, stackFluidOut) && resultStack.getMaxStackSize() > 1 && stackFluidOut.getCount() <= stackFluidOut.getMaxStackSize() - resultStack.getCount()) {
+//                            stackFluidOut.grow(resultStack.getCount());
+//                            stackFluidIn.shrink(5);
+//                        } else if (stackFluidOut.isEmpty()) {
+//                            coffeeMachine.items.set(5, resultStack);
+//
+//                            stackFluidIn.shrink(5);
+//                        }
+//                    } else {
+//                        coffeeMachine.items.set(4, resultStack);
+//                    }
+//                }
+            }
 
             // Energy Slot
             ItemStack energySlotStack = coffeeMachine.items.get(6);
             if (!energySlotStack.isEmpty()) {
-                int freeEnergySpace = coffeeMachine.energyStorage.getMaxEnergyStored() - coffeeMachine.energyStorage.getEnergyStored();
-                int maxReceive = coffeeMachine.energyStorage.getMaxReceive();
+                int freeEnergySpace = coffeeMachine.energyStorage.getCapacityAsInt() - coffeeMachine.energyStorage.getAmountAsInt();
+                int maxReceive = coffeeMachine.energyStorage.getMaxInsert();
                 if (freeEnergySpace > 0) {
                     EnergyUtils.getEnergy(energySlotStack).ifPresent(itemEnergyStorage -> {
-                        if (itemEnergyStorage.canExtract()) {
-                            int extracted = itemEnergyStorage.extractEnergy(Math.min(freeEnergySpace, maxReceive), false);
-                            coffeeMachine.energyStorage.growEnergy(extracted);
+                        try (Transaction tx = Transaction.openRoot()) {
+                            int extracted = itemEnergyStorage.extract(Math.min(freeEnergySpace, maxReceive), tx);
+                            coffeeMachine.energyStorage.insert(extracted, tx);
+
+                            if (extracted > 0) {
+                                tx.commit();
+                            }
                         }
                     });
                 }
             }
 
-            if (coffeeMachine.energyStorage.getEnergyStored() > 0 && coffeeMachine.cookingProgress > 0) {
+            if (coffeeMachine.energyStorage.getAmountAsInt() > 0 && coffeeMachine.cookingTimer > 0) {
                 if (coffeeMachine.getCurrentRecipe() != null) {
                     coffeeMachine.energyStorage.consumeEnergy(ServerConfig.COFFEE_MACHINE_ENERGY_PER_TICK.get());
-                    if (coffeeMachine.cookingProgress < coffeeMachine.cookingTotalTime && coffeeMachine.getCurrentRecipe() != null) {
-                        coffeeMachine.cookingProgress++;
+                    if (coffeeMachine.cookingTimer < coffeeMachine.cookingTotalTime && coffeeMachine.getCurrentRecipe() != null) {
+                        coffeeMachine.cookingTimer++;
                     } else {
                         coffeeMachine.process(coffeeMachine.getCurrentRecipe());
-                        coffeeMachine.cookingProgress = 0;
+                        coffeeMachine.cookingTimer = 0;
                         coffeeMachine.cookingTotalTime = 0;
                     }
                 } else {
-                    coffeeMachine.cookingProgress = 0;
+                    coffeeMachine.cookingTimer = 0;
                     coffeeMachine.cookingTotalTime = 0;
                 }
-            } else if (coffeeMachine.litTime > 0) {
-                coffeeMachine.litTime--;
+            } else if (coffeeMachine.litTimeRemaining > 0) {
+                coffeeMachine.litTimeRemaining--;
             }
         }
     }
@@ -222,24 +271,24 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             } else {
                 inputExtra.shrink(1);
             }
-            FluidStack waterResource = this.tankHandler.getFluidInTank(0).copy();
 
-            // Consume Water
-            int waterConsumption = Optional.of(recipe.getWaterIngredient())
-                    .map(SizedFluidIngredient::amount)
-                    .orElse(0);
+            try (Transaction tx = Transaction.openRoot()) {
+                FluidResource waterResource = this.tankHandler.getResource(0);
+                FluidResource milkResource = this.tankHandler.getResource(1);
 
-            waterResource.setAmount(waterConsumption);
-            this.tankHandler.drain(waterResource, IFluidHandler.FluidAction.EXECUTE);
+                int waterConsumption = Optional.of(recipe.getWaterIngredient())
+                        .map(SizedFluidIngredient::amount)
+                        .orElse(0);
+                int milkConsumption = recipe.getMilkIngredient()
+                        .map(SizedFluidIngredient::amount)
+                        .orElse(0);
 
-            // Consume Milk
-            FluidStack milkResource = this.tankHandler.getFluidInTank(1).copy();
-            int milkConsumption = recipe.getMilkIngredient()
-                    .map(SizedFluidIngredient::amount)
-                    .orElse(0);
+                this.tankHandler.extract(0, waterResource, waterConsumption, tx);
+                this.tankHandler.extract(1, milkResource, milkConsumption, tx);
 
-            milkResource.setAmount(milkConsumption);
-            this.tankHandler.drain(milkResource, IFluidHandler.FluidAction.EXECUTE);
+                // Execute the transfer
+                tx.commit();
+            }
         }
     }
 
@@ -249,7 +298,8 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
             return null;
         }
 
-        Optional<RecipeHolder<CoffeeRecipe>> recipeHolder = this.quickCheck.getRecipeFor(new CoffeeRecipeInput(new InvWrapper(this), this.tankHandler, this.useMilk), serverLevel);
+        WorldlyContainerWrapper itemHandler = new WorldlyContainerWrapper(this, null);
+        Optional<RecipeHolder<CoffeeRecipe>> recipeHolder = this.quickCheck.getRecipeFor(new CoffeeRecipeInput(itemHandler, this.tankHandler, this.useMilk), serverLevel);
 
         if (recipeHolder.isPresent() && this.canProcess(recipeHolder.orElseThrow().value())) {
             return recipeHolder.orElseThrow().value();
@@ -267,12 +317,12 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
                 return;
             }
             this.cookingTotalTime = recipe.getCookingTime();
-            this.cookingProgress = 1;
-            this.litTime = recipe.getCookingTime();
+            this.cookingTimer = 1;
+            this.litTimeRemaining = recipe.getCookingTime();
         } else {
             sound = SoundEvents.HOE_TILL;
-            this.litTime = 0;
-            this.cookingProgress = 0;
+            this.litTimeRemaining = 0;
+            this.cookingTimer = 0;
             this.cookingTotalTime = 0;
         }
         this.setChanged();
@@ -291,19 +341,18 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public void sendSyncPacket(int type) {
-        if (this.level == null || this.level.isClientSide) {
+        if (this.level == null || this.level.isClientSide()) {
             return;
         }
 
-        RegistryAccess lookupProvider = this.level.registryAccess();
         CompoundTag nbt = new CompoundTag();
 
         if (type == SYNC_WATER_TANK) {
-            nbt.put("Fluid", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+            nbt.store("water", FluidStack.CODEC, FluidUtil.getStack(this.tankHandler, 0));
         } else if (type == SYNC_MILK_TANK) {
-            nbt.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
+            nbt.store("milk", FluidStack.CODEC, FluidUtil.getStack(this.tankHandler, 1));
         } else if (type == SYNC_USE_MILK) {
-            nbt.putBoolean("UseMilk", this.useMilk);
+            nbt.putBoolean("use_milk", this.useMilk);
         }
 
         PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) this.level, new ChunkPos(this.worldPosition), new BlockEntitySyncPacket(this.worldPosition, nbt));
@@ -311,54 +360,50 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public void receiveMessageFromServer(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        if (tag.contains("Fluid", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getWaterTank().readFromNBT(lookupProvider, tag.getCompound("Fluid"));
-        }
-        if (tag.contains("Milk", Tag.TAG_COMPOUND)) {
-            this.tankHandler.getMilkTank().readFromNBT(lookupProvider, tag.getCompound("Milk"));
-        }
-        if (tag.contains("UseMilk", Tag.TAG_BYTE)) {
-            this.useMilk = tag.getBoolean("UseMilk");
-        }
+        this.initTanks(
+                tag.read("water", FluidStack.CODEC).orElse(FluidStack.EMPTY),
+                tag.read("milk", FluidStack.CODEC).orElse(FluidStack.EMPTY)
+        );
+        this.useMilk = tag.getBooleanOr("use_milk", this.useMilk);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(compound, lookupProvider);
-        ContainerHelper.loadAllItems(compound, this.items, lookupProvider);
-        this.litTime = compound.getInt("BurnTime");
-        this.cookingProgress = compound.getInt("CookTime");
-        this.cookingTotalTime = compound.getInt("CookTimeTotal");
-        this.useMilk = compound.getBoolean("UseMilk");
-        this.energyStorage.setEnergyStored(compound.getInt("EnergyStored"));
-        this.tankHandler.getWaterTank().readFromNBT(lookupProvider, compound.getCompound("Water"));
-        this.tankHandler.getMilkTank().readFromNBT(lookupProvider, compound.getCompound("Milk"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        ContainerHelper.loadAllItems(input, this.items);
+        this.energyStorage.deserialize(input);
+        this.cookingTimer = input.getIntOr("cooking_time_spent", 0);
+        this.cookingTotalTime = input.getIntOr("cooking_total_time", 0);
+        this.litTimeRemaining = input.getIntOr("lit_time_remaining", 0);
+        this.useMilk = input.getBooleanOr("use_milk", false);
+        this.initTanks(
+                input.read("water", FluidStack.CODEC).orElse(FluidStack.EMPTY),
+                input.read("milk", FluidStack.CODEC).orElse(FluidStack.EMPTY)
+        );
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
-        ContainerHelper.saveAllItems(tag, this.items, false, lookupProvider);
-        tag.putInt("BurnTime", this.litTime);
-        tag.putInt("CookTime", this.cookingProgress);
-        tag.putInt("CookTimeTotal", this.cookingTotalTime);
-        tag.putBoolean("UseMilk", this.useMilk);
-        tag.putInt("EnergyStored", this.energyStorage.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        ContainerHelper.saveAllItems(output, this.items, false);
+        this.energyStorage.serialize(output);
+        output.putInt("cooking_time_spent", this.cookingTimer);
+        output.putInt("cooking_total_time", this.cookingTotalTime);
+        output.putInt("lit_time_remaining", this.litTimeRemaining);
+        output.putBoolean("use_milk", this.useMilk);
 
-        if (!this.tankHandler.getWaterTank().isEmpty()) {
-            tag.put("Water", this.tankHandler.getWaterTank().writeToNBT(lookupProvider, new CompoundTag()));
+        if (!this.tankHandler.getResource(0).isEmpty()) {
+            output.store("water", FluidStack.CODEC, FluidUtil.getStack(this.tankHandler, 0));
         }
 
-        if (!this.tankHandler.getMilkTank().isEmpty()) {
-            tag.put("Milk", this.tankHandler.getMilkTank().writeToNBT(lookupProvider, new CompoundTag()));
+        if (!this.tankHandler.getResource(1).isEmpty()) {
+            output.store("milk", FluidStack.CODEC, FluidUtil.getStack(this.tankHandler, 1));
         }
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
-        CompoundTag tag = new CompoundTag();
-        this.saveAdditional(tag, lookupProvider);
-        return tag;
+        return this.saveCustomOnly(lookupProvider);
     }
 
     @Nullable
@@ -481,16 +526,15 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
+    protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
 
         Contents contents = components.get(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get());
         if (contents != null) {
-            this.tankHandler.getWaterTank().setFluid(contents.water());
-            this.tankHandler.getMilkTank().setFluid(contents.milk());
-            this.energyStorage.setEnergyStored(contents.energy());
-            this.litTime = contents.burnTime();
-            this.cookingProgress = contents.cookTime();
+            this.initTanks(contents.water(), contents.milk());
+            this.energyStorage.set(contents.energy());
+            this.litTimeRemaining = contents.burnTime();
+            this.cookingTimer = contents.cookTime();
             this.cookingTotalTime = contents.cookTimeTotal();
             this.useMilk = contents.useMilk();
         }
@@ -502,98 +546,54 @@ public class CoffeeMachineBlockEntity extends BaseContainerBlockEntity implement
 
         builder.set(UselessDataComponents.COFFEE_MACHINE_CONTENTS.get(),
                 new Contents(
-                        this.tankHandler.getWaterTank().getFluid(),
-                        this.tankHandler.getMilkTank().getFluid(),
-                        this.energyStorage.getEnergyStored(),
-                        this.litTime,
-                        this.cookingProgress,
+                        FluidUtil.getStack(this.tankHandler, 0),
+                        FluidUtil.getStack(this.tankHandler, 1),
+                        this.energyStorage.getAmountAsInt(),
+                        this.litTimeRemaining,
+                        this.cookingTimer,
                         this.cookingTotalTime,
                         this.useMilk
                 ));
     }
 
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
+    public void removeComponentsFromTag(ValueOutput tag) {
         super.removeComponentsFromTag(tag);
 
-        tag.remove("EnergyStored");
-        tag.remove("Water");
-        tag.remove("Milk");
-        tag.remove("BurnTime");
-        tag.remove("CookTime");
-        tag.remove("CookTimeTotal");
-        tag.remove("UseMilk");
+        tag.discard("energy");
+        tag.discard("water");
+        tag.discard("milk");
+        tag.discard("cooking_time_spent");
+        tag.discard("cooking_total_time");
+        tag.discard("lit_time_remaining");
+        tag.discard("use_milk");
     }
 
-    public class CoffeeMachineTank implements IFluidHandler {
-        final FluidTank waterTank = new FluidTank(ServerConfig.COFFEE_MACHINE_WATER_CAPACITY.get()) {
-            @Override
-            protected void onContentsChanged() {
-                CoffeeMachineBlockEntity.this.sendSyncPacket(SYNC_WATER_TANK);
-            }
+    private void initTanks(FluidStack water, FluidStack milk) {
+        this.tankHandler = new CombinedResourceHandler<>(
+                new FluidStacksResourceHandler(NonNullList.of(FluidStack.EMPTY, water), ServerConfig.COFFEE_MACHINE_WATER_CAPACITY.get()) {
+                    @Override
+                    public boolean isValid(int index, FluidResource resource) {
+                        return resource.is(Tags.Fluids.WATER);
+                    }
 
-            @Override
-            public boolean isFluidValid(FluidStack stack) {
-                return stack.getFluid().is(FluidTags.WATER);
-            }
-        };
-        final FluidTank milkTank = new FluidTank(ServerConfig.COFFEE_MACHINE_MILK_CAPACITY.get()) {
-            @Override
-            protected void onContentsChanged() {
-                CoffeeMachineBlockEntity.this.sendSyncPacket(SYNC_MILK_TANK);
-            }
+                    @Override
+                    protected void onContentsChanged(int index, FluidStack previousContents) {
+                        CoffeeMachineBlockEntity.this.sendSyncPacket(SYNC_WATER_TANK);
+                    }
+                },
+                new FluidStacksResourceHandler(NonNullList.of(FluidStack.EMPTY, milk), ServerConfig.COFFEE_MACHINE_MILK_CAPACITY.get()) {
+                    @Override
+                    public boolean isValid(int index, FluidResource resource) {
+                        return resource.is(Tags.Fluids.MILK);
+                    }
 
-            @Override
-            public boolean isFluidValid(FluidStack stack) {
-                return stack.getFluid().is(Tags.Fluids.MILK);
-            }
-        };
-
-        @Override
-        public int getTanks() {
-            return 2;
-        }
-
-        @Nonnull
-        @Override
-        public FluidStack getFluidInTank(int tank) {
-            return tank == 0 ? waterTank.getFluid() : tank == 1 ? milkTank.getFluid() : FluidStack.EMPTY;
-        }
-
-        @Override
-        public int getTankCapacity(int tank) {
-            return tank == 0 ? waterTank.getCapacity() : tank == 1 ? milkTank.getCapacity() : 0;
-        }
-
-        @Override
-        public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
-            return tank == 0 ? waterTank.isFluidValid(stack) : tank == 1 && milkTank.isFluidValid(stack);
-        }
-
-        @Override
-        public int fill(FluidStack resource, FluidAction action) {
-            return resource.getFluid().is(Tags.Fluids.MILK) ? milkTank.fill(resource, action) : waterTank.fill(resource, action);
-        }
-
-        @Nonnull
-        @Override
-        public FluidStack drain(FluidStack resource, FluidAction action) {
-            return resource.getFluid().is(Tags.Fluids.MILK) ? milkTank.drain(resource, action) : waterTank.drain(resource, action);
-        }
-
-        @Nonnull
-        @Override
-        public FluidStack drain(int maxDrain, FluidAction action) {
-            return FluidStack.EMPTY;
-        }
-
-        public FluidTank getWaterTank() {
-            return waterTank;
-        }
-
-        public FluidTank getMilkTank() {
-            return milkTank;
-        }
+                    @Override
+                    protected void onContentsChanged(int index, FluidStack previousContents) {
+                        CoffeeMachineBlockEntity.this.sendSyncPacket(SYNC_MILK_TANK);
+                    }
+                }
+        );
     }
 
     public record Contents(

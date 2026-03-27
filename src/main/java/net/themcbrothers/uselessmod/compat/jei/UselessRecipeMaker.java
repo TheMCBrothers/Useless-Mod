@@ -2,6 +2,7 @@ package net.themcbrothers.uselessmod.compat.jei;
 
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -45,7 +46,7 @@ public class UselessRecipeMaker {
         List<ItemStack> repairables = repairData.getRepairables();
 
         // TODO: JEI 1.21.2+
-        List<ItemStack> repairMaterials = repairIngredient.items().stream().map(ItemStack::new).toList();
+        List<ItemStack> repairMaterials = repairIngredient.getValues().stream().map(ItemStack::new).toList();
 
         return repairables.stream()
                 .mapMulti((itemStack, consumer) -> {
@@ -54,13 +55,13 @@ public class UselessRecipeMaker {
                     ItemStack damagedHalf = itemStack.copy();
                     damagedHalf.setDamageValue(damagedHalf.getMaxDamage() / 2);
 
-                    IJeiAnvilRecipe repairWithSame = vanillaRecipeFactory.createAnvilRecipe(List.of(damagedThreeQuarters), List.of(damagedThreeQuarters), List.of(damagedHalf));
+                    IJeiAnvilRecipe repairWithSame = vanillaRecipeFactory.createAnvilRecipe(damagedThreeQuarters, List.of(damagedThreeQuarters), List.of(damagedHalf), Identifier.parse("lll")); // TODO
                     consumer.accept(repairWithSame);
 
                     if (!repairMaterials.isEmpty()) {
                         ItemStack damagedFully = itemStack.copy();
                         damagedFully.setDamageValue(damagedFully.getMaxDamage());
-                        IJeiAnvilRecipe repairWithMaterial = vanillaRecipeFactory.createAnvilRecipe(List.of(damagedFully), repairMaterials, List.of(damagedThreeQuarters));
+                        IJeiAnvilRecipe repairWithMaterial = vanillaRecipeFactory.createAnvilRecipe(damagedFully, repairMaterials, List.of(damagedThreeQuarters), Identifier.parse("lll")); // TODO
                         consumer.accept(repairWithMaterial);
                     }
                 });

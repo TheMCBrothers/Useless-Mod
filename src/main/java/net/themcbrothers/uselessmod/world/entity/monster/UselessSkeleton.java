@@ -5,10 +5,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.level.Level;
-import net.themcbrothers.uselessmod.core.UselessBlocks;
 import org.jetbrains.annotations.Nullable;
 
 public class UselessSkeleton extends AbstractSkeleton {
@@ -19,10 +17,7 @@ public class UselessSkeleton extends AbstractSkeleton {
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean flag) {
         super.dropCustomDeathLoot(level, damageSource, flag);
-        if (damageSource.getEntity() instanceof Creeper creeper && creeper.canDropMobsSkull()) {
-            creeper.increaseDroppedSkulls();
-            this.spawnAtLocation(level, UselessBlocks.USELESS_SKELETON_SKULL);
-        }
+        // TODO: loot table skull drop
     }
 
     @Override

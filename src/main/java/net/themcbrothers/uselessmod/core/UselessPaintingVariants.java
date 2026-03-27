@@ -3,7 +3,7 @@ package net.themcbrothers.uselessmod.core;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.decoration.PaintingVariant;
+import net.minecraft.world.entity.decoration.painting.PaintingVariant;
 import net.themcbrothers.uselessmod.UselessMod;
 
 import java.util.Optional;
@@ -22,10 +22,10 @@ public final class UselessPaintingVariants {
     }
 
     private static void register(BootstrapContext<PaintingVariant> context, ResourceKey<PaintingVariant> key, int width, int height) {
-        context.register(key, new PaintingVariant(width, height, key.location(), Optional.empty(), Optional.empty()));
+        context.register(key, new PaintingVariant(width, height, key.identifier(), Optional.empty(), Optional.empty()));
     }
 
     private static ResourceKey<PaintingVariant> createKey(String name) {
-        return ResourceKey.create(Registries.PAINTING_VARIANT, UselessMod.rl(name));
+        return ResourceKey.create(Registries.PAINTING_VARIANT, UselessMod.id(name));
     }
 }

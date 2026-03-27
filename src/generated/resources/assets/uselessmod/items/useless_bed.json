@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "uselessmod:item/useless_bed",
+    "model": {
+      "type": "minecraft:bed",
+      "texture": "minecraft:lime"
+    }
+  }
+}

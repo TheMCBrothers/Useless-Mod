@@ -1,10 +1,10 @@
 package net.themcbrothers.uselessmod.world.level.block.entity;
 
 import com.google.common.collect.Lists;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,13 +13,15 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.themcbrothers.uselessmod.api.LampRegistry;
 import net.themcbrothers.uselessmod.core.UselessBlockEntityTypes;
 import net.themcbrothers.uselessmod.core.UselessDataComponents;
 import net.themcbrothers.uselessmod.world.level.block.LightSwitchBlock;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class LightSwitchBlockEntity extends BlockEntity {
@@ -35,26 +37,28 @@ public class LightSwitchBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput components) {
-        this.setBlockPositions(components.getOrDefault(UselessDataComponents.LIGHTS.get(), List.of()));
+    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+        this.setBlockPositions(componentGetter.getOrDefault(UselessDataComponents.LIGHTS.get(), Collections.emptyList()));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.saveAdditional(tag, lookupProvider);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
 
         if (!this.blockPositions.isEmpty()) {
-            List<Long> packedPositions = this.blockPositions.stream().map(BlockPos::asLong).toList();
-            tag.putLongArray("Lights", packedPositions);
+            ValueOutput.TypedOutputList<Long> lights = output.list("lights", Codec.LONG);
+            this.blockPositions.stream().map(BlockPos::asLong).forEach(lights::add);
         }
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.loadAdditional(tag, lookupProvider);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
 
-        this.blockPositions.clear();
-        Arrays.stream(tag.getLongArray("Lights")).mapToObj(BlockPos::of).forEach(this.blockPositions::add);
+        input.list("lights", Codec.LONG).ifPresent(longs -> {
+            this.blockPositions.clear();
+            longs.stream().map(BlockPos::of).forEach(this.blockPositions::add);
+        });
     }
 
     public boolean switchLights() {

@@ -48,10 +48,4 @@ public final class UselessDataComponents {
             () -> DataComponentType.<Holder<Block>>builder()
                     .persistent(BuiltInRegistries.BLOCK.holderByNameCodec())
                     .build());
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_CONTENTS = Registration.DATA_COMPONENT_TYPES.register("fluid_contents",
-            () -> DataComponentType.<SimpleFluidContent>builder()
-                    .persistent(SimpleFluidContent.CODEC)
-                    .networkSynchronized(SimpleFluidContent.STREAM_CODEC)
-                    .build());
 }

@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "uselessmod:item/useless_elytra"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "uselessmod:item/useless_elytra_broken"
+    },
+    "property": "minecraft:broken"
+  }
+}

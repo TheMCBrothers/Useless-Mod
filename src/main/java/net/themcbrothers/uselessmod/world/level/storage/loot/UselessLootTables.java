@@ -6,6 +6,6 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.themcbrothers.uselessmod.UselessMod;
 
 public class UselessLootTables {
-    public static final ResourceKey<LootTable> USELESS_SHEEP = ResourceKey.create(Registries.LOOT_TABLE, UselessMod.rl("entities/useless_sheep"));
-    public static final ResourceKey<LootTable> SHEEP_USELESS = ResourceKey.create(Registries.LOOT_TABLE, UselessMod.rl("entities/useless_sheep/useless"));
+    public static final ResourceKey<LootTable> USELESS_SHEEP = ResourceKey.create(Registries.LOOT_TABLE, UselessMod.id("entities/useless_sheep"));
+    public static final ResourceKey<LootTable> SHEEP_USELESS = ResourceKey.create(Registries.LOOT_TABLE, UselessMod.id("entities/useless_sheep/useless"));
 }

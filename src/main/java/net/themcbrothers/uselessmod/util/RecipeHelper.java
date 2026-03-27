@@ -3,7 +3,7 @@ package net.themcbrothers.uselessmod.util;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.themcbrothers.uselessmod.core.UselessRecipePropertySet;
 import net.themcbrothers.uselessmod.world.item.crafting.CoffeeRecipe;
 
@@ -13,7 +13,7 @@ public class RecipeHelper {
     private static RecipeManager recipeManager;
 
     @SubscribeEvent
-    public void onAddReloadListeners(AddReloadListenerEvent event) {
+    public void onAddReloadListeners(AddServerReloadListenersEvent event) {
         recipeManager = event.getServerResources().getRecipeManager();
 
         net.themcbrothers.lib.util.RecipeHelper.addPropertySet(UselessRecipePropertySet.COFFEE_MACHINE_CUP,

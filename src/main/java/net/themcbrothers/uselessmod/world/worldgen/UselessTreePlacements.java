@@ -28,6 +28,6 @@ public final class UselessTreePlacements {
     }
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, UselessMod.rl(name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, UselessMod.id(name));
     }
 }

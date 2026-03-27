@@ -8,15 +8,15 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.item.equipment.EquipmentModels;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
 import net.neoforged.neoforge.registries.DeferredItem;
-import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.world.item.BucketWithPaintItem;
 import net.themcbrothers.uselessmod.world.item.PaintBrushItem;
 
 import static net.themcbrothers.uselessmod.core.Registration.ITEMS;
 
+// TODO: add new content
 public final class UselessItems {
     static void register() {
     }
@@ -32,31 +32,31 @@ public final class UselessItems {
     public static final DeferredItem<Item> SUPER_USELESS_NUGGET = ITEMS.registerSimpleItem("super_useless_nugget");
 
     // Weapons and Tools
-    public static final DeferredItem<Item> USELESS_SHEARS = ITEMS.registerItem("useless_shears", ShearsItem::new, new Item.Properties().durability(320));
-    public static final DeferredItem<Item> USELESS_SHIELD = ITEMS.registerItem("useless_shield", props -> new ShieldItem(props.durability(420).repairable(ItemTags.REPAIRS_IRON_ARMOR).equippableUnswappable(EquipmentSlot.OFFHAND))); // TODO: repairable
-    public static final DeferredItem<Item> USELESS_SWORD = ITEMS.registerItem("useless_sword", props -> new SwordItem(UselessToolMaterials.USELESS, 3, -2.4F, props));
+    public static final DeferredItem<Item> USELESS_SHEARS = ITEMS.registerItem("useless_shears", ShearsItem::new, props -> props.durability(320));
+    public static final DeferredItem<Item> USELESS_SHIELD = ITEMS.registerItem("useless_shield", ShieldItem::new, props -> props.durability(420).repairable(ItemTags.REPAIRS_IRON_ARMOR).equippableUnswappable(EquipmentSlot.OFFHAND)); // TODO: repairable
+    public static final DeferredItem<Item> USELESS_SWORD = ITEMS.registerSimpleItem("useless_sword", props -> props.sword(UselessToolMaterials.USELESS, 3, -2.4F));
     public static final DeferredItem<Item> USELESS_SHOVEL = ITEMS.registerItem("useless_shovel", props -> new ShovelItem(UselessToolMaterials.USELESS, 1.5F, -3.0F, props));
-    public static final DeferredItem<Item> USELESS_PICKAXE = ITEMS.registerItem("useless_pickaxe", props -> new PickaxeItem(UselessToolMaterials.USELESS, 1, -2.8F, props));
+    public static final DeferredItem<Item> USELESS_PICKAXE = ITEMS.registerSimpleItem("useless_pickaxe", props -> props.pickaxe(UselessToolMaterials.USELESS, 1, -2.8F));
     public static final DeferredItem<Item> USELESS_AXE = ITEMS.registerItem("useless_axe", props -> new AxeItem(UselessToolMaterials.USELESS, 6.0F, -3.1F, props));
     public static final DeferredItem<Item> USELESS_HOE = ITEMS.registerItem("useless_hoe", props -> new HoeItem(UselessToolMaterials.USELESS, -2, -1.0F, props));
     public static final DeferredItem<Item> SUPER_USELESS_SHIELD = ITEMS.registerItem("super_useless_shield", props -> new ShieldItem(props.durability(640).repairable(ItemTags.REPAIRS_IRON_ARMOR).equippableUnswappable(EquipmentSlot.OFFHAND))); // TODO: repairable
-    public static final DeferredItem<Item> SUPER_USELESS_SWORD = ITEMS.registerItem("super_useless_sword", props -> new SwordItem(UselessToolMaterials.SUPER_USELESS, 3, -2.4F, props));
+    public static final DeferredItem<Item> SUPER_USELESS_SWORD = ITEMS.registerSimpleItem("super_useless_sword", props -> props.sword(UselessToolMaterials.SUPER_USELESS, 3, -2.4F));
     public static final DeferredItem<Item> SUPER_USELESS_SHOVEL = ITEMS.registerItem("super_useless_shovel", props -> new ShovelItem(UselessToolMaterials.SUPER_USELESS, 1.5F, -3.0F, props));
-    public static final DeferredItem<Item> SUPER_USELESS_PICKAXE = ITEMS.registerItem("super_useless_pickaxe", props -> new PickaxeItem(UselessToolMaterials.SUPER_USELESS, 1, -2.8F, props));
+    public static final DeferredItem<Item> SUPER_USELESS_PICKAXE = ITEMS.registerSimpleItem("super_useless_pickaxe", props -> props.pickaxe(UselessToolMaterials.SUPER_USELESS, 1, -2.8F));
     public static final DeferredItem<Item> SUPER_USELESS_AXE = ITEMS.registerItem("super_useless_axe", props -> new AxeItem(UselessToolMaterials.SUPER_USELESS, 6.0F, -3.1F, props));
     public static final DeferredItem<Item> SUPER_USELESS_HOE = ITEMS.registerItem("super_useless_hoe", props -> new HoeItem(UselessToolMaterials.SUPER_USELESS, -2, -1.0F, props));
 
     // Armor
-    public static final DeferredItem<Item> USELESS_ELYTRA = ITEMS.registerSimpleItem("useless_elytra", new Item.Properties().durability(540).rarity(Rarity.EPIC).component(DataComponents.GLIDER, Unit.INSTANCE).component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.CHEST).setEquipSound(SoundEvents.ARMOR_EQUIP_ELYTRA).setModel(EquipmentModels.ELYTRA).setDamageOnHurt(false).build()).repairable(Items.PHANTOM_MEMBRANE));
-    public static final DeferredItem<Item> USELESS_HELMET = ITEMS.registerItem("useless_helmet", props -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorType.HELMET, props));
-    public static final DeferredItem<Item> USELESS_CHESTPLATE = ITEMS.registerItem("useless_chestplate", props -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorType.CHESTPLATE, props));
-    public static final DeferredItem<Item> USELESS_LEGGINGS = ITEMS.registerItem("useless_leggings", props -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorType.LEGGINGS, props));
-    public static final DeferredItem<Item> USELESS_BOOTS = ITEMS.registerItem("useless_boots", props -> new ArmorItem(UselessArmorMaterials.USELESS, ArmorType.BOOTS, props));
-    public static final DeferredItem<Item> SUPER_USELESS_ELYTRA = ITEMS.registerSimpleItem("super_useless_elytra", new Item.Properties().durability(864).rarity(Rarity.EPIC).component(DataComponents.GLIDER, Unit.INSTANCE).component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.CHEST).setEquipSound(SoundEvents.ARMOR_EQUIP_ELYTRA).setModel(EquipmentModels.ELYTRA).setDamageOnHurt(false).build()).repairable(Items.PHANTOM_MEMBRANE));
-    public static final DeferredItem<Item> SUPER_USELESS_HELMET = ITEMS.registerItem("super_useless_helmet", props -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorType.HELMET, props));
-    public static final DeferredItem<Item> SUPER_USELESS_CHESTPLATE = ITEMS.registerItem("super_useless_chestplate", props -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorType.CHESTPLATE, props));
-    public static final DeferredItem<Item> SUPER_USELESS_LEGGINGS = ITEMS.registerItem("super_useless_leggings", props -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorType.LEGGINGS, props));
-    public static final DeferredItem<Item> SUPER_USELESS_BOOTS = ITEMS.registerItem("super_useless_boots", props -> new ArmorItem(UselessArmorMaterials.SUPER_USELESS, ArmorType.BOOTS, props));
+    public static final DeferredItem<Item> USELESS_ELYTRA = ITEMS.registerSimpleItem("useless_elytra", props -> props.durability(540).rarity(Rarity.EPIC).component(DataComponents.GLIDER, Unit.INSTANCE).component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.CHEST).setEquipSound(SoundEvents.ARMOR_EQUIP_ELYTRA).setAsset(EquipmentAssets.ELYTRA).setDamageOnHurt(false).build()).repairable(Items.PHANTOM_MEMBRANE));
+    public static final DeferredItem<Item> USELESS_HELMET = ITEMS.registerSimpleItem("useless_helmet", props -> props.humanoidArmor(UselessArmorMaterials.USELESS, ArmorType.HELMET));
+    public static final DeferredItem<Item> USELESS_CHESTPLATE = ITEMS.registerSimpleItem("useless_chestplate", props -> props.humanoidArmor(UselessArmorMaterials.USELESS, ArmorType.CHESTPLATE));
+    public static final DeferredItem<Item> USELESS_LEGGINGS = ITEMS.registerSimpleItem("useless_leggings", props -> props.humanoidArmor(UselessArmorMaterials.USELESS, ArmorType.LEGGINGS));
+    public static final DeferredItem<Item> USELESS_BOOTS = ITEMS.registerSimpleItem("useless_boots", props -> props.humanoidArmor(UselessArmorMaterials.USELESS, ArmorType.BOOTS));
+    public static final DeferredItem<Item> SUPER_USELESS_ELYTRA = ITEMS.registerSimpleItem("super_useless_elytra", props -> props.durability(864).rarity(Rarity.EPIC).component(DataComponents.GLIDER, Unit.INSTANCE).component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.CHEST).setEquipSound(SoundEvents.ARMOR_EQUIP_ELYTRA).setAsset(EquipmentAssets.ELYTRA).setDamageOnHurt(false).build()).repairable(Items.PHANTOM_MEMBRANE));
+    public static final DeferredItem<Item> SUPER_USELESS_HELMET = ITEMS.registerSimpleItem("super_useless_helmet", props -> props.humanoidArmor(UselessArmorMaterials.SUPER_USELESS, ArmorType.HELMET));
+    public static final DeferredItem<Item> SUPER_USELESS_CHESTPLATE = ITEMS.registerSimpleItem("super_useless_chestplate", props -> props.humanoidArmor(UselessArmorMaterials.SUPER_USELESS, ArmorType.CHESTPLATE));
+    public static final DeferredItem<Item> SUPER_USELESS_LEGGINGS = ITEMS.registerSimpleItem("super_useless_leggings", props -> props.humanoidArmor(UselessArmorMaterials.SUPER_USELESS, ArmorType.LEGGINGS));
+    public static final DeferredItem<Item> SUPER_USELESS_BOOTS = ITEMS.registerSimpleItem("super_useless_boots", props -> props.humanoidArmor(UselessArmorMaterials.SUPER_USELESS, ArmorType.BOOTS));
 
     public static final DeferredItem<Item> USELESS_SKELETON_SKULL = ITEMS.registerItem("useless_skeleton_skull", props -> new StandingAndWallBlockItem(UselessBlocks.USELESS_SKELETON_SKULL.get(), UselessBlocks.USELESS_SKELETON_WALL_SKULL.get(), Direction.DOWN, props.rarity(Rarity.UNCOMMON).useBlockDescriptionPrefix()));
 
@@ -70,8 +70,8 @@ public final class UselessItems {
     public static final DeferredItem<Item> USELESS_FEATHER = ITEMS.registerSimpleItem("useless_feather");
 
     // Color
-    public static final DeferredItem<Item> PAINT_BRUSH = ITEMS.registerItem("paint_brush", PaintBrushItem::new, new Item.Properties().durability(16));
-    public static final DeferredItem<Item> BUCKET_PAINT = ITEMS.registerItem("bucket_paint", props -> new BucketWithPaintItem(UselessFluids.PAINT.get(), props), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
+    public static final DeferredItem<Item> PAINT_BRUSH = ITEMS.registerItem("paint_brush", PaintBrushItem::new, props -> props.durability(16));
+    public static final DeferredItem<Item> BUCKET_PAINT = ITEMS.registerItem("bucket_paint", props -> new BucketWithPaintItem(UselessFluids.PAINT.get(), props), props -> props.craftRemainder(Items.BUCKET).stacksTo(1));
 
     // Spawn Eggs (registered via Entity Type Deferred Register)
     public static final DeferredItem<Item> USELESS_SKELETON_SPAWN_EGG = DeferredItem.createItem(UselessEntityTypes.USELESS_SKELETON.getId().withSuffix("_spawn_egg"));

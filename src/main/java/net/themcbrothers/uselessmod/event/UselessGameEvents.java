@@ -7,7 +7,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.world.entity.animal.UselessSheep;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = UselessMod.MOD_ID)
+@EventBusSubscriber(modid = UselessMod.MOD_ID)
 public class UselessGameEvents {
     @SubscribeEvent
     static void onEntityInteract(final PlayerInteractEvent.EntityInteract event) {

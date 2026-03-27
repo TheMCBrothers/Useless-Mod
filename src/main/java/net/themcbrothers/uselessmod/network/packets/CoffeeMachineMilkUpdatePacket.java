@@ -11,7 +11,7 @@ import net.themcbrothers.uselessmod.world.inventory.CoffeeMachineMenu;
 import net.themcbrothers.uselessmod.world.level.block.entity.CoffeeMachineBlockEntity;
 
 public record CoffeeMachineMilkUpdatePacket(boolean useMilk) implements PacketMessage {
-    public static final Type<CoffeeMachineMilkUpdatePacket> TYPE = new Type<>(UselessMod.rl("coffee_machine_milk_update"));
+    public static final Type<CoffeeMachineMilkUpdatePacket> TYPE = new Type<>(UselessMod.id("coffee_machine_milk_update"));
     public static final StreamCodec<FriendlyByteBuf, CoffeeMachineMilkUpdatePacket> STREAM_CODEC = new StreamCodec<>() {
         @Override
         public CoffeeMachineMilkUpdatePacket decode(FriendlyByteBuf buf) {

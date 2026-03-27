@@ -25,7 +25,7 @@ public class UselessTags {
         public static final TagKey<Block> WALL_CLOSET_MATERIALS = modTag("wall_closet_materials");
 
         private static TagKey<Block> modTag(String tag) {
-            return BlockTags.create(UselessMod.rl(tag));
+            return BlockTags.create(UselessMod.id(tag));
         }
     }
 
@@ -55,7 +55,7 @@ public class UselessTags {
         public static final TagKey<Item> LAMPS = modTag("lamps");
 
         private static TagKey<Item> modTag(String tag) {
-            return ItemTags.create(UselessMod.rl(tag));
+            return ItemTags.create(UselessMod.id(tag));
         }
     }
 

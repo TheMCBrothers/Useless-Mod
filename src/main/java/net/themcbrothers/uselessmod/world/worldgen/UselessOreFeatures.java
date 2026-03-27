@@ -46,6 +46,6 @@ public final class UselessOreFeatures {
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, UselessMod.rl(name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, UselessMod.id(name));
     }
 }

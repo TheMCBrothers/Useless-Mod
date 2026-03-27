@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.FluidTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.PaintingVariantTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
@@ -12,19 +11,18 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.PaintingVariantTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.BlockTagCopyingItemTagProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.themcbrothers.uselessmod.UselessMod;
 import net.themcbrothers.uselessmod.UselessTags;
 import net.themcbrothers.uselessmod.core.*;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class UselessTagsProvider {
     public static class Blocks extends BlockTagsProvider {
-        public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(output, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(output, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
@@ -44,7 +42,7 @@ public class UselessTagsProvider {
             this.tag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS).add(UselessBlocks.RAW_SUPER_USELESS_BLOCK.get());
             this.tag(Tags.Blocks.STORAGE_BLOCKS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_SUPER_USELESS).addTag(UselessTags.Blocks.STORAGE_BLOCKS_RAW_SUPER_USELESS);
 
-            this.tag(BlockTags.MINEABLE_WITH_AXE).add(UselessBlocks.USELESS_WHEAT.get(), UselessBlocks.WILD_USELESS_WHEAT.get(), UselessBlocks.COFFEE_BEANS.get(), UselessBlocks.WILD_COFFEE_BEANS.get());
+            this.tag(BlockTags.MAINTAINS_FARMLAND).add(UselessBlocks.USELESS_WHEAT.get(), UselessBlocks.WILD_USELESS_WHEAT.get(), UselessBlocks.COFFEE_BEANS.get(), UselessBlocks.WILD_COFFEE_BEANS.get());
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(UselessBlocks.USELESS_ORE.get(), UselessBlocks.DEEPSLATE_USELESS_ORE.get(), UselessBlocks.NETHER_USELESS_ORE.get(), UselessBlocks.END_USELESS_ORE.get(), UselessBlocks.SUPER_USELESS_ORE.get(), UselessBlocks.DEEPSLATE_SUPER_USELESS_ORE.get(), UselessBlocks.NETHER_SUPER_USELESS_ORE.get(), UselessBlocks.END_SUPER_USELESS_ORE.get(), UselessBlocks.USELESS_BLOCK.get(), UselessBlocks.SUPER_USELESS_BLOCK.get(), UselessBlocks.RAW_USELESS_BLOCK.get(), UselessBlocks.RAW_SUPER_USELESS_BLOCK.get(), UselessBlocks.USELESS_BARS.get(), UselessBlocks.SUPER_USELESS_BARS.get(), UselessBlocks.USELESS_DOOR.get(), UselessBlocks.SUPER_USELESS_DOOR.get(), UselessBlocks.USELESS_TRAPDOOR.get(), UselessBlocks.SUPER_USELESS_TRAPDOOR.get(), UselessBlocks.PAINT_BUCKET.get(), UselessBlocks.COFFEE_MACHINE.get());
             this.tag(BlockTags.MINEABLE_WITH_HOE).add(UselessBlocks.USELESS_OAK_LEAVES.get());
             this.tag(BlockTags.NEEDS_STONE_TOOL).add(UselessBlocks.USELESS_ORE.get(), UselessBlocks.DEEPSLATE_USELESS_ORE.get(), UselessBlocks.NETHER_USELESS_ORE.get(), UselessBlocks.END_USELESS_ORE.get(), UselessBlocks.USELESS_BLOCK.get());
@@ -80,9 +78,9 @@ public class UselessTagsProvider {
         }
     }
 
-    public static class Items extends ItemTagsProvider {
-        public Items(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, blockTags, UselessMod.MOD_ID, existingFileHelper);
+    public static class Items extends BlockTagCopyingItemTagProvider {
+        public Items(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
+            super(output, lookupProvider, blockTags, UselessMod.MOD_ID);
         }
 
         @Override
@@ -165,8 +163,8 @@ public class UselessTagsProvider {
     }
 
     public static class Fluids extends FluidTagsProvider {
-        public Fluids(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Fluids(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
@@ -176,30 +174,29 @@ public class UselessTagsProvider {
     }
 
     public static class Entities extends EntityTypeTagsProvider {
-        public Entities(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Entities(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
         protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(EntityTypeTags.SKELETONS).add(UselessEntityTypes.USELESS_SKELETON.get());
+            this.tag(EntityTypeTags.BURN_IN_DAYLIGHT).add(UselessEntityTypes.USELESS_SKELETON.get());
         }
     }
 
     public static class Paintings extends PaintingVariantTagsProvider {
-        public Paintings(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(packOutput, lookupProvider, UselessMod.MOD_ID, existingFileHelper);
+        public Paintings(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(packOutput, lookupProvider, UselessMod.MOD_ID);
         }
 
         @Override
         protected void addTags(HolderLookup.Provider lookupProvider) {
             this.tag(PaintingVariantTags.PLACEABLE)
-                    .add(
-                            UselessPaintingVariants.LARGE_LOGO_RED,
-                            UselessPaintingVariants.LARGE_LOGO_BLUE,
-                            UselessPaintingVariants.SMALL_LOGO_RED,
-                            UselessPaintingVariants.SMALL_LOGO_BLUE
-                    );
+                    .add(UselessPaintingVariants.LARGE_LOGO_RED)
+                    .add(UselessPaintingVariants.LARGE_LOGO_BLUE)
+                    .add(UselessPaintingVariants.SMALL_LOGO_RED)
+                    .add(UselessPaintingVariants.SMALL_LOGO_BLUE);
         }
     }
 }
